@@ -1,0 +1,5 @@
+/.env
+/.vscode
+/vendor
+/cache/latte/*
+!/cache/latte/.gitkeep

@@ -1,0 +1,21 @@
+{
+    "name": "pablouser1/wikiuma-ng",
+    "description": "Valoraciones a profesores de la UMA",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Pablo Ferreiro"
+        }
+    ],
+    "require": {
+        "latte/latte": "^2.11",
+        "vlucas/phpdotenv": "^5.4",
+        "bramus/router": "^1.6",
+        "gregwar/captcha": "^1.1"
+    }
+}

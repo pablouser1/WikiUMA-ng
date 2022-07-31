@@ -1,0 +1,10 @@
+.note {
+	width: 64px;
+	height: 64px;
+	color: white;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 64px;
+	border-radius: 50%;
+	font-size: 25px;
+}

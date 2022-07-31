@@ -1,0 +1,16 @@
+{layout '../layouts/default.latte'}
+
+{block header}
+<p class="title">Titulaciones</p>
+<p class="subtitle">{$titulaciones[0]->CENTRO}</p>
+{/block}
+
+{block content}
+<div class="columns is-centered is-vcentered is-multiline">
+{foreach $titulaciones as $titulacion}
+  <div class="column is-narrow">
+    {include '../components/card.latte', name: $titulacion->PLAN, url: path('/plan/' . $titulacion->COD_PLAN)}
+  </div>
+{/foreach}
+</div>
+{/block}
