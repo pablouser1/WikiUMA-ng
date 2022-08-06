@@ -66,8 +66,7 @@ class ProfesorController {
         $valid = $builder->testPhrase($_POST['captcha']);
 
         // Avoid using captcha more than once
-        session_unset();
-        session_destroy();
+        unset($_SESSION['phrase']);
         if (!$valid) {
             die("Captcha inválido");
         }

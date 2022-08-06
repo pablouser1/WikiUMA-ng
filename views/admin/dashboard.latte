@@ -1,0 +1,25 @@
+{layout '../../layouts/default.latte'}
+
+{block header}
+  <p class="title">Dashboard</p>
+{/block}
+
+{block content}
+  {foreach $reports as $report}
+    <div class="box">
+      <p>Id mensaje reportado: {$report->id}</p>
+      <p>Razón: {$report->reason}</p>
+      <hr />
+      <p>{$report->message}</p>
+      <div class="buttons">
+        <a class="button is-warning">Ignorar</a>
+        <a class="button is-danger">Eliminar review</a>
+      </div>
+    </div>
+  {/foreach}
+  <hr />
+  <p class="has-text-centered">
+    <a href="{path('/admin/logout')}">Logout</a>
+  </p>
+
+{/block}

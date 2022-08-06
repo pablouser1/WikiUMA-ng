@@ -21,3 +21,10 @@ $router->mount('/profesores', function () use ($router) {
     $router->get('/', 'ProfesorController@get');
     $router->post('/', 'ProfesorController@post');
 });
+
+$router->mount('/admin', function () use ($router) {
+    $router->get('/', 'AdminController@get');
+    $router->get('/login', 'AdminController@loginGet');
+    $router->post('/login', 'AdminController@loginPost');
+    $router->get('/logout', 'AdminController@logout');
+});

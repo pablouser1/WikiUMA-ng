@@ -11,14 +11,18 @@ Para poder usar WikiUMA-ng necesitas como mínimo:
 * PHP7.4 (8.0 recomendado)
 * ext-gd
 * ext-mbstring
-* Base de datos (MySQL/MariaDB/PostgreSQL/SQLite)
+* Base de datos MySQL/MariaDB/PostgreSQL
 
 Recomendado:
 * Redis
 * ext-redis
 
+```bash
+composer install
+```
+
 ## TODO
-* Admin
+* Terminar sistema de reporte
 * Mejores estadísticas
 * Mejor UI
 * Votar comentarios

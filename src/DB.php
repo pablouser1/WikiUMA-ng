@@ -32,10 +32,11 @@ class DB {
     }
 
     public function getStatsTeacher(string $idnc): object {
-        $med = 0;
-        $min = 0;
-        $max = 0;
-        $notes = 0;
+        $stats = new \stdClass;
+        $stats->med = 0;
+        $stats->min = 0;
+        $stats->max = 0;
+        $stats->total = 0;
 
         $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE `idnc`=:idnc ORDER BY note DESC');
         $stmt->execute([
@@ -45,18 +46,13 @@ class DB {
         $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
         if ($res && count($res) > 0) {
-            $med = array_sum($res) / count($res);
-            $max = $res[0];
-            $min = $res[count($res) - 1];
-            $notes = count($res);
+            $stats->med = array_sum($res) / count($res);
+            $stats->max = $res[0];
+            $stats->min = $res[count($res) - 1];
+            $stats->total = count($res);
         }
 
-        return (object) [
-            'med' => $med,
-            'min' => $min,
-            'max' => $max,
-            'total' => $notes
-        ];
+        return $stats;
     }
 
     /**
@@ -80,5 +76,26 @@ class DB {
             ':id' => $id,
             ':change' => $change
         ]);
+    }
+
+    public function getAdmin(string $username): ?object {
+        $admin = null;
+        $stmt = $this->conn->prepare('SELECT * FROM admins WHERE `username`=:username');
+        $stmt->execute([
+            ':username' => $username
+        ]);
+        if ($stmt->rowCount() === 1) {
+            $admin = $stmt->fetchObject();
+        }
+        return $admin;
+    }
+
+    public function getReports(): array {
+        $reports = [];
+        $query = $this->conn->query("SELECT reports.id, reports.reason, reviews.id, reviews.message FROM reports INNER JOIN reviews ON reviews.id = reports.review_id");
+        if ($query) {
+            $reports = $query->fetchAll(\PDO::FETCH_OBJ);
+        }
+        return $reports;
     }
 }
