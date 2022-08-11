@@ -12,14 +12,23 @@ $router->get('/about', function () {
     $latte = Wrappers::latte();
     $latte->render(Misc::getView('about'), ['title' => 'Acerca de']);
 });
-$router->get('/captcha', 'CaptchaController@get');
+
 $router->get('/centros', 'CentrosController@show');
 $router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@show');
 $router->get('/plan/(\d+)', 'PlanController@show');
 $router->get('/asignaturas/(\d+)/(\d+)', 'AsignaturaController@show');
-$router->mount('/profesores', function () use ($router) {
-    $router->get('/', 'ProfesorController@get');
-    $router->post('/', 'ProfesorController@post');
+$router->get('/profesores', 'ProfesorController@get');
+$router->get('/captcha', 'CaptchaController@get');
+
+$router->mount('/reviews', function () use ($router) {
+    $router->post('/', 'ReviewController@post');
+    $router->get('/(\d+)/delete', 'ReviewController@delete');
+});
+
+$router->mount('/reports', function () use ($router) {
+    $router->get('/new/(\d+)', 'ReporteController@get');
+    $router->post('/new/(\d+)', 'ReporteController@post');
+    $router->get('/(\d+)/delete', 'ReporteController@delete');
 });
 
 $router->mount('/admin', function () use ($router) {

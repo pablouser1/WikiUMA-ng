@@ -17,7 +17,7 @@
         <p class="level-item is-size-7 has-text-{color($votes, true)}">{$votes}</p>
       </div>
       <div class="level-right">
-        <a class="level-item is-size-7 has-text-danger">Reportar</a>
+        <a href="{path('/reports/new/' . $id)}" class="level-item is-size-7 has-text-danger">Reportar</a>
       </div>
     </nav>
   </div>

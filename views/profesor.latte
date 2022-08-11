@@ -36,7 +36,7 @@
 </section>
 <hr />
 <p class="title has-text-centered">Escribe tu reseña</p>
-<form action="{path('/profesores?email=' . $profesor->email)}" method="POST">
+<form action="{path('/reviews?email=' . $profesor->email)}" method="POST">
   <div class="field">
     <label class="label">Reseña</label>
     <div class="control">
@@ -76,7 +76,7 @@
   <p class="title has-text-centered">Valoraciones</p>
   <div class="container">
     {foreach $reviews as $review}
-      {include '../components/review.latte', username: $review->username, message: $review->message, note: $review->note, votes: $review->votes}
+      {include '../components/review.latte', id: $review->id, username: $review->username, message: $review->message, note: $review->note, votes: $review->votes}
     {/foreach}
   </div>
 {/if}

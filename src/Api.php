@@ -20,11 +20,11 @@ class Api {
                     if (isset($_ENV['REDIS_URL'])) {
                         $url = parse_url($_ENV['REDIS_URL']);
                         $host = $url['host'];
-                        $port = $url['port'];
+                        $port = intval($url['port']);
                         $password = $url['pass'] ?? null;
                     } else {
                         $host = $_ENV['REDIS_HOST'];
-                        $port = (int) $_ENV['REDIS_PORT'];
+                        $port = intval($_ENV['REDIS_PORT']);
                         $password = isset($_ENV['REDIS_PASSWORD']) ? $_ENV['REDIS_PASSWORD'] : null;
                     }
                     $this->cacheEngine = new RedisCache($host, $port, $password);

@@ -11,7 +11,7 @@ class Misc {
     }
 
     static public function redirect(string $path) {
-        $location = Misc::url($path);
+        $location = self::url($path);
         header("Location: $location");
     }
 

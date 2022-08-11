@@ -5,18 +5,24 @@
 {/block}
 
 {block content}
-  {foreach $reports as $report}
-    <div class="box">
-      <p>Id mensaje reportado: {$report->id}</p>
-      <p>Razón: {$report->reason}</p>
-      <hr />
-      <p>{$report->message}</p>
-      <div class="buttons">
-        <a class="button is-warning">Ignorar</a>
-        <a class="button is-danger">Eliminar review</a>
+  <div class="container">
+    {if count($reports) > 0}
+    <div class="columns is-multiline is-centered is-vcentered">
+    {foreach $reports as $report}
+      <div class="column is-narrow">
+        {include '../../components/review.latte', id: $review->id, username: $report->username, message: $report->message, note: $report->note, votes: $report->votes}
+        <p>Razón: {$report->reason}</p>
+        <div class="buttons">
+          <a class="button is-warning" href="{path('/reports/' . $report->reportId . '/delete')}">Ignorar</a>
+          <a class="button is-danger" href="{path('/reviews/' . $report->reviewId . '/delete')}">Eliminar review</a>
+        </div>
       </div>
+    {/foreach}
     </div>
-  {/foreach}
+    {else}
+    <p class="has-text-centered">No hay reportes</p>
+    {/if}
+  </div>
   <hr />
   <p class="has-text-centered">
     <a href="{path('/admin/logout')}">Logout</a>

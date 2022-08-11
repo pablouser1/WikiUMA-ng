@@ -22,7 +22,6 @@ composer install
 ```
 
 ## TODO
-* Terminar sistema de reporte
 * Mejores estadísticas
 * Mejor UI
 * Votar comentarios

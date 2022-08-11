@@ -55,6 +55,7 @@ class AdminController {
     }
 
     static public function logout() {
+        session_start();
         session_destroy();
         Misc::redirect('/admin/login');
     }

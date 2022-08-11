@@ -31,6 +31,38 @@ class DB {
         return $stmt->fetchAll(\PDO::FETCH_OBJ);
     }
 
+    public function getReview(int $id): ?object {
+        $review = null;
+        $stmt = $this->conn->prepare('SELECT * FROM reviews WHERE `id`=:id');
+        $stmt->execute([
+            ':id' => $id
+        ]);
+        if ($stmt->rowCount() === 1) {
+            $review = $stmt->fetchObject();
+        }
+        return $review;
+    }
+
+    /**
+     * Add review on teacher
+     */
+    public function addReview(string $idnc, string $username, float $note, string $message) {
+        $stmt = $this->conn->prepare('INSERT INTO reviews (idnc, username, note, `message`) VALUES (:idnc, :username, :note, :message)');
+        $stmt->execute([
+            ':idnc' => $idnc,
+            ':username' => $username,
+            ':note' => $note,
+            ':message' => $message
+        ]);
+    }
+
+    public function deleteReview(int $id) {
+        $stmt = $this->conn->prepare('DELETE FROM reviews WHERE id=:id');
+        $stmt->execute([
+            ':id' => $id
+        ]);
+    }
+
     public function getStatsTeacher(string $idnc): object {
         $stats = new \stdClass;
         $stats->med = 0;
@@ -53,19 +85,6 @@ class DB {
         }
 
         return $stats;
-    }
-
-    /**
-     * Add opinion on teacher
-     */
-    public function addReview(string $idnc, string $username, float $note, string $message) {
-        $stmt = $this->conn->prepare('INSERT INTO reviews (idnc, username, note, `message`) VALUES (:idnc, :username, :note, :message)');
-        $stmt->execute([
-            ':idnc' => $idnc,
-            ':username' => $username,
-            ':note' => $note,
-            ':message' => $message
-        ]);
     }
 
     public function changeVote(int $id, bool $more) {
@@ -92,10 +111,25 @@ class DB {
 
     public function getReports(): array {
         $reports = [];
-        $query = $this->conn->query("SELECT reports.id, reports.reason, reviews.id, reviews.message FROM reports INNER JOIN reviews ON reviews.id = reports.review_id");
+        $query = $this->conn->query("SELECT reports.id AS reportId, reports.reason, reviews.id AS reviewId, reviews.username, reviews.message, reviews.note, reviews.votes FROM reports INNER JOIN reviews ON reviews.id = reports.review_id");
         if ($query) {
             $reports = $query->fetchAll(\PDO::FETCH_OBJ);
         }
         return $reports;
+    }
+
+    public function addReport(int $review_id, string $reason) {
+        $stmt = $this->conn->prepare('INSERT INTO reports (review_id, reason) VALUES (:review_id, :reason)');
+        $stmt->execute([
+            ':review_id' => $review_id,
+            ':reason' => $reason
+        ]);
+    }
+
+    public function deleteReport(int $id) {
+        $stmt = $this->conn->prepare('DELETE FROM reports WHERE id=:id');
+        $stmt->execute([
+            ':id' => $id
+        ]);
     }
 }
