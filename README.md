@@ -22,7 +22,7 @@ composer install
 ```
 
 ## TODO
-* Mejores estadísticas
+* Expandir estadísticas
 * Mejor UI
 * Votar comentarios
 * Iconos

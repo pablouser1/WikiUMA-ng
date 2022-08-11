@@ -1,22 +1,19 @@
 <?php
 /** @var \Bramus\Router\Router $router */
 
-use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 
-$router->get('/', function () {
-    $latte = Wrappers::latte();
-    $latte->render(Misc::getView('home'), ['title' => 'Inicio']);
-});
+$router->get('/', 'HomeController@get');
 $router->get('/about', function () {
-    $latte = Wrappers::latte();
-    $latte->render(Misc::getView('about'), ['title' => 'Acerca de']);
+    Wrappers::latte('about', ['title' => 'Acerca de']);
 });
 
-$router->get('/centros', 'CentrosController@show');
-$router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@show');
-$router->get('/plan/(\d+)', 'PlanController@show');
-$router->get('/asignaturas/(\d+)/(\d+)', 'AsignaturaController@show');
+$router->get('/stats', 'StatsController@get');
+
+$router->get('/centros', 'CentrosController@get');
+$router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@get');
+$router->get('/plan/(\d+)', 'PlanController@get');
+$router->get('/asignaturas/(\d+)/(\d+)', 'AsignaturaController@get');
 $router->get('/profesores', 'ProfesorController@get');
 $router->get('/captcha', 'CaptchaController@get');
 

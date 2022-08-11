@@ -2,7 +2,7 @@
 namespace App\Helpers;
 
 class Wrappers {
-    static public function latte() {
+    static public function latte(string $template, array $params = []) {
         $latte = new \Latte\Engine;
         $cache_path = Misc::env('LATTE_CACHE', __DIR__ . '/../../cache/latte');
         $latte->setTempDirectory($cache_path);
@@ -25,6 +25,7 @@ class Wrappers {
             }
             return $type;
         });
-        return $latte;
+
+        $latte->render(Misc::getView($template), $params);
     }
 }

@@ -2,19 +2,19 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\Misc;
+use App\Helpers\ErrorHandler;
 use App\Helpers\Wrappers;
 
 class TitulacionesController {
-    static public function show(int $id) {
+    static public function get(int $id) {
         $api = new Api;
         $titulaciones = $api->titulaciones($id);
-        if ($titulaciones) {
-            $latte = Wrappers::latte();
-            $latte->render(Misc::getView('titulaciones'), [
-                'title' => 'Titulaciones',
-                'titulaciones' => $titulaciones
-            ]);
+        if (!$titulaciones) {
+            ErrorHandler::show(404, 'No encontrado');
         }
+        Wrappers::latte('titulaciones', [
+            'title' => 'Titulaciones',
+            'titulaciones' => $titulaciones
+        ]);
     }
 }

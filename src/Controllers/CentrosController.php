@@ -3,18 +3,17 @@ namespace App\Controllers;
 
 use App\Api;
 use App\Helpers\ErrorHandler;
-use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 
 class CentrosController {
-    static public function show() {
+    static public function get() {
         $api = new Api;
         $centros = $api->centros();
         if (!$centros) {
             ErrorHandler::show(502, 'Ha habido un error consiguiendo la lista de centros');
         }
-        $latte = Wrappers::latte();
-        $latte->render(Misc::getView('centros'), [
+
+        Wrappers::latte('centros', [
             'title' => 'Centros',
             'centros' => $centros
         ]);

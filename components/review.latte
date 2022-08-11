@@ -16,9 +16,11 @@
       <div class="level-left">
         <p class="level-item is-size-7 has-text-{color($votes, true)}">{$votes}</p>
       </div>
+      {if isset($controls) && !$controls}
       <div class="level-right">
         <a href="{path('/reports/new/' . $id)}" class="level-item is-size-7 has-text-danger">Reportar</a>
       </div>
+      {/if}
     </nav>
   </div>
 </article>

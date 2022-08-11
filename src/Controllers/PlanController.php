@@ -3,11 +3,10 @@ namespace App\Controllers;
 
 use App\Api;
 use App\Helpers\ErrorHandler;
-use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 
 class PlanController {
-    static public function show(int $id) {
+    static public function get(int $id) {
         $api = new Api;
         $plan = $api->plan($id);
         if (!$plan) {
@@ -18,8 +17,8 @@ class PlanController {
         foreach ($plan->asignaturas as $asignatura) {
             $cursos[intval($asignatura->curso)][] = $asignatura;
         }
-        $latte = Wrappers::latte();
-        $latte->render(Misc::getView('plan'), [
+
+        Wrappers::latte('plan', [
             'title' => 'Plan',
             'cursos' => $cursos,
             'duracion' => intval($plan->duracion),

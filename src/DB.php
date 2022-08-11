@@ -78,10 +78,28 @@ class DB {
         $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
 
         if ($res && count($res) > 0) {
-            $stats->med = array_sum($res) / count($res);
+            $stats->med = round(array_sum($res) / count($res), 1);
             $stats->max = $res[0];
             $stats->min = $res[count($res) - 1];
             $stats->total = count($res);
+        }
+
+        return $stats;
+    }
+
+    public function getStatsTotal(): object {
+        $stats = new \stdClass;
+        $stats->count = 0;
+        $stats->med = 0;
+
+        $stmt = $this->conn->prepare('SELECT note FROM reviews');
+        $stmt->execute();
+
+        $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
+
+        if ($res && count($res) > 0) {
+            $stats->med = array_sum($res) / count($res);
+            $stats->count = count($res);
         }
 
         return $stats;

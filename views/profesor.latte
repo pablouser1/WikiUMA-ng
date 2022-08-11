@@ -24,8 +24,8 @@
         </div>
         <div class="column is-narrow">
           <p>Votos totales: {$stats->total}</p>
-          <p>Máxima nota: {$stats->min}</p>
-          <p>Mínima nota: {$stats->max}</p>
+          <p>Mínima nota: {$stats->min}</p>
+          <p>Máxima nota: {$stats->max}</p>
         </div>
       </div>
       {else}
@@ -76,7 +76,7 @@
   <p class="title has-text-centered">Valoraciones</p>
   <div class="container">
     {foreach $reviews as $review}
-      {include '../components/review.latte', id: $review->id, username: $review->username, message: $review->message, note: $review->note, votes: $review->votes}
+      {include '../components/review.latte', id: $review->id, username: $review->username, message: $review->message, note: $review->note, votes: $review->votes, controls: true}
     {/foreach}
   </div>
 {/if}

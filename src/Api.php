@@ -60,10 +60,12 @@ class Api {
     }
 
     private function __send(string $endpoint, string $key) {
+        $version = \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
         $ch = curl_init(self::BASE_URL . $endpoint);
 
         curl_setopt_array($ch, [
-            CURLOPT_RETURNTRANSFER => true
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_USERAGENT => "WikiUMA-ng/$version (https://github.com/pablouser1/WikiUMA-ng)"
         ]);
 
         $data = curl_exec($ch);

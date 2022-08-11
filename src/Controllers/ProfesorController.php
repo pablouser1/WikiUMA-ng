@@ -4,7 +4,6 @@ namespace App\Controllers;
 use App\Api;
 use App\DB;
 use App\Helpers\ErrorHandler;
-use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 
 class ProfesorController {
@@ -21,8 +20,8 @@ class ProfesorController {
             $db = new DB();
             $reviews = $db->getReviews($profesor->idnc);
             $stats = $db->getStatsTeacher($profesor->idnc);
-            $latte = Wrappers::latte();
-            $latte->render(Misc::getView('profesor'), [
+
+            Wrappers::latte('profesor', [
                 'title' => $profesor->nombre,
                 'profesor' => $profesor,
                 'reviews' => $reviews,

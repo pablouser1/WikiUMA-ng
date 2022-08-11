@@ -17,8 +17,7 @@ class AdminController {
 
         $reports = $db->getReports();
 
-        $latte = Wrappers::latte();
-        $latte->render(Misc::getView('admin/dashboard'), [
+        Wrappers::latte('admin/dashboard', [
             'title' => 'Dashboard',
             'reports' => $reports
         ]);
@@ -31,8 +30,9 @@ class AdminController {
             exit;
         }
 
-        $latte = Wrappers::latte();
-        $latte->render(Misc::getView('admin/login'), ['title' => 'Login']);
+        Wrappers::latte('admin/login', [
+            'title' => 'Login'
+        ]);
     }
 
     static public function loginPost() {

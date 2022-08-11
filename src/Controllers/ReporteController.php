@@ -15,8 +15,7 @@ class ReporteController {
             ErrorHandler::show(404, 'Esa reseña no existe');
         }
 
-        $latte = Wrappers::latte();
-        $latte->render(Misc::getView('reporte'), [
+        Wrappers::latte('reporte', [
             'title' => 'Reporte',
             'review' => $review
         ]);
