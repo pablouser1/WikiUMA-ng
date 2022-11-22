@@ -9,7 +9,6 @@ use Gregwar\Captcha\CaptchaBuilder;
 
 class ReviewController {
     static public function post() {
-        session_start();
         if (!(isset($_GET['email']) && filter_var($_GET['email'], FILTER_VALIDATE_EMAIL))) {
             ErrorHandler::show(400, 'Tienes que enviar un email válido');
         }
@@ -63,7 +62,6 @@ class ReviewController {
     }
 
     static public function delete(int $id) {
-        session_start();
         if (!isset($_SESSION['loggedin'])) {
             Misc::redirect('/admin/login');
             exit;

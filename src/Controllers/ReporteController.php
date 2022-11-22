@@ -21,7 +21,6 @@ class ReporteController {
     }
 
     static public function post(int $review_id) {
-        session_start();
         $reason = '';
 
         if (isset($_POST['reason']) && !empty($_POST['reason'])) {
@@ -47,10 +46,9 @@ class ReporteController {
     }
 
     /**
-     * Elimina reporte, no la review
+     * Elimina reporte
      */
     static public function delete(int $id) {
-        session_start();
         if (!isset($_SESSION['loggedin'])) {
             Misc::redirect('/admin/login');
             exit;
