@@ -5,12 +5,14 @@ use App\DB;
 use App\Helpers\ErrorHandler;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;
+use App\Items\Report;
+use App\Items\Review;
 use Gregwar\Captcha\CaptchaBuilder;
 
 class ReporteController {
     static public function get(int $review_id) {
-        $db = new DB;
-        $review = $db->getReview($review_id);
+        $reviewDb = new Review;
+        $review = $reviewDb->get($review_id);
         if (!$review) {
             ErrorHandler::show(404, 'Esa reseña no existe');
         }
@@ -26,9 +28,10 @@ class ReporteController {
         if (isset($_POST['reason']) && !empty($_POST['reason'])) {
             $reason = htmlspecialchars(trim($_POST['reason']));
         }
+        $db = Wrappers::db();
 
-        $db = new DB;
-        $review = $db->getReview($review_id);
+        $reviewDb = new Review($db);
+        $review = $reviewDb->get($review_id);
         if (!$review) {
             ErrorHandler::show(404, 'Esa reseña no existe');
         }
@@ -41,7 +44,8 @@ class ReporteController {
         if (!$valid) {
             die("Captcha inválido");
         }
-        $db->addReport($review->id, $reason);
+        $reportDb = new Report($db);
+        $reportDb->add($review->id, $reason);
         Misc::redirect('/');
     }
 
@@ -54,8 +58,8 @@ class ReporteController {
             exit;
         }
 
-        $db = new DB;
-        $db->deleteReport($id);
+        $report = new Report();
+        $report->delete($id);
         Misc::redirect('/admin');
     }
 }

@@ -8,7 +8,7 @@ class Wrappers {
         $driver = Misc::env('DB_DRIVER', 'mysql');
         $host = Misc::env('DB_HOST', 'localhost');
         $port = Misc::env('DB_PORT', 3306);
-        $db = Misc::env('DB_NAME', 'umabot');
+        $db = Misc::env('DB_NAME', 'wikiuma');
         $username = Misc::env('DB_USERNAME', '');
         $password = Misc::env('DB_PASSWORD', '');
         $dns = $driver .

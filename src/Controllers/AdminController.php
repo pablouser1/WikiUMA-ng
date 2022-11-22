@@ -1,20 +1,20 @@
 <?php
 namespace App\Controllers;
 
-use App\DB;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;
+use App\Items\Admin;
+use App\Items\Report;
 
 class AdminController {
     static public function get() {
-        if (!isset($_SESSION['loggedin'])) {
+        if (!Misc::isLoggedIn()) {
             Misc::redirect('/admin/login');
             exit;
         }
 
-        $db = new DB;
-
-        $reports = $db->getReports();
+        $report = new Report;
+        $reports = $report->getAll();
 
         Wrappers::plates('dashboard', [
             'reports' => $reports
@@ -22,7 +22,7 @@ class AdminController {
     }
 
     static public function loginGet() {
-        if (isset($_SESSION['loggedin'])) {
+        if (Misc::isLoggedIn()) {
             Misc::redirect('/admin');
             exit;
         }
@@ -32,10 +32,10 @@ class AdminController {
 
     static public function loginPost() {
         if (isset($_POST['username'], $_POST['password'])) {
-            $db = new DB;
+            $adminDb = new Admin;
             $username = $_POST['username'];
             $plain_password = $_POST['password'];
-            $admin = $db->getAdmin($username);
+            $admin = $adminDb->get($username);
             if ($admin) {
                 // Admin exists
                 if (password_verify($plain_password, $admin->password)) {

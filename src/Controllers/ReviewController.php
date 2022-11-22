@@ -5,6 +5,7 @@ use App\Api;
 use App\DB;
 use App\Helpers\ErrorHandler;
 use App\Helpers\Misc;
+use App\Items\Review;
 use Gregwar\Captcha\CaptchaBuilder;
 
 class ReviewController {
@@ -56,19 +57,19 @@ class ReviewController {
             ErrorHandler::show(404, 'Profesor no encontrado');
         }
 
-        $db = new DB;
-        $db->addReview($profesor->idnc, $username, $note, $message);
-        Misc::redirect('/profesores?email=' . $email);
+        $review = new Review();
+        $review->add($profesor->idnc, $username, $note, $message);
+        Misc::redirect('/profesores', ['email' => $email]);
     }
 
     static public function delete(int $id) {
-        if (!isset($_SESSION['loggedin'])) {
+        if (!Misc::isLoggedIn()) {
             Misc::redirect('/admin/login');
             exit;
         }
 
-        $db = new DB;
-        $db->deleteReview($id);
+        $review = new Review();
+        $review->delete($id);
         Misc::redirect('/admin');
     }
 
@@ -81,6 +82,11 @@ class ReviewController {
     }
 
     static private function changeVote(int $id, bool $more) {
+        if (isset($_SESSION['voted'])) {
+            if (in_array($id, $_SESSION['voted'])) {
+                ErrorHandler::show(400, '¡Ya has votado!');
+            }
+        }
         if (!isset($_GET['back'])) {
             ErrorHandler::show(400, 'Faltan parámetros');
         }
@@ -89,8 +95,13 @@ class ReviewController {
             ErrorHandler::show(400, 'Parámetros inválidos');
         }
 
-        $db = new DB;
-        $db->changeVote($id, $more);
+        $review = new Review();
+        $review->vote($id, $more);
+        if (!isset($_SESSION['voted'])) {
+            $_SESSION['voted'] = [$id];
+        } else {
+            $_SESSION['voted'][] = $id;
+        }
         Misc::redirect($_GET['back']);
     }
 }
