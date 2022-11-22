@@ -66,7 +66,31 @@ class ReviewController {
             Misc::redirect('/admin/login');
             exit;
         }
+
         $db = new DB;
         $db->deleteReview($id);
+        Misc::redirect('/admin');
+    }
+
+    static public function like(int $id) {
+        self::changeVote($id, true);
+    }
+
+    static public function dislike(int $id) {
+        self::changeVote($id, false);
+    }
+
+    static private function changeVote(int $id, bool $more) {
+        if (!isset($_GET['back'])) {
+            ErrorHandler::show(400, 'Faltan parámetros');
+        }
+
+        if(!filter_var($_GET['back'], FILTER_VALIDATE_URL)) {
+            ErrorHandler::show(400, 'Parámetros inválidos');
+        }
+
+        $db = new DB;
+        $db->changeVote($id, $more);
+        Misc::redirect($_GET['back']);
     }
 }

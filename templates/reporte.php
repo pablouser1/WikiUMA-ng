@@ -4,35 +4,38 @@
 <p class="title">Reporte a comentario</p>
 <?php $this->stop() ?>
 
-<p>Se va a reportar el siguiente comentario:</p>
-<?=$this->insert('components/review', [
-    'id' => $review->id,
-    'username' => $review->username,
-    'message' => $review->message,
-    'note' => $review->note,
-    'votes' => $review->votes
-])?>
-
-<form action="<?=$this->url('/reports/new/' . $review->id)?>" method="POST">
-    <div class="field">
-        <label class="label">Razón</label>
-        <div class="control">
-            <textarea name="reason" class="textarea"></textarea>
-        </div>
+<div class="container">
+    <p>Se va a reportar el siguiente comentario:</p>
+    <div class="box">
+        <?=$this->insert('components/review', [
+            'id' => $review->id,
+            'username' => $review->username,
+            'message' => $review->message,
+            'note' => $review->note,
+            'votes' => $review->votes
+        ])?>
     </div>
-    <div class="field has-addons">
-        <div class="control">
-            <figure class="figure">
-                <img src="<?=$this->url('/captcha')?>" />
-            </figure>
+    <form action="<?=$this->url('/reports/new/' . $review->id)?>" method="POST">
+        <div class="field">
+            <label class="label">Razón</label>
+            <div class="control">
+                <textarea name="reason" class="textarea"></textarea>
+            </div>
         </div>
-        <div class="control">
-            <input name="captcha" type="text" class="input" placeholder="Escribe el Captcha" />
+        <div class="field has-addons">
+            <div class="control">
+                <figure class="figure">
+                    <img src="<?=$this->url('/captcha')?>" />
+                </figure>
+            </div>
+            <div class="control">
+                <input name="captcha" type="text" class="input" placeholder="Escribe el Captcha" />
+            </div>
         </div>
-    </div>
-    <div class="field">
-        <div class="control">
-            <button type="submit" class="button is-success">Enviar</button>
+        <div class="field">
+            <div class="control">
+                <button type="submit" class="button is-success">Enviar</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>

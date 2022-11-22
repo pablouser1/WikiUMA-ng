@@ -25,6 +25,8 @@ $router->get('/captcha', 'CaptchaController@get');
 $router->mount('/reviews', function () use ($router) {
     $router->post('/', 'ReviewController@post');
     $router->get('/(\d+)/delete', 'ReviewController@delete');
+    $router->get('/(\d+)/like', 'ReviewController@like');
+    $router->get('/(\d+)/dislike', 'ReviewController@dislike');
 });
 
 $router->mount('/reports', function () use ($router) {
