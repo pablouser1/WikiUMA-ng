@@ -18,7 +18,7 @@ class PlanController {
             $cursos[intval($asignatura->curso)][] = $asignatura;
         }
 
-        Wrappers::latte('plan', [
+        Wrappers::plates('plan', [
             'title' => 'Plan',
             'cursos' => $cursos,
             'duracion' => intval($plan->duracion),

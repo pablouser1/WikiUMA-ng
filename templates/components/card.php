@@ -1,8 +1,8 @@
 <div class="card">
   <div class="card-content">
-    <p>{$name}</p>
+    <p><?=$this->e($name)?></p>
   </div>
   <footer class="card-footer">
-    <a href="{$url}" class="card-footer-item">Ir</a>
+    <a href="<?=$this->e($url)?>" class="card-footer-item">Ir</a>
   </footer>
 </div>

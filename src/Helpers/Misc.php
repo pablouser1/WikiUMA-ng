@@ -15,10 +15,7 @@ class Misc {
         header("Location: $location");
     }
 
-    /**
-     * Returns absolute path for view
-     */
-    static public function getView(string $template): string {
-        return __DIR__ . "/../../views/{$template}.latte";
+    static public function isLoggedIn(): bool {
+        return isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1;
     }
 }

@@ -22,9 +22,6 @@ composer install
 ```
 
 ## TODO
-* Expandir estadísticas
-* Mejor UI
 * Votar comentarios
 * Iconos
 * Instrucciones de instalación
-* Docker

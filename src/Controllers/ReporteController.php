@@ -15,8 +15,7 @@ class ReporteController {
             ErrorHandler::show(404, 'Esa reseña no existe');
         }
 
-        Wrappers::latte('reporte', [
-            'title' => 'Reporte',
+        Wrappers::plates('reporte', [
             'review' => $review
         ]);
     }

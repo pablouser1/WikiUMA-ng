@@ -13,8 +13,8 @@ class AsignaturaController {
             ErrorHandler::show(404, 'Asignatura no encontrada');
         }
 
-        Wrappers::latte('asignatura', [
-            'title' => 'Asignatura',
+        Wrappers::plates('asignatura', [
+            'title' => $asignatura->nombre,
             'asignatura' => $asignatura
         ]);
     }

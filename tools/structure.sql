@@ -1,5 +1,4 @@
 -- wikiuma.reviews definition
-
 CREATE TABLE `reviews` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idnc` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -11,7 +10,6 @@ CREATE TABLE `reviews` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- wikiuma.reports definition
-
 CREATE TABLE `reports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `review_id` int(11) NOT NULL,
@@ -22,7 +20,6 @@ CREATE TABLE `reports` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Reportes hechos por el usuario';
 
 -- wikiuma.admins definition
-
 CREATE TABLE IF NOT EXISTS `admins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,

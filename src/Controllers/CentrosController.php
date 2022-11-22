@@ -13,8 +13,7 @@ class CentrosController {
             ErrorHandler::show(502, 'Ha habido un error consiguiendo la lista de centros');
         }
 
-        Wrappers::latte('centros', [
-            'title' => 'Centros',
+        Wrappers::plates('centros', [
             'centros' => $centros
         ]);
     }

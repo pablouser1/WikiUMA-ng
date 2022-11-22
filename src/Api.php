@@ -1,12 +1,12 @@
 <?php
 namespace App;
 
-use App\Cache\InterfaceCache;
+use App\Cache\Cache;
 use App\Cache\RedisCache;
 
 class Api {
     const BASE_URL = "https://duma.uma.es/api/appuma";
-    private ?InterfaceCache $cacheEngine = null;
+    private ?Cache $cacheEngine = null;
 
     function __construct() {
         // Cache config

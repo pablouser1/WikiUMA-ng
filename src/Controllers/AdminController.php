@@ -7,7 +7,6 @@ use App\Helpers\Wrappers;
 
 class AdminController {
     static public function get() {
-        session_start();
         if (!isset($_SESSION['loggedin'])) {
             Misc::redirect('/admin/login');
             exit;
@@ -17,27 +16,21 @@ class AdminController {
 
         $reports = $db->getReports();
 
-        Wrappers::latte('admin/dashboard', [
-            'title' => 'Dashboard',
+        Wrappers::plates('dashboard', [
             'reports' => $reports
         ]);
     }
 
     static public function loginGet() {
-        session_start();
         if (isset($_SESSION['loggedin'])) {
             Misc::redirect('/admin');
             exit;
         }
 
-        Wrappers::latte('admin/login', [
-            'title' => 'Login'
-        ]);
+        Wrappers::plates('login');
     }
 
     static public function loginPost() {
-        session_start();
-
         if (isset($_POST['username'], $_POST['password'])) {
             $db = new DB;
             $username = $_POST['username'];
@@ -47,6 +40,7 @@ class AdminController {
                 // Admin exists
                 if (password_verify($plain_password, $admin->password)) {
                     $_SESSION['loggedin'] = true;
+                    $_SESSION['username'] = $admin->username;
                     Misc::redirect('/admin');
                 }
             }
@@ -55,7 +49,6 @@ class AdminController {
     }
 
     static public function logout() {
-        session_start();
         session_destroy();
         Misc::redirect('/admin/login');
     }

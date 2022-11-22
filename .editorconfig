@@ -9,11 +9,6 @@ charset = utf-8
 trim_trailing_whitespace = true
 insert_final_newline = true
 
-# Spaces in latte
-[**.latte]
-indent_style = space
-indent_size = 2
-
 [**.js]
 indent_style = space
 indent_size = 2
@@ -25,7 +20,3 @@ indent_size = 2
 [**.php]
 indent_style = space
 indent_size = 4
-
-[**.html]
-indent_style = tab
-indent_size = 2

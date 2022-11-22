@@ -3,12 +3,17 @@
 
 use App\Helpers\Wrappers;
 
-$router->get('/', 'HomeController@get');
-$router->get('/about', function () {
-    Wrappers::latte('about', ['title' => 'Acerca de']);
+$router->set404(function () {
+    Wrappers::plates('error', [
+        'code' => 404,
+        'body' => 'Not found'
+    ]);
 });
 
-$router->get('/stats', 'StatsController@get');
+$router->get('/', 'HomeController@get');
+$router->get('/about', function () {
+    Wrappers::plates('about');
+});
 
 $router->get('/centros', 'CentrosController@get');
 $router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@get');

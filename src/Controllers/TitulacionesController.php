@@ -12,8 +12,8 @@ class TitulacionesController {
         if (!$titulaciones) {
             ErrorHandler::show(404, 'No encontrado');
         }
-        Wrappers::latte('titulaciones', [
-            'title' => 'Titulaciones',
+        Wrappers::plates('titulaciones', [
+            'title' => $titulaciones[0]->CENTRO,
             'titulaciones' => $titulaciones
         ]);
     }

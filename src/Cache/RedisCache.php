@@ -1,7 +1,7 @@
 <?php
 namespace App\Cache;
 
-class RedisCache implements InterfaceCache {
+class RedisCache implements Cache {
     private \Redis $client;
     function __construct(string $host, int $port, ?string $password) {
         $this->client = new \Redis();

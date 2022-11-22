@@ -1,9 +1,0 @@
-{layout '../layouts/hero.latte'}
-
-{block content}
-  <p class="title">Estadísticas</p>
-  <div class="box">
-    <p>Nota media total: <span class="has-text-{color($stats->med)}">{$stats->med}</span></p>
-    <p>Reseñas totales: {$stats->count}</p>
-  </div>
-{/block}

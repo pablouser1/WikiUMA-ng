@@ -14,9 +14,9 @@
         }
     ],
     "require": {
-        "latte/latte": "^2.11",
-        "vlucas/phpdotenv": "^5.4",
         "bramus/router": "^1.6",
-        "gregwar/captcha": "^1.1"
+        "gregwar/captcha": "^1.1",
+        "league/plates": "^3.4",
+        "josegonzalez/dotenv": "dev-master"
     }
 }

@@ -21,7 +21,7 @@ class ProfesorController {
             $reviews = $db->getReviews($profesor->idnc);
             $stats = $db->getStatsTeacher($profesor->idnc);
 
-            Wrappers::latte('profesor', [
+            Wrappers::plates('profesor', [
                 'title' => $profesor->nombre,
                 'profesor' => $profesor,
                 'reviews' => $reviews,
