@@ -3,6 +3,12 @@
     "description": "Valoraciones a profesores de la UMA",
     "version": "1.1.0.0",
     "type": "project",
+    "config": {
+		"optimize-autoloader": true,
+		"platform": {
+			"php": "7.4"
+		}
+	},
     "autoload": {
         "psr-4": {
             "App\\": "src/"
