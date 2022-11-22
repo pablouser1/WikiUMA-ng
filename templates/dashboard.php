@@ -10,15 +10,15 @@
         <?php foreach($reports as $report): ?>
         <div class="column is-narrow">
             <?=$this->insert('components/review', [
-                'id' => $review->id,
-                'username' => $review->username,
-                'message' => $review->message,
-                'note' => $review->note,
-                'votes' => $review->votes,
+                'id' => $report->id,
+                'username' => $report->username,
+                'message' => $report->message,
+                'note' => $report->note,
+                'votes' => $report->votes,
             ])?>
             <p>Razón: <?=$this->e($report->reason)?></p>
             <div class="buttons">
-                <a class="button is-warning" href="{<?=$this->url('/reports/' . $report->reportId . '/delete')?>">Ignorar</a>
+                <a class="button is-warning" href="<?=$this->url('/reports/' . $report->reportId . '/delete')?>">Ignorar</a>
                 <a class="button is-danger" href="<?=$this->url('/reviews/' . $report->reviewId . '/delete')?>">Eliminar review</a>
             </div>
         </div>
