@@ -11,6 +11,7 @@
     <p>Este proyecto no sería posible sin la ayuda de:</p>
     <ul>
     	<li><a rel="nofollow" href="https://github.com/thephpleague/plates">Plates</a></li>
+        <li><a rel="nofollow" href="https://github.com/gregwar/captcha">gregwar/captcha</a></li>
     	<li><a rel="nofollow" href="https://github.com/bramus/router">bramus/router</a></li>
     	<li><a rel="nofollow" href="https://github.com/josegonzalez/php-dotenv">josegonzalez/dotenv</a></li>
     	<li><a rel="nofollow" href="https://github.com/jgthms/bulma">Bulma</a></li>
