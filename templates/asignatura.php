@@ -4,7 +4,7 @@
     <p class="title"><?=$this->e($asignatura->nombre)?></p>
 <?php $this->stop() ?>
 
-<?=$this->insert('components/client_search')?>
+<?=$this->insert('components/search_client')?>
 <?php foreach($asignatura->grupos as $index => $grupo): ?>
     <p class="title has-text-centered">Grupo <?=$this->e($grupo->nombre)?></p>
     <div class="columns is-centered is-vcentered is-multiline">

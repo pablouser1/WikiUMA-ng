@@ -22,4 +22,15 @@ class Misc {
     static public function isLoggedIn(): bool {
         return isset($_SESSION['loggedin']) && $_SESSION['loggedin'] == 1;
     }
+
+    static public function parseHTML(?string $html): ?\DOMDocument {
+        if ($html) {
+            $doc = new \DOMDocument();
+            $success = @$doc->loadHTML($html);
+            if ($success) {
+                return $doc;
+            }
+        }
+        return null;
+    }
 }

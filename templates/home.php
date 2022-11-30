@@ -8,4 +8,5 @@
         <a class="button <?=$this->e($link['color'])?>" href="<?=$this->url($link['endpoint'])?>"><?=$this->e($link['name'])?></a>
         <?php endforeach ?>
     </div>
+    <?= $this->insert('components/search_server') ?>
 </div>

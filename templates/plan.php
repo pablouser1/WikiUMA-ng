@@ -4,7 +4,7 @@
     <p class="title">Plan</p>
 <?php $this->stop() ?>
 
-<?=$this->insert('components/client_search')?>
+<?=$this->insert('components/search_client')?>
 <?php foreach ($cursos as $index => $curso): ?>
     <p class="title has-text-centered">Año <?=$this->e($index)?></p>
     <div class="columns is-centered is-vcentered is-multiline">

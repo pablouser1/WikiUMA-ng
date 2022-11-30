@@ -5,7 +5,7 @@
 <p class="subtitle"><?=$this->e($titulaciones[0]->CENTRO)?></p>
 <?php $this->stop() ?>
 
-<?=$this->insert('components/client_search')?>
+<?=$this->insert('components/search_client')?>
 <div class="columns is-centered is-vcentered is-multiline">
     <?php foreach($titulaciones as $titulacion): ?>
         <div class="column item is-narrow" data-name="<?=$this->e($titulacion->PLAN)?>">

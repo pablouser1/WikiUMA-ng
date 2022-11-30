@@ -4,7 +4,7 @@
     <p class="title">Centros</p>
 <?php $this->stop() ?>
 
-<?=$this->insert('components/client_search')?>
+<?=$this->insert('components/search_client')?>
 <div class="columns is-centered is-vcentered is-multiline">
     <?php foreach($centros as $centro): ?>
         <?php if ($centro->alfilws !== ""): ?>

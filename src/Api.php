@@ -3,12 +3,18 @@ namespace App;
 
 use App\Cache\Cache;
 use App\Cache\RedisCache;
+use App\Helpers\Misc;
 
 class Api {
-    const BASE_URL = "https://duma.uma.es/api/appuma";
+    const BASE_API = "https://duma.uma.es/api/appuma";
+    const BASE_WEB = "https://duma.uma.es/duma";
     private ?Cache $cacheEngine = null;
+    private string $csrfFile;
+    private string $version;
 
     function __construct() {
+        $this->csrfFile = sys_get_temp_dir() . '/wikiuma.txt';
+        $this->version = \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
         // Cache config
         if (isset($_ENV['API_CACHE'])) {
             switch ($_ENV['API_CACHE']) {
@@ -53,28 +59,135 @@ class Api {
         return $this->__handleRequest("/profesor/$email/");
     }
 
-    private function __handleRequest(string $endpoint) {
-        $key = str_replace('/', '-', substr($endpoint, 1, -1));
-
-        return $this->__hasCache($key) ? $this->__getCache($key) : $this->__send($endpoint, $key);
+    public function profesorWeb(string $idnc): string {
+        $email = '';
+        $html = $this->__handleRequest('/buscador/persona/' . $idnc . '/', [], [], "", false);
+        $doc = Misc::parseHTML($html);
+        if ($doc) {
+            $xpath = new \DOMXpath($doc);
+            $elements = $xpath->query("/html/body/div[4]/div[2]/div[2]");
+            if ($elements) {
+                $div = $elements->item(0);
+                $email = $div->textContent;
+            }
+        }
+        return $email;
     }
 
-    private function __send(string $endpoint, string $key) {
-        $version = \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
-        $ch = curl_init(self::BASE_URL . $endpoint);
+    public function buscar(string $nombre, string $apellido_1, string $apellido_2): array {
+        $results = [];
+        $csrf = $this->__getCsrf();
+        $headers = [
+            "Referer: https://duma.uma.es/duma/buscador/"
+        ];
+        $cookies = "csrftoken=" . $csrf;
 
-        curl_setopt_array($ch, [
+        $html = $this->__handleRequest('/buscador/persona/', [
+            "csrfmiddlewaretoken" => $csrf,
+            "pas" => "on",
+            "pdi" => "on",
+            "nombre" => $nombre,
+            "apellido_1" => $apellido_1,
+            "apellido_2" => $apellido_2,
+            "email" => "",
+            "telefono" => "",
+            "centro" => "",
+            "departamento" => "",
+            "general" => ""
+        ], $headers, $cookies, false);
+
+        $doc = Misc::parseHTML($html);
+
+        if ($doc) {
+            $h4s = $doc->getElementsByTagName('h4');
+            foreach ($h4s as $h4) {
+                // Take second child (a)
+                $a = $h4->childNodes->item(2);
+                if ($a) {
+                    $url = $a->getAttribute('href');
+                    if ($url) {
+                        $results[] = (object) [
+                            'name' => $a->textContent,
+                            'idnc' => basename($url)
+                        ];
+                    }
+                }
+            }
+        }
+
+        return $results;
+    }
+
+    private function __handleRequest(string $endpoint, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true) {
+        $key = str_replace('/', '-', substr($endpoint, 1, -1));
+
+        return $isJson && $this->__hasCache($key) ? $this->__getCache($key) : $this->__send($endpoint, $key, $body, $headers, $cookies, $isJson);
+    }
+
+    private function __send(string $endpoint, string $key, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true) {
+        $base = $isJson ? self::BASE_API : self::BASE_WEB;
+
+        $options = [
+            CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_USERAGENT => "WikiUMA-ng/$version (https://github.com/pablouser1/WikiUMA-ng)"
-        ]);
+            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/pablouser1/WikiUMA-ng)"
+
+        ];
+
+        $url = $base . $endpoint;
+
+        if (!empty($body)) {
+            $options[CURLOPT_POST] = true;
+            $options[CURLOPT_POSTFIELDS] = http_build_query($body);
+        }
+
+        if (!empty($headers)) {
+            $options[CURLOPT_HTTPHEADER] = $headers;
+        }
+
+        if ($cookies) {
+            $options[CURLOPT_COOKIE] = $cookies;
+        }
+
+        $ch = curl_init($url);
+
+        curl_setopt_array($ch, $options);
 
         $data = curl_exec($ch);
         $errno = curl_errno($ch);
         curl_close($ch);
         if (!$errno && $data) {
-            $this->__setCache($key, $data);
-            return json_decode($data, false);
+            if ($isJson) {
+                $this->__setCache($key, $data);
+            }
+            return $isJson ? json_decode($data, false) : $data;
         }
+        return null;
+    }
+
+    private function __getCsrf(): ?string {
+        if (is_file($this->csrfFile)) {
+            return file_get_contents($this->csrfFile);
+        }
+
+        $ch = curl_init(self::BASE_WEB . '/buscador/persona/');
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HEADER => true,
+            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/pablouser1/WikiUMA-ng)"
+        ]);
+        $result = curl_exec($ch);
+        preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
+        $cookies = array();
+        foreach($matches[1] as $item) {
+            parse_str($item, $cookie);
+            $cookies = array_merge($cookies, $cookie);
+        }
+        if (isset($cookies['csrftoken'])) {
+            file_put_contents($this->csrfFile, $cookies['csrftoken']);
+            return $cookies['csrftoken'];
+        }
+
         return null;
     }
 

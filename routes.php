@@ -14,7 +14,11 @@ $router->get('/', 'HomeController@get');
 $router->get('/about', function () {
     Wrappers::plates('about');
 });
+$router->get('/terms', function () {
+    Wrappers::plates('terms');
+});
 
+$router->get('/search', 'SearchController@get');
 $router->get('/centros', 'CentrosController@get');
 $router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@get');
 $router->get('/plan/(\d+)', 'PlanController@get');
