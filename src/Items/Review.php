@@ -2,17 +2,21 @@
 namespace App\Items;
 
 class Review extends BaseItem {
+    const PER_PAGE = 10;
+
     public function getAll(): array {
-        $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes FROM reviews');
+        $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes, `subject` FROM reviews');
         $success = $stmt->execute();
 
         return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
     }
 
-    public function getAllFromIdnc(string $idnc): array {
-        $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes FROM reviews WHERE `idnc`=:idnc');
+    public function getAllFrom(string $to, int $page = 1): array {
+        $offset = $this->__calcOffset($page);
+        $per = self::PER_PAGE;
+        $stmt = $this->conn->prepare("SELECT id, username, note, `message`, votes FROM reviews WHERE `to`=:to ORDER BY created_at DESC LIMIT $offset,$per");
         $success = $stmt->execute([
-            ':idnc' => $idnc
+            ':to' => $to
         ]);
 
         return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
@@ -26,13 +30,14 @@ class Review extends BaseItem {
         return $success ? $stmt->fetchObject() : null;
     }
 
-    public function add(string $idnc, string $username, float $note, string $message): bool {
-        $stmt = $this->conn->prepare('INSERT INTO reviews (idnc, username, note, `message`) VALUES (:idnc, :username, :note, :message)');
+    public function add(string $to, string $username, float $note, string $message, int $subject): bool {
+        $stmt = $this->conn->prepare('INSERT INTO reviews (`to`, username, note, `message`, `subject`) VALUES (:to, :username, :note, :message, :subject)');
         $success = $stmt->execute([
-            ':idnc' => $idnc,
+            ':to' => $to,
             ':username' => $username,
             ':note' => $note,
-            ':message' => $message
+            ':message' => $message,
+            ':subject' => $subject
         ]);
         return $success;
     }
@@ -45,16 +50,16 @@ class Review extends BaseItem {
         return $success;
     }
 
-    public function statsOne(string $idnc): object {
+    public function statsOne(string $to): object {
         $stats = new \stdClass;
         $stats->med = 0;
         $stats->min = 0;
         $stats->max = 0;
         $stats->total = 0;
 
-        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE `idnc`=:idnc ORDER BY note DESC');
+        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE `to`=:to ORDER BY note DESC');
         $success = $stmt->execute([
-            ':idnc' => $idnc
+            ':to' => $to
         ]);
 
         if ($success) {
@@ -76,7 +81,7 @@ class Review extends BaseItem {
         $stats->total = 0;
         $stats->med = 0;
 
-        $stmt = $this->conn->prepare('SELECT note FROM reviews');
+        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE subject=0');
         $success = $stmt->execute();
         if ($success) {
             $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
@@ -98,5 +103,9 @@ class Review extends BaseItem {
             ':change' => $change
         ]);
         return $success;
+    }
+
+    private function __calcOffset(int $page): int {
+        return self::PER_PAGE * ($page - 1);
     }
 }

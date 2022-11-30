@@ -33,4 +33,8 @@ class Misc {
         }
         return null;
     }
+
+    static public function getPage(): int {
+        return isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
+    }
 }

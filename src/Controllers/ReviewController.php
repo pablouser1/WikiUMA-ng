@@ -13,8 +13,12 @@ class ReviewController {
             ErrorHandler::show(400, 'Tienes que aceptar los términos de uso');
         }
 
-        if (!(isset($_GET['email']) && filter_var($_GET['email'], FILTER_VALIDATE_EMAIL))) {
-            ErrorHandler::show(400, 'Tienes que enviar un email válido');
+        if (!isset($_GET['data'])) {
+            ErrorHandler::show(400, 'Tienes que enviar un payload válido');
+        }
+
+        if (!(isset($_GET['subject']) && is_numeric($_GET['subject']))) {
+            ErrorHandler::show(400, 'No hay modo');
         }
 
         if (!isset($_SESSION['phrase'])) {
@@ -53,16 +57,42 @@ class ReviewController {
             ErrorHandler::show(400, 'Captcha inválido');
         }
 
-        $email = $_GET['email'];
+        $data = $_GET['data'];
+        $subject = boolval($_GET['subject']);
+        $to = '';
+        $redirect = [];
         $api = new Api;
-        $profesor = $api->profesor($email);
-        if (!$profesor) {
-            ErrorHandler::show(404, 'Profesor no encontrado');
+        if ($subject) {
+            // Separar id e id del plan
+            // 0: id asignatura
+            // 1: id plan
+            $asignatura_array = explode(';', $data);
+            $asignatura = $api->asignatura($asignatura_array[0], $asignatura_array[1]);
+            if (!$asignatura) {
+                ErrorHandler::show(404, 'Asignatura no encontrado');
+            }
+
+            $to = $asignatura->cod_asig;
+            $redirect = [
+                '/asignaturas/' . $asignatura_array[0] . '/' . $asignatura_array[1],
+                []
+            ];
+        } else {
+            $profesor = $api->profesor($data);
+            if (!$profesor) {
+                ErrorHandler::show(404, 'Profesor no encontrado');
+            }
+
+            $to = $profesor->idnc;
+            $redirect = [
+                '/profesores',
+                ['email' => $data]
+            ];
         }
 
         $review = new Review();
-        $review->add($profesor->idnc, $username, $note, $message);
-        Misc::redirect('/profesores', ['email' => $email]);
+        $review->add($to, $username, $note, $message, intval($subject));
+        Misc::redirect($redirect[0], $redirect[1]);
     }
 
     static public function delete(int $id) {

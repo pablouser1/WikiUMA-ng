@@ -61,6 +61,9 @@ class Wrappers {
             }
             return $type;
         });
+        $engine->registerFunction('page', function (): int {
+            return Misc::getPage();
+        });
         $template = $engine->make($view);
         echo $template->render($data);
     }

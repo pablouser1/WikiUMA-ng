@@ -40,28 +40,29 @@ class Api {
     }
 
     public function centros(): ?array {
-        return $this->__handleRequest('/centros/listado/');
+        $key = 'centros';
+        return $this->__handleRequest('/centros/listado/', $key);
     }
 
     public function titulaciones(int $id): ?array {
-        return $this->__handleRequest("/centros/titulaciones/$id/");
+        return $this->__handleRequest("/centros/titulaciones/$id/", "titulaciones-" . $id);
     }
 
     public function plan(int $id): ?object {
-        return $this->__handleRequest("/plan/$id/");
+        return $this->__handleRequest("/plan/$id/", "plan-" . $id);
     }
 
     public function asignatura(int $id, int $plan_id): ?object {
-        return $this->__handleRequest("/asignatura/$id/$plan_id/");
+        return $this->__handleRequest("/asignatura/$id/$plan_id/", 'asignatura-' . $id);
     }
 
     public function profesor(string $email): ?object {
-        return $this->__handleRequest("/profesor/$email/");
+        return $this->__handleRequest("/profesor/$email/", 'profesor-' . $email);
     }
 
     public function profesorWeb(string $idnc): string {
         $email = '';
-        $html = $this->__handleRequest('/buscador/persona/' . $idnc . '/', [], [], "", false);
+        $html = $this->__handleRequest('/buscador/persona/' . $idnc . '/', "", [], [], "", false);
         $doc = Misc::parseHTML($html);
         if ($doc) {
             $xpath = new \DOMXpath($doc);
@@ -82,7 +83,7 @@ class Api {
         ];
         $cookies = "csrftoken=" . $csrf;
 
-        $html = $this->__handleRequest('/buscador/persona/', [
+        $html = $this->__handleRequest('/buscador/persona/', '', [
             "csrfmiddlewaretoken" => $csrf,
             "pas" => "on",
             "pdi" => "on",
@@ -118,9 +119,7 @@ class Api {
         return $results;
     }
 
-    private function __handleRequest(string $endpoint, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true) {
-        $key = str_replace('/', '-', substr($endpoint, 1, -1));
-
+    private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true) {
         return $isJson && $this->__hasCache($key) ? $this->__getCache($key) : $this->__send($endpoint, $key, $body, $headers, $cookies, $isJson);
     }
 

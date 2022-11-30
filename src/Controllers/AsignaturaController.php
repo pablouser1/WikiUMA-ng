@@ -3,7 +3,9 @@ namespace App\Controllers;
 
 use App\Api;
 use App\Helpers\ErrorHandler;
+use App\Helpers\Misc;
 use App\Helpers\Wrappers;
+use App\Items\Review;
 
 class AsignaturaController {
     static public function get(int $id, int $plan_id) {
@@ -13,9 +15,16 @@ class AsignaturaController {
             ErrorHandler::show(404, 'Asignatura no encontrada');
         }
 
+        $page = Misc::getPage();
+        $review = new Review;
+        $reviews = $review->getAllFrom($asignatura->cod_asig, $page);
+        $stats = $review->statsOne($asignatura->cod_asig);
         Wrappers::plates('asignatura', [
             'title' => $asignatura->nombre,
-            'asignatura' => $asignatura
+            'asignatura' => $asignatura,
+            'reviews' => $reviews,
+            'stats' => $stats,
+            'plan_id' => $plan_id
         ]);
     }
 }

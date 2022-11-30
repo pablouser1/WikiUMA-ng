@@ -27,8 +27,9 @@ class ProfesorController {
         $profesor = $api->profesor($email);
         if ($profesor) {
             // Get reviews from db
+            $page = Misc::getPage();
             $reviewDb = new Review;
-            $reviews = $reviewDb->getAllFromIdnc($profesor->idnc);
+            $reviews = $reviewDb->getAllFrom($profesor->idnc, $page);
             $stats = $reviewDb->statsOne($profesor->idnc);
 
             Wrappers::plates('profesor', [

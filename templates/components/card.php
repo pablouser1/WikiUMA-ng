@@ -1,5 +1,5 @@
 <div class="card">
-  <div class="card-content">
+  <div class="card-content has-text-centered">
     <p><?=$this->e($name)?></p>
   </div>
   <footer class="card-footer">
