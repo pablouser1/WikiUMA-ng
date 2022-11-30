@@ -1,7 +1,6 @@
 <?php
 namespace App\Controllers;
 
-use App\DB;
 use App\Helpers\ErrorHandler;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;

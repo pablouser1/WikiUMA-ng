@@ -14,8 +14,8 @@ $router->get('/', 'HomeController@get');
 $router->get('/about', function () {
     Wrappers::plates('about');
 });
-$router->get('/terms', function () {
-    Wrappers::plates('terms');
+$router->get('/legal', function () {
+    Wrappers::plates('legal');
 });
 
 $router->get('/search', 'SearchController@get');

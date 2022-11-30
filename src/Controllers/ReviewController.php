@@ -2,7 +2,6 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\DB;
 use App\Helpers\ErrorHandler;
 use App\Helpers\Misc;
 use App\Items\Review;
@@ -10,6 +9,10 @@ use Gregwar\Captcha\CaptchaBuilder;
 
 class ReviewController {
     static public function post() {
+        if (!isset($_POST['accepted'])) {
+            ErrorHandler::show(400, 'Tienes que aceptar los términos de uso');
+        }
+
         if (!(isset($_GET['email']) && filter_var($_GET['email'], FILTER_VALIDATE_EMAIL))) {
             ErrorHandler::show(400, 'Tienes que enviar un email válido');
         }

@@ -14,8 +14,8 @@ abstract class Links {
             'color' => 'is-info'
         ],
         [
-            'name' => 'Términos de uso',
-            'endpoint' => '/terms',
+            'name' => 'Legal',
+            'endpoint' => '/legal',
             'color' => 'is-warning'
         ]
     ];

@@ -53,12 +53,18 @@
             <div class="field has-addons">
                 <div class="control">
                     <figure class="figure">
-                        <img src="<?=$this->url('/captcha')?>" />
+                        <img src="<?= $this->url('/captcha') ?>" />
                     </figure>
                 </div>
                 <div class="control">
-                    <input name="captcha" type="text" class="input" placeholder="Escribe el Captcha" />
+                    <input name="captcha" type="text" class="input" placeholder="Escribe el Captcha" required />
                 </div>
+            </div>
+            <div class="field">
+                <label class="checkbox">
+                    <input name="accepted" type="checkbox" required>
+                    He leído y acepto los <a href="<?= $this->url('/legal')?>">términos de uso</a>
+                </label>
             </div>
             <div class="field">
                 <div class="control">
