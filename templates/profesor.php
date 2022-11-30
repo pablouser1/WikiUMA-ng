@@ -83,7 +83,8 @@
                     'message' => $review->message,
                     'note' => $review->note,
                     'votes' => $review->votes,
-                    'controls' => true
+                    'controls' => true,
+                    'voting' => true
                 ])?>
             <?php endforeach ?>
         </div>

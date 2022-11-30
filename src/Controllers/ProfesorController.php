@@ -28,7 +28,7 @@ class ProfesorController {
         if ($profesor) {
             // Get reviews from db
             $reviewDb = new Review;
-            $reviews = $reviewDb->getAll($profesor->idnc);
+            $reviews = $reviewDb->getAllFromIdnc($profesor->idnc);
             $stats = $reviewDb->statsOne($profesor->idnc);
 
             Wrappers::plates('profesor', [

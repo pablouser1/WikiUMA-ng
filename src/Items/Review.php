@@ -2,7 +2,14 @@
 namespace App\Items;
 
 class Review extends BaseItem {
-    public function getAll(string $idnc): array {
+    public function getAll(): array {
+        $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes FROM reviews');
+        $success = $stmt->execute();
+
+        return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
+    }
+
+    public function getAllFromIdnc(string $idnc): array {
         $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes FROM reviews WHERE `idnc`=:idnc');
         $success = $stmt->execute([
             ':idnc' => $idnc
@@ -74,8 +81,8 @@ class Review extends BaseItem {
         if ($success) {
             $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
             if (count($res) > 0) {
-                $stats->med = array_sum($res) / count($res);
-                $stats->count = count($res);
+                $stats->med = round(array_sum($res) / count($res), 2);
+                $stats->total = count($res);
             }
         }
 

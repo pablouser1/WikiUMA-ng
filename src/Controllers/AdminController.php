@@ -5,19 +5,41 @@ use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 use App\Items\Admin;
 use App\Items\Report;
+use App\Items\Review;
 
 class AdminController {
-    static public function get() {
+    static public function dashboard() {
         if (!Misc::isLoggedIn()) {
             Misc::redirect('/admin/login');
             exit;
         }
 
+        Wrappers::plates('dashboard');
+    }
+
+    static public function reports() {
+        if (!Misc::isLoggedIn()) {
+            Misc::redirect('/admin/login');
+            exit;
+        }
         $report = new Report;
         $reports = $report->getAll();
 
-        Wrappers::plates('dashboard', [
+        Wrappers::plates('reports', [
             'reports' => $reports
+        ]);
+    }
+
+    static public function reviews() {
+        if (!Misc::isLoggedIn()) {
+            Misc::redirect('/admin/login');
+            exit;
+        }
+        $review = new Review();
+        $reviews = $review->getAll();
+
+        Wrappers::plates('reviews', [
+            'reviews' => $reviews
         ]);
     }
 

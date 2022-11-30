@@ -40,7 +40,9 @@ $router->mount('/reports', function () use ($router) {
 });
 
 $router->mount('/admin', function () use ($router) {
-    $router->get('/', 'AdminController@get');
+    $router->get('/', 'AdminController@dashboard');
+    $router->get('/reports', 'AdminController@reports');
+    $router->get('/reviews', 'AdminController@reviews');
     $router->get('/login', 'AdminController@loginGet');
     $router->post('/login', 'AdminController@loginPost');
     $router->get('/logout', 'AdminController@logout');

@@ -18,13 +18,15 @@
             <span class="icon" style="color: #e25555;">&#9829;</span>
             <span><?=$this->e($votes)?></span>
         </p>
-        <p class="level-item">
-            <small>
-                <a href="<?=$this->url('/reviews/' . $id . '/like', ['back' => $this->current_url()])?>">Me gusta</a>
-                <span> · </span>
-                <a href="<?=$this->url('/reviews/' . $id . '/dislike', ['back' => $this->current_url()])?>">No me gusta</a>
-            </small>
-        </p>
+        <?php if (isset($voting)): ?>
+            <p class="level-item">
+                <small>
+                    <a href="<?=$this->url('/reviews/' . $id . '/like', ['back' => $this->current_url()])?>">Me gusta</a>
+                    <span> · </span>
+                    <a href="<?=$this->url('/reviews/' . $id . '/dislike', ['back' => $this->current_url()])?>">No me gusta</a>
+                </small>
+            </p>
+        <?php endif ?>
       </div>
       <?php if (isset($controls)): ?>
         <div class="level-right">

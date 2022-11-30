@@ -18,10 +18,10 @@ Recomendado:
 * ext-redis
 
 ```bash
-composer install
+composer install # Usa --no-dev si estás en production
 ```
 
 ## TODO
-* Votar comentarios
+* Reseña a asignatura
 * Iconos
 * Instrucciones de instalación

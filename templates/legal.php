@@ -5,14 +5,21 @@
 <?php $this->stop() ?>
 <div class="container">
     <div class="content">
-        <p class="title">Política de uso</p>
+        <p class="title">Términos de uso</p>
         <ul>
+            <li>
+                Esta página web <strong>NO ESTÁ AFILIADA</strong> a la Universidad de Málaga
+            </li>
+            <li>
+                La administración de este servicio no verifica ni avala las publicaciones escritas por los usuarios
+            </li>
             <li>
                 Cualquier publicación no apropiada (amenazas, publicación de información privada...) no está permitida y puede
                 ser eliminada por la administración.
             </li>
             <li>
-                Las publicaciones pueden ser manualmente denunciadas, en este caso la administración de la página web valorará el caso.
+                Las publicaciones pueden ser manualmente denunciadas, en este caso la administración de la página web valorará el caso y
+                puede borrar el comentario
             </li>
         </ul>
     </div>
@@ -24,7 +31,7 @@
                 la haya realizado.
             </li>
             <li>
-                Este programa utiliza cookies, necesarias para su correcto funcionamiento.
+                Esta página web utiliza cookies, necesarias para su correcto funcionamiento.
             </li>
         </ul>
     </div>
