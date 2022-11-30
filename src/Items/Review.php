@@ -73,7 +73,7 @@ class Review extends BaseItem {
 
     public function statsAll(): object {
         $stats = new \stdClass;
-        $stats->count = 0;
+        $stats->total = 0;
         $stats->med = 0;
 
         $stmt = $this->conn->prepare('SELECT note FROM reviews');
