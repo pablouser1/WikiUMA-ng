@@ -14,7 +14,10 @@ class AdminController {
             exit;
         }
 
-        Wrappers::plates('dashboard');
+        $review = new Review();
+        $stats = $review->statsTotal();
+
+        Wrappers::plates('dashboard', ['stats' => $stats]);
     }
 
     static public function reports() {

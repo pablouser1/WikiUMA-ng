@@ -5,5 +5,5 @@
 <?php $this->stop() ?>
 
 <div class="container">
-    <p>Hola</p>
+    <?= $this->insert('components/stats', ['stats' => $stats]) ?>
 </div>

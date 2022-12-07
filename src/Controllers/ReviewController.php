@@ -28,13 +28,13 @@ class ReviewController {
         $username = '';
 
         if (isset($_POST['username']) && !empty($_POST['username'])) {
-            $username = htmlspecialchars(trim($_POST['username']));
+            $username = htmlspecialchars(trim($_POST['username']), ENT_COMPAT);
         }
 
         $message = '';
 
         if (isset($_POST['message']) && !empty($_POST['username'])) {
-            $message = htmlspecialchars(trim($_POST['message']));
+            $message = htmlspecialchars(trim($_POST['message']), ENT_COMPAT);
         }
 
         if (!(isset($_POST['note'], $_POST['captcha']) && is_numeric($_POST['note']))) {
@@ -67,6 +67,11 @@ class ReviewController {
             // 0: id asignatura
             // 1: id plan
             $asignatura_array = explode(';', $data);
+            // Nos aseguramos que sea exactamente dos elementos
+            if (count($asignatura_array) !== 2) {
+                ErrorHandler::show(400, 'Datos inválidos');
+            }
+
             $asignatura = $api->asignatura($asignatura_array[0], $asignatura_array[1]);
             if (!$asignatura) {
                 ErrorHandler::show(404, 'Asignatura no encontrado');

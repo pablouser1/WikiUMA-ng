@@ -82,31 +82,23 @@ class Review extends BaseItem {
         return $stats;
     }
 
-    public function statsTotal(): object {
-        $stats = new \stdClass;
-        $stats->total = 0;
-        $stats->med = 0;
+    public function statsTotal(): array {
+        $stats = [];
 
-        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE subject=0');
-        $success = $stmt->execute();
-        if ($success) {
-            $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
-            if (count($res) > 0) {
-                $stats->med = round(array_sum($res) / count($res), 2);
-                $stats->total = count($res);
-            }
+        $query = $this->conn->query('SELECT COUNT(note) AS `total`, AVG(note) AS med FROM reviews GROUP BY `subject`');
+
+        if ($query) {
+            $stats = $query->fetchAll(\PDO::FETCH_OBJ);
         }
 
         return $stats;
     }
 
     public function vote(int $id, bool $more = false): bool {
-        $change = $more ? 1 : -1;
-
         $stmt = $this->conn->prepare("UPDATE reviews SET votes = (votes + :change) WHERE id=:id");
         $success = $stmt->execute([
             ':id' => $id,
-            ':change' => $change
+            ':change' => intval($more)
         ]);
         return $success;
     }
