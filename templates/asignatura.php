@@ -11,6 +11,7 @@
 <?php if (count($reviews) > 0): ?>
     <div class="container">
         <div class="box">
+            <?php $this->insert('components/sort') ?>
             <?php foreach ($reviews as $review): ?>
                 <?=$this->insert('components/review', [
                     'id' => $review->id,

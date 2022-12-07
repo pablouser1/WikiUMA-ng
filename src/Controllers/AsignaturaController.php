@@ -16,8 +16,10 @@ class AsignaturaController {
         }
 
         $page = Misc::getPage();
+        $sort = $_GET['sort'] ?? 'created_at';
+        $order = $_GET['order'] ?? 'asc';
         $review = new Review;
-        $reviews = $review->getAllFrom($asignatura->cod_asig, $page);
+        $reviews = $review->getAllFrom($asignatura->cod_asig, $page, $sort, $order);
         $stats = $review->statsOne($asignatura->cod_asig);
         Wrappers::plates('asignatura', [
             'title' => $asignatura->nombre,

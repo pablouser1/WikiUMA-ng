@@ -27,17 +27,7 @@ class Wrappers {
             return Misc::url($endpoint, $query);
         });
         $engine->registerFunction('current_url', function(): string {
-            // https://www.javatpoint.com/how-to-get-current-page-url-in-php
-            if(isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
-                $url = "https://";
-            else
-                $url = "http://";
-            // Append the host(domain name, ip) to the URL.
-            $url .= $_SERVER['HTTP_HOST'];
-
-            // Append the requested resource location to the URL
-            $url .= $_SERVER['REQUEST_URI'];
-            return $url;
+            return Misc::url(router()->getCurrentUri());
         });
         $engine->registerFunction('version', function (): string {
             return \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
@@ -64,6 +54,13 @@ class Wrappers {
         $engine->registerFunction('page', function (): int {
             return Misc::getPage();
         });
+        $engine->registerFunction('selected', function (string $needle, string $key, array $arr = []): string {
+            if (empty($arr)) {
+                $arr = $_GET;
+            }
+            return isset($arr[$key]) && $arr[$key] === $needle ? 'selected' : '';
+        });
+
         $template = $engine->make($view);
         echo $template->render($data);
     }

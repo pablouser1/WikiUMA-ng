@@ -1,6 +1,8 @@
 <?php
 namespace App\Items;
 
+use App\Helpers\Misc;
+
 class Review extends BaseItem {
     const PER_PAGE = 10;
 
@@ -11,15 +13,19 @@ class Review extends BaseItem {
         return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
     }
 
-    public function getAllFrom(string $to, int $page = 1): array {
-        $offset = $this->__calcOffset($page);
-        $per = self::PER_PAGE;
-        $stmt = $this->conn->prepare("SELECT id, username, note, `message`, votes FROM reviews WHERE `to`=:to ORDER BY created_at DESC LIMIT $offset,$per");
-        $success = $stmt->execute([
-            ':to' => $to
-        ]);
+    public function getAllFrom(string $to, int $page = 1, string $sort = "created_at", string $order = "asc"): array {
+        $isValidSort = Misc::sanitizeSort($sort, $order);
+        if ($isValidSort) {
+            $offset = $this->__calcOffset($page);
+            $per = self::PER_PAGE;
+            $stmt = $this->conn->prepare("SELECT id, username, note, `message`, votes FROM reviews WHERE `to`=:to ORDER BY $sort $order LIMIT $offset,$per");
+            $success = $stmt->execute([
+                ':to' => $to
+            ]);
+            return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
+        }
 
-        return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
+        return [];
     }
 
     public function get(int $id): ?object {
@@ -76,7 +82,7 @@ class Review extends BaseItem {
         return $stats;
     }
 
-    public function statsAll(): object {
+    public function statsTotal(): object {
         $stats = new \stdClass;
         $stats->total = 0;
         $stats->med = 0;

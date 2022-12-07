@@ -12,6 +12,7 @@
     <?= $this->insert('components/review_add', ['data' => $profesor->email, 'subject' => 0]) ?>
     <?php if (count($reviews) > 0): ?>
         <div class="box">
+            <?php $this->insert('components/sort', ['params' => ['email' => $profesor->email]]) ?>
             <?php foreach ($reviews as $review): ?>
                 <?=$this->insert('components/review', [
                     'id' => $review->id,

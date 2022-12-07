@@ -1,7 +1,7 @@
 {
     "name": "pablouser1/wikiuma-ng",
     "description": "Valoraciones a profesores de la UMA",
-    "version": "1.2.1.0",
+    "version": "1.2.2.0",
     "type": "project",
     "config": {
 		"optimize-autoloader": true,

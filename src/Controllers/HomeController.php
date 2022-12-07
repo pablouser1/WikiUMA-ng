@@ -7,7 +7,7 @@ use App\Items\Review;
 class HomeController {
     static public function get() {
         $review = new Review();
-        $stats = $review->statsAll();
+        $stats = $review->statsTotal();
         Wrappers::plates('home', [
             'stats' => $stats
         ]);

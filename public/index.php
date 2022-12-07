@@ -10,4 +10,10 @@ require __DIR__ . '/../routes.php';
 
 session_start();
 
+// -- Config global router -- //
+$GLOBALS['router'] = $router;
+function router(): Bramus\Router\Router {
+    return $GLOBALS['router'];
+}
+
 $router->run();

@@ -37,4 +37,10 @@ class Misc {
     static public function getPage(): int {
         return isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
     }
+
+    static public function sanitizeSort(string $sort, string $order): bool {
+        $sortValid = in_array($sort, ['created_at', 'votes'], true);
+        $orderValid = in_array($order, ['asc', 'desc'], true);
+        return $sortValid && $orderValid;
+    }
 }
