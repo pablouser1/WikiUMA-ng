@@ -60,6 +60,15 @@ class Wrappers {
             }
             return isset($arr[$key]) && $arr[$key] === $needle ? 'selected' : '';
         });
+        $engine->registerFunction('url_to', function (string $data, int $subject): string {
+            $isSubject = boolval($subject);
+            if ($isSubject) {
+                // Asignatura (TODO)
+                return Misc::url('/');
+            }
+
+            return Misc::url('/profesores', ['idnc' => $data]);
+        });
 
         $template = $engine->make($view);
         echo $template->render($data);

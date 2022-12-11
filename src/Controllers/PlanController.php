@@ -12,7 +12,6 @@ class PlanController {
         if (!$plan) {
             ErrorHandler::show(404, 'Plan no encontrado');
         }
-
         $cursos = [];
         foreach ($plan->asignaturas as $asignatura) {
             $cursos[intval($asignatura->curso)][] = $asignatura;

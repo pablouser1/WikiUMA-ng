@@ -6,14 +6,19 @@ use App\Helpers\Misc;
 class Review extends BaseItem {
     const PER_PAGE = 10;
 
-    public function getAll(): array {
-        $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes, `subject` FROM reviews');
-        $success = $stmt->execute();
+    public function getAll(int $page = 1, string $sort = "created_at", string $order = "desc"): array {
+        $isValidSort = Misc::sanitizeSort($sort, $order);
+        if ($isValidSort) {
+            $offset = $this->__calcOffset($page);
+            $per = self::PER_PAGE;
+            $query = $this->conn->query("SELECT id, `to`, username, note, `message`, votes, `subject`, created_at FROM reviews ORDER BY $sort $order LIMIT $offset,$per");
+            return $query !== false ? $query->fetchAll(\PDO::FETCH_OBJ) : [];
+        }
 
-        return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
+        return [];
     }
 
-    public function getAllFrom(string $to, int $page = 1, string $sort = "created_at", string $order = "asc"): array {
+    public function getAllFrom(string $to, int $page = 1, string $sort = "created_at", string $order = "desc"): array {
         $isValidSort = Misc::sanitizeSort($sort, $order);
         if ($isValidSort) {
             $offset = $this->__calcOffset($page);

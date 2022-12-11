@@ -1,5 +1,4 @@
 <?php if (count($stats) > 0) : ?>
-    <p class="title has-text-centered">Estadísticas</p>
     <div class="columns is-centered is-vcentered is-multiline">
         <?php if (isset($stats[0])) : ?>
             <div class="column is-narrow">

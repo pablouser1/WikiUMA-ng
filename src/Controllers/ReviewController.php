@@ -108,7 +108,7 @@ class ReviewController {
 
         $review = new Review();
         $review->delete($id);
-        Misc::redirect('/admin');
+        Misc::redirect('/admin/reviews');
     }
 
     static public function like(int $id) {

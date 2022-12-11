@@ -2,6 +2,7 @@
 
 <?php $this->start('header') ?>
     <p class="title"><?=$this->e($asignatura->nombre)?></p>
+    <p class="subtitle"><?= $this->e($asignatura->curso) ?>º año - <?= $this->e($asignatura->cuatrimestre) ?>º cuatrimestre</p>
 <?php $this->stop() ?>
 
 <?= $this->insert('components/summary', [
@@ -48,6 +49,6 @@
     <?php endforeach ?>
 </div>
 
-<div class="container">
+<div class="container mt-4">
     <?= $this->insert('components/review_add', ['data' => $asignatura->cod_asig . ';' . $plan_id, 'subject' => 1]) ?>
 </div>

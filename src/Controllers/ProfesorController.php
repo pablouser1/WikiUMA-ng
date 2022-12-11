@@ -29,7 +29,7 @@ class ProfesorController {
             // Get reviews from db
             $page = Misc::getPage();
             $sort = $_GET['sort'] ?? 'created_at';
-            $order = $_GET['order'] ?? 'asc';
+            $order = $_GET['order'] ?? 'desc';
             $reviewDb = new Review;
             $reviews = $reviewDb->getAllFrom($profesor->idnc, $page, $sort, $order);
             $stats = $reviewDb->statsOne($profesor->idnc);

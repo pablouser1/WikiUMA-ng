@@ -22,5 +22,5 @@ composer install # Usa --no-dev si estás en production
 ```
 
 ## TODO
-* Iconos
+* Ver asignatura en contexto
 * Instrucciones de instalación

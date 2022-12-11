@@ -17,7 +17,7 @@ class AsignaturaController {
 
         $page = Misc::getPage();
         $sort = $_GET['sort'] ?? 'created_at';
-        $order = $_GET['order'] ?? 'asc';
+        $order = $_GET['order'] ?? 'desc';
         $review = new Review;
         $reviews = $review->getAllFrom($asignatura->cod_asig, $page, $sort, $order);
         $stats = $review->statsOne($asignatura->cod_asig);

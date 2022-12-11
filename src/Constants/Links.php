@@ -6,17 +6,20 @@ abstract class Links {
         [
             'name' => 'Centros',
             'endpoint' => '/centros',
-            'color' => 'is-primary'
+            'color' => 'is-primary',
+            'icon' => 'list'
         ],
         [
             'name' => 'Acerca de',
             'endpoint' => '/about',
-            'color' => 'is-info'
+            'color' => 'is-info',
+            'icon' => 'info'
         ],
         [
             'name' => 'Legal',
             'endpoint' => '/legal',
-            'color' => 'is-warning'
+            'color' => 'is-warning',
+            'icon' => 'danger'
         ]
     ];
 }

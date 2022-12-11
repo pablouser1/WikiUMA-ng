@@ -8,13 +8,12 @@
     'stats' => $stats
 ]) ?>
 
-<div class="container">
-    <?= $this->insert('components/review_add', ['data' => $profesor->email, 'subject' => 0]) ?>
+<div class="container mt-4">
     <?php if (count($reviews) > 0): ?>
         <?php $this->insert('components/sort', ['params' => ['email' => $profesor->email]]) ?>
         <?php foreach ($reviews as $review): ?>
             <div class="box">
-                <?=$this->insert('components/review', [
+                <?= $this->insert('components/review', [
                     'id' => $review->id,
                     'username' => $review->username,
                     'message' => $review->message,
@@ -22,9 +21,10 @@
                     'votes' => $review->votes,
                     'controls' => true,
                     'voting' => true
-                ])?>
+                ]) ?>
             </div>
         <?php endforeach ?>
         <?= $this->insert('components/pagination', ['count' => count($reviews)]) ?>
     <?php endif ?>
+    <?= $this->insert('components/review_add', ['data' => $profesor->email, 'subject' => 0]) ?>
 </div>

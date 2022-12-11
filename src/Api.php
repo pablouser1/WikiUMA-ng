@@ -108,7 +108,7 @@ class Api {
                     $url = $a->getAttribute('href');
                     if ($url) {
                         $results[] = (object) [
-                            'name' => $a->textContent,
+                            'name' => utf8_decode($a->textContent), // Sin el utf8_decode los caractéres especiales salen mal
                             'idnc' => basename($url)
                         ];
                     }

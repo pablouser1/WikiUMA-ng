@@ -38,8 +38,13 @@ class AdminController {
             Misc::redirect('/admin/login');
             exit;
         }
+
+        $page = Misc::getPage();
+        $sort = $_GET['sort'] ?? 'created_at';
+        $order = $_GET['order'] ?? 'desc';
+
         $review = new Review();
-        $reviews = $review->getAll();
+        $reviews = $review->getAll($page, $sort, $order);
 
         Wrappers::plates('reviews', [
             'reviews' => $reviews
