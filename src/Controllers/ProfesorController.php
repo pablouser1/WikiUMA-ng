@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\ErrorHandler;
+use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 use App\Items\Review;
@@ -14,13 +14,13 @@ class ProfesorController {
         } else if (isset($_GET['idnc'])) {
             self::byIdnc();
         } else {
-            ErrorHandler::show(400, "Parámetros inválidos");
+            MsgHandler::show(400, "Parámetros inválidos");
         }
     }
 
     static private function byEmail() {
         if (!filter_var($_GET['email'], FILTER_VALIDATE_EMAIL)) {
-            ErrorHandler::show(400, 'Tienes que enviar una dirección de correo válida');
+            MsgHandler::show(400, 'Tienes que enviar una dirección de correo válida');
         }
         $email = $_GET['email'];
         $api = new Api;
@@ -55,7 +55,7 @@ class ProfesorController {
                 'email' => $email
             ]);
         } else {
-            ErrorHandler::show(502, 'Error interno al procesar solicitud');
+            MsgHandler::show(502, 'Error interno al procesar solicitud');
         }
     }
 }

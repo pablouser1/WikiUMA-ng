@@ -16,7 +16,7 @@
                 'votes' => $review->votes,
             ])?>
             <div class="buttons">
-                <a class="button is-info" href="<?=$this->url_to($review->to, $review->subject)?>">Ver en contexto</a>
+                <a class="button is-info" href="<?=$this->url_to($review->data, $review->subject)?>">Ver en contexto</a>
                 <a class="button is-danger" href="<?=$this->url('/reviews/' . $review->id . '/delete')?>">Eliminar reseña</a>
             </div>
         </div>

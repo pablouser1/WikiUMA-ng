@@ -39,11 +39,25 @@ $router->mount('/reports', function () use ($router) {
     $router->get('/(\d+)/delete', 'ReporteController@delete');
 });
 
+$router->mount('/login', function () use ($router) {
+    $router->get('/', 'AuthController@loginGet');
+    $router->post('/', 'AuthController@loginPost');
+});
+
+$router->mount('/register', function () use ($router) {
+    $router->get('/', 'AuthController@registerGet');
+    $router->post('/', 'AuthController@registerPost');
+});
+
+$router->mount('/verify', function () use ($router) {
+    $router->get('/', 'AuthController@verifyGet');
+    $router->post('/', 'AuthController@verifyPost');
+});
+
+$router->get('/logout', 'AuthController@logout');
+
 $router->mount('/admin', function () use ($router) {
     $router->get('/', 'AdminController@dashboard');
     $router->get('/reports', 'AdminController@reports');
     $router->get('/reviews', 'AdminController@reviews');
-    $router->get('/login', 'AdminController@loginGet');
-    $router->post('/login', 'AdminController@loginPost');
-    $router->get('/logout', 'AdminController@logout');
 });

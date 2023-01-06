@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\ErrorHandler;
+use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 use App\Items\Review;
@@ -12,15 +12,17 @@ class AsignaturaController {
         $api = new Api;
         $asignatura = $api->asignatura($id, $plan_id);
         if (!$asignatura) {
-            ErrorHandler::show(404, 'Asignatura no encontrada');
+            MsgHandler::show(404, 'Asignatura no encontrada');
         }
 
         $page = Misc::getPage();
         $sort = $_GET['sort'] ?? 'created_at';
         $order = $_GET['order'] ?? 'desc';
         $review = new Review;
-        $reviews = $review->getAllFrom($asignatura->cod_asig, $page, $sort, $order);
-        $stats = $review->statsOne($asignatura->cod_asig);
+
+        $full_subject = Misc::joinSubject($asignatura->cod_asig, $plan_id);
+        $reviews = $review->getAllFrom($full_subject, $page, $sort, $order);
+        $stats = $review->statsOne($full_subject);
         Wrappers::plates('asignatura', [
             'title' => $asignatura->nombre,
             'asignatura' => $asignatura,

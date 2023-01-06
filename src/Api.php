@@ -40,8 +40,7 @@ class Api {
     }
 
     public function centros(): ?array {
-        $key = 'centros';
-        return $this->__handleRequest('/centros/listado/', $key);
+        return $this->__handleRequest('/centros/listado/', 'centros');
     }
 
     public function titulaciones(int $id): ?array {
@@ -52,8 +51,8 @@ class Api {
         return $this->__handleRequest("/plan/$id/", "plan-" . $id);
     }
 
-    public function asignatura(int $id, int $plan_id): ?object {
-        return $this->__handleRequest("/asignatura/$id/$plan_id/", 'asignatura-' . $id);
+    public function asignatura(int $asignatura_id, int $plan_id): ?object {
+        return $this->__handleRequest("/asignatura/$asignatura_id/$plan_id/", 'asignatura-' . $asignatura_id);
     }
 
     public function profesor(string $email): ?object {
@@ -108,7 +107,7 @@ class Api {
                     $url = $a->getAttribute('href');
                     if ($url) {
                         $results[] = (object) [
-                            'name' => utf8_decode($a->textContent), // Sin el utf8_decode los caractéres especiales salen mal
+                            'name' => mb_convert_encoding($a->textContent, 'utf-8'), // Sin el mb_convert_encoding los caractéres especiales salen mal
                             'idnc' => basename($url)
                         ];
                     }

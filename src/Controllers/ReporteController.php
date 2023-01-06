@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Helpers\ErrorHandler;
+use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 use App\Items\Report;
@@ -13,7 +13,7 @@ class ReporteController {
         $reviewDb = new Review;
         $review = $reviewDb->get($review_id);
         if (!$review) {
-            ErrorHandler::show(404, 'Esa reseña no existe');
+            MsgHandler::show(404, 'Esa reseña no existe');
         }
 
         Wrappers::plates('reporte', [
@@ -32,7 +32,7 @@ class ReporteController {
         $reviewDb = new Review($db);
         $review = $reviewDb->get($review_id);
         if (!$review) {
-            ErrorHandler::show(404, 'Esa reseña no existe');
+            MsgHandler::show(404, 'Esa reseña no existe');
         }
 
         // Verify captcha
@@ -54,7 +54,7 @@ class ReporteController {
     static public function delete(int $id) {
         if (!isset($_SESSION['loggedin'])) {
             Misc::redirect('/admin/login');
-            exit;
+            return;
         }
 
         $report = new Report();

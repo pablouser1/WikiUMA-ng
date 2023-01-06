@@ -21,11 +21,21 @@ CREATE TABLE `reports` (
   CONSTRAINT `reports_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Reportes hechos por el usuario';
 
--- wikiuma.admins definition
-CREATE TABLE IF NOT EXISTS `admins` (
+-- wikiuma.users definition
+CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `niu` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
   `password` binary(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `admin` tinyint(1),
   PRIMARY KEY (`id`),
   UNIQUE KEY `admins_UN` (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- wikiuma.verify definition
+CREATE TABLE `verify` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `niu` varchar(16) NOT NULL,
+  `code` varchar(64) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `verify_UN` (`niu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

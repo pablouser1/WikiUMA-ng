@@ -11,21 +11,21 @@ class Review extends BaseItem {
         if ($isValidSort) {
             $offset = $this->__calcOffset($page);
             $per = self::PER_PAGE;
-            $query = $this->conn->query("SELECT id, `to`, username, note, `message`, votes, `subject`, created_at FROM reviews ORDER BY $sort $order LIMIT $offset,$per");
+            $query = $this->conn->query("SELECT id, `data`, username, note, `message`, votes, `subject`, created_at FROM reviews ORDER BY $sort $order LIMIT $offset,$per");
             return $query !== false ? $query->fetchAll(\PDO::FETCH_OBJ) : [];
         }
 
         return [];
     }
 
-    public function getAllFrom(string $to, int $page = 1, string $sort = "created_at", string $order = "desc"): array {
+    public function getAllFrom(string $data, int $page = 1, string $sort = "created_at", string $order = "desc"): array {
         $isValidSort = Misc::sanitizeSort($sort, $order);
         if ($isValidSort) {
             $offset = $this->__calcOffset($page);
             $per = self::PER_PAGE;
-            $stmt = $this->conn->prepare("SELECT id, username, note, `message`, votes FROM reviews WHERE `to`=:to ORDER BY $sort $order LIMIT $offset,$per");
+            $stmt = $this->conn->prepare("SELECT id, username, note, `message`, votes FROM reviews WHERE `data`=:data ORDER BY $sort $order LIMIT $offset,$per");
             $success = $stmt->execute([
-                ':to' => $to
+                ':data' => $data
             ]);
             return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
         }
@@ -41,10 +41,10 @@ class Review extends BaseItem {
         return $success ? $stmt->fetchObject() : null;
     }
 
-    public function add(string $to, string $username, float $note, string $message, int $subject): bool {
-        $stmt = $this->conn->prepare('INSERT INTO reviews (`to`, username, note, `message`, `subject`) VALUES (:to, :username, :note, :message, :subject)');
+    public function add(string $data, string $username, float $note, string $message, int $subject): bool {
+        $stmt = $this->conn->prepare('INSERT INTO reviews (`data`, username, note, `message`, `subject`) VALUES (:data, :username, :note, :message, :subject)');
         $success = $stmt->execute([
-            ':to' => $to,
+            ':data' => $data,
             ':username' => $username,
             ':note' => $note,
             ':message' => $message,
@@ -61,16 +61,16 @@ class Review extends BaseItem {
         return $success;
     }
 
-    public function statsOne(string $to): object {
+    public function statsOne(string $data): object {
         $stats = new \stdClass;
         $stats->med = 0;
         $stats->min = 0;
         $stats->max = 0;
         $stats->total = 0;
 
-        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE `to`=:to ORDER BY note DESC');
+        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE `data`=:data ORDER BY note DESC');
         $success = $stmt->execute([
-            ':to' => $to
+            ':data' => $data
         ]);
 
         if ($success) {

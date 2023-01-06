@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\ErrorHandler;
+use App\Helpers\MsgHandler;
 use App\Helpers\Wrappers;
 
 class PlanController {
@@ -10,7 +10,7 @@ class PlanController {
         $api = new Api;
         $plan = $api->plan($id);
         if (!$plan) {
-            ErrorHandler::show(404, 'Plan no encontrado');
+            MsgHandler::show(404, 'Plan no encontrado');
         }
         $cursos = [];
         foreach ($plan->asignaturas as $asignatura) {
@@ -18,7 +18,7 @@ class PlanController {
         }
 
         Wrappers::plates('plan', [
-            'title' => 'Plan',
+            'title' => 'Plan ' . $id,
             'cursos' => $cursos,
             'duracion' => intval($plan->duracion),
             'plan_id' => $id

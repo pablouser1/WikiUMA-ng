@@ -2,28 +2,13 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\ErrorHandler;
+use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Items\Review;
-use Gregwar\Captcha\CaptchaBuilder;
 
 class ReviewController {
     static public function post() {
-        if (!isset($_POST['accepted'])) {
-            ErrorHandler::show(400, 'Tienes que aceptar los términos de uso');
-        }
-
-        if (!isset($_GET['data'])) {
-            ErrorHandler::show(400, 'Tienes que enviar un payload válido');
-        }
-
-        if (!(isset($_GET['subject']) && is_numeric($_GET['subject']))) {
-            ErrorHandler::show(400, 'No hay modo');
-        }
-
-        if (!isset($_SESSION['phrase'])) {
-            ErrorHandler::show(400, 'Captcha no existente');
-        }
+        self::__validateInput();
 
         $username = '';
 
@@ -37,73 +22,35 @@ class ReviewController {
             $message = htmlspecialchars(trim($_POST['message']), ENT_COMPAT);
         }
 
-        if (!(isset($_POST['note'], $_POST['captcha']) && is_numeric($_POST['note']))) {
-            ErrorHandler::show(400, 'Datos de formulario inválidos');
-        }
-
         $note = floatval($_POST['note']);
 
         if (!((0 <= $note) && ($note <= 10))) {
-            ErrorHandler::show(400, 'Número fuera de rango (0-10)');
+            MsgHandler::show(400, 'Número fuera de rango (0-10)');
         }
 
         // Verify captcha
-        $builder = new CaptchaBuilder($_SESSION['phrase']);
-        $valid = $builder->testPhrase($_POST['captcha']);
-
-        // Avoid using captcha more than once
-        unset($_SESSION['phrase']);
+        $valid = Misc::isCaptchaValid($_POST['captcha']);
         if (!$valid) {
-            ErrorHandler::show(400, 'Captcha inválido');
+            MsgHandler::show(400, 'Captcha inválido');
         }
 
         $data = $_GET['data'];
-        $subject = boolval($_GET['subject']);
-        $to = '';
-        $redirect = [];
         $api = new Api;
-        if ($subject) {
-            // Separar id e id del plan
-            // 0: id asignatura
-            // 1: id plan
-            $asignatura_array = explode(';', $data);
-            // Nos aseguramos que sea exactamente dos elementos
-            if (count($asignatura_array) !== 2) {
-                ErrorHandler::show(400, 'Datos inválidos');
-            }
 
-            $asignatura = $api->asignatura($asignatura_array[0], $asignatura_array[1]);
-            if (!$asignatura) {
-                ErrorHandler::show(404, 'Asignatura no encontrado');
-            }
+        $res = boolval($_GET['subject']) ? self::__handleSubjects($data, $api) : self::__handleTeachers($data, $api);
 
-            $to = $asignatura->cod_asig;
-            $redirect = [
-                '/asignaturas/' . $asignatura_array[0] . '/' . $asignatura_array[1],
-                []
-            ];
-        } else {
-            $profesor = $api->profesor($data);
-            if (!$profesor) {
-                ErrorHandler::show(404, 'Profesor no encontrado');
-            }
-
-            $to = $profesor->idnc;
-            $redirect = [
-                '/profesores',
-                ['email' => $data]
-            ];
-        }
+        $to = $res->to;
+        $redirect = $res->redirect;
 
         $review = new Review();
-        $review->add($to, $username, $note, $message, intval($subject));
+        $review->add($to, $username, $note, $message, intval($_GET['subject']));
         Misc::redirect($redirect[0], $redirect[1]);
     }
 
     static public function delete(int $id) {
         if (!Misc::isLoggedIn()) {
-            Misc::redirect('/admin/login');
-            exit;
+            Misc::redirect('/login');
+            return;
         }
 
         $review = new Review();
@@ -120,17 +67,15 @@ class ReviewController {
     }
 
     static private function changeVote(int $id, bool $more) {
-        if (isset($_SESSION['voted'])) {
-            if (in_array($id, $_SESSION['voted'])) {
-                ErrorHandler::show(400, '¡Ya has votado!');
-            }
+        if (isset($_SESSION['voted']) && in_array($id, $_SESSION['voted'])) {
+            MsgHandler::show(400, '¡Ya has votado!');
         }
         if (!isset($_GET['back'])) {
-            ErrorHandler::show(400, 'Faltan parámetros');
+            MsgHandler::show(400, 'Faltan parámetros');
         }
 
         if(!filter_var($_GET['back'], FILTER_VALIDATE_URL)) {
-            ErrorHandler::show(400, 'Parámetros inválidos');
+            MsgHandler::show(400, 'Parámetros inválidos');
         }
 
         $review = new Review();
@@ -141,5 +86,67 @@ class ReviewController {
             $_SESSION['voted'][] = $id;
         }
         Misc::redirect($_GET['back']);
+    }
+
+    static private function __validateInput() {
+        if (!isset($_POST['accepted'])) {
+            MsgHandler::show(400, 'Tienes que aceptar los términos de uso');
+        }
+
+        if (!isset($_GET['data'])) {
+            MsgHandler::show(400, 'Tienes que enviar un payload válido');
+        }
+
+        if (!(isset($_GET['subject']) && is_numeric($_GET['subject']))) {
+            MsgHandler::show(400, 'No hay modo');
+        }
+
+        if (!isset($_SESSION['phrase'])) {
+            MsgHandler::show(400, 'Captcha no existente');
+        }
+
+        if (!(isset($_POST['note'], $_POST['captcha']) && is_numeric($_POST['note']))) {
+            MsgHandler::show(400, 'Datos de formulario inválidos');
+        }
+    }
+
+    static private function __handleTeachers(string $data, Api $api): object {
+        $res = new \stdClass;
+
+        $profesor = $api->profesor($data);
+        if (!$profesor) {
+            MsgHandler::show(404, 'Profesor no encontrado');
+        }
+
+        $res->to = $profesor->idnc;
+        $res->redirect = [
+            '/profesores',
+            ['email' => $data]
+        ];
+
+        return $res;
+    }
+
+    static private function __handleSubjects(string $data, Api $api): object {
+        $res = new \stdClass;
+
+        $subject_spl = Misc::splitSubject($data);
+        // Nos aseguramos que sea válido
+        if (!$subject_spl) {
+            MsgHandler::show(400, 'Datos inválidos');
+        }
+
+        $asignatura = $api->asignatura($subject_spl->asig, $subject_spl->plan);
+        if (!$asignatura) {
+            MsgHandler::show(404, 'Asignatura no encontrada');
+        }
+
+        $res->to = $data;
+        $res->redirect = [
+            '/asignaturas/' . $subject_spl->asig . '/' . $subject_spl->plan,
+            []
+        ];
+
+        return $res;
     }
 }

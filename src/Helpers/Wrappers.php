@@ -35,8 +35,8 @@ class Wrappers {
         $engine->registerFunction('links', function (): array {
             return Links::list;
         });
-        $engine->registerFunction('isAdmin', function (): bool {
-            return Misc::isLoggedIn();
+        $engine->registerFunction('isLoggedIn', function (bool $isAdmin = false): bool {
+            return Misc::isLoggedIn($isAdmin);
         });
         $engine->registerFunction('color', function (float $note, bool $isComment = false): string {
             $type = '';
@@ -60,11 +60,11 @@ class Wrappers {
             }
             return isset($arr[$key]) && $arr[$key] === $needle ? 'selected' : '';
         });
-        $engine->registerFunction('url_to', function (string $data, int $subject): string {
-            $isSubject = boolval($subject);
+        $engine->registerFunction('url_to', function (string $data, int $subject_id): string {
+            $isSubject = boolval($subject_id);
             if ($isSubject) {
-                // Asignatura (TODO)
-                return Misc::url('/');
+                $subject = Misc::splitSubject($data);
+                return Misc::url('/asignaturas/' . $subject->asig . '/' . $subject->plan);
             }
 
             return Misc::url('/profesores', ['idnc' => $data]);

@@ -20,24 +20,30 @@
       <?php endforeach ?>
     </div>
     <div class="navbar-end">
-      <?php if ($this->isAdmin()): ?>
+      <?php if ($this->isLoggedIn()): ?>
       <div class="navbar-item has-dropdown is-hoverable">
         <a class="navbar-link">
-          <?= $this->insert('components/icon', ['icon' => 'user', 'text' => $this->e($_SESSION['username'])]) ?>
+          <?= $this->insert('components/icon', ['icon' => 'user', 'text' => $this->e($_SESSION['niu'])]) ?>
         </a>
         <div class="navbar-dropdown">
-          <a class="navbar-item" href="<?=$this->url('/admin')?>">Panel de Control</a>
-          <a class="navbar-item" href="<?=$this->url('/admin/logout')?>">Cerrar sesión</a>
+          <?php if ($this->isLoggedIn(true)): ?>
+            <a class="navbar-item" href="<?=$this->url('/admin')?>">Panel de Control</a>
+          <?php endif ?>
+          <a class="navbar-item" href="<?=$this->url('/logout')?>">Cerrar sesión</a>
         </div>
       </div>
       <?php else: ?>
-      <a href="/admin/login" class="navbar-item">
-        <?= $this->insert('components/icon', ['icon' => 'user', 'text' => 'Restringido']) ?>
-      </a>
+        <div class="navbar-item">
+          <div class="buttons">
+            <a href="/login" class="button is-info">
+              <?= $this->insert('components/icon', ['icon' => 'user', 'text' => 'Iniciar sesión']) ?>
+            </a>
+            <a href="/register" class="button is-primary">
+              <?= $this->insert('components/icon', ['icon' => 'user-add', 'text' => 'Registrarse']) ?>
+            </a>
+          </div>
+        </div>
       <?php endif ?>
-      <a href="https://github.com/pablouser1/WikiUma-ng" class="navbar-item">
-        <?= $this->insert('components/icon', ['icon' => 'code-slash', 'text' => 'Código Fuente']) ?>
-      </a>
     </div>
   </div>
 </nav>
