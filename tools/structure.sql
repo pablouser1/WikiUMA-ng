@@ -28,7 +28,7 @@ CREATE TABLE `users` (
   `password` binary(60) NOT NULL,
   `admin` tinyint(1),
   PRIMARY KEY (`id`),
-  UNIQUE KEY `admins_UN` (`username`)
+  UNIQUE KEY `users_UN` (`niu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- wikiuma.verify definition
