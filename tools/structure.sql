@@ -35,7 +35,7 @@ CREATE TABLE `users` (
 CREATE TABLE `verify` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `niu` varchar(16) NOT NULL,
-  `code` varchar(64) NOT NULL,
+  `code` varchar(128) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `verify_UN` (`niu`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
