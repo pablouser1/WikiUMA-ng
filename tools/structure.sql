@@ -25,7 +25,7 @@ CREATE TABLE `reports` (
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `niu` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `password` binary(60) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` binary(60) NOT NULL,
   `admin` tinyint(1),
   PRIMARY KEY (`id`),
   UNIQUE KEY `admins_UN` (`username`)
