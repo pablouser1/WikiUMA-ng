@@ -22,8 +22,8 @@
                     <div class="level-item">
                         <nav class="breadcrumb has-bullet-separator is-small" aria-label="breadcrumbs">
                             <ul>
-                                <li><a href="<?= $this->url('/reviews/' . $id . '/like', ['back' => $this->current_url()]) ?>">Me gusta</a></li>
-                                <li><a href="<?= $this->url('/reviews/' . $id . '/dislike', ['back' => $this->current_url()]) ?>">No me gusta</a></li>
+                                <li><a href="<?= $this->url('/reviews/' . $id . '/like', ['back' => $this->current_url(true)]) ?>">Me gusta</a></li>
+                                <li><a href="<?= $this->url('/reviews/' . $id . '/dislike', ['back' => $this->current_url(true)]) ?>">No me gusta</a></li>
                             </ul>
                         </nav>
                     </div>

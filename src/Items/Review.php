@@ -100,10 +100,11 @@ class Review extends BaseItem {
     }
 
     public function vote(int $id, bool $more = false): bool {
+        $val = $more ? 1 : -1;
         $stmt = $this->conn->prepare("UPDATE reviews SET votes = (votes + :change) WHERE id=:id");
         $success = $stmt->execute([
             ':id' => $id,
-            ':change' => intval($more)
+            ':change' => $val
         ]);
         return $success;
     }

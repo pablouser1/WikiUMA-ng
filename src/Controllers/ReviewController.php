@@ -70,6 +70,7 @@ class ReviewController {
         if (isset($_SESSION['voted']) && in_array($id, $_SESSION['voted'])) {
             MsgHandler::show(400, '¡Ya has votado!');
         }
+
         if (!isset($_GET['back'])) {
             MsgHandler::show(400, 'Faltan parámetros');
         }
@@ -85,7 +86,10 @@ class ReviewController {
         } else {
             $_SESSION['voted'][] = $id;
         }
-        Misc::redirect($_GET['back']);
+
+        $url = $_GET['back'];
+
+        header("Location: $url");
     }
 
     static private function __validateInput() {

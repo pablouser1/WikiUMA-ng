@@ -26,8 +26,10 @@ class Wrappers {
         $engine->registerFunction('url', function(string $endpoint, array $query = []): string {
             return Misc::url($endpoint, $query);
         });
-        $engine->registerFunction('current_url', function(): string {
-            return Misc::url(router()->getCurrentUri());
+        $engine->registerFunction('current_url', function(bool $withQuery = false): string {
+            $url = Misc::url(router()->getCurrentUri());
+            if ($withQuery && !empty($_GET)) $url .= '?' . http_build_query($_GET);
+            return $url;
         });
         $engine->registerFunction('version', function (): string {
             return \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
