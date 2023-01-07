@@ -6,7 +6,7 @@
                 <div class="columns is-centered is-vcentered is-mobile">
                     <div class="column is-narrow">
                         <p>Media</p>
-                        <div class="note has-background-<?=$this->color($stats->med)?>">
+                        <div class="note has-background-<?= $this->color($stats->med) ?>">
                             <p><?= $this->e($stats->med) ?></p>
                         </div>
                     </div>

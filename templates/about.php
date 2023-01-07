@@ -2,11 +2,11 @@
 
 <?php $this->start('header') ?>
 <p class="title">¡Bienvenido a WikiUMA <small>ng</small>!</p>
+<p class="subtitle">Versión: <?= $this->version() ?></p>
 <?php $this->stop() ?>
 
 <div class="content">
-    <p>Versión: <?= $this->version() ?></p>
-    <p>WikiUMA-ng aspira a ser una versión mejorada de <a href="https://www.wikiuma.com" rel="nofollow">WikiUma</a></p>
+    <p>WikiUMA <small>ng</small> aspira a ser una versión mejorada de <a href="https://www.wikiuma.com" rel="nofollow">WikiUMA <small>✞</small></a></p>
 </div>
 <div class="content">
     <p class="title">Donaciones</p>
@@ -17,10 +17,10 @@
         <a class="button is-warning" href="https://liberapay.com/pablouser1" target="_blank">Liberapay</a>
     </div>
     <p>¡Gracias por el apoyo! <span style="color: #e25555;">&#9829;</span></p>
-    <p>- Pablo Ferreiro, desarrollador de WikiUMA-ng</p>
+    <p>- Pablo Ferreiro, desarrollador de WikiUMA <small>ng</small></p>
 </div>
 <div class="content">
-    <p class="title">Programas de terceros</p>
+    <p class="title">Créditos</p>
     <p>Este proyecto no sería posible sin la ayuda de:</p>
     <ul>
         <li><a rel="nofollow" href="https://github.com/thephpleague/plates">Plates</a></li>
