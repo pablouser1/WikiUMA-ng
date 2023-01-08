@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/hero', ['title' => isset($title) ? $title : 'Error']) ?>
+<?php $this->layout('layouts/hero', ['title' => $title ? $title : 'Error']) ?>
 
-<p class="title"><?= isset($title) ? $this->e($title) : 'HTTP ' . $this->e($code) ?></p>
+<p class="title"><?= $title ? $this->e($title) : 'HTTP ' . $this->e($code) ?></p>
 <p><?=$this->e($body)?></p>
