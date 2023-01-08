@@ -21,6 +21,25 @@ CREATE TABLE `reports` (
   CONSTRAINT `reports_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Reportes hechos por el usuario';
 
+-- wikiuma.tags definition
+CREATE TABLE `tags` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `type` tinyint(1) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `tags_UN` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- wikiuma.reviews_tags definition
+CREATE TABLE `reviews_tags` (
+  `review_id` int(11) NOT NULL,
+  `tag_id` int(11) NOT NULL,
+  UNIQUE KEY `reviews_tags_UN` (`review_id`,`tag_id`),
+  KEY `reviews_tags_FK_1` (`tag_id`),
+  CONSTRAINT `reviews_tags_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `reviews_tags_FK_1` FOREIGN KEY (`tag_id`) REFERENCES `tags` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
 -- wikiuma.users definition
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
