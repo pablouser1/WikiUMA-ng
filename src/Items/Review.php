@@ -44,16 +44,30 @@ class Review extends BaseItem {
         return null;
     }
 
-    public function add(string $data, string $username, float $note, string $message, int $subject): bool {
+    public function add(string $data, string $username, float $note, string $message, int $subject, array $tags): bool {
         $stmt = $this->conn->prepare('INSERT INTO reviews (`data`, username, note, `message`, `subject`) VALUES (:data, :username, :note, :message, :subject)');
-        $success = $stmt->execute([
+        $rev_success = $stmt->execute([
             ':data' => $data,
             ':username' => $username,
             ':note' => $note,
             ':message' => $message,
             ':subject' => $subject
         ]);
-        return $success;
+
+        // Insert tags if any
+        if ($rev_success && !empty($tags)) {
+            $id = intval($this->conn->lastInsertId());
+            // TODO: Use multi-insert method
+            $sql = 'INSERT INTO reviews_tags (review_id, tag_id) VALUES (:rev_id, :tag_id)';
+            $stmt = $this->conn->prepare($sql);
+            foreach ($tags as $tag) {
+                $stmt->execute([
+                    ':rev_id' => $id,
+                    ':tag_id' => $tag
+                ]);
+            }
+        }
+        return $rev_success;
     }
 
     public function delete(int $id): bool {

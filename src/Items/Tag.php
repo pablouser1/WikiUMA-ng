@@ -37,6 +37,7 @@ class Tag extends BaseItem {
             `type`
         FROM
             tags
+        ORDER BY `type` DESC
         SQL;
         $query = $this->conn->query($sql);
         return $query !== false ? $query->fetchAll(\PDO::FETCH_OBJ) : [];
@@ -56,6 +57,7 @@ class Tag extends BaseItem {
             rt.tag_id=t.id
         WHERE
             rt.review_id=:id
+        ORDER BY t.type DESC
         SQL;
         $stmt = $this->conn->prepare($sql);
         $success = $stmt->execute([

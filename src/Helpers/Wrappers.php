@@ -77,6 +77,9 @@ class Wrappers {
             }
             return isset($arr[$key]) && $arr[$key] === $needle ? 'selected' : '';
         });
+        $engine->registerFunction('selected_tag', function (int $type, int $val): string {
+            return $type === $val ? 'selected' : '';
+        });
         $engine->registerFunction('url_to', function (string $data, int $subject_id): string {
             $isSubject = boolval($subject_id);
             if ($isSubject) {

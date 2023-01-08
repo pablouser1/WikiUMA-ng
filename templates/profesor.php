@@ -30,6 +30,6 @@
             <?php endforeach ?>
             <?= $this->insert('components/pagination', ['count' => count($reviews)]) ?>
         <?php endif ?>
-        <?= $this->insert('components/review_add', ['data' => $profesor->email, 'subject' => 0]) ?>
+        <?= $this->insert('components/review_add', ['data' => $profesor->email, 'subject' => 0, 'tags' => $tags]) ?>
     </div>
 </div>

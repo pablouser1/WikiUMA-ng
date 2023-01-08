@@ -25,6 +25,25 @@
                 <input name="note" class="input" type="number" min="0" max="10" required placeholder="Escribe tu valoración del 0 al 10" />
             </div>
         </div>
+        <?php if(isset($tags) && count($tags) > 0): ?>
+            <label class="label">
+                <?= $this->insert('components/icon', ['icon' => 'tag', 'text' => 'Etiquetas']) ?>
+            </label>
+            <div class="field">
+                <div class="control">
+                    <div class="tags">
+                        <?php foreach($tags as $tag): ?>
+                            <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
+                                <label class="checkbox">
+                                    <input name="tags[]" value="<?= $this->e($tag->id) ?>" type="checkbox" />
+                                    <?= $this->e($tag->name) ?>
+                                </label>
+                            </span>
+                        <?php endforeach ?>
+                    </div>
+                </div>
+            </div>
+        <?php endif ?>
         <?= $this->insert('components/captcha') ?>
         <div class="field">
             <label class="checkbox">

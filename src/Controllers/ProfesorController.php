@@ -6,6 +6,7 @@ use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 use App\Items\Review;
+use App\Items\Tag;
 
 class ProfesorController {
     static public function get() {
@@ -26,18 +27,24 @@ class ProfesorController {
         $api = new Api;
         $profesor = $api->profesor($email);
         if ($profesor) {
-            // Get reviews from db
             $page = Misc::getPage();
             $sort = $_GET['sort'] ?? 'created_at';
             $order = $_GET['order'] ?? 'desc';
-            $reviewDb = new Review;
+
+            $db = Wrappers::db();
+            // Get reviews
+            $reviewDb = new Review($db);
             $reviews = $reviewDb->getAllFrom($profesor->idnc, $page, $sort, $order);
             $stats = $reviewDb->statsOne($profesor->idnc);
+            // Get tags
+            $tagDb = new Tag($db);
+            $tags = $tagDb->getAll();
 
             Wrappers::plates('profesor', [
                 'title' => $profesor->nombre,
                 'profesor' => $profesor,
                 'reviews' => $reviews,
+                'tags' => $tags,
                 'stats' => $stats
             ]);
         }

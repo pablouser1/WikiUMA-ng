@@ -10,22 +10,32 @@ class ReviewController {
     static public function post() {
         self::__validateInput();
 
+        // Username
         $username = '';
-
         if (isset($_POST['username']) && !empty($_POST['username'])) {
             $username = htmlspecialchars(trim($_POST['username']), ENT_COMPAT);
         }
 
+        // Message
         $message = '';
-
         if (isset($_POST['message']) && !empty($_POST['username'])) {
             $message = htmlspecialchars(trim($_POST['message']), ENT_COMPAT);
         }
 
+        // Note
         $note = floatval($_POST['note']);
-
         if (!((0 <= $note) && ($note <= 10))) {
             MsgHandler::show(400, 'Número fuera de rango (0-10)');
+        }
+
+        // Tags (if any)
+        $tags = [];
+        if (isset($_POST['tags']) && is_array($_POST['tags']) && !empty($_POST['tags'])) {
+            foreach ($_POST['tags'] as $tag) {
+                if (is_numeric($tag)) {
+                    $tags[] = intval($tag);
+                }
+            }
         }
 
         // Verify captcha
@@ -43,7 +53,7 @@ class ReviewController {
         $redirect = $res->redirect;
 
         $review = new Review();
-        $review->add($to, $username, $note, $message, intval($_GET['subject']));
+        $review->add($to, $username, $note, $message, intval($_GET['subject']), $tags);
         Misc::redirect($redirect[0], $redirect[1]);
     }
 
