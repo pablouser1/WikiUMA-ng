@@ -16,6 +16,16 @@
                         <p>Nota máxima: <?= $this->e($stats->max) ?></p>
                     </div>
                 </div>
+                <?php if(count($stats->tags) > 0): ?>
+                    <p>Etiqutas más usadas</p>
+                    <div class="tags is-centered">
+                        <?php foreach ($stats->tags as $tag): ?>
+                            <span class="tag is-medium is-<?= $this->tag($tag->type) ?> is-rounded">
+                                <?= $this->e($tag->name) ?>
+                            </span>
+                        <?php endforeach ?>
+                    </div>
+                <?php endif ?>
             <?php else : ?>
                 <p>No hay ninguna reseña. ¡Se el primero en escribir una!
             <?php endif ?>

@@ -60,7 +60,7 @@ class Wrappers {
                     $color = 'danger';
                     break;
                 case 0:
-                    $color = 'black';
+                    $color = 'primary';
                     break;
                 case 1:
                     $color = 'success';

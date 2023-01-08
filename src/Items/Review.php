@@ -84,17 +84,18 @@ class Review extends BaseItem {
         $stats->min = 0;
         $stats->max = 0;
         $stats->total = 0;
+        $stats->tags = [];
 
         $sql = <<<SQL
         SELECT
-            COUNT(note) AS `total`,
-            ROUND(AVG(note), 2) AS med,
-            MAX(note) as max,
-            MIN(note) as min
+            COUNT(r.note) AS total,
+            ROUND(AVG(r.note), 2) AS med,
+            MAX(r.note) as max,
+            MIN(r.note) as min
         FROM
-            reviews
+            reviews r
         WHERE
-            `data` =:data
+            r.data=:data
         SQL;
 
         $stmt = $this->conn->prepare($sql);
@@ -104,6 +105,37 @@ class Review extends BaseItem {
 
         if ($success) {
             $stats = $stmt->fetchObject();
+        }
+
+        // Tag
+        $sql = <<<SQL
+        SELECT
+            t.name,
+            t.type
+        FROM
+            reviews r
+        INNER JOIN
+            reviews_tags rt
+        ON
+            rt.review_id=r.id
+        INNER JOIN
+            tags t
+        ON
+            rt.tag_id=t.id
+        WHERE
+            r.data=:data
+        ORDER BY
+            COUNT(t.name) DESC
+        LIMIT 3
+        SQL;
+
+        $stmt = $this->conn->prepare($sql);
+        $success = $stmt->execute([
+            ':data' => $data
+        ]);
+
+        if ($success) {
+            $stats->tags = $stmt->fetchAll(\PDO::FETCH_OBJ);
         }
 
         return $stats;
