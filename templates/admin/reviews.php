@@ -14,6 +14,7 @@
                 'message' => $review->message,
                 'note' => $review->note,
                 'votes' => $review->votes,
+                'tags' => $review->tags
             ])?>
             <div class="buttons">
                 <a class="button is-info" href="<?=$this->url_to($review->data, $review->subject)?>">Ver en contexto</a>

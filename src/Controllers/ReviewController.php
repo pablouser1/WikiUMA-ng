@@ -48,7 +48,7 @@ class ReviewController {
     }
 
     static public function delete(int $id) {
-        if (!Misc::isLoggedIn()) {
+        if (!Misc::isLoggedIn(true)) {
             Misc::redirect('/login');
             return;
         }

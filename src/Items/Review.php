@@ -7,38 +7,41 @@ class Review extends BaseItem {
     const PER_PAGE = 10;
 
     public function getAll(int $page = 1, string $sort = "created_at", string $order = "desc"): array {
-        $isValidSort = Misc::sanitizeSort($sort, $order);
-        if ($isValidSort) {
-            $offset = $this->__calcOffset($page);
-            $per = self::PER_PAGE;
-            $query = $this->conn->query("SELECT id, `data`, username, note, `message`, votes, `subject`, created_at FROM reviews ORDER BY $sort $order LIMIT $offset,$per");
-            return $query !== false ? $query->fetchAll(\PDO::FETCH_OBJ) : [];
-        }
-
-        return [];
+        return $this->__commonGet('', $page, $sort, $order);
     }
 
     public function getAllFrom(string $data, int $page = 1, string $sort = "created_at", string $order = "desc"): array {
-        $isValidSort = Misc::sanitizeSort($sort, $order);
-        if ($isValidSort) {
-            $offset = $this->__calcOffset($page);
-            $per = self::PER_PAGE;
-            $stmt = $this->conn->prepare("SELECT id, username, note, `message`, votes FROM reviews WHERE `data`=:data ORDER BY $sort $order LIMIT $offset,$per");
-            $success = $stmt->execute([
-                ':data' => $data
-            ]);
-            return $success ? $stmt->fetchAll(\PDO::FETCH_OBJ) : [];
-        }
-
-        return [];
+        return $this->__commonGet($data, $page, $sort, $order);
     }
 
     public function get(int $id): ?object {
-        $stmt = $this->conn->prepare('SELECT id, username, note, `message`, votes FROM reviews WHERE `id`=:id LIMIT 1');
+        $sql = <<<SQL
+        SELECT
+            `id`,
+            `username`,
+            `note`,
+            `message`,
+            `votes`,
+            `created_at`
+        FROM
+            reviews
+        WHERE
+            id=:id
+        LIMIT 1
+        SQL;
+
+        $stmt = $this->conn->prepare($sql);
         $success = $stmt->execute([
             ':id' => $id
         ]);
-        return $success ? $stmt->fetchObject() : null;
+        if ($success) {
+            $review = $stmt->fetchObject();
+            // Parse
+            $tag = new Tag($this->conn);
+            $review->tags = $tag->getFrom($review->id);
+            return $review;
+        }
+        return null;
     }
 
     public function add(string $data, string $username, float $note, string $message, int $subject): bool {
@@ -68,20 +71,25 @@ class Review extends BaseItem {
         $stats->max = 0;
         $stats->total = 0;
 
-        $stmt = $this->conn->prepare('SELECT note FROM reviews WHERE `data`=:data ORDER BY note DESC');
+        $sql = <<<SQL
+        SELECT
+            COUNT(note) AS `total`,
+            ROUND(AVG(note), 2) AS med,
+            MAX(note) as max,
+            MIN(note) as min
+        FROM
+            reviews
+        WHERE
+            `data` =:data
+        SQL;
+
+        $stmt = $this->conn->prepare($sql);
         $success = $stmt->execute([
             ':data' => $data
         ]);
 
         if ($success) {
-            $res = $stmt->fetchAll(\PDO::FETCH_COLUMN);
-
-            if (count($res) > 0) {
-                $stats->med = round(array_sum($res) / count($res), 1);
-                $stats->max = $res[0];
-                $stats->min = $res[count($res) - 1];
-                $stats->total = count($res);
-            }
+            $stats = $stmt->fetchObject();
         }
 
         return $stats;
@@ -90,7 +98,7 @@ class Review extends BaseItem {
     public function statsTotal(): array {
         $stats = [];
 
-        $query = $this->conn->query('SELECT COUNT(note) AS `total`, AVG(note) AS med FROM reviews GROUP BY `subject`');
+        $query = $this->conn->query('SELECT COUNT(note) AS `total`, ROUND(AVG(note), 2) AS med FROM reviews GROUP BY `subject`');
 
         if ($query) {
             $stats = $query->fetchAll(\PDO::FETCH_OBJ);
@@ -111,5 +119,49 @@ class Review extends BaseItem {
 
     private function __calcOffset(int $page): int {
         return self::PER_PAGE * ($page - 1);
+    }
+
+    private function __commonGet(string $data, int $page = 1, string $sort = "created_at", string $order = "desc"): array {
+        $isValidSort = Misc::sanitizeSort($sort, $order);
+        if ($isValidSort) {
+            $offset = $this->__calcOffset($page);
+            $per = self::PER_PAGE;
+            $where = $data !== '' ? 'WHERE `data`=:data' : '';
+            $sql = <<<SQL
+            SELECT
+                `id`,
+                `data`,
+                `username`,
+                `note`,
+                `message`,
+                `votes`,
+                `subject`,
+                `created_at`
+            FROM
+                reviews
+            $where
+            ORDER BY
+                $sort $order
+            LIMIT
+                $offset, $per
+            SQL;
+
+            $stmt = $this->conn->prepare($sql);
+            $success = $stmt->execute($where !== '' ? [
+                ':data' => $data
+            ] : []);
+
+            $reviews = $stmt->fetchAll(\PDO::FETCH_OBJ);
+            if ($success) {
+                // Parse
+                $tag = new Tag($this->conn);
+                foreach ($reviews as $review) {
+                    $review->tags = $tag->getFrom($review->id);
+                }
+            }
+            return $reviews;
+        }
+
+        return [];
     }
 }

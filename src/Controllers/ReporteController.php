@@ -52,13 +52,13 @@ class ReporteController {
      * Elimina reporte
      */
     static public function delete(int $id) {
-        if (!isset($_SESSION['loggedin'])) {
-            Misc::redirect('/admin/login');
+        if (!Misc::isLoggedIn(true)) {
+            Misc::redirect('/login');
             return;
         }
 
         $report = new Report();
         $report->delete($id);
-        Misc::redirect('/admin');
+        Misc::redirect('/admin/reports');
     }
 }

@@ -5,10 +5,11 @@ use App\Helpers\Misc;
 use App\Helpers\Wrappers;
 use App\Items\Report;
 use App\Items\Review;
+use App\Items\Tag;
 
 class AdminController {
     static public function dashboard() {
-        if (!Misc::isLoggedIn()) {
+        if (!Misc::isLoggedIn(true)) {
             Misc::redirect('/login');
             return;
         }
@@ -20,7 +21,7 @@ class AdminController {
     }
 
     static public function reports() {
-        if (!Misc::isLoggedIn()) {
+        if (!Misc::isLoggedIn(true)) {
             Misc::redirect('/login');
             return;
         }
@@ -33,7 +34,7 @@ class AdminController {
     }
 
     static public function reviews() {
-        if (!Misc::isLoggedIn()) {
+        if (!Misc::isLoggedIn(true)) {
             Misc::redirect('/login');
             return;
         }
@@ -47,6 +48,20 @@ class AdminController {
 
         Wrappers::plates('admin/reviews', [
             'reviews' => $reviews
+        ]);
+    }
+
+    static public function tags() {
+        if (!Misc::isLoggedIn(true)) {
+            Misc::redirect('/login');
+            return;
+        }
+
+        $tag = new Tag();
+        $tags = $tag->getAll();
+
+        Wrappers::plates('admin/tags', [
+            'tags' => $tags
         ]);
     }
 }

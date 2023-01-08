@@ -44,14 +44,29 @@ class Wrappers {
             $type = '';
             if ($isComment) {
                 if ($note < 0) $type = 'danger';
-                if ($note === 0) $type = 'black';
-                if ($note > 0) $type = 'success';
+                elseif ($note === 0) $type = 'black';
+                elseif ($note > 0) $type = 'success';
             } else {
                 if ($note < 5) $type = 'danger';
-                if ($note === 5) $type = 'warning';
-                if ($note > 5) $type = 'success';
+                elseif ($note === 5) $type = 'warning';
+                elseif ($note > 5) $type = 'success';
             }
             return $type;
+        });
+        $engine->registerFunction('tag', function (int $type): string {
+            $color = '';
+            switch ($type) {
+                case -1:
+                    $color = 'danger';
+                    break;
+                case 0:
+                    $color = 'black';
+                    break;
+                case 1:
+                    $color = 'success';
+                    break;
+            }
+            return $color;
         });
         $engine->registerFunction('page', function (): int {
             return Misc::getPage();

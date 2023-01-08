@@ -12,7 +12,8 @@
             'username' => $review->username,
             'message' => $review->message,
             'note' => $review->note,
-            'votes' => $review->votes
+            'votes' => $review->votes,
+            'tags' => $review->tags
         ])?>
     </div>
     <form action="<?=$this->url('/reports/new/' . $review->id)?>" method="POST">

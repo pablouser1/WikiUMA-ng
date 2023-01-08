@@ -11,6 +11,7 @@
                 <ul class="menu-list">
                   <li><a href="<?= $this->url('/admin/reports') ?>">Reportes</a></li>
                   <li><a href="<?= $this->url('/admin/reviews') ?>">Reseñas</a></li>
+                  <li><a href="<?= $this->url('/admin/tags') ?>">Etiquetas</a></li>
                 </ul>
             </aside>
         </div>

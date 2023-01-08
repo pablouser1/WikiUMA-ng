@@ -4,7 +4,7 @@
 use App\Helpers\Wrappers;
 
 $router->set404(function () {
-    Wrappers::plates('error', [
+    Wrappers::plates('message', [
         'code' => 404,
         'body' => 'Not found'
     ]);
@@ -56,8 +56,15 @@ $router->mount('/verify', function () use ($router) {
 
 $router->get('/logout', 'AuthController@logout');
 
+$router->mount('/tags', function () use ($router) {
+    $router->post('/new', 'TagController@create');
+    $router->post('/(\d+)/edit', 'TagController@edit');
+    $router->get('/(\d+)/delete', 'TagController@delete');
+});
+
 $router->mount('/admin', function () use ($router) {
     $router->get('/', 'AdminController@dashboard');
     $router->get('/reports', 'AdminController@reports');
     $router->get('/reviews', 'AdminController@reviews');
+    $router->get('/tags', 'AdminController@tags');
 });

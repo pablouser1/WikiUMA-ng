@@ -10,6 +10,13 @@
                 <strong><?= $this->e($username) ?></strong>
                 <br>
                 <?= $this->e($message) ?>
+                <?php if(isset($tags) && count($tags) > 0): ?>
+                    <div class="tags">
+                    <?php foreach($tags as $tag): ?>
+                        <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>"><?= $this->e($tag->name) ?></span>
+                    <?php endforeach ?>
+                    </div>
+                <?php endif ?>
             </p>
         </div>
         <nav class="level is-mobile">

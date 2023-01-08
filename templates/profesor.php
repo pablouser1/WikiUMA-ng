@@ -22,6 +22,7 @@
                         'message' => $review->message,
                         'note' => $review->note,
                         'votes' => $review->votes,
+                        'tags' => $review->tags,
                         'controls' => true,
                         'voting' => true
                     ]) ?>

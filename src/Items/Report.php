@@ -7,6 +7,10 @@ class Report extends BaseItem {
         $query = $this->conn->query("SELECT reports.id AS reportId, reports.reason, reviews.id AS reviewId, reviews.username, reviews.message, reviews.note, reviews.votes FROM reports INNER JOIN reviews ON reviews.id = reports.review_id");
         if ($query) {
             $reports = $query->fetchAll(\PDO::FETCH_OBJ);
+            $tag = new Tag($this->conn);
+            foreach ($reports as $report) {
+                $report->tags = $tag->getFrom($report->reviewId);
+            }
         }
         return $reports;
     }
