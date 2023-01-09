@@ -4,12 +4,17 @@ namespace App\Controllers;
 use App\Api;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
+use App\Helpers\Mode;
 use App\Helpers\Wrappers;
 use App\Items\Review;
 use App\Items\Tag;
 
 class ProfesorController {
     static public function get() {
+        if (!Mode::handle(2)) {
+            MsgHandler::show(401, '¡Tienes que iniciar sesión!');
+        }
+
         if (isset($_GET['email'])) {
             self::byEmail();
         } else if (isset($_GET['idnc'])) {

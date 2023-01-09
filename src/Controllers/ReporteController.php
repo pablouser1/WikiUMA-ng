@@ -3,6 +3,7 @@ namespace App\Controllers;
 
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
+use App\Helpers\Mode;
 use App\Helpers\Wrappers;
 use App\Items\Report;
 use App\Items\Review;
@@ -22,6 +23,10 @@ class ReporteController {
     }
 
     static public function post(int $review_id) {
+        if (!Mode::handle(2)) {
+            MsgHandler::show(401, '¡Necesitas iniciar sesión!');
+        }
+
         $reason = '';
 
         if (isset($_POST['reason']) && !empty($_POST['reason'])) {

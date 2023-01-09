@@ -38,9 +38,11 @@
             <a href="/login" class="button is-info">
               <?= $this->insert('components/icon', ['icon' => 'user', 'text' => 'Iniciar sesión']) ?>
             </a>
-            <a href="/register" class="button is-primary">
-              <?= $this->insert('components/icon', ['icon' => 'user-add', 'text' => 'Registrarse']) ?>
-            </a>
+            <?php if ($this->mode() !== 0): ?>
+                <a href="/register" class="button is-primary">
+                  <?= $this->insert('components/icon', ['icon' => 'user-add', 'text' => 'Registrarse']) ?>
+                </a>
+            <?php endif ?>
           </div>
         </div>
       <?php endif ?>

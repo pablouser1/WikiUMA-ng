@@ -83,11 +83,17 @@ class Wrappers {
         $engine->registerFunction('url_to', function (string $data, int $subject_id): string {
             $isSubject = boolval($subject_id);
             if ($isSubject) {
-                $subject = Misc::splitSubject($data);
+                $subject = Subject::split($data);
                 return Misc::url('/asignaturas/' . $subject->asig . '/' . $subject->plan);
             }
 
             return Misc::url('/profesores', ['idnc' => $data]);
+        });
+        $engine->registerFunction('mode', function (): int {
+            return Mode::get();
+        });
+        $engine->registerFunction('mode_handle', function (int $maxMode = 0): int {
+            return Mode::handle($maxMode);
         });
 
         $template = $engine->make($view);

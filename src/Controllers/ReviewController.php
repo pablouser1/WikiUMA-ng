@@ -4,10 +4,16 @@ namespace App\Controllers;
 use App\Api;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
+use App\Helpers\Mode;
+use App\Helpers\Subject;
 use App\Items\Review;
 
 class ReviewController {
     static public function post() {
+        if (!Mode::handle(1)) {
+            MsgHandler::show(401, '¡Tienes que iniciar sesión!');
+        }
+
         self::__validateInput();
 
         // Username
@@ -144,7 +150,7 @@ class ReviewController {
     static private function __handleSubjects(string $data, Api $api): object {
         $res = new \stdClass;
 
-        $subject_spl = Misc::splitSubject($data);
+        $subject_spl = Subject::split($data);
         // Nos aseguramos que sea válido
         if (!$subject_spl) {
             MsgHandler::show(400, 'Datos inválidos');

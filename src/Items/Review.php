@@ -80,6 +80,7 @@ class Review extends BaseItem {
 
     public function statsOne(string $data): object {
         $stats = new \stdClass;
+        $stats->id = 0;
         $stats->med = 0;
         $stats->min = 0;
         $stats->max = 0;
@@ -88,6 +89,7 @@ class Review extends BaseItem {
 
         $sql = <<<SQL
         SELECT
+            id,
             COUNT(r.note) AS total,
             ROUND(AVG(r.note), 2) AS med,
             MAX(r.note) as max,
@@ -105,37 +107,10 @@ class Review extends BaseItem {
 
         if ($success) {
             $stats = $stmt->fetchObject();
-        }
-
-        // Tag
-        $sql = <<<SQL
-        SELECT
-            t.name,
-            t.type
-        FROM
-            reviews r
-        INNER JOIN
-            reviews_tags rt
-        ON
-            rt.review_id=r.id
-        INNER JOIN
-            tags t
-        ON
-            rt.tag_id=t.id
-        WHERE
-            r.data=:data
-        ORDER BY
-            COUNT(t.name) DESC
-        LIMIT 3
-        SQL;
-
-        $stmt = $this->conn->prepare($sql);
-        $success = $stmt->execute([
-            ':data' => $data
-        ]);
-
-        if ($success) {
-            $stats->tags = $stmt->fetchAll(\PDO::FETCH_OBJ);
+            if ($stats->id !== null) {
+                $tag = new Tag($this->conn);
+                $stats->tags = $tag->getFrom($stats->id);
+            }
         }
 
         return $stats;
