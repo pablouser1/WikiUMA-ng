@@ -23,6 +23,8 @@ class Wrappers {
      */
     static public function plates(string $view, array $data = []): void {
         $engine = new \League\Plates\Engine(__DIR__ . '/../../templates');
+
+        // -- Basic -- //
         $engine->registerFunction('url', function(string $endpoint, array $query = []): string {
             return Misc::url($endpoint, $query);
         });
@@ -34,12 +36,37 @@ class Wrappers {
         $engine->registerFunction('version', function (): string {
             return \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
         });
-        $engine->registerFunction('links', function (): array {
-            return Links::list;
+        $engine->registerFunction('mode', function (): int {
+            return Mode::get();
         });
+
+        // -- Control -- //
         $engine->registerFunction('isLoggedIn', function (bool $isAdmin = false): bool {
             return Misc::isLoggedIn($isAdmin);
         });
+        $engine->registerFunction('links', function (): array {
+            return Links::list;
+        });
+        $engine->registerFunction('captcha', function (): string {
+            return Captcha::build();
+        });
+        $engine->registerFunction('page', function (): int {
+            return Misc::getPage();
+        });
+        $engine->registerFunction('url_to', function (string $data, int $subject_id): string {
+            $isSubject = boolval($subject_id);
+            if ($isSubject) {
+                $subject = Subject::split($data);
+                return Misc::url('/asignaturas/' . $subject->asig . '/' . $subject->plan);
+            }
+
+            return Misc::url('/profesores', ['idnc' => $data]);
+        });
+        $engine->registerFunction('mode_handle', function (int $maxMode = 0): int {
+            return Mode::handle($maxMode);
+        });
+
+        // -- Styling -- //
         $engine->registerFunction('color', function (float $note, bool $isComment = false): string {
             $type = '';
             if ($isComment) {
@@ -68,9 +95,6 @@ class Wrappers {
             }
             return $color;
         });
-        $engine->registerFunction('page', function (): int {
-            return Misc::getPage();
-        });
         $engine->registerFunction('selected', function (string $needle, string $key, array $arr = []): string {
             if (empty($arr)) {
                 $arr = $_GET;
@@ -80,22 +104,8 @@ class Wrappers {
         $engine->registerFunction('selected_tag', function (int $type, int $val): string {
             return $type === $val ? 'selected' : '';
         });
-        $engine->registerFunction('url_to', function (string $data, int $subject_id): string {
-            $isSubject = boolval($subject_id);
-            if ($isSubject) {
-                $subject = Subject::split($data);
-                return Misc::url('/asignaturas/' . $subject->asig . '/' . $subject->plan);
-            }
 
-            return Misc::url('/profesores', ['idnc' => $data]);
-        });
-        $engine->registerFunction('mode', function (): int {
-            return Mode::get();
-        });
-        $engine->registerFunction('mode_handle', function (int $maxMode = 0): int {
-            return Mode::handle($maxMode);
-        });
-
+        // Run
         $template = $engine->make($view);
         echo $template->render($data);
     }

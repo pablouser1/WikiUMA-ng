@@ -99,6 +99,7 @@ class Api {
         $doc = Misc::parseHTML($html);
 
         if ($doc) {
+            // Get all h4 in the doc
             $h4s = $doc->getElementsByTagName('h4');
             foreach ($h4s as $h4) {
                 // Take second child (a)
@@ -129,7 +130,6 @@ class Api {
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/pablouser1/WikiUMA-ng)"
-
         ];
 
         $url = $base . $endpoint;
@@ -164,6 +164,7 @@ class Api {
     }
 
     private function __getCsrf(): ?string {
+        // Get csrf token if it already exists
         if (is_file($this->csrfFile)) {
             return file_get_contents($this->csrfFile);
         }
@@ -174,13 +175,18 @@ class Api {
             CURLOPT_HEADER => true,
             CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/pablouser1/WikiUMA-ng)"
         ]);
+
         $result = curl_exec($ch);
+
+        // Extract cookies
         preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
         $cookies = array();
         foreach($matches[1] as $item) {
             parse_str($item, $cookie);
             $cookies = array_merge($cookies, $cookie);
         }
+
+        // Write csrf token to tmp
         if (isset($cookies['csrftoken'])) {
             file_put_contents($this->csrfFile, $cookies['csrftoken']);
             return $cookies['csrftoken'];

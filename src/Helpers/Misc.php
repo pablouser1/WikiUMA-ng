@@ -1,7 +1,7 @@
 <?php
 namespace App\Helpers;
 
-use Gregwar\Captcha\CaptchaBuilder;
+use App\Helpers\Sorting;
 
 class Misc {
     static public function url(string $endpoint = '', array $query = []): string {
@@ -41,23 +41,11 @@ class Misc {
         return null;
     }
 
-    static public function isCaptchaValid(string $captcha): bool {
-        $builder = new CaptchaBuilder($_SESSION['phrase']);
-        $valid = $builder->testPhrase($captcha);
-
-        // Avoid using captcha more than once
-        unset($_SESSION['phrase']);
-
-        return $valid;
-    }
-
     static public function getPage(): int {
         return isset($_GET['page']) && is_numeric($_GET['page']) ? intval($_GET['page']) : 1;
     }
 
     static public function sanitizeSort(string $sort, string $order): bool {
-        $sortValid = in_array($sort, ['created_at', 'votes'], true);
-        $orderValid = in_array($order, ['asc', 'desc'], true);
-        return $sortValid && $orderValid;
+        return Sorting::isSortValid($sort) && Sorting::isOrderValid($order);
     }
 }

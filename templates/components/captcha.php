@@ -4,7 +4,7 @@
 <div class="field has-addons">
     <div class="control">
         <figure class="figure">
-            <img src="<?= $this->url('/captcha') ?>" alt="Captcha" />
+            <img src="<?= $this->captcha() ?>" alt="Captcha" />
         </figure>
     </div>
     <div class="control">

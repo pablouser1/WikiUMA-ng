@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
+use App\Helpers\Captcha;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Mode;
@@ -45,7 +46,7 @@ class ReviewController {
         }
 
         // Verify captcha
-        $valid = Misc::isCaptchaValid($_POST['captcha']);
+        $valid = Captcha::validate($_POST['captcha']);
         if (!$valid) {
             MsgHandler::show(400, 'Captcha inválido');
         }

@@ -31,7 +31,7 @@ class RedisCache implements Cache {
         return $this->client->exists($cache_key);
     }
 
-    public function set(string $cache_key, string $data, $timeout = 3600) {
+    public function set(string $cache_key, string $data, int $timeout = 3600) {
         $this->client->set($cache_key, $data, $timeout);
     }
 }

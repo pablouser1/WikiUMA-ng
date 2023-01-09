@@ -40,8 +40,8 @@ class AdminController {
         }
 
         $page = Misc::getPage();
-        $sort = $_GET['sort'] ?? 'created_at';
-        $order = $_GET['order'] ?? 'desc';
+        $sort = isset($_GET['sort']) ? $_GET['sort'] : 'created_at';
+        $order = isset($_GET['order']) ? $_GET['order'] : 'desc';
 
         $review = new Review();
         $reviews = $review->getAll($page, $sort, $order);

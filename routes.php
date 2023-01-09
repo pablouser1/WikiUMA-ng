@@ -24,7 +24,6 @@ $router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@get');
 $router->get('/plan/(\d+)', 'PlanController@get');
 $router->get('/asignaturas/(\d+)/(\d+)', 'AsignaturaController@get');
 $router->get('/profesores', 'ProfesorController@get');
-$router->get('/captcha', 'CaptchaController@get');
 
 $router->mount('/reviews', function () use ($router) {
     $router->post('/', 'ReviewController@post');
