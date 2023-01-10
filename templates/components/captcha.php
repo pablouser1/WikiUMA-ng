@@ -1,5 +1,5 @@
 <label class="label">
-    <?= $this->insert('components/icon', ['icon' => 'bot', 'text' => 'Captcha']) ?>
+    <?= $this->insert('components/icon/main', ['icon' => 'bot', 'text' => 'Captcha']) ?>
 </label>
 <div class="field has-addons">
     <div class="control">

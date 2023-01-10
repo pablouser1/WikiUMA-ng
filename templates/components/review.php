@@ -13,7 +13,9 @@
                 <?php if(isset($tags) && count($tags) > 0): ?>
                     <div class="tags">
                     <?php foreach($tags as $tag): ?>
-                        <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>"><?= $this->e($tag->name) ?></span>
+                        <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
+                            <?= $this->insert('components/tag', ['tag' => $tag]) ?>
+                        </span>
                     <?php endforeach ?>
                     </div>
                 <?php endif ?>
@@ -39,7 +41,7 @@
             <?php if (isset($controls)): ?>
                 <div class="level-right">
                     <a href="<?= $this->url('/reports/new/' . $id) ?>" class="level-item is-size-7 has-text-danger">
-                        <?= $this->insert('components/icon', ['icon' => 'flag', 'text' => 'Reportar']) ?>
+                        <?= $this->insert('components/icon/main', ['icon' => 'flag', 'text' => 'Reportar']) ?>
                     </a>
                 </div>
             <?php endif ?>

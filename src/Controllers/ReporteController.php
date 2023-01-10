@@ -46,11 +46,15 @@ class ReporteController {
         // Avoid using captcha more than once
         unset($_SESSION['phrase']);
         if (!$valid) {
-            die("Captcha inválido");
+            MsgHandler::show(400, 'Captcha inválido');
         }
         $reportDb = new Report($db);
-        $reportDb->add($review->id, $reason);
-        Misc::redirect('/');
+        $success = $reportDb->add($review->id, $reason);
+        if (!$success) {
+            MsgHandler::show(500, 'Ha habido un error al procesar tu solicitud');
+        }
+
+        MsgHandler::show(200, 'Tu informe ha sido procesado correctamente', '¡Éxito!', false);
     }
 
     /**

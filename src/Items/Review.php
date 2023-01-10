@@ -80,16 +80,15 @@ class Review extends BaseItem {
 
     public function statsOne(string $data): object {
         $stats = new \stdClass;
-        $stats->id = 0;
         $stats->med = 0;
         $stats->min = 0;
         $stats->max = 0;
         $stats->total = 0;
         $stats->tags = [];
 
+        // Notes
         $sql = <<<SQL
         SELECT
-            id,
             COUNT(r.note) AS total,
             ROUND(AVG(r.note), 2) AS med,
             MAX(r.note) as max,
@@ -107,9 +106,9 @@ class Review extends BaseItem {
 
         if ($success) {
             $stats = $stmt->fetchObject();
-            if ($stats->id !== null) {
+            if ($stats->total > 0) {
                 $tag = new Tag($this->conn);
-                $stats->tags = $tag->getFrom($stats->id);
+                $stats->tags = $tag->statsOne($data);
             }
         }
 

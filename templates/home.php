@@ -8,7 +8,7 @@
             <div class="buttons is-centered is-responsive">
                 <?php foreach ($this->links() as $link) : ?>
                     <a class="button <?= $this->e($link['color']) ?>" href="<?= $this->url($link['endpoint']) ?>">
-                        <?= $this->insert('components/icon', ['icon' => $this->e($link['icon']), 'text' => $this->e($link['name'])]) ?>
+                        <?= $this->insert('components/icon/main', ['icon' => $this->e($link['icon']), 'text' => $this->e($link['name'])]) ?>
                     </a>
                 <?php endforeach ?>
             </div>

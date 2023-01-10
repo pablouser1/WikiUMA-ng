@@ -4,7 +4,7 @@
 	<div class="control has-icons-left">
 		<input id="search" type="text" class="input is-rounded" placeholder="Filtrar" />
         <span class="icon is-small is-left">
-            <?= $this->insert('components/icon', ['icon' => 'search']) ?>
+            <?= $this->insert('components/icon/main', ['icon' => 'search']) ?>
         </span>
 	</div>
 </div>

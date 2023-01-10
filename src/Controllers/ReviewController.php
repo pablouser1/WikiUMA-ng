@@ -25,7 +25,7 @@ class ReviewController {
 
         // Message
         $message = '';
-        if (isset($_POST['message']) && !empty($_POST['username'])) {
+        if (isset($_POST['message']) && !empty($_POST['message'])) {
             $message = htmlspecialchars(trim($_POST['message']), ENT_COMPAT);
         }
 

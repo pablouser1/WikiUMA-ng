@@ -6,7 +6,7 @@
             <form action="<?=$this->url('/login')?>" method="POST">
                 <div class="field">
                     <label class="label">
-                        <?= $this->insert('components/icon', ['icon' => 'user', 'text' => 'NIU']) ?>
+                        <?= $this->insert('components/icon/main', ['icon' => 'user', 'text' => 'NIU']) ?>
                     </label>
                     <div class="control">
                         <input name="niu" type="text" class="input" placeholder="061..." required />
@@ -14,7 +14,7 @@
                 </div>
                 <div class="field">
                     <label class="label">
-                        <?= $this->insert('components/icon', ['icon' => 'lock', 'text' => 'Contraseña']) ?>
+                        <?= $this->insert('components/icon/main', ['icon' => 'lock', 'text' => 'Contraseña']) ?>
                     </label>
                     <div class="control">
                         <input name="password" type="password" placeholder="*******" class="input" required />

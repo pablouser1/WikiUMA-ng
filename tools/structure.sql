@@ -1,10 +1,10 @@
 -- wikiuma.reviews definition
 CREATE TABLE `reviews` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `to` varchar(36) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `username` varchar(16) COLLATE utf8mb4_unicode_ci DEFAULT 'Anon',
+  `to` varchar(36) NOT NULL,
+  `username` varchar(16) DEFAULT 'Anon',
   `note` float NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `message` text DEFAULT NULL,
   `votes` int(11) DEFAULT 0,
   `subject` tinyint(1),
   created_at DATETIME DEFAULT CURRENT_TIMESTAMP() NOT NULL,
@@ -15,7 +15,7 @@ CREATE TABLE `reviews` (
 CREATE TABLE `reports` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `review_id` int(11) NOT NULL,
-  `reason` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reason` text NOT NULL,
   PRIMARY KEY (`id`),
   KEY `reports_FK` (`review_id`),
   CONSTRAINT `reports_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE
@@ -26,6 +26,7 @@ CREATE TABLE `tags` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT 0,
+  `icon` char(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tags_UN` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -43,7 +44,7 @@ CREATE TABLE `reviews_tags` (
 -- wikiuma.users definition
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `niu` varchar(16) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `niu` varchar(16) NOT NULL,
   `password` binary(60) NOT NULL,
   `admin` tinyint(1),
   PRIMARY KEY (`id`),

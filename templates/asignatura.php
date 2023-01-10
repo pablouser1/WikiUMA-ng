@@ -5,7 +5,7 @@
     <p class="subtitle"><?= $this->e($asignatura->curso) ?>º año - <?= $this->e($asignatura->cuatrimestre) ?>º cuatrimestre</p>
     <small>
         <a target="_blank" rel="nofollow" href="<?= $this->e($asignatura->programa) ?>">
-            <?= $this->insert('components/icon', ['icon' => 'eye', 'text' => 'Ver programa']) ?>
+            <?= $this->insert('components/icon/main', ['icon' => 'eye', 'text' => 'Ver programa']) ?>
         </a>
     </small>
 <?php $this->stop() ?>

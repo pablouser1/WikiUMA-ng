@@ -23,16 +23,7 @@
                 <textarea name="reason" class="textarea"></textarea>
             </div>
         </div>
-        <div class="field has-addons">
-            <div class="control">
-                <figure class="figure">
-                    <img src="<?=$this->url('/captcha')?>" />
-                </figure>
-            </div>
-            <div class="control">
-                <input name="captcha" type="text" class="input" placeholder="Escribe el Captcha" />
-            </div>
-        </div>
+        <?= $this->insert('components/captcha') ?>
         <div class="field">
             <div class="control">
                 <button type="submit" class="button is-success">Enviar</button>

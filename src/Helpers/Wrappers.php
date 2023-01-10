@@ -71,12 +71,12 @@ class Wrappers {
             $type = '';
             if ($isComment) {
                 if ($note < 0) $type = 'danger';
-                elseif ($note === 0) $type = 'black';
+                elseif ($note === 0) $type = 'primary';
                 elseif ($note > 0) $type = 'success';
             } else {
                 if ($note < 5) $type = 'danger';
-                elseif ($note === 5) $type = 'warning';
-                elseif ($note > 5) $type = 'success';
+                elseif ((5 <= $note) && ($note < 7)) $type = 'warning';
+                elseif ($note >= 7) $type = 'success';
             }
             return $type;
         });

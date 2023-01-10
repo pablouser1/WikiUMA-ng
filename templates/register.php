@@ -6,7 +6,7 @@
             <form action="<?=$this->url('/register')?>" method="POST">
                 <div class="field">
                     <label class="label">
-                        <?= $this->insert('components/icon', ['icon' => 'user', 'text' => 'NIU']) ?>
+                        <?= $this->insert('components/icon/main', ['icon' => 'user', 'text' => 'NIU']) ?>
                     </label>
                     <div class="control">
                         <input name="niu" type="text" class="input" placeholder="061..." required />

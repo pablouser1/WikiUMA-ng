@@ -4,7 +4,7 @@
         <form action="<?= $this->url('/reviews', ['data' => $data, 'subject' => $subject]) ?>" method="POST">
             <div class="field">
                 <label class="label">
-                    <?= $this->insert('components/icon', ['icon' => 'file-document', 'text' => 'Reseña']) ?>
+                    <?= $this->insert('components/icon/main', ['icon' => 'file-document', 'text' => 'Reseña']) ?>
                 </label>
                 <div class="control">
                     <textarea name="message" class="textarea"></textarea>
@@ -12,7 +12,7 @@
             </div>
             <div class="field">
                 <label class="label">
-                    <?= $this->insert('components/icon', ['icon' => 'user', 'text' => 'Nombre de usuario (opcional)']) ?>
+                    <?= $this->insert('components/icon/main', ['icon' => 'user', 'text' => 'Nombre de usuario (opcional)']) ?>
                 </label>
                 <div class="control">
                     <input name="username" class="input" type="text" autocomplete="off" />
@@ -20,15 +20,15 @@
             </div>
             <div class="field">
                 <label class="label">
-                    <?= $this->insert('components/icon', ['icon' => 'smile', 'text' => 'Valoración (sobre 10)']) ?>
+                    <?= $this->insert('components/icon/main', ['icon' => 'smile', 'text' => 'Valoración (sobre 10)']) ?>
                 </label>
                 <div class="control">
-                    <input name="note" class="input" type="number" min="0" max="10" required placeholder="Escribe tu valoración del 0 al 10" />
+                    <input name="note" class="input" type="number" min="0" max="10" step=".01" required placeholder="Escribe tu valoración del 0 al 10" />
                 </div>
             </div>
             <?php if(isset($tags) && count($tags) > 0): ?>
                 <label class="label">
-                    <?= $this->insert('components/icon', ['icon' => 'tag', 'text' => 'Etiquetas']) ?>
+                    <?= $this->insert('components/icon/main', ['icon' => 'tag', 'text' => 'Etiquetas']) ?>
                 </label>
                 <div class="field">
                     <div class="control">
@@ -37,7 +37,7 @@
                                 <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
                                     <label class="checkbox">
                                         <input name="tags[]" value="<?= $this->e($tag->id) ?>" type="checkbox" />
-                                        <?= $this->e($tag->name) ?>
+                                        <?= $this->insert('components/tag', ['tag' => $tag]) ?>
                                     </label>
                                 </span>
                             <?php endforeach ?>
@@ -55,7 +55,7 @@
             <div class="field">
                 <div class="control">
                     <button type="submit" class="button is-success">
-                        <?= $this->insert('components/icon', ['icon' => 'check', 'text' => 'Enviar']) ?>
+                        <?= $this->insert('components/icon/main', ['icon' => 'check', 'text' => 'Enviar']) ?>
                     </button>
                 </div>
             </div>

@@ -32,6 +32,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="field">
+                                <label class="label">Icono</label>
+                                <div class="control">
+                                    <input name="icon" class="input" type="text" maxlength="1" value="<?= $this->e($tag->icon) ?>" />
+                                </div>
+                                <p class="help">Opcional</p>
+                            </div>
                         </div>
                         <footer class="card-footer">
                             <button type="submit" class="card-footer-item">Editar</button>
@@ -51,20 +58,27 @@
         <div class="field">
             <label class="label">Nombre</label>
             <div class="control">
-                <input name="name" class="input" type="text" />
+                <input name="name" class="input" type="text" required />
             </div>
         </div>
         <div class="field">
             <label class="label">Tipo</label>
             <div class="control">
                 <div class="select">
-                    <select name="type">
-                        <option value="-1">Negativo</option>
-                        <option value="0" selected>Neutro</option>
+                    <select name="type" required>
                         <option value="1">Positivo</option>
+                        <option value="0" selected>Neutro</option>
+                        <option value="-1">Negativo</option>
                     </select>
                 </div>
             </div>
+        </div>
+        <div class="field">
+            <label class="label">Icono</label>
+            <div class="control">
+                <input name="icon" class="input" type="text" maxlength="1" />
+            </div>
+            <p class="help">Opcional</p>
         </div>
         <div class="field">
             <div class="control">

@@ -21,7 +21,7 @@
                     <div class="tags is-centered">
                         <?php foreach ($stats->tags as $tag): ?>
                             <span class="tag is-medium is-<?= $this->tag($tag->type) ?> is-rounded">
-                                <?= $this->e($tag->name) ?>
+                                <?= $this->insert('components/tag', ['tag' => $tag]) ?>
                             </span>
                         <?php endforeach ?>
                     </div>
