@@ -16,9 +16,10 @@ class TagController {
 
         $name = htmlspecialchars(trim($_POST['name']), ENT_COMPAT);
         $type = intval($_POST['type']);
+        $icon = isset($_POST['icon']) && mb_strlen($_POST['icon'], 'utf-8') === 1 ? $_POST['icon'] : null;
 
         $tag = new Tag();
-        $success = $tag->add($name, $type);
+        $success = $tag->add($name, $type, $icon);
         if (!$success) {
             MsgHandler::show(400, 'Error al agregar etiqueta');
         }
@@ -36,9 +37,10 @@ class TagController {
 
         $name = htmlspecialchars(trim($_POST['name']), ENT_COMPAT);
         $type = intval($_POST['type']);
+        $icon = isset($_POST['icon']) && mb_strlen($_POST['icon'], 'utf-8') === 1 ? $_POST['icon'] : null;
 
         $tag = new Tag();
-        $success = $tag->edit($id, $name, $type);
+        $success = $tag->edit($id, $name, $type, $icon);
         if (!$success) {
             MsgHandler::show(400, 'Error al editar etiqueta');
         }

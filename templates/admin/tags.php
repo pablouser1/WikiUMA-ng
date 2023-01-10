@@ -35,7 +35,7 @@
                             <div class="field">
                                 <label class="label">Icono</label>
                                 <div class="control">
-                                    <input name="icon" class="input" type="text" maxlength="1" value="<?= $this->e($tag->icon) ?>" />
+                                    <input name="icon" class="input" type="text" maxlength="2" value="<?= $this->e($tag->icon) ?>" />
                                 </div>
                                 <p class="help">Opcional</p>
                             </div>
@@ -76,7 +76,7 @@
         <div class="field">
             <label class="label">Icono</label>
             <div class="control">
-                <input name="icon" class="input" type="text" maxlength="1" />
+                <input name="icon" class="input" type="text" maxlength="2" />
             </div>
             <p class="help">Opcional</p>
         </div>
