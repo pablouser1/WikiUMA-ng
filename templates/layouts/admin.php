@@ -3,7 +3,7 @@
 <body>
     <?=$this->insert('components/navbar')?>
     <div class="columns">
-        <div class="column is-2">
+        <div class="column is-2 ml-2">
             <aside class="menu">
                 <p class="menu-label">
                   Administración
