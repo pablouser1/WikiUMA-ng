@@ -109,7 +109,7 @@ class Api {
         }
 
         if ($email) {
-            return new Response(200, ['email' => $email]);
+            return new Response(200, (object) ['email' => $email], false);
         }
         return new Response(502, null);
 
