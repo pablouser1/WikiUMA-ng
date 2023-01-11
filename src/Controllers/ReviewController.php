@@ -6,6 +6,7 @@ use App\Helpers\Captcha;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Mode;
+use App\Helpers\Profanity;
 use App\Helpers\Subject;
 use App\Items\Review;
 
@@ -17,17 +18,23 @@ class ReviewController {
         }
 
         self::__validateInput();
+        // Verify captcha
+        $valid = Captcha::validate($_POST['captcha']);
+        if (!$valid) {
+            MsgHandler::show(400, 'Captcha inválido');
+            return;
+        }
 
         // Username
         $username = '';
         if (isset($_POST['username']) && !empty($_POST['username'])) {
-            $username = htmlspecialchars(trim($_POST['username']), ENT_COMPAT);
+            $username = Profanity::filter(htmlspecialchars(trim($_POST['username']), ENT_COMPAT));
         }
 
         // Message
         $message = '';
         if (isset($_POST['message']) && !empty($_POST['message'])) {
-            $message = htmlspecialchars(trim($_POST['message']), ENT_COMPAT);
+            $message = Profanity::filter(htmlspecialchars(trim($_POST['message']), ENT_COMPAT));
         }
 
         // Note
@@ -45,13 +52,6 @@ class ReviewController {
                     $tags[] = intval($tag);
                 }
             }
-        }
-
-        // Verify captcha
-        $valid = Captcha::validate($_POST['captcha']);
-        if (!$valid) {
-            MsgHandler::show(400, 'Captcha inválido');
-            return;
         }
 
         $data = $_GET['data'];
@@ -148,7 +148,7 @@ class ReviewController {
         $apiRes = $api->profesor($data);
         if (!$apiRes->success) {
             MsgHandler::showApi($apiRes);
-            return;
+            exit;
         }
 
         $profesor = $apiRes->data;

@@ -5,6 +5,7 @@ use App\Helpers\Captcha;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Mode;
+use App\Helpers\Profanity;
 use App\Helpers\Wrappers;
 use App\Items\Report;
 use App\Items\Review;
@@ -29,11 +30,19 @@ class ReporteController {
             return;
         }
 
+        // Verify captcha
+        $valid = Captcha::validate($_POST['captcha']);
+        if (!$valid) {
+            MsgHandler::show(400, 'Captcha inválido');
+            return;
+        }
+
         $reason = '';
 
         if (isset($_POST['reason']) && !empty($_POST['reason'])) {
-            $reason = htmlspecialchars(trim($_POST['reason']));
+            $reason = Profanity::filter(htmlspecialchars(trim($_POST['reason'])));
         }
+
         $db = Wrappers::db();
 
         $reviewDb = new Review($db);
@@ -43,12 +52,6 @@ class ReporteController {
             return;
         }
 
-        // Verify captcha
-        $valid = Captcha::validate($_POST['captcha']);
-        if (!$valid) {
-            MsgHandler::show(400, 'Captcha inválido');
-            return;
-        }
         $reportDb = new Report($db);
         $success = $reportDb->add($review->id, $reason);
         if (!$success) {
