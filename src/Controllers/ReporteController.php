@@ -40,7 +40,7 @@ class ReporteController {
         $reason = '';
 
         if (isset($_POST['reason']) && !empty($_POST['reason'])) {
-            $reason = Profanity::filter(htmlspecialchars(trim($_POST['reason'])));
+            $reason = htmlspecialchars(trim($_POST['reason']));
         }
 
         $db = Wrappers::db();
