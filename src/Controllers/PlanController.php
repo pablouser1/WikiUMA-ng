@@ -8,10 +8,11 @@ use App\Helpers\Wrappers;
 class PlanController {
     static public function get(int $id) {
         $api = new Api;
-        $plan = $api->plan($id);
-        if (!$plan) {
-            MsgHandler::show(404, 'Plan no encontrado');
+        $res = $api->plan($id);
+        if (!$res->success) {
+            MsgHandler::showApi($res);
         }
+        $plan = $res->data;
         $cursos = [];
         foreach ($plan->asignaturas as $asignatura) {
             $cursos[intval($asignatura->curso)][] = $asignatura;

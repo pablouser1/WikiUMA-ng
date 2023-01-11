@@ -2,6 +2,7 @@
 namespace App\Helpers;
 
 use App\Constants\Links;
+use App\Constants\HTTP;
 
 class Wrappers {
     static public function db(): \PDO {
@@ -103,6 +104,9 @@ class Wrappers {
         });
         $engine->registerFunction('selected_tag', function (int $type, int $val): string {
             return $type === $val ? 'selected' : '';
+        });
+        $engine->registerFunction('code', function (int $code): string {
+            return HTTP::getMessage($code);
         });
 
         // Run

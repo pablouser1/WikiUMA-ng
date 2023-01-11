@@ -13,6 +13,7 @@ class ReviewController {
     static public function post() {
         if (!Mode::handle(1)) {
             MsgHandler::show(401, '¡Tienes que iniciar sesión!');
+            return;
         }
 
         self::__validateInput();
@@ -33,6 +34,7 @@ class ReviewController {
         $note = floatval($_POST['note']);
         if (!((0 <= $note) && ($note <= 10))) {
             MsgHandler::show(400, 'Número fuera de rango (0-10)');
+            return;
         }
 
         // Tags (if any)
@@ -49,6 +51,7 @@ class ReviewController {
         $valid = Captcha::validate($_POST['captcha']);
         if (!$valid) {
             MsgHandler::show(400, 'Captcha inválido');
+            return;
         }
 
         $data = $_GET['data'];
@@ -86,14 +89,17 @@ class ReviewController {
     static private function changeVote(int $id, bool $more) {
         if (isset($_SESSION['voted']) && in_array($id, $_SESSION['voted'])) {
             MsgHandler::show(400, '¡Ya has votado!');
+            return;
         }
 
         if (!isset($_GET['back'])) {
             MsgHandler::show(400, 'Faltan parámetros');
+            return;
         }
 
         if(!filter_var($_GET['back'], FILTER_VALIDATE_URL)) {
             MsgHandler::show(400, 'Parámetros inválidos');
+            return;
         }
 
         $review = new Review();
@@ -112,32 +118,40 @@ class ReviewController {
     static private function __validateInput() {
         if (!isset($_POST['accepted'])) {
             MsgHandler::show(400, 'Tienes que aceptar los términos de uso');
+            return;
         }
 
         if (!isset($_GET['data'])) {
             MsgHandler::show(400, 'Tienes que enviar un payload válido');
+            return;
         }
 
         if (!(isset($_GET['subject']) && is_numeric($_GET['subject']))) {
             MsgHandler::show(400, 'No hay modo');
+            return;
         }
 
         if (!isset($_SESSION['phrase'])) {
             MsgHandler::show(400, 'Captcha no existente');
+            return;
         }
 
         if (!(isset($_POST['note'], $_POST['captcha']) && is_numeric($_POST['note']))) {
             MsgHandler::show(400, 'Datos de formulario inválidos');
+            return;
         }
     }
 
     static private function __handleTeachers(string $data, Api $api): object {
         $res = new \stdClass;
 
-        $profesor = $api->profesor($data);
-        if (!$profesor) {
-            MsgHandler::show(404, 'Profesor no encontrado');
+        $apiRes = $api->profesor($data);
+        if (!$apiRes->success) {
+            MsgHandler::showApi($apiRes);
+            return;
         }
+
+        $profesor = $apiRes->data;
 
         $res->to = $profesor->idnc;
         $res->redirect = [

@@ -1,13 +1,13 @@
 <?php
 namespace App\Controllers;
 
+use App\Helpers\Captcha;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Mode;
 use App\Helpers\Wrappers;
 use App\Items\Report;
 use App\Items\Review;
-use Gregwar\Captcha\CaptchaBuilder;
 
 class ReporteController {
     static public function get(int $review_id) {
@@ -15,6 +15,7 @@ class ReporteController {
         $review = $reviewDb->get($review_id);
         if (!$review) {
             MsgHandler::show(404, 'Esa reseña no existe');
+            return;
         }
 
         Wrappers::plates('reporte', [
@@ -25,6 +26,7 @@ class ReporteController {
     static public function post(int $review_id) {
         if (!Mode::handle(2)) {
             MsgHandler::show(401, '¡Necesitas iniciar sesión!');
+            return;
         }
 
         $reason = '';
@@ -38,23 +40,23 @@ class ReporteController {
         $review = $reviewDb->get($review_id);
         if (!$review) {
             MsgHandler::show(404, 'Esa reseña no existe');
+            return;
         }
 
         // Verify captcha
-        $builder = new CaptchaBuilder($_SESSION['phrase']);
-        $valid = $builder->testPhrase($_POST['captcha']);
-        // Avoid using captcha more than once
-        unset($_SESSION['phrase']);
+        $valid = Captcha::validate($_POST['captcha']);
         if (!$valid) {
             MsgHandler::show(400, 'Captcha inválido');
+            return;
         }
         $reportDb = new Report($db);
         $success = $reportDb->add($review->id, $reason);
         if (!$success) {
             MsgHandler::show(500, 'Ha habido un error al procesar tu solicitud');
+            return;
         }
 
-        MsgHandler::show(200, 'Tu informe ha sido procesado correctamente', '¡Éxito!', false);
+        MsgHandler::show(200, 'Tu informe ha sido procesado correctamente', '¡Éxito!');
     }
 
     /**

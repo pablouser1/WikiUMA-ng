@@ -8,13 +8,13 @@ use App\Helpers\Wrappers;
 class CentrosController {
     static public function get() {
         $api = new Api;
-        $centros = $api->centros();
-        if (!$centros) {
-            MsgHandler::show(502, 'Ha habido un error consiguiendo la lista de centros');
+        $res = $api->centros();
+        if (!$res->success) {
+            MsgHandler::showApi($res);
         }
 
         Wrappers::plates('centros', [
-            'centros' => $centros
+            'centros' => $res->data
         ]);
     }
 }

@@ -6,7 +6,7 @@ use App\Helpers\Wrappers;
 $router->set404(function () {
     Wrappers::plates('message', [
         'code' => 404,
-        'body' => 'Not found'
+        'title' => 'Error'
     ]);
 });
 

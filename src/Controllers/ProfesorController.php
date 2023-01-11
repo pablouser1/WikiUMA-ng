@@ -30,29 +30,34 @@ class ProfesorController {
         }
         $email = $_GET['email'];
         $api = new Api;
-        $profesor = $api->profesor($email);
-        if ($profesor) {
-            $page = Misc::getPage();
-            $sort = $_GET['sort'] ?? 'created_at';
-            $order = $_GET['order'] ?? 'desc';
+        $res = $api->profesor($email);
 
-            $db = Wrappers::db();
-            // Get reviews
-            $reviewDb = new Review($db);
-            $reviews = $reviewDb->getAllFrom($profesor->idnc, $page, $sort, $order);
-            $stats = $reviewDb->statsOne($profesor->idnc);
-            // Get tags
-            $tagDb = new Tag($db);
-            $tags = $tagDb->getAll();
-
-            Wrappers::plates('profesor', [
-                'title' => $profesor->nombre,
-                'profesor' => $profesor,
-                'reviews' => $reviews,
-                'tags' => $tags,
-                'stats' => $stats
-            ]);
+        if (!$res->success) {
+            MsgHandler::showApi($res);
         }
+
+        $profesor = $res->data;
+
+        $page = Misc::getPage();
+        $sort = $_GET['sort'] ?? 'created_at';
+        $order = $_GET['order'] ?? 'desc';
+        $db = Wrappers::db();
+
+        // Get reviews
+        $reviewDb = new Review($db);
+        $reviews = $reviewDb->getAllFrom($profesor->idnc, $page, $sort, $order);
+        $stats = $reviewDb->statsOne($profesor->idnc);
+
+        // Get tags
+        $tagDb = new Tag($db);
+        $tags = $tagDb->getAll();
+        Wrappers::plates('profesor', [
+            'title' => $profesor->nombre,
+            'profesor' => $profesor,
+            'reviews' => $reviews,
+            'tags' => $tags,
+            'stats' => $stats
+        ]);
     }
 
     /**
@@ -61,13 +66,13 @@ class ProfesorController {
     static private function byIdnc() {
         $idnc = $_GET['idnc'];
         $api = new Api;
-        $email = $api->profesorWeb($idnc);
-        if ($email) {
-            Misc::redirect('/profesores', [
-                'email' => $email
-            ]);
-        } else {
-            MsgHandler::show(502, 'Error interno al procesar solicitud');
+        $res = $api->profesorWeb($idnc);
+        if (!$res->success) {
+            MsgHandler::showApi($res);
         }
+
+        Misc::redirect('/profesores', [
+            'email' => $res->data->email
+        ]);
     }
 }

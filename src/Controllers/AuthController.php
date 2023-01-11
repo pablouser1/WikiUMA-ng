@@ -52,6 +52,7 @@ class AuthController {
     static public function registerPost() {
         if (!isset($_POST['niu'], $_POST['captcha'])) {
             MsgHandler::show(400, 'Cuerpo inválido');
+            return;
         }
 
         $niu = trim($_POST['niu']);
@@ -59,11 +60,13 @@ class AuthController {
         // https://www.uma.es/servicio-central-de-informatica/cms/menu/catalogo/mensajeria-electronica/
         if (substr($niu, 0, 3) !== '061') {
             MsgHandler::show(400, 'NIU Inválido');
+            return;
         }
 
         $valid = Captcha::validate($_POST['captcha']);
         if (!$valid) {
             MsgHandler::show(400, 'Captcha inválido');
+            return;
         }
 
         $db = Wrappers::db();
@@ -73,6 +76,7 @@ class AuthController {
 
         if ($user) {
             MsgHandler::show(400, 'Este usuario ya está registrado');
+            return;
         }
 
         $code = bin2hex(random_bytes(64));
@@ -83,22 +87,24 @@ class AuthController {
         $verifyDb = new Verify($db);
 
         $sent = $mail->sendCode($address, $code);
-        if ($sent) {
-            if ($verifyDb->exists($niu)) {
-                $verifyDb->update($niu, $code);
-            } else {
-                $verifyDb->add($niu, $code);
-            }
-
-            MsgHandler::show(200, 'Si ese NIU realmente existe, debes haber recibido un correo electrónico en tu correo corporativo (@uma.es) con más instrucciones. Si no has recibido el correo comprueba que el NIU sea válido o que tu bandeja de entrada no esté llena', '¡Éxito!', false);
-        } else {
+        if (!$sent) {
             MsgHandler::show(500, 'Error al enviar el correo electrónico');
+            return;
         }
+
+        if ($verifyDb->exists($niu)) {
+            $verifyDb->update($niu, $code);
+        } else {
+            $verifyDb->add($niu, $code);
+        }
+
+        MsgHandler::show(200, 'Si ese NIU realmente existe, debes haber recibido un correo electrónico en tu correo corporativo (@uma.es) con más instrucciones. Si no has recibido el correo comprueba que el NIU sea válido o que tu bandeja de entrada no esté llena', '¡Éxito!', false);
     }
 
     static public function verifyGet() {
         if (!isset($_GET['code'])) {
             MsgHandler::show(400, 'Falta un código');
+            return;
         }
 
         $verify = new Verify();
@@ -107,6 +113,7 @@ class AuthController {
 
         if (!$data) {
             MsgHandler::show(400, 'Código inválido');
+            return;
         }
 
         Wrappers::plates('verify', [
@@ -117,16 +124,19 @@ class AuthController {
     static public function verifyPost() {
         if (!isset($_POST['code'])) {
             MsgHandler::show(400, 'Falta un código');
+            return;
         }
 
         if (!isset($_POST['password'], $_POST['password_repeat'])) {
             MsgHandler::show(400, 'Falta la contraseña');
+            return;
         }
 
         $password = trim($_POST['password']);
         $password_repeat = trim($_POST['password_repeat']);
         if ($password !== $password_repeat) {
             MsgHandler::show(400, 'Las contraseñas no coinciden');
+            return;
         }
 
         $db = Wrappers::db();
@@ -135,24 +145,25 @@ class AuthController {
         $data = $verify->get($_POST['code']);
         if (!$data) {
             MsgHandler::show(400, 'Código inválido');
+            return;
         }
 
         $niu = $data->niu;
 
         $user = new User($db);
         $success = $user->add($niu, $password);
-        if ($success) {
-            // Remove verify
-            $verify->delete($data->id);
-            // Login user
-            $_SESSION['loggedin'] = true;
-            $_SESSION['niu'] = $niu;
-            $_SESSION['admin'] = false;
-            Misc::redirect('/');
-        } else {
+        if (!$success) {
             MsgHandler::show(500, 'Error al crear tu usuario');
+            return;
         }
 
+        // Remove verify
+        $verify->delete($data->id);
+        // Login user
+        $_SESSION['loggedin'] = true;
+        $_SESSION['niu'] = $niu;
+        $_SESSION['admin'] = false;
+        Misc::redirect('/');
     }
 
     static public function logout() {

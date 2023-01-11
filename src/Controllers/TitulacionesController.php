@@ -8,10 +8,14 @@ use App\Helpers\Wrappers;
 class TitulacionesController {
     static public function get(int $id) {
         $api = new Api;
-        $titulaciones = $api->titulaciones($id);
-        if (!$titulaciones) {
-            MsgHandler::show(404, 'No encontrado');
+        $res = $api->titulaciones($id);
+        if (!$res->data) {
+            MsgHandler::showApi($res);
+            return;
         }
+
+        $titulaciones = $res->data;
+
         Wrappers::plates('titulaciones', [
             'title' => $titulaciones[0]->CENTRO,
             'titulaciones' => $titulaciones

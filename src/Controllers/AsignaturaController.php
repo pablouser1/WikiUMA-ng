@@ -11,14 +11,17 @@ use App\Items\Review;
 class AsignaturaController {
     static public function get(int $id, int $plan_id) {
         $api = new Api;
-        $asignatura = $api->asignatura($id, $plan_id);
-        if (!$asignatura) {
+        $res = $api->asignatura($id, $plan_id);
+        if (!$res->success) {
             MsgHandler::show(404, 'Asignatura no encontrada');
+            return;
         }
 
+        $asignatura = $res->data;
+
         $page = Misc::getPage();
-        $sort = $_GET['sort'] ?? 'created_at';
-        $order = $_GET['order'] ?? 'desc';
+        $sort = isset($_GET['sort']) ? $_GET['sort'] : 'created_at';
+        $order = isset($_GET['order']) ? $_GET['sort'] : 'desc';
         $review = new Review;
 
         $full_subject = Subject::join($asignatura->cod_asig, $plan_id);

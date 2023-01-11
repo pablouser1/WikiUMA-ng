@@ -2,6 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
+use App\Helpers\MsgHandler;
 use App\Helpers\Wrappers;
 
 class SearchController {
@@ -12,9 +13,15 @@ class SearchController {
 
         $api = new Api;
 
-        $results = $api->buscar($nombre, $apellido_1, $apellido_2);
+        $res = $api->buscar($nombre, $apellido_1, $apellido_2);
+
+        if (!$res->success) {
+            MsgHandler::showApi($res);
+            return;
+        }
+
         Wrappers::plates('search', [
-            'results' => $results
+            'results' => $res->data
         ]);
     }
 }

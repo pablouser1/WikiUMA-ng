@@ -22,6 +22,7 @@ class TagController {
         $success = $tag->add($name, $type, $icon);
         if (!$success) {
             MsgHandler::show(400, 'Error al agregar etiqueta');
+            return;
         }
 
         Misc::redirect('/admin/tags');
@@ -43,6 +44,7 @@ class TagController {
         $success = $tag->edit($id, $name, $type, $icon);
         if (!$success) {
             MsgHandler::show(400, 'Error al editar etiqueta');
+            return;
         }
 
         Misc::redirect('/admin/tags');
@@ -58,6 +60,7 @@ class TagController {
         $success = $tag->delete($id);
         if (!$success) {
             MsgHandler::show(400, 'Error al editar etiqueta');
+            return;
         }
 
         Misc::redirect('/admin/tags');
@@ -66,10 +69,12 @@ class TagController {
     static private function __handleBody() {
         if (!(isset($_POST['name']) && !empty($_POST['name']))) {
             MsgHandler::show(400, 'No hay nombre');
+            return;
         }
 
         if (!(isset($_POST['type']) && is_numeric($_POST['type']))) {
             MsgHandler::show(400, 'No hay tipo o es inválido');
+            return;
         }
     }
 }

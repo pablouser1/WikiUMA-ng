@@ -1,34 +1,50 @@
 <?php
 namespace App;
 
-use App\Cache\Cache;
+use App\Cache\ICache;
+use App\Cache\ApcuCache;
+use App\Cache\JSONCache;
 use App\Cache\RedisCache;
+use App\Constants\Caches;
 use App\Helpers\Misc;
+use App\Models\Response;
 
 class Api {
     const BASE_API = "https://duma.uma.es/api/appuma";
     const BASE_WEB = "https://duma.uma.es/duma";
-    private ?Cache $cacheEngine = null;
+    private ?ICache $cacheEngine = null;
     private string $csrfFile;
     private string $version;
 
     function __construct() {
-        $this->csrfFile = sys_get_temp_dir() . '/wikiuma.txt';
+        $this->csrfFile = sys_get_temp_dir() . '/wikiuma.txt'; // Usado después en búsquedas de profesores
         $this->version = \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
+
         // Cache config
         if (isset($_ENV['API_CACHE'])) {
             switch ($_ENV['API_CACHE']) {
-                case 'redis':
+                case Caches::JSON:
+                    // ONLY FOR DEBUGGING
+                    $this->cacheEngine = new JSONCache;
+                    break;
+                case Caches::APCU:
+                    // For small setups
+                    $this->cacheEngine = new ApcuCache;
+                    break;
+                case Caches::REDIS:
+                    // RECOMMENDED
                     if (!(isset($_ENV['REDIS_URL']) || isset($_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']))) {
                         throw new \Exception('You need to set REDIS_URL or REDIS_HOST and REDIS_PORT to use Redis Cache!');
                     }
 
                     if (isset($_ENV['REDIS_URL'])) {
+                        // Soporte para Heroku
                         $url = parse_url($_ENV['REDIS_URL']);
                         $host = $url['host'];
                         $port = intval($url['port']);
                         $password = $url['pass'] ?? null;
                     } else {
+                        // .env u otros
                         $host = $_ENV['REDIS_HOST'];
                         $port = intval($_ENV['REDIS_PORT']);
                         $password = isset($_ENV['REDIS_PASSWORD']) ? $_ENV['REDIS_PASSWORD'] : null;
@@ -39,30 +55,50 @@ class Api {
         }
     }
 
-    public function centros(): ?array {
+    public function centros(): Response {
         return $this->__handleRequest('/centros/listado/', 'centros');
     }
 
-    public function titulaciones(int $id): ?array {
+    /**
+     * Titulaciones a partir del id del centro
+     */
+    public function titulaciones(int $id): Response {
         return $this->__handleRequest("/centros/titulaciones/$id/", "titulaciones-" . $id);
     }
 
-    public function plan(int $id): ?object {
+    /**
+     * Plan a partir de su id
+     */
+    public function plan(int $id): Response {
         return $this->__handleRequest("/plan/$id/", "plan-" . $id);
     }
 
-    public function asignatura(int $asignatura_id, int $plan_id): ?object {
+    /**
+     * Asignatura usando el ID de la asignatura y el ID del plan asociado
+     * NOTA: El id debe de estar presente aunque puede ser cualquier valor
+     */
+    public function asignatura(int $asignatura_id, int $plan_id): Response {
         return $this->__handleRequest("/asignatura/$asignatura_id/$plan_id/", 'asignatura-' . $asignatura_id);
     }
 
-    public function profesor(string $email): ?object {
+    /**
+     * Profesor usando su correo electrónico
+     */
+    public function profesor(string $email): Response {
         return $this->__handleRequest("/profesor/$email/", 'profesor-' . $email);
     }
 
-    public function profesorWeb(string $idnc): string {
+    /**
+     * Convierte un idnc a email haciendo scraping en la web
+     */
+    public function profesorWeb(string $idnc): Response {
         $email = '';
-        $html = $this->__handleRequest('/buscador/persona/' . $idnc . '/', "", [], [], "", false);
-        $doc = Misc::parseHTML($html);
+        $res = $this->__handleRequest('/buscador/persona/' . $idnc . '/', "", [], [], "", false);
+        if (!$res->success) {
+            return $res;
+        }
+
+        $doc = Misc::parseHTML($res->data);
         if ($doc) {
             $xpath = new \DOMXpath($doc);
             $elements = $xpath->query("/html/body/div[4]/div[2]/div[2]");
@@ -71,10 +107,15 @@ class Api {
                 $email = $div->textContent;
             }
         }
-        return $email;
+
+        if ($email) {
+            return new Response(200, ['email' => $email]);
+        }
+        return new Response(502, null);
+
     }
 
-    public function buscar(string $nombre, string $apellido_1, string $apellido_2): array {
+    public function buscar(string $nombre, string $apellido_1, string $apellido_2): Response {
         $results = [];
         $csrf = $this->__getCsrf();
         $headers = [
@@ -82,7 +123,7 @@ class Api {
         ];
         $cookies = "csrftoken=" . $csrf;
 
-        $html = $this->__handleRequest('/buscador/persona/', '', [
+        $res = $this->__handleRequest('/buscador/persona/', '', [
             "csrfmiddlewaretoken" => $csrf,
             "pas" => "on",
             "pdi" => "on",
@@ -96,8 +137,11 @@ class Api {
             "general" => ""
         ], $headers, $cookies, false);
 
-        $doc = Misc::parseHTML($html);
+        if (!$res->success) {
+            return $res;
+        }
 
+        $doc = Misc::parseHTML($res->data);
         if ($doc) {
             // Get all h4 in the doc
             $h4s = $doc->getElementsByTagName('h4');
@@ -116,14 +160,20 @@ class Api {
             }
         }
 
-        return $results;
+        return new Response(200, $results, true);
     }
 
-    private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true) {
-        return $isJson && $this->__hasCache($key) ? $this->__getCache($key) : $this->__send($endpoint, $key, $body, $headers, $cookies, $isJson);
+    private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response {
+        if ($key !== '' && $this->__hasCache($key)) {
+            // Use cache
+            return $this->__getCache($key, $isJson);
+        }
+
+        // Make request
+        return $this->__send($endpoint, $key, $body, $headers, $cookies, $isJson);
     }
 
-    private function __send(string $endpoint, string $key, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true) {
+    private function __send(string $endpoint, string $key, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response {
         $base = $isJson ? self::BASE_API : self::BASE_WEB;
 
         $options = [
@@ -152,15 +202,18 @@ class Api {
         curl_setopt_array($ch, $options);
 
         $data = curl_exec($ch);
-        $errno = curl_errno($ch);
+        $error = curl_errno($ch);
+        $code = curl_getinfo($ch, CURLINFO_RESPONSE_CODE);
         curl_close($ch);
-        if (!$errno && $data) {
-            if ($isJson) {
+        if (!$error) {
+            // Request sent
+            $res = new Response($code, $data, $isJson);
+            if ($res->success && $key !== '') {
                 $this->__setCache($key, $data);
             }
-            return $isJson ? json_decode($data, false) : $data;
+            return $res;
         }
-        return null;
+        return new Response(502, null, $isJson);
     }
 
     private function __getCsrf(): ?string {
@@ -178,18 +231,20 @@ class Api {
 
         $result = curl_exec($ch);
 
-        // Extract cookies
-        preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
-        $cookies = array();
-        foreach($matches[1] as $item) {
-            parse_str($item, $cookie);
-            $cookies = array_merge($cookies, $cookie);
-        }
+        if ($result !== false) {
+            // Extract cookies
+            preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
+            $cookies = array();
+            foreach($matches[1] as $item) {
+                parse_str($item, $cookie);
+                $cookies = array_merge($cookies, $cookie);
+            }
 
-        // Write csrf token to tmp
-        if (isset($cookies['csrftoken'])) {
-            file_put_contents($this->csrfFile, $cookies['csrftoken']);
-            return $cookies['csrftoken'];
+            // Write csrf token to tmp
+            if (isset($cookies['csrftoken'])) {
+                file_put_contents($this->csrfFile, $cookies['csrftoken']);
+                return $cookies['csrftoken'];
+            }
         }
 
         return null;
@@ -199,8 +254,8 @@ class Api {
         return $this->cacheEngine && $this->cacheEngine->exists($key);
     }
 
-    private function __getCache(string $key) {
-        return $this->cacheEngine->get($key);
+    private function __getCache(string $key, bool $isJson): Response {
+        return $this->cacheEngine->get($key, $isJson);
     }
 
     private function __setCache(string $key, string $data) {

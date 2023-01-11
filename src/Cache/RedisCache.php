@@ -1,7 +1,9 @@
 <?php
 namespace App\Cache;
 
-class RedisCache implements Cache {
+use App\Models\Response;
+
+class RedisCache implements ICache {
     private \Redis $client;
     function __construct(string $host, int $port, ?string $password) {
         $this->client = new \Redis();
@@ -19,10 +21,10 @@ class RedisCache implements Cache {
         $this->client->close();
     }
 
-    public function get(string $cache_key) {
+    public function get(string $cache_key, bool $isJson): ?Response {
         $data = $this->client->get($cache_key);
         if ($data) {
-            return json_decode($data);
+            return new Response(200, $data, $isJson);
         }
         return null;
     }
@@ -31,7 +33,7 @@ class RedisCache implements Cache {
         return $this->client->exists($cache_key);
     }
 
-    public function set(string $cache_key, string $data, int $timeout = 3600) {
+    public function set(string $cache_key, string $data, int $timeout = 3600): void {
         $this->client->set($cache_key, $data, $timeout);
     }
 }
