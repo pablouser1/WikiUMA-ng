@@ -17,6 +17,6 @@ class MsgHandler {
     }
 
     static public function showApi(Response $res) {
-        self::show($res->code, $res->error, 'Error Scraping');
+        self::show($res->code, $res->error !== null ? $res->error : '', 'Error Scraping');
     }
 }
