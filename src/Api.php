@@ -17,7 +17,7 @@ class Api {
     private string $version;
 
     function __construct() {
-        $this->csrfFile = sys_get_temp_dir() . '/wikiuma.txt'; // Usado después en búsquedas de profesores
+        $this->csrfFile = sys_get_temp_dir() . '/uma_csrf.txt'; // Usado después en búsquedas de profesores
         $this->version = \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
 
         // Cache config
@@ -152,7 +152,7 @@ class Api {
                     $url = $a->getAttribute('href');
                     if ($url) {
                         $results[] = (object) [
-                            'name' => mb_convert_encoding($a->textContent, 'utf-8'), // Sin el mb_convert_encoding los caractéres especiales salen mal
+                            'name' => mb_convert_encoding($a->textContent, 'ISO-8859-1'), // Sin el mb_convert_encoding los caractéres especiales salen mal
                             'idnc' => basename($url)
                         ];
                     }

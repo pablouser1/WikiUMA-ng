@@ -5,7 +5,6 @@ use App\Helpers\Captcha;
 use App\Helpers\MsgHandler;
 use App\Helpers\Misc;
 use App\Helpers\Mode;
-use App\Helpers\Profanity;
 use App\Helpers\Wrappers;
 use App\Items\Report;
 use App\Items\Review;
