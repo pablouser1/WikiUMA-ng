@@ -28,5 +28,6 @@
         <li><a rel="nofollow" href="https://github.com/bramus/router">bramus/router</a></li>
         <li><a rel="nofollow" href="https://github.com/josegonzalez/php-dotenv">josegonzalez/dotenv</a></li>
         <li><a rel="nofollow" href="https://github.com/jgthms/bulma">Bulma</a></li>
+        <li><a rel="nofollow" href="https://github.com/jojoee/leo-profanity-php">LeoProfanity</a></li>
     </ul>
 </div>
