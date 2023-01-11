@@ -160,7 +160,7 @@ class Api {
             }
         }
 
-        return new Response(200, $results, true);
+        return new Response(200, $results, false);
     }
 
     private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response {
