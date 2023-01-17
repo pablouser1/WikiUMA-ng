@@ -9,17 +9,17 @@
             <p>
                 <strong><?= $this->e($username) ?></strong>
                 <br>
-                <?= $this->e($message) ?>
-                <?php if(isset($tags) && count($tags) > 0): ?>
-                    <div class="tags">
+                <span style="white-space:pre-wrap;"><?= $this->e($message) ?></span>
+            </p>
+            <?php if(isset($tags) && count($tags) > 0): ?>
+                <div class="tags">
                     <?php foreach($tags as $tag): ?>
                         <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
                             <?= $this->insert('components/tag', ['tag' => $tag]) ?>
                         </span>
                     <?php endforeach ?>
-                    </div>
-                <?php endif ?>
-            </p>
+                </div>
+            <?php endif ?>
         </div>
         <nav class="level is-mobile">
             <div class="level-left">
