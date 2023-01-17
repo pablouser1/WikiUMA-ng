@@ -16,9 +16,11 @@ class TitulacionesController {
 
         $titulaciones = $res->data;
 
+        $titulacionesFiltered = array_filter($titulaciones, fn (object $titulacion) => !$titulacion->CURSO_EXTINGUE);
+
         Wrappers::plates('titulaciones', [
-            'title' => $titulaciones[0]->CENTRO,
-            'titulaciones' => $titulaciones
+            'title' => $titulacionesFiltered[0]->CENTRO,
+            'titulaciones' => $titulacionesFiltered
         ]);
     }
 }
