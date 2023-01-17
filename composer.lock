@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c3d718d2b0a8719c60411379e7f83f26",
+    "content-hash": "f52b4cee7b7cc3daf0ebceca67c8dfa3",
     "packages": [
         {
             "name": "bramus/router",
@@ -113,68 +113,6 @@
                 "source": "https://github.com/Gregwar/Captcha/tree/master"
             },
             "time": "2020-03-24T14:39:05+00:00"
-        },
-        {
-            "name": "jojoee/leo-profanity",
-            "version": "v1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/jojoee/leo-profanity-php.git",
-                "reference": "3cc32fe5c3ac5547d674cab3146766575c70088e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/jojoee/leo-profanity-php/zipball/3cc32fe5c3ac5547d674cab3146766575c70088e",
-                "reference": "3cc32fe5c3ac5547d674cab3146766575c70088e",
-                "shasum": ""
-            },
-            "require": {
-                "php": "~5.6|~7.0"
-            },
-            "require-dev": {
-                "phpmd/phpmd": "^2.6",
-                "phpunit/phpunit": "^5.7",
-                "squizlabs/php_codesniffer": "^2.8"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Jojoee\\Library\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nathachai Thongniran",
-                    "email": "inid3a@gmail.com",
-                    "homepage": "https://github.com/jojoee",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Profanity filter, based on Shutterstock dictionary",
-            "homepage": "https://github.com/jojoee/leo-profanity-php",
-            "keywords": [
-                "bad",
-                "clean",
-                "curse",
-                "dirty",
-                "filter",
-                "list",
-                "obscene",
-                "profanity",
-                "string",
-                "swear",
-                "word",
-                "words"
-            ],
-            "support": {
-                "issues": "https://github.com/jojoee/leo-profanity-php/issues",
-                "source": "https://github.com/jojoee/leo-profanity-php/tree/master"
-            },
-            "time": "2017-03-31T02:38:07+00:00"
         },
         {
             "name": "josegonzalez/dotenv",

@@ -1,14 +1,11 @@
 <?php
 namespace App\Helpers;
 
-use Jojoee\Library\LeoProfanity;
+use App\CustomCheck;
 
 class Profanity {
     static public function filter(string $message): string {
-        $profanities = include __DIR__ . '/../../tools/profanities.php';
-        $filter = new LeoProfanity();
-        $filter->clearList();
-        $filter->add($profanities);
-        return $filter->clean($message);
+        $filter = new CustomCheck(__DIR__ . '/../../tools/profanities.php');
+        return $filter->cleanWords($message);
     }
 }
