@@ -98,7 +98,7 @@ class AuthController {
             $verifyDb->add($niu, $code);
         }
 
-        MsgHandler::show(200, 'Si ese NIU realmente existe, debes haber recibido un correo electrónico en tu correo corporativo (@uma.es) con más instrucciones. Si no has recibido el correo comprueba que el NIU sea válido o que tu bandeja de entrada no esté llena', '¡Éxito!', false);
+        MsgHandler::show(200, 'Si ese NIU realmente existe, debes haber recibido un correo electrónico en tu correo corporativo (@uma.es o @alu.uma.es) con más instrucciones. Si no has recibido el correo comprueba que el NIU sea válido o que tu bandeja de entrada no esté llena', '¡Éxito!');
     }
 
     static public function verifyGet() {
