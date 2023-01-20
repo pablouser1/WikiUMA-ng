@@ -4,9 +4,9 @@
 use App\Helpers\Wrappers;
 
 $router->set404(function () {
+    http_response_code(404);
     Wrappers::plates('message', [
-        'code' => 404,
-        'title' => 'Error'
+        'code' => 404
     ]);
 });
 
