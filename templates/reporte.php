@@ -1,11 +1,11 @@
 <?php $this->layout('layouts/default', ['title' => 'Añadir reporte']) ?>
 
 <?php $this->start('header') ?>
-<p class="title">Reporte a comentario</p>
+<p class="title">Informar sobre comentario</p>
 <?php $this->stop() ?>
 
 <div class="container">
-    <p>Se va a reportar el siguiente comentario:</p>
+    <p>Se va a informar a la administración sobre el siguiente comentario:</p>
     <div class="box">
         <?=$this->insert('components/review', [
             'id' => $review->id,
@@ -18,7 +18,7 @@
     </div>
     <form action="<?=$this->url('/reports/new/' . $review->id)?>" method="POST">
         <div class="field">
-            <label class="label">Razón</label>
+            <label class="label">Motivo</label>
             <div class="control">
                 <textarea name="reason" class="textarea"></textarea>
             </div>

@@ -58,7 +58,7 @@ class ReporteController {
             return;
         }
 
-        MsgHandler::show(200, 'Tu informe ha sido procesado correctamente', '¡Éxito!');
+        MsgHandler::show(200, 'Gracias por hacer de WikiUMA un sitio mejor para todos ❤️', 'Tu informe ha sido procesado correctamente');
     }
 
     /**

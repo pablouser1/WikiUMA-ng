@@ -27,7 +27,7 @@
         <li><a rel="nofollow" href="https://github.com/gregwar/captcha">gregwar/captcha</a></li>
         <li><a rel="nofollow" href="https://github.com/bramus/router">bramus/router</a></li>
         <li><a rel="nofollow" href="https://github.com/josegonzalez/php-dotenv">josegonzalez/dotenv</a></li>
-        <li><a rel="nofollow" href="https://github.com/jgthms/bulma">Bulma</a></li>
-        <li><a rel="nofollow" href="https://github.com/jojoee/leo-profanity-php">LeoProfanity</a></li>
+        <li><a rel="nofollow" href="https://github.com/jgthms/bulma">Bulma</a> y <a rel="nofollow" href="https://github.com/jenil/bulmaswatch">Bulmaswatch</a></li>
+        <li><a rel="nofollow" href="https://github.com/developerdino/ProfanityFilter">developerdino/ProfanityFilter</a> (con algunas modificaciones)</li>
     </ul>
 </div>
