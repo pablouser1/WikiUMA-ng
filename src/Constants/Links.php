@@ -7,7 +7,7 @@ abstract class Links {
             'name' => 'Centros',
             'endpoint' => '/centros',
             'color' => 'is-primary',
-            'icon' => 'list'
+            'icon' => 'organisation'
         ],
         [
             'name' => 'Acerca de',

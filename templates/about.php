@@ -1,7 +1,7 @@
 <?php $this->layout('layouts/default', ['title' => 'Acerca de']) ?>
 
 <?php $this->start('header') ?>
-<p class="title">¡Bienvenido a WikiUMA <small>ng</small>!</p>
+<p class="title">Acerca de WikiUMA <small>ng</small></p>
 <p class="subtitle">Versión: <?= $this->version() ?></p>
 <?php $this->stop() ?>
 
@@ -9,7 +9,9 @@
     <p>WikiUMA <small>ng</small> aspira a ser una versión mejorada de <a href="https://www.wikiuma.com" rel="nofollow">WikiUMA <small>✞</small></a></p>
 </div>
 <div class="content">
-    <p class="title">Donaciones</p>
+    <p class="title">
+        <?= $this->insert('components/icon/main', ['icon' => 'euro', 'text' => 'Donaciones']) ?>
+    </p>
     <p>Mantener este proyecto vivo requiere tanto de dinero como de tiempo. Donar podría ayudarme a mantener este servicio para todos.</p>
     <p>Cualquier donación será bienvenida, puedes donar usando:</p>
     <div class="buttons">
