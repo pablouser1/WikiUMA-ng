@@ -9,19 +9,6 @@
     <p>WikiUMA <small>ng</small> aspira a ser una versión mejorada de <a href="https://www.wikiuma.com" rel="nofollow">WikiUMA <small>✞</small></a></p>
 </div>
 <div class="content">
-    <p class="title">
-        <?= $this->insert('components/icon/main', ['icon' => 'euro', 'text' => 'Donaciones']) ?>
-    </p>
-    <p>Mantener este proyecto vivo requiere tanto de dinero como de tiempo. Donar podría ayudarme a mantener este servicio para todos.</p>
-    <p>Cualquier donación será bienvenida, puedes donar usando:</p>
-    <div class="buttons">
-        <a class="button is-info" href="https://paypal.me/pablouser1" target="_blank">PayPal</a>
-        <a class="button is-warning" href="https://liberapay.com/pablouser1" target="_blank">Liberapay</a>
-    </div>
-    <p>¡Gracias por el apoyo! <span style="color: #e25555;">&#9829;</span></p>
-    <p>- Pablo Ferreiro, desarrollador de WikiUMA <small>ng</small></p>
-</div>
-<div class="content">
     <p class="title">Créditos</p>
     <p>Este proyecto no sería posible sin la ayuda de:</p>
     <ul>
