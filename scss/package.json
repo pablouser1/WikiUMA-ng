@@ -2,8 +2,8 @@
   "name": "cerrodelviento-scss",
   "private": true,
   "scripts": {
-    "bulma": "sass --style=compressed bulma.scss ../public/css/vendor/bulma.min.css",
-    "cssgg": "sass --style=compressed cssgg.scss ../public/css/vendor/cssgg.min.css"
+    "bulma": "sass --style=compressed bulma.scss ../css/vendor/bulma.min.css",
+    "cssgg": "sass --style=compressed cssgg.scss ../css/vendor/cssgg.min.css"
   },
   "dependencies": {
     "bulma": "^0.9.4",
