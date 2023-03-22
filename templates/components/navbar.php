@@ -35,7 +35,7 @@
       <?php else: ?>
         <div class="navbar-item">
           <div class="buttons">
-            <a href="/login" class="button is-info">
+            <a href="<?=$this->url('/login')?>" class="button is-info">
               <?= $this->insert('components/icon/main', ['icon' => 'user', 'text' => 'Iniciar sesión']) ?>
             </a>
             <?php if ($this->mode() !== 0): ?>
