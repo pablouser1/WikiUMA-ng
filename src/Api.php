@@ -18,7 +18,7 @@ class Api {
 
     function __construct() {
         $this->csrfFile = sys_get_temp_dir() . '/uma_csrf.txt'; // Usado después en búsquedas de profesores
-        $this->version = \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
+        $this->version = \Composer\InstalledVersions::getVersion('consejoinfuma/wikiuma-ng');
 
         // Cache config
         if (isset($_ENV['API_CACHE'])) {
@@ -179,7 +179,7 @@ class Api {
         $options = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/pablouser1/WikiUMA-ng)"
+            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/ConsejoInfUMA/WikiUMA-ng)"
         ];
 
         $url = $base . $endpoint;
@@ -226,7 +226,7 @@ class Api {
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => true,
-            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/pablouser1/WikiUMA-ng)"
+            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/ConsejoInfUMA/WikiUMA-ng)"
         ]);
 
         $result = curl_exec($ch);

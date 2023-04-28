@@ -16,6 +16,12 @@ abstract class Links {
             'icon' => 'info'
         ],
         [
+            'name' => 'Lifehacks',
+            'endpoint' => '/lifehacks',
+            'color' => 'is-success',
+            'icon' => 'bulb'
+        ],
+        [
             'name' => 'Legal',
             'endpoint' => '/legal',
             'color' => 'is-warning',

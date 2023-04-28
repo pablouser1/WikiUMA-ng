@@ -1,13 +1,11 @@
 <?php
 /** @var \Bramus\Router\Router $router */
 
+use App\Helpers\MsgHandler;
 use App\Helpers\Wrappers;
 
 $router->set404(function () {
-    http_response_code(404);
-    Wrappers::plates('message', [
-        'code' => 404
-    ]);
+    MsgHandler::show(404, "Esta página no existe");
 });
 
 $router->get('/', 'HomeController@get');
@@ -66,4 +64,9 @@ $router->mount('/admin', function () use ($router) {
     $router->get('/reports', 'AdminController@reports');
     $router->get('/reviews', 'AdminController@reviews');
     $router->get('/tags', 'AdminController@tags');
+});
+
+$router->mount('/lifehacks', function () use ($router) {
+    $router->get('/', 'LifehackController@index');
+    $router->get('/spam', 'LifehackController@spam');
 });

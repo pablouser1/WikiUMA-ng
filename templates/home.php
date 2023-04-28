@@ -3,8 +3,8 @@
 <div class="columns is-centered">
     <div class="column is-half">
         <div class="box">
-            <p class="title">¡Bienvenido a WikiUMA <small>ng</small>!</p>
-            <p class="subtitle">Califica a tus profesores de la UMA de forma anónima</p>
+            <p class="title">¡Bienvenido a WikiUMA <small title="nueva generación">ng</small>!</p>
+            <p class="subtitle">Califica a tus profesores de forma anónima y más</p>
             <div class="buttons is-centered is-responsive">
                 <?php foreach ($this->links() as $link) : ?>
                     <a class="button <?= $this->e($link['color']) ?>" href="<?= $this->url($link['endpoint']) ?>">

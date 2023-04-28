@@ -1,8 +1,9 @@
 <?php
 namespace App\Helpers;
 
-use App\Constants\Links;
 use App\Constants\HTTP;
+use App\Constants\Lifehacks;
+use App\Constants\Links;
 
 class Wrappers {
     static public function db(): \PDO {
@@ -35,7 +36,7 @@ class Wrappers {
             return $url;
         });
         $engine->registerFunction('version', function (): string {
-            return \Composer\InstalledVersions::getVersion('pablouser1/wikiuma-ng');
+            return \Composer\InstalledVersions::getVersion('consejoinfuma/wikiuma-ng');
         });
         $engine->registerFunction('mode', function (): int {
             return Mode::get();
@@ -47,6 +48,9 @@ class Wrappers {
         });
         $engine->registerFunction('links', function (): array {
             return Links::list;
+        });
+        $engine->registerFunction('lifehacks', function(): array {
+            return Lifehacks::list;
         });
         $engine->registerFunction('captcha', function (): string {
             return Captcha::build();

@@ -2,7 +2,7 @@
     <div class="hero-body">
         <div class="container has-text-centered">
             <p class="title">Resumen</p>
-            <?php if ($stats->total !== 0) : ?>
+            <?php if ($stats->total != 0) : ?>
                 <div class="columns is-centered is-vcentered is-mobile">
                     <div class="column is-narrow">
                         <p>Media</p>
