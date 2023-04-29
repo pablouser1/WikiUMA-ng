@@ -1,7 +1,7 @@
 <?php $this->layout('layouts/default', ['title' => 'Lifehacks']) ?>
 
 <?php $this->start('header') ?>
-<p class="title">Lifehacks de la UMA</p>
+<p class="title">Lifehacks</p>
 <?php $this->stop() ?>
 
 <div class="content">

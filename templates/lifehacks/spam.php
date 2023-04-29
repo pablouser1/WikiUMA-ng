@@ -41,7 +41,12 @@
       <li>
         Haz click en el botón que pone "Actualizar"
       </li>
-      <li>¡Listo!</li>
     </ol>
+    <p>¡Listo!</p>
+    <p>
+        PD: Si por algún motivo necesitas consultar alguno de estos correos puedes ver
+        <a href="https://sympa.sci.uma.es/sympa/arc/ldestudiantes" rel="nofollow" target="_blank">aquí</a>
+        todos los correos enviados por este medio
+    </p>
   </div>
 </div>
