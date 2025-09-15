@@ -14,8 +14,19 @@
 <section class="section">
     <div class="block">
         <div class="container">
+            <?php if ($reviews->isEmpty()): ?>
+                <?php $this->insert('partials/reviews-empty') ?>
+            <?php else: ?>
+                <?php foreach ($reviews as $review): ?>
+                    <?php $this->insert('partials/review', ['review' => $review, 'voting' => true, 'controls' => true]) ?>
+                <?php endforeach ?>
+            <?php endif ?>
+        </div>
+    </div>
+    <div class="block">
+        <div class="container">
             <p class="title has-text-centered">Profesores</p>
-            <?=$this->insert('partials/search-client')?>
+            <?= $this->insert('partials/search-client') ?>
             <?php foreach ($asignatura->grupos as $grupo): ?>
                 <p class="title has-text-centered">Grupo <?= $this->e($grupo->nombre) ?></p>
                 <div class="columns is-centered is-vcentered is-multiline">
