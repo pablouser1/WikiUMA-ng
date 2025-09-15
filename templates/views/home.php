@@ -8,9 +8,9 @@
             <a class="button <?= $this->e($link['color']) ?>" href="<?= $this->url($link['path']) ?>">
                 <span class="icon-text">
                     <span class="icon">
-                        <?=$this->insert('partials/icon', ['icon' => $this->e($link['icon'])])?>
+                        <?php $this->insert('partials/icon', ['icon' => $this->e($link['icon'])]) ?>
                     </span>
-                    <span><?=$this->e($link['name'])?></span>
+                    <span><?= $this->e($link['name']) ?></span>
                 </span>
             </a>
         <?php endforeach ?>

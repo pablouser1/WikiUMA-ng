@@ -15,7 +15,7 @@
                 <div class="tags">
                     <?php foreach ($review->tags as $tag): ?>
                         <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
-                            <?= $this->insert('partials/tag', ['tag' => $tag]) ?>
+                            <?php $this->insert('partials/tag', ['tag' => $tag]) ?>
                         </span>
                     <?php endforeach ?>
                 </div>
@@ -41,7 +41,7 @@
             <?php if (isset($controls) && $controls): ?>
                 <div class="level-right">
                     <a href="<?= $this->url('/reviews/' . $review->id . '/report') ?>" class="level-item is-size-7 has-text-danger">
-                        <?= $this->insert('partials/icon', ['icon' => 'white-flag', 'text' => 'Reportar']) ?>
+                        <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'text' => 'Reportar']) ?>
                     </a>
                 </div>
             <?php endif ?>
