@@ -5,9 +5,11 @@ require __DIR__ . '/../bootstrap.php';
 use App\Constants\Messages;
 use App\Controllers\AsignaturasController;
 use App\Controllers\CentrosController;
+use App\Controllers\ChallengeController;
 use App\Controllers\HomeController;
 use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
+use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
 use App\Controllers\TitulacionesController;
 use App\Wrappers\Plates;
@@ -30,6 +32,9 @@ $router->get('/planes/{plan_id:number}/asignaturas/{asignatura_id:number}', [Asi
 $router->get('/profesores', [ProfesoresController::class, 'index']);
 
 $router->get('/search', [SearchController::class, 'index']);
+$router->get('/challenge', [ChallengeController::class, 'index']);
+
+$router->post('/reviews', [ReviewsController::class, 'create']);
 // -- END ROUTES -- //
 
 $response = null;

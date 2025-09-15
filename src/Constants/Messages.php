@@ -10,4 +10,5 @@ class Messages
     public const string INVALID_REQUEST = "Solicitud inválida";
     public const string MUST_SEND_ID = "Debes enviar un email o un idnc";
     public const string MUST_SEND_VALID_EMAIL = "El email enviado no es válido";
+    public const string MUST_SEND_BODY = "No hay cuerpo";
 }

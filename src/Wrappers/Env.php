@@ -33,6 +33,11 @@ class Env
         return $base . $path . $queryStr;
     }
 
+    public static function app_key(): string
+    {
+        return $_ENV['APP_KEY'] ?? '';
+    }
+
     public static function db(): array
     {
         $driver = $_ENV["DB_DRIVER"] ?? "mysql";

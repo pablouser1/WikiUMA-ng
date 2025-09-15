@@ -1,6 +1,8 @@
 <div class="box">
     <p class="title has-text-centered">Escribe tu reseña</p>
-    <form action="<?= $this->url('/reviews', ['data' => $data, 'subject' => $subject]) ?>" method="POST">
+    <form action="<?= $this->url('/reviews') ?>" method="POST">
+        <input name="target" value="<?=$this->e($target)?>" type="hidden" hidden readonly />
+        <input name="type" value="<?=$this->e($type)?>" type="hidden" hidden readonly />
         <div class="field">
             <label class="label">
                 <span class="icon-text">
@@ -11,7 +13,7 @@
                 </span>
             </label>
             <div class="control">
-                <textarea name="message" class="textarea"></textarea>
+                <textarea name="message" class="textarea" required></textarea>
             </div>
         </div>
         <div class="field">
@@ -69,6 +71,9 @@
                 <input name="accepted" type="checkbox" required>
                 He leído y acepto los <a href="<?= $this->url('/legal') ?>">términos de uso</a>
             </label>
+        </div>
+        <div class="field">
+            <altcha-widget challengeurl="<?=$this->url('/challenge')?>"></altcha-widget>
         </div>
         <div class="field">
             <div class="control">

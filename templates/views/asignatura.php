@@ -2,6 +2,7 @@
     'title' => $asignatura->nombre,
     'withSearch' => true,
     'withReviews' => true,
+    'withCaptcha' => true,
 ])
 ?>
 

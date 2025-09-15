@@ -11,5 +11,8 @@
     <?php if(isset($withSearch) && $withSearch): ?>
     <script defer src="<?=$this->url('/js/search.js')?>"></script>
     <?php endif ?>
+    <?php if(isset($withCaptcha) && $withCaptcha): ?>
+    <script async defer src="https://cdn.jsdelivr.net/gh/altcha-org/altcha/dist/altcha.min.js" type="module"></script>
+    <?php endif ?>
     <title><?=$this->e($title)?> - WikiUMA(ng)</title>
 </head>

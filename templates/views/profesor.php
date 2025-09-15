@@ -1,6 +1,7 @@
 <?php $this->layout('layouts/default', [
     'title' => $profesor->nombre,
     'withReviews' => true,
+    'withCaptcha' => true,
 ])
 ?>
 
@@ -18,7 +19,7 @@
             <?php endif ?>
         </div>
         <div class="block">
-            <?php $this->insert('partials/review-new') ?>
+            <?php $this->insert('partials/review-new', ['target' => $profesor->idnc, 'type' => \App\Enums\ReviewTypesEnum::TEACHER->value]) ?>
         </div>
     </div>
 </section>
