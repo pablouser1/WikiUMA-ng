@@ -38,9 +38,9 @@ try {
     $response = $router->dispatch($request);
 } catch (Exception $e) {
     $response = new HtmlResponse(Plates::renderError("Error {$e->getStatusCode()}", $e->getMessage()), $e->getStatusCode());
-} /*catch (\Throwable $e) {
+} catch (\Throwable $e) {
     $response = new HtmlResponse(Plates::renderError(Messages::UNKNOWN_ERROR, $e->getMessage()), 500);
-}*/
+}
 
 // send the response to the browser
 (new SapiEmitter)->emit($response);

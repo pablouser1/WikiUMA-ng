@@ -8,8 +8,10 @@
 
 <section class="section">
     <?php if($reviews->isNotEmpty()): ?>
-        <?php foreach ($reviews as $review): ?>
-            <?php $this->insert('partials/review', ['review' => $review, 'voting' => true, 'controls' => true]) ?>
-        <?php endforeach ?>
+        <div class="container">
+            <?php foreach ($reviews as $review): ?>
+                <?php $this->insert('partials/review', ['review' => $review, 'voting' => true, 'controls' => true]) ?>
+            <?php endforeach ?>
+        </div>
     <?php endif ?>
 </section>
