@@ -2,26 +2,29 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\MsgHandler;
-use App\Helpers\Wrappers;
+use App\Constants\Messages;
+use App\Wrappers\Plates;
+use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Psr\Http\Message\ServerRequestInterface;
 
 class SearchController {
-    static public function get() {
-        $nombre = $_GET['nombre'] ?? '';
-        $apellido_1 = $_GET['apellido_1'] ?? '';
-        $apellido_2 = $_GET['apellido_2'] ?? '';
+    public static function index(ServerRequestInterface $request): Response {
+        $query = $request->getQueryParams();
+        $nombre = $query['nombre'] ?? '';
+        $apellido_1 = $query['apellido_1'] ?? '';
+        $apellido_2 = $query['apellido_2'] ?? '';
 
         $api = new Api;
 
         $res = $api->buscar($nombre, $apellido_1, $apellido_2);
 
         if (!$res->success) {
-            MsgHandler::showApi($res);
-            return;
+            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $res->error));
         }
 
-        Wrappers::plates('search', [
-            'results' => $res->data
-        ]);
+        return new HtmlResponse(Plates::render('views/search', [
+            'results' => $res->data,
+        ]));
     }
 }

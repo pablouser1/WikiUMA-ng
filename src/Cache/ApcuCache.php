@@ -1,10 +1,10 @@
 <?php
 namespace App\Cache;
 
-use App\Models\Response;
+use App\Models\Api\Response;
 
 class ApcuCache implements ICache {
-    function __construct() {
+    public function __construct() {
         if (!(extension_loaded('apcu') && apcu_enabled())) {
             throw new \Exception('APCu not enabled');
         }

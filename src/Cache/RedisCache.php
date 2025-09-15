@@ -1,7 +1,7 @@
 <?php
 namespace App\Cache;
 
-use App\Models\Response;
+use App\Models\Api\Response;
 
 class RedisCache implements ICache {
     private \Redis $client;

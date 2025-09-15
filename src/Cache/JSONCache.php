@@ -1,12 +1,12 @@
 <?php
 namespace App\Cache;
 
-use App\Models\Response;
+use App\Models\Api\Response;
 
 class JSONCache implements ICache {
     private string $cache_path;
 
-    function __construct() {
+    public function __construct() {
         if (isset($_ENV['API_CACHE_JSON']) && !empty($_ENV['API_CACHE_JSON'])) {
             $this->cache_path = $_ENV['API_CACHE_JSON'];
         } else {
@@ -24,7 +24,7 @@ class JSONCache implements ICache {
         $filename = $this->cache_path . '/' . $cache_key . '.json';
         if (is_file($filename)) {
             $json_string = file_get_contents($filename);
-            return new Response($json_string, $isJson);
+            return new Response(200, $json_string, $isJson);
         }
         return null;
     }

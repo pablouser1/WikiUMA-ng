@@ -1,16 +1,14 @@
 <?php
 namespace App\Controllers;
 
-use App\Helpers\Wrappers;
-use App\Items\Review;
+use App\Wrappers\Plates;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Psr\Http\Message\ServerRequestInterface;
 
-class HomeController {
-    static public function get() {
-        $review = new Review();
-
-        $stats = $review->statsTotal();
-        Wrappers::plates('home', [
-            'stats' => $stats
-        ]);
+class HomeController
+{
+    public static function index(ServerRequestInterface $request)
+    {
+        return new HtmlResponse(Plates::render('views/home'));
     }
 }

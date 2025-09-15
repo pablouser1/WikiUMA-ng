@@ -2,19 +2,21 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Helpers\MsgHandler;
-use App\Helpers\Wrappers;
+use App\Constants\Messages;
+use App\Wrappers\Plates;
+use Laminas\Diactoros\Response\HtmlResponse;
+use Psr\Http\Message\ServerRequestInterface;
 
-class CentrosController {
-    static public function get() {
+class CentrosController
+{
+    public static function index(ServerRequestInterface $request)
+    {
         $api = new Api;
-        $res = $api->centros();
-        if (!$res->success) {
-            MsgHandler::showApi($res);
+        $centros = $api->centros();
+        if (!$centros->success) {
+            http_response_code(503);
+            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $centros->error));
         }
-
-        Wrappers::plates('centros', [
-            'centros' => $res->data
-        ]);
+        return new HtmlResponse(Plates::render('views/centros', ['centros' => $centros->data]));
     }
 }

@@ -1,7 +1,7 @@
 <?php
 namespace App\Cache;
 
-use App\Models\Response;
+use App\Models\Api\Response;
 
 interface ICache {
     public function get(string $cache_key, bool $isJson): ?Response;

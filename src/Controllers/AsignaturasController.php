@@ -7,16 +7,17 @@ use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
-class TitulacionesController
+class AsignaturasController
 {
     public static function index(ServerRequestInterface $request, array $args)
     {
         $api = new Api;
-        $titulaciones = $api->titulaciones($args['centro_id']);
-        if (!$titulaciones->success) {
+        $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
+        if (!$asignatura->success) {
             http_response_code(503);
-            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $titulaciones->error));
+            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $asignatura->error));
         }
-        return new HtmlResponse(Plates::render('views/titulaciones', ['titulaciones' => $titulaciones->data]));
+
+        return new HtmlResponse(Plates::render('views/asignatura', ['asignatura' => $asignatura->data]));
     }
 }
