@@ -3,12 +3,12 @@ CREATE TABLE `reviews` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `data` varchar(36) NOT NULL,
+  `target` varchar(36) NOT NULL,
   `username` varchar(16) DEFAULT 'Anon',
   `note` float NOT NULL,
   `message` text DEFAULT NULL,
   `votes` int(11) DEFAULT 0,
-  `subject` tinyint(1) DEFAULT NULL,
+  `type` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
