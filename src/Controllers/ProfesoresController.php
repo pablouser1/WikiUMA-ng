@@ -5,8 +5,8 @@ use App\Api;
 use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use App\Models\Tag;
 use App\Wrappers\Env;
-use App\Wrappers\Misc;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -46,10 +46,12 @@ class ProfesoresController
         }
 
         $reviews = Review::where('target', '=', $profesor->data->idnc)->where('type', '=', ReviewTypesEnum::TEACHER)->get();
+        $tags = Tag::all();
 
         return new HtmlResponse(Plates::render('views/profesor', [
             'profesor' => $profesor->data,
             'reviews' => $reviews,
+            'tags' => $tags,
         ]));
     }
 

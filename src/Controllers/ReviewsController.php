@@ -6,7 +6,9 @@ use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
 use App\Wrappers\Env;
+use App\Wrappers\Misc;
 use App\Wrappers\Plates;
+use App\Wrappers\Profanity;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -34,13 +36,15 @@ class ReviewsController
 
         // Captcha is OK from now on
         $target = $body['target'];
-        $msg = htmlspecialchars(trim($body['message']), ENT_QUOTES, 'UTF-8');
+        $msg = Profanity::filter(htmlspecialchars(trim($body['message']), ENT_COMPAT));
         $note = intval($body['note']);
         // Optional
-        $username = $body['username'] ?? null;
+        $username = '';
+        if (isset($body['username']) && !empty($body['username'])) {
+            $username = Profanity::filter(htmlspecialchars(trim($body['username']), ENT_COMPAT));
+        }
 
-        // TODO: Handle tags
-        $tags = $body['tags'] ?? null;
+        $tags = isset($body['tags']) && is_array($body['tags']) ? $body['tags'] : null;
 
         $review = new Review([
             'type' => $type,
@@ -51,11 +55,18 @@ class ReviewsController
         ]);
         $review->save();
 
-        return match ($type) {
-            ReviewTypesEnum::TEACHER => new RedirectResponse(Env::app_url('/profesores', ['idnc' => $target])),
-            ReviewTypesEnum::SUBJECT => new RedirectResponse(Env::app_url('/')),
-            default => new RedirectResponse(Env::app_url('/')),
-        };
+        if ($tags !== null) {
+            $review->tags()->attach($tags);
+        }
+
+        if ($type === ReviewTypesEnum::TEACHER) {
+            return new RedirectResponse(Env::app_url('/profesores', ['idnc' => $target]));
+        } else if ($type === ReviewTypesEnum::SUBJECT) {
+            $arr = Misc::planAsignaturaSplit($target);
+            return new RedirectResponse(Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]));
+        }
+
+        return new RedirectResponse(Env::app_url('/'));
     }
 
     private static function __invalidBody(): Response

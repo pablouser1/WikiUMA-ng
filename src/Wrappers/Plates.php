@@ -15,6 +15,9 @@ class Plates
         $engine->registerFunction('url', fn(string $path, ?array $query = null) => Env::app_url($path, $query));
         $engine->registerFunction('links', fn() => Links::LIST);
 
+        $engine->registerFunction('planAsignaturaSplit', fn(string $str) => Misc::planAsignaturaSplit($str));
+        $engine->registerFunction('planAsignaturaJoin', fn (string $plan_id, string $asig_id) => Misc::planAsignaturaJoin($plan_id, $asig_id));
+
         // -- STYLING -- //
         $engine->registerFunction('color', function (float $note, bool $isComment = false): string {
             $type = '';

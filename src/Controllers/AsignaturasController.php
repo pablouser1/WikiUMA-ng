@@ -25,6 +25,7 @@ class AsignaturasController
         return new HtmlResponse(Plates::render('views/asignatura', [
             'asignatura' => $asignatura->data,
             'reviews' => $reviews,
+            'plan_id' => $args['plan_id'],
         ]));
     }
 }

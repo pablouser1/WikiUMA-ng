@@ -44,4 +44,12 @@
         </div>
     </div>
     <div class="block">
+        <div class="container">
+            <?php $this->insert('partials/review-new', [
+                'tags' => $tags,
+                'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),
+                'type' => \App\Enums\ReviewTypesEnum::TEACHER->value
+            ]) ?>
+        </div>
+    </div>
 </section>
