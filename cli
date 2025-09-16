@@ -1,0 +1,17 @@
+#!/usr/bin/env php
+<?php
+require __DIR__ . '/vendor/autoload.php';
+
+use App\Console\Driver;
+
+if (PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) {
+  echo "Cli only!";
+  exit;
+}
+
+require __DIR__ . '/bootstrap.php';
+
+$cli = new League\CLImate\CLImate;
+
+$driver = new Driver($cli);
+$driver->entrypoint();
