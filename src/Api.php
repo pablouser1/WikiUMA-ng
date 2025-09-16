@@ -7,9 +7,10 @@ use App\Cache\ApcuCache;
 use App\Cache\JSONCache;
 use App\Cache\RedisCache;
 use App\Constants\App;
-use App\Constants\Caches;
+use App\Enums\CacheEnum;
 use App\Wrappers\Misc;
 use App\Models\Api\Response;
+use App\Wrappers\Env;
 
 class Api
 {
@@ -25,26 +26,21 @@ class Api
         $this->version = App::VERSION;
 
         // Cache config
-        if (isset($_ENV['API_CACHE'])) {
-            switch ($_ENV['API_CACHE']) {
-                case Caches::JSON:
+        $cache = Env::api_cache();
+        if ($cache !== null) {
+            switch ($cache) {
+                case CacheEnum::JSON:
                     // ONLY FOR DEBUGGING
                     $this->cacheEngine = new JSONCache;
                     break;
-                case Caches::APCU:
+                case CacheEnum::APCU:
                     // For small setups
                     $this->cacheEngine = new ApcuCache;
                     break;
-                case Caches::REDIS:
+                case CacheEnum::REDIS:
                     // RECOMMENDED
-                    if (!isset($_ENV['REDIS_HOST'], $_ENV['REDIS_PORT'])) {
-                        throw new \Exception('You need to set REDIS_URL or REDIS_HOST and REDIS_PORT to use Redis Cache!');
-                    }
-
-                    $host = $_ENV['REDIS_HOST'];
-                    $port = intval($_ENV['REDIS_PORT']);
-                    $password = isset($_ENV['REDIS_PASSWORD']) ? $_ENV['REDIS_PASSWORD'] : null;
-                    $this->cacheEngine = new RedisCache($host, $port, $password);
+                    $redis = Env::redis();
+                    $this->cacheEngine = new RedisCache($redis['host'], $redis['port'], $redis['password']);
                     break;
             }
         }

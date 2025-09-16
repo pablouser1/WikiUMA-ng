@@ -2,6 +2,8 @@
 
 namespace App\Wrappers;
 
+use App\Enums\CacheEnum;
+
 class Env
 {
     public static function parse(string $path): void
@@ -43,6 +45,12 @@ class Env
         return $_ENV['APP_KEY'] ?? '';
     }
 
+    public static function api_cache(): ?CacheEnum
+    {
+        $value = $_ENV['API_CACHE'] ?? null;
+        return $value !== null ? CacheEnum::tryFrom($value) : null;
+    }
+
     public static function db(): array
     {
         $driver = $_ENV["DB_DRIVER"] ?? "mysql";
@@ -59,6 +67,19 @@ class Env
             "database" => $name,
             "username" => $user,
             "password" => $password
+        ];
+    }
+
+    public static function redis(): array
+    {
+        $host = $_ENV['REDIS_HOST'] ?? null;
+        $port = $_ENV['REDIS_PORT'] ?? null;
+        $password = $_ENV['REDIS_PASSWORD'] ?? null;
+
+        return [
+            'host' => $host,
+            'port' => $port,
+            'password' => $password,
         ];
     }
 }
