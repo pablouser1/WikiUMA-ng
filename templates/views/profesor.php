@@ -19,7 +19,7 @@
             <?php endif ?>
         </div>
         <div class="block">
-            <?php $this->insert('partials/review-new', ['tags' => $tags, 'target' => $profesor->idnc, 'type' => \App\Enums\ReviewTypesEnum::TEACHER->value]) ?>
+            <?php $this->insert('partials/review-new', ['tags' => $tags, 'target' => $profesor->idnc, 'type' => \App\Enums\ReviewTypesEnum::TEACHER]) ?>
         </div>
     </div>
 </section>

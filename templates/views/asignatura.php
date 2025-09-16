@@ -48,7 +48,7 @@
             <?php $this->insert('partials/review-new', [
                 'tags' => $tags,
                 'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),
-                'type' => \App\Enums\ReviewTypesEnum::TEACHER->value
+                'type' => \App\Enums\ReviewTypesEnum::SUBJECT,
             ]) ?>
         </div>
     </div>

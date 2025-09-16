@@ -2,7 +2,7 @@
     <p class="title has-text-centered">Escribe tu reseña</p>
     <form action="<?= $this->url('/reviews') ?>" method="POST">
         <input name="target" value="<?=$this->e($target)?>" type="hidden" hidden readonly />
-        <input name="type" value="<?=$this->e($type)?>" type="hidden" hidden readonly />
+        <input name="type" value="<?=$this->e($type->value)?>" type="hidden" hidden readonly />
         <div class="field">
             <label class="label">
                 <span class="icon-text">

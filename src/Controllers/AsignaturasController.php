@@ -5,6 +5,7 @@ use App\Api;
 use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use App\Wrappers\Misc;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,7 +21,9 @@ class AsignaturasController
             return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $asignatura->error));
         }
 
-        $reviews = Review::where('target', '=', $args['asignatura_id'])->where('type', '=', ReviewTypesEnum::SUBJECT)->get();
+        $reviews = Review::where('target', '=', Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']))
+            ->where('type', '=', ReviewTypesEnum::SUBJECT)
+            ->get();
 
         return new HtmlResponse(Plates::render('views/asignatura', [
             'asignatura' => $asignatura->data,
