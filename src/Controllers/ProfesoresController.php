@@ -7,6 +7,7 @@ use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
 use App\Models\Tag;
 use App\Wrappers\Env;
+use App\Wrappers\ErrorHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -26,8 +27,7 @@ class ProfesoresController
         } else if (isset($query['idnc'])) {
             $response = self::__byIdnc($query['idnc'], $api);
         } else {
-            http_response_code(400);
-            $response = new HtmlResponse(Plates::renderError(Messages::INVALID_REQUEST, Messages::MUST_SEND_ID));
+            $response = self::__invalidParams();
         }
 
         return $response;
@@ -36,13 +36,12 @@ class ProfesoresController
     private static function __byEmail(string $email, Api $api): Response
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            http_response_code(400);
-            return new HtmlResponse(Plates::renderError(Messages::CLIENT_ERROR, Messages::MUST_SEND_VALID_EMAIL));
+            return self::__invalidParams();
         }
 
         $profesor = $api->profesor($email);
         if (!$profesor->success) {
-            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $profesor->error));
+            return ErrorHandler::showFromApiRes($profesor);
         }
 
         $reviews = Review::where('target', '=', $profesor->data->idnc)->where('type', '=', ReviewTypesEnum::TEACHER)->get();
@@ -59,11 +58,16 @@ class ProfesoresController
     {
         $profesor = $api->profesorWeb($idnc);
         if (!$profesor->success) {
-            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $profesor->error));
+            return self::__invalidParams();
         }
 
         return new RedirectResponse(Env::app_url('/profesores', [
             'email' => $profesor->data->email,
         ]));
+    }
+
+    private static function __invalidParams(): Response
+    {
+        return ErrorHandler::show(400, Messages::INVALID_REQUEST, Messages::MUST_SEND_PARAMS);
     }
 }

@@ -6,11 +6,10 @@ use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
 use App\Wrappers\Env;
+use App\Wrappers\ErrorHandler;
 use App\Wrappers\Misc;
-use App\Wrappers\Plates;
 use App\Wrappers\Profanity;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -71,6 +70,6 @@ class ReviewsController
 
     private static function __invalidBody(): Response
     {
-        return new HtmlResponse(Plates::renderError(Messages::CLIENT_ERROR, Messages::MUST_SEND_BODY));
+        return ErrorHandler::show(400, Messages::INVALID_REQUEST, Messages::MUST_SEND_PARAMS);
     }
 }

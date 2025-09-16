@@ -6,7 +6,7 @@ class Env
 {
     public static function parse(string $path): void
     {
-        $arr = @parse_ini_file($path);
+        $arr = @parse_ini_file($path, false, INI_SCANNER_TYPED);
 
         if ($arr === false) {
             return;
@@ -31,6 +31,11 @@ class Env
         }
 
         return $base . $path . $queryStr;
+    }
+
+    public static function app_debug(): bool
+    {
+        return $_ENV['APP_DEBUG'] ?? false;
     }
 
     public static function app_key(): string

@@ -12,8 +12,8 @@ use App\Controllers\ProfesoresController;
 use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
 use App\Controllers\TitulacionesController;
-use App\Wrappers\Plates;
-use Laminas\Diactoros\Response\HtmlResponse;
+use App\Wrappers\Env;
+use App\Wrappers\ErrorHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Http\Exception;
 
@@ -45,9 +45,14 @@ $response = null;
 try {
     $response = $router->dispatch($request);
 } catch (Exception $e) {
-    $response = new HtmlResponse(Plates::renderError("Error {$e->getStatusCode()}", $e->getMessage()), $e->getStatusCode());
+    $response = ErrorHandler::show($e->getStatusCode(), "Error {$e->getStatusCode()}", $e->getMessage());
 } catch (\Throwable $e) {
-    $response = new HtmlResponse(Plates::renderError(Messages::UNKNOWN_ERROR, $e->getMessage()), 500);
+    // Rethrow if debugging
+    if (Env::app_debug()) {
+        throw $e;
+    }
+
+    $response = ErrorHandler::show(500, Messages::UNKNOWN_ERROR, $e->getMessage());
 }
 
 // send the response to the browser

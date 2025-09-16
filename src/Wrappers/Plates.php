@@ -45,12 +45,4 @@ class Plates
 
         return $engine->render($template, $data);
     }
-
-    public static function renderError(string $title, ?string $body): string
-    {
-        return self::render('views/error', [
-            'title' => $title,
-            'body' => $body,
-        ]);
-    }
 }

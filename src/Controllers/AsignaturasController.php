@@ -2,9 +2,9 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use App\Wrappers\ErrorHandler;
 use App\Wrappers\Misc;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -17,8 +17,7 @@ class AsignaturasController
         $api = new Api;
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
         if (!$asignatura->success) {
-            http_response_code(503);
-            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $asignatura->error));
+            return ErrorHandler::showFromApiRes($asignatura);
         }
 
         $reviews = Review::where('target', '=', Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']))

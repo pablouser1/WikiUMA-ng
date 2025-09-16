@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Constants\Messages;
+use App\Wrappers\ErrorHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -17,14 +17,14 @@ class SearchController {
 
         $api = new Api;
 
-        $res = $api->buscar($nombre, $apellido_1, $apellido_2);
+        $search = $api->buscar($nombre, $apellido_1, $apellido_2);
 
-        if (!$res->success) {
-            return new HtmlResponse(Plates::renderError(Messages::API_ERROR, $res->error));
+        if (!$search->success) {
+            return ErrorHandler::showFromApiRes($search);
         }
 
         return new HtmlResponse(Plates::render('views/search', [
-            'results' => $res->data,
+            'results' => $search->data,
         ]));
     }
 }
