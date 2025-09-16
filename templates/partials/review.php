@@ -40,9 +40,13 @@
             </div>
             <?php if (isset($controls) && $controls): ?>
                 <div class="level-right">
-                    <a href="<?= $this->url('/reviews/' . $review->id . '/report') ?>" class="level-item is-size-7 has-text-danger">
-                        <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'text' => 'Reportar']) ?>
-                    </a>
+                    <div class="level-item">
+                        <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
+                            <span class="icon">
+                                <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
+                            </span>
+                        </a>
+                    </div>
                 </div>
             <?php endif ?>
         </nav>
