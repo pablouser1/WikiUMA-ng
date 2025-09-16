@@ -8,9 +8,8 @@
         <div class="content">
             <p>
                 <strong><?= $this->e($review->username) ?></strong>
-                <br>
-                <span style="white-space:pre-wrap;"><?= $this->e($review->message) ?></span>
             </p>
+            <?= $review->message ?>
             <?php if (isset($review->tags) && count($review->tags) > 0): ?>
                 <div class="tags">
                     <?php foreach ($review->tags as $tag): ?>

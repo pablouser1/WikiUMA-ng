@@ -11,6 +11,7 @@ use App\Wrappers\Misc;
 use App\Wrappers\Profanity;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
+use League\CommonMark\CommonMarkConverter;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ReviewsController
@@ -34,13 +35,20 @@ class ReviewsController
         }
 
         // Captcha is OK from now on
+        $converter = new CommonMarkConverter([
+            'html_input' => 'escape',
+            'allow_unsafe_links' => false,
+            'max_nesting_level' => 15,
+            'max_delimiters_per_line' => 200,
+        ]);
+
         $target = $body['target'];
-        $msg = Profanity::filter(htmlspecialchars(trim($body['message']), ENT_COMPAT));
+        $msg = Profanity::filter($converter->convert(trim($body['message'])));
         $note = intval($body['note']);
         // Optional
         $username = '';
         if (isset($body['username']) && !empty($body['username'])) {
-            $username = Profanity::filter(htmlspecialchars(trim($body['username']), ENT_COMPAT));
+            $username = Profanity::filter(trim($body['username']));
         }
 
         $tags = isset($body['tags']) && is_array($body['tags']) ? $body['tags'] : null;

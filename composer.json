@@ -22,6 +22,10 @@
         "league/plates": "^3.6",
         "illuminate/database": "^12.28",
         "altcha-org/altcha": "^1.1",
-        "league/climate": "^3.10"
+        "league/climate": "^3.10",
+        "league/commonmark": "^2.7"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.24"
     }
 }

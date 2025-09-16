@@ -15,6 +15,7 @@
             <div class="control">
                 <textarea name="message" class="textarea" required></textarea>
             </div>
+            <p class="help">Pssst... Puedes usar Markdown.</p>
         </div>
         <div class="field">
             <label class="label">
