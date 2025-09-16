@@ -13,8 +13,8 @@ use App\Models\Api\Response;
 
 class Api
 {
-    const BASE_API = "https://duma.uma.es/api/appuma";
-    const BASE_WEB = "https://duma.uma.es/duma";
+    private const string BASE_API = "https://duma.uma.es/api/appuma";
+    private const string BASE_WEB = "https://duma.uma.es/duma";
     private ?ICache $cacheEngine = null;
     private string $csrfFile;
     private string $version;
@@ -22,7 +22,7 @@ class Api
     public function __construct()
     {
         $this->csrfFile = sys_get_temp_dir() . '/uma_csrf.txt'; // Usado después en búsquedas de profesores
-        $this->version = \Composer\InstalledVersions::getVersion(App::PACKAGE_NAME);
+        $this->version = App::VERSION;
 
         // Cache config
         if (isset($_ENV['API_CACHE'])) {
