@@ -6,6 +6,7 @@ use App\Constants\Messages;
 use App\Controllers\AsignaturasController;
 use App\Controllers\CentrosController;
 use App\Controllers\ChallengeController;
+use App\Controllers\DevController;
 use App\Controllers\MiscController;
 use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
@@ -16,6 +17,7 @@ use App\Wrappers\Env;
 use App\Wrappers\ErrorHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Http\Exception;
+use League\Route\RouteGroup;
 
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
@@ -38,6 +40,12 @@ $router->get('/search', [SearchController::class, 'index']);
 $router->get('/challenge', [ChallengeController::class, 'index']);
 
 $router->post('/reviews', [ReviewsController::class, 'create']);
+
+if (Env::app_debug()) {
+    $router->group('/dev', function (RouteGroup $route) {
+        $route->get('/reactions/{code:number}', [DevController::class, 'reactions']);
+    });
+}
 // -- END ROUTES -- //
 
 $response = null;
