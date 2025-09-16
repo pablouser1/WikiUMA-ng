@@ -19,7 +19,13 @@ Recomendado:
 * ext-redis
 
 ```bash
-composer install # Usa --no-dev si estás en production
+composer install # Usa --no-dev si estás en producción
+```
+
+## Docs
+Con PHPDoc instalado, ejecuta:
+```bash
+phpdoc run -d src -t docs
 ```
 
 ## TODO

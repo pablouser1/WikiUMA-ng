@@ -1,11 +1,19 @@
 <?php
+
 namespace App\Cache;
 
 use App\Models\Api\Response;
 
-class RedisCache implements ICache {
+
+/**
+ * Cache using Redis. Recommended for general usage.
+ */
+class RedisCache implements ICache
+{
     private \Redis $client;
-    function __construct(string $host, int $port, ?string $password) {
+
+    public function __construct(string $host, int $port, ?string $password)
+    {
         $this->client = new \Redis();
         if (!$this->client->connect($host, $port)) {
             throw new \Exception('REDIS: Could not connnect to server');
@@ -17,11 +25,13 @@ class RedisCache implements ICache {
         }
     }
 
-    function __destruct() {
+    public function __destruct()
+    {
         $this->client->close();
     }
 
-    public function get(string $cache_key, bool $isJson): ?Response {
+    public function get(string $cache_key, bool $isJson): ?Response
+    {
         $data = $this->client->get($cache_key);
         if ($data) {
             return new Response(200, $data, $isJson);
@@ -29,11 +39,13 @@ class RedisCache implements ICache {
         return null;
     }
 
-    public function exists(string $cache_key): bool {
+    public function exists(string $cache_key): bool
+    {
         return $this->client->exists($cache_key);
     }
 
-    public function set(string $cache_key, string $data, int $timeout = 3600): void {
+    public function set(string $cache_key, string $data, int $timeout = 3600): void
+    {
         $this->client->set($cache_key, $data, $timeout);
     }
 }

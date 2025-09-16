@@ -7,11 +7,18 @@ use AltchaOrg\Altcha\ChallengeOptions;
 use App\Wrappers\Env;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
-use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Challenge controller
+ */
 class ChallengeController
 {
-    public static function index(ServerRequestInterface $request): Response
+    /**
+     * Send Captcha challenge.
+     *
+     * Route: `/challenge`.
+     */
+    public static function index(): Response
     {
         $altcha = new Altcha(Env::app_key());
 

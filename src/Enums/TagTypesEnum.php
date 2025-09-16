@@ -1,6 +1,9 @@
 <?php
 namespace App\Enums;
 
+/**
+ * Enumamerate all valid tag types.
+ */
 enum TagTypesEnum: int
 {
     case POSITIVE = 0;

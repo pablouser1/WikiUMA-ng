@@ -1,6 +1,9 @@
 <?php
 namespace App\Models\Api;
 
+/**
+ * Wrapped response from UMA servers.
+ */
 class Response {
     public int $code;
     public bool $success;

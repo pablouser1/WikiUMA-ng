@@ -4,21 +4,38 @@ namespace App\Controllers;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
-use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Misc Controller. Used for read-only, static pages.
+ */
 class MiscController
 {
-    public static function home(ServerRequestInterface $request): Response
+    /**
+     * Main site.
+     *
+     * Route: `/`.
+     */
+    public static function home(): Response
     {
         return self::__render('views/home');
     }
 
-    public static function about(ServerRequestInterface $request): Response
+    /**
+     * About site, with info about the site and external libraries.
+     *
+     * Route: `/about`.
+     */
+    public static function about(): Response
     {
         return self::__render('views/about');
     }
 
-    public static function legal(ServerRequestInterface $request): Response
+    /**
+     * Legal site, with info about terms and conditions.
+     *
+     * Route: `/legal`.
+     */
+    public static function legal(): Response
     {
         return self::__render('views/legal');
     }

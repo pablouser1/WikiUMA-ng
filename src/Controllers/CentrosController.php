@@ -5,11 +5,18 @@ use App\Api;
 use App\Wrappers\ErrorHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
-use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Centros controller
+ */
 class CentrosController
 {
-    public static function index(ServerRequestInterface $request)
+    /**
+     * Get all faculties.
+     *
+     * Route: `/centros`.
+     */
+    public static function index()
     {
         $api = new Api;
         $centros = $api->centros();

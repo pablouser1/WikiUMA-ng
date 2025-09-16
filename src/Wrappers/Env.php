@@ -4,6 +4,9 @@ namespace App\Wrappers;
 
 use App\Enums\CacheEnum;
 
+/**
+ * Wrapper for Environment Variables.
+ */
 class Env
 {
     public static function parse(string $path): void
@@ -35,22 +38,34 @@ class Env
         return $base . $path . $queryStr;
     }
 
+    /**
+     * Get app's debugging state.
+     */
     public static function app_debug(): bool
     {
         return $_ENV['APP_DEBUG'] ?? false;
     }
 
+    /**
+     * Get app's encryption key.
+     */
     public static function app_key(): string
     {
         return $_ENV['APP_KEY'] ?? '';
     }
 
+    /**
+     * Get cache engine to be used.
+     */
     public static function api_cache(): ?CacheEnum
     {
         $value = $_ENV['API_CACHE'] ?? null;
         return $value !== null ? CacheEnum::tryFrom($value) : null;
     }
 
+    /**
+     * Get db credentials.
+     */
     public static function db(): array
     {
         $driver = $_ENV["DB_DRIVER"] ?? "mysql";
@@ -70,6 +85,9 @@ class Env
         ];
     }
 
+    /**
+     * Get redis credentials.
+     */
     public static function redis(): array
     {
         $host = $_ENV['REDIS_HOST'] ?? null;

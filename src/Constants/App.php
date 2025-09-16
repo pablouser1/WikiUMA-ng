@@ -2,6 +2,9 @@
 
 namespace App\Constants;
 
+/**
+ * App-specific constants.
+ */
 abstract class App
 {
     public const string VERSION = "v0.0.1";

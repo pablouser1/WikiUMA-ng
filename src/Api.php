@@ -12,6 +12,9 @@ use App\Wrappers\Misc;
 use App\Models\Api\Response;
 use App\Wrappers\Env;
 
+/**
+ * Wrapper for all UMA requests.
+ */
 class Api
 {
     private const string BASE_API = "https://duma.uma.es/api/appuma";
@@ -112,6 +115,9 @@ class Api
         return new Response(502, null);
     }
 
+    /**
+     * Hacer búsqueda por DUMA vía web scraping.
+     */
     public function buscar(string $nombre, string $apellido_1, string $apellido_2): Response
     {
         $results = [];
@@ -262,7 +268,7 @@ class Api
         return $this->cacheEngine->get($key, $isJson);
     }
 
-    private function __setCache(string $key, string $data)
+    private function __setCache(string $key, string $data): void
     {
         if ($this->cacheEngine) $this->cacheEngine->set($key, $data);
     }

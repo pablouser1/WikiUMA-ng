@@ -2,8 +2,12 @@
 
 namespace App\Constants;
 
+/**
+ * Reaction images used on error page.
+ */
 abstract class Reactions
 {
+    /** @var array<int,array{"name": string, "alt": string}>  */
     public const array LIST = [
         400 => [
             [
@@ -43,6 +47,12 @@ abstract class Reactions
         ],
     ];
 
+    /**
+     * Picks random reaction from specific status code.
+     *
+     * @param int $code HTTP Code
+     * @return ?object{"name": string, "alt": string}
+     */
     public static function random(int $code): ?object
     {
         if (!isset(self::LIST[$code])) {

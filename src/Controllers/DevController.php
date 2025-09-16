@@ -2,22 +2,25 @@
 
 namespace App\Controllers;
 
-use App\Wrappers\Env;
 use App\Wrappers\ErrorHandler;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Dev Controller. Only active when APP_DEBUG=true
+ */
 class DevController
 {
+    /**
+     * Emulate an error.
+     *
+     * Route: `/dev/reactions/{code}`.
+     *
+     * @param array{"code": int} $args
+     */
     public static function reactions(ServerRequestInterface $request, array $args): Response
     {
-        if (!(isset($args['code']))) {
-            return new RedirectResponse(Env::app_url('/'));
-        }
-
         $code = intval($args['code']);
-
         return ErrorHandler::show($code, "Error $code", 'Example body');
     }
 }

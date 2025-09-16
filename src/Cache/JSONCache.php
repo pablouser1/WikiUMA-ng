@@ -3,6 +3,9 @@ namespace App\Cache;
 
 use App\Models\Api\Response;
 
+/**
+ * Cache using JSON files. Should only be used when debugging!
+ */
 class JSONCache implements ICache {
     private string $cache_path;
 

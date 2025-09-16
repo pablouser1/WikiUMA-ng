@@ -1,6 +1,9 @@
 <?php
 namespace App\Constants;
 
+/**
+ * Messages sent to user via HTTP.
+ */
 class Messages
 {
     public const string API_ERROR = "Error en servidores de la UMA";
