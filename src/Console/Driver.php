@@ -1,6 +1,7 @@
 <?php
 namespace App\Console;
 
+use App\Console\Modules\ReportsModule;
 use App\Console\Modules\TagsModule;
 
 class Driver extends Base implements IBase
@@ -9,6 +10,10 @@ class Driver extends Base implements IBase
         [
             'name' => 'Tags',
             'runner' => [TagsModule::class, 'entrypoint'],
+        ],
+        [
+            'name' => 'Reports',
+            'runner' => [ReportsModule::class, 'entrypoint'],
         ],
     ];
 

@@ -31,7 +31,9 @@ CREATE TABLE `reports` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `review_id` int(11) NOT NULL,
-  `reason` text NOT NULL,
+  `body` text NOT NULL,
+  `reason` text DEFAULT NULL,
+  `status` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `reports_FK` (`review_id`),
   CONSTRAINT `reports_FK` FOREIGN KEY (`review_id`) REFERENCES `reviews` (`id`) ON DELETE CASCADE
