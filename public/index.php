@@ -6,7 +6,7 @@ use App\Constants\Messages;
 use App\Controllers\AsignaturasController;
 use App\Controllers\CentrosController;
 use App\Controllers\ChallengeController;
-use App\Controllers\HomeController;
+use App\Controllers\MiscController;
 use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
 use App\Controllers\ReviewsController;
@@ -24,7 +24,10 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
 $router = new League\Route\Router;
 
 // -- ROUTES -- //
-$router->get('/', [HomeController::class, 'index']);
+$router->get('/', [MiscController::class, 'home']);
+$router->get('/about', [MiscController::class, 'about']);
+$router->get('/legal', [MiscController::class, 'legal']);
+
 $router->get('/centros', [CentrosController::class, 'index']);
 $router->get('/centros/{centro_id:number}/titulaciones', [TitulacionesController::class, 'index']);
 $router->get('/planes/{plan_id:number}', [PlanesController::class, 'index']);
