@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Wrappers;
 
 /**
@@ -8,7 +9,8 @@ namespace App\Wrappers;
  * @link https://github.com/developerdino/ProfanityFilter/pull/39
  * @link https://github.com/developerdino/ProfanityFilter/pull/43
  */
-class CustomCheck {
+class CustomCheck
+{
     const SEPARATOR_PLACEHOLDER = '{!!}';
 
     /**
@@ -153,7 +155,8 @@ class CustomCheck {
      */
     protected $badWordsFound = '';
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->profanities = include __DIR__ . '/../../misc/profanities.php';
 
         $this->separatorExpression = $this->generateSeparatorExpression();
@@ -165,7 +168,8 @@ class CustomCheck {
      *
      * @return string
      */
-    private function generateSeparatorExpression() {
+    private function generateSeparatorExpression()
+    {
         return $this->generateEscapedExpression($this->separatorCharacters, $this->escapedSeparatorCharacters);
     }
 
@@ -196,7 +200,8 @@ class CustomCheck {
      *
      * @return array
      */
-    protected function generateCharacterExpressions() {
+    protected function generateCharacterExpressions()
+    {
         $characterExpressions = [];
         foreach ($this->characterSubstitutions as $character => $substitutions) {
             $characterExpressions[$character] = $this->generateEscapedExpression(
@@ -216,7 +221,8 @@ class CustomCheck {
      *
      * @return string
      */
-    public function cleanWords($string, $replacement = '*') {
+    public function cleanWords($string, $replacement = '*')
+    {
         if ($this->hasProfanity($string)) {
             $profanity = $this->generateProfanityExpression(
                 $this->badWordsFound,
@@ -236,7 +242,8 @@ class CustomCheck {
      *
      * @return bool
      */
-    public function hasProfanity($string) {
+    public function hasProfanity($string)
+    {
         $this->badWordsFound = '';
 
         if (empty($string)) {
@@ -267,7 +274,8 @@ class CustomCheck {
     /**
      * Get bad words found
      */
-    public function getBadWordsFound() {
+    public function getBadWordsFound()
+    {
         return $this->badWordsFound;
     }
 
@@ -280,7 +288,8 @@ class CustomCheck {
      *
      * @return mixed
      */
-    protected function generateProfanityExpression($word, $characterExpressions, $separatorExpression) {
+    protected function generateProfanityExpression($word, $characterExpressions, $separatorExpression)
+    {
         $expression = '/\b' . preg_replace(
             array_keys($characterExpressions),
             array_values($characterExpressions),
@@ -298,7 +307,8 @@ class CustomCheck {
      *
      * @return bool
      */
-    private function stringHasProfanity($string, $profanity) {
+    private function stringHasProfanity($string, $profanity)
+    {
         return preg_match($profanity, $string) === 1;
     }
 }
