@@ -10,7 +10,7 @@ Valora a los profesores de la Universidad de Málaga.
 ## Instalación
 Para poder usar WikiUMA-ng necesitas como mínimo:
 * PHP >= 8.0
-* ext-gd
+* cURL + ext
 * ext-mbstring
 * Base de datos MySQL/MariaDB/PostgreSQL
 

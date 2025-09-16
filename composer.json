@@ -16,6 +16,8 @@
         }
     ],
     "require": {
+        "ext-mbstring": "*",
+        "ext-curl": "*",
         "league/route": "^6.2",
         "laminas/laminas-diactoros": "^3.6",
         "laminas/laminas-httphandlerrunner": "^2.12",
@@ -27,5 +29,9 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.24"
+    },
+    "suggest": {
+        "ext-apcu": "APCu cache support",
+        "ext-redis": "Redis cache support"
     }
 }
