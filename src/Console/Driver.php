@@ -1,6 +1,7 @@
 <?php
 namespace App\Console;
 
+use App\Console\Modules\MigrateOldModule;
 use App\Console\Modules\ReportsModule;
 use App\Console\Modules\SeederModule;
 use App\Console\Modules\TagsModule;
@@ -19,6 +20,10 @@ class Driver extends Base implements IBase
         [
             'name' => 'Seed',
             'runner' => [SeederModule::class, 'entrypoint'],
+        ],
+        [
+            'name' => 'Migrate from old version',
+            'runner' => [MigrateOldModule::class, 'entrypoint'],
         ],
     ];
 
