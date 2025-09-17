@@ -2,6 +2,7 @@
 namespace App\Console;
 
 use App\Console\Modules\ReportsModule;
+use App\Console\Modules\SeederModule;
 use App\Console\Modules\TagsModule;
 
 class Driver extends Base implements IBase
@@ -14,6 +15,10 @@ class Driver extends Base implements IBase
         [
             'name' => 'Reports',
             'runner' => [ReportsModule::class, 'entrypoint'],
+        ],
+        [
+            'name' => 'Seed',
+            'runner' => [SeederModule::class, 'entrypoint'],
         ],
     ];
 
