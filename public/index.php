@@ -40,6 +40,8 @@ $router->get('/search', [SearchController::class, 'index']);
 $router->get('/challenge', [ChallengeController::class, 'index']);
 
 $router->post('/reviews', [ReviewsController::class, 'create']);
+$router->get('/reviews/{review_id:number}/report', [ReviewsController::class, 'reportIndex']);
+$router->post('/reviews/{review_id:number}/report', [ReviewsController::class, 'reportCreate']);
 
 if (Env::app_debug()) {
     $router->group('/dev', function (RouteGroup $route) {

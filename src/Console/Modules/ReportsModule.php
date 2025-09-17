@@ -29,10 +29,10 @@ class ReportsModule extends Base implements IBase
         foreach ($reports as $i => $report) {
             $num = $i + 1;
             $this->cli->bold("Report $num / $count:");
-            $this->cli->out($report->message);
+            $this->cli->out(strip_tags($report->message));
             $this->cli->br();
             $this->cli->bold('Original message:');
-            $this->cli->out($report->review->message);
+            $this->cli->out(strip_tags($report->review->message));
         }
     }
 }
