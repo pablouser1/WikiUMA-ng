@@ -3,9 +3,11 @@
 namespace App\Wrappers;
 
 /**
+ * Profanity filter.
+ *
  * Modified class from developerdino/ProfanityFilter
- * with some improvements not merged yet
- * @link https://github.com/developerdino/ProfanityFilter
+ * with some improvements not merged yet.
+ *
  * @link https://github.com/developerdino/ProfanityFilter/pull/39
  * @link https://github.com/developerdino/ProfanityFilter/pull/43
  */

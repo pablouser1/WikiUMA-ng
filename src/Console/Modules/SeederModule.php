@@ -5,8 +5,8 @@ use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
-use App\Wrappers\Profanity;
 use Faker\Generator;
 
 class SeederModule extends Base implements IBase
@@ -33,11 +33,13 @@ class SeederModule extends Base implements IBase
             return;
         }
 
+        $checker = new CustomCheck;
+
         $review_teacher = new Review([
             'target' => self::DEFAULT_TEACHER,
             'username' => $this->faker->optional()->userName(),
             'note' => $this->faker->numberBetween(0, 10),
-            'message' => Profanity::filter($this->__message_with_spice()),
+            'message' => $checker->cleanWords($this->__message_with_spice()),
             'votes' => $this->faker->numberBetween(0, 100),
             'type' => ReviewTypesEnum::TEACHER,
         ]);
@@ -47,7 +49,7 @@ class SeederModule extends Base implements IBase
             'target' => self::DEFAULT_SUBJECT,
             'username' => $this->faker->optional()->userName(),
             'note' => $this->faker->numberBetween(0, 10),
-            'message' => Profanity::filter($this->__message_with_spice()),
+            'message' => $checker->cleanWords($this->__message_with_spice()),
             'votes' => $this->faker->numberBetween(0, 100),
             'type' => ReviewTypesEnum::SUBJECT,
         ]);

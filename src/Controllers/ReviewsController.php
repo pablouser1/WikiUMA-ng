@@ -6,6 +6,7 @@ use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
+use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
@@ -48,13 +49,15 @@ class ReviewsController
             'max_delimiters_per_line' => 200,
         ]);
 
+        $checker = new CustomCheck;
+
         $target = $body['target'];
-        $msg = Profanity::filter($converter->convert(trim($body['message'])));
+        $msg = $checker->cleanWords($converter->convert(trim($body['message'])));
         $note = intval($body['note']);
         // Optional
         $username = null;
         if (isset($body['username']) && !empty($body['username'])) {
-            $username = Profanity::filter(trim($body['username']));
+            $username = $checker->cleanWords(trim($body['username']));
         }
 
         $tags = isset($body['tags']) && is_array($body['tags']) ? $body['tags'] : null;
