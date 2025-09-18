@@ -13,19 +13,8 @@
 ?>
 
 <section class="section">
-    <div class="block">
-        <div class="container">
-            <?php if ($reviews->isEmpty()): ?>
-                <?php $this->insert('partials/reviews-empty') ?>
-            <?php else: ?>
-                <?php foreach ($reviews as $review): ?>
-                    <?php $this->insert('partials/review', ['review' => $review, 'voting' => true, 'controls' => true]) ?>
-                <?php endforeach ?>
-            <?php endif ?>
-        </div>
-    </div>
-    <div class="block">
-        <div class="container">
+    <div class="container">
+        <div class="block">
             <p class="title has-text-centered">Profesores</p>
             <?php $this->insert('partials/search-client') ?>
             <?php foreach ($asignatura->grupos as $grupo): ?>
@@ -42,10 +31,9 @@
                 </div>
             <?php endforeach ?>
         </div>
-    </div>
-    <div class="block">
-        <div class="container">
-            <?php $this->insert('partials/review-new', [
+        <div class="block">
+            <?php $this->insert('partials/reviews', [
+                'reviews' => $reviews,
                 'tags' => $tags,
                 'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),
                 'type' => \App\Enums\ReviewTypesEnum::SUBJECT,
