@@ -11,7 +11,7 @@
                     <?php if($review->accepted_report === null): ?>
                         <?= $this->e($review->username) ?>
                     <?php else: ?>
-                        <span class="tag is-danger">Eliminado</span>
+                        <span class="tag is-danger">No disponible</span>
                     <?php endif ?>
                 </strong>
             </p>
@@ -20,7 +20,7 @@
                     <i>Este comentario ha sido eliminado por la administración.</i>
                 </p>
                 <?php if ($review->accepted_report->reason !== null): ?>
-                    <p>Motivo: <?= $this->e($review->accepted_report->reason) ?></p>
+                    <p><b>Motivo</b>: <?= $this->e($review->accepted_report->reason) ?></p>
                 <?php endif ?>
             <?php else: ?>
                 <?= $review->message ?>
