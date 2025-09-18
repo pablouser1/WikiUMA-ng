@@ -44,7 +44,9 @@ class ProfesoresController
             return ErrorHandler::showFromApiRes($profesor);
         }
 
-        $reviews = Review::where('target', '=', $profesor->data->idnc)->where('type', '=', ReviewTypesEnum::TEACHER)->get();
+        $reviews = Review::where('target', '=', $profesor->data->idnc)
+            ->where('type', '=', ReviewTypesEnum::TEACHER)
+            ->get();
         $tags = Tag::all();
 
         return new HtmlResponse(Plates::render('views/profesor', [

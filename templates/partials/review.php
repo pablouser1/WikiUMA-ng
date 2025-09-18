@@ -25,7 +25,7 @@
             <?php else: ?>
                 <?= $review->message ?>
             <?php endif ?>
-            <?php if (isset($review->tags) && count($review->tags) > 0): ?>
+            <?php if (isset($review->tags) && $review->tags->isNotEmpty()): ?>
                 <div class="tags">
                     <?php foreach ($review->tags as $tag): ?>
                         <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
