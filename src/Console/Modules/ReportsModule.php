@@ -15,6 +15,21 @@ class ReportsModule extends Base implements IBase
         ],
     ];
 
+    private const array ACTIONS = [
+        [
+            'name' => 'Accept',
+            'runner' => [self::class, 'actions_accept'],
+        ],
+        [
+            'name' => 'Deny',
+            'runner' => [self::class, 'actions_deny'],
+        ],
+        [
+            'name' => 'Ignore',
+            'runner' => [self::class, 'actions_ignore'],
+        ],
+    ];
+
     public function entrypoint(): void
     {
         $this->cli->bold()->out('Reports');
@@ -33,6 +48,32 @@ class ReportsModule extends Base implements IBase
             $this->cli->br();
             $this->cli->bold('Original message:');
             $this->cli->out(strip_tags($report->review->message));
+
+            $this->radio(self::ACTIONS, [
+                'report' => $report,
+            ]);
         }
+    }
+
+    public function actions_accept(Report $report): void
+    {
+        $report->status = ReportStatusEnum::ACCEPTED;
+        $report->save();
+        $this->cli->bold('Report accepted.');
+        // TODO: Send email if available
+    }
+
+    public function actions_deny(Report $report): void
+    {
+        $report->status = ReportStatusEnum::DENIED;
+        $report->save();
+        $this->cli->bold('Report denied.');
+        // TODO: Send email if available
+    }
+
+    public function actions_ignore(Report $report): void
+    {
+        $this->cli->bold('Report ignored.');
+        // TODO: Send email if available
     }
 }
