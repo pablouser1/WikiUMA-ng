@@ -57,12 +57,7 @@
                 <div class="control">
                     <div class="tags">
                         <?php foreach ($tags as $tag): ?>
-                            <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
-                                <label class="checkbox">
-                                    <input name="tags[]" value="<?= $this->e($tag->id) ?>" type="checkbox" />
-                                    <?php $this->insert('partials/tag', ['tag' => $tag]) ?>
-                                </label>
-                            </span>
+                            <?php $this->insert('partials/tag-edit', ['tag' => $tag]) ?>
                         <?php endforeach ?>
                     </div>
                 </div>

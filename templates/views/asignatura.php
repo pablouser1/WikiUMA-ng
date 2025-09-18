@@ -6,11 +6,15 @@
 ])
 ?>
 
-<?php $this->insert('partials/hero', [
-    'title' => $asignatura->nombre,
-    'subtitle' => "{$asignatura->curso} año - {$asignatura->cuatrimestre} cuatrimestre"
-])
-?>
+<section class="hero is-small has-text-centered">
+    <div class="hero-body">
+        <p class="title"><?=$this->e($asignatura->nombre)?></p>
+        <p class="subtitle"><?=$this->e($asignatura->curso)?> año - <?=$this->e($asignatura->cuatrimestre) ?> cuatrimestre</p>
+        <?php if ($stats->total > 0): ?>
+            <?php $this->insert('partials/stats', ['stats' => $stats]) ?>
+        <?php endif ?>
+    </div>
+</section>
 
 <section class="section">
     <div class="container">

@@ -20,6 +20,7 @@ CREATE TABLE `tags` (
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `name` varchar(32) NOT NULL,
   `type` tinyint(1) NOT NULL DEFAULT 0,
+  `for`  tinyint(1) NOT NULL DEFAULT 0,
   `icon` varchar(4) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `tags_UN` (`name`)

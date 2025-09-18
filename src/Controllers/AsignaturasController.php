@@ -4,9 +4,11 @@ namespace App\Controllers;
 use App\Api;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use App\Models\Tag;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
 use App\Wrappers\Plates;
+use App\Wrappers\Stats;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -31,13 +33,19 @@ class AsignaturasController
             return MsgHandler::errorFromApi($asignatura);
         }
 
-        $reviews = Review::where('target', '=', Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']))
+        $id = Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
+
+        $reviews = Review::where('target', '=', $id)
             ->where('type', '=', ReviewTypesEnum::SUBJECT)
             ->get();
+        $stats = Stats::fromTarget($id, ReviewTypesEnum::SUBJECT);
+        $tags = Tag::where('for', '=', ReviewTypesEnum::TEACHER)->get();
 
         return new HtmlResponse(Plates::render('views/asignatura', [
             'asignatura' => $asignatura->data,
             'reviews' => $reviews,
+            'tags' => $tags,
+            'stats' => $stats,
             'plan_id' => $args['plan_id'],
         ]));
     }

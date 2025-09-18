@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use App\Enums\ReviewTypesEnum;
 use App\Enums\TagTypesEnum;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Tag extends Model
 {
@@ -12,6 +14,7 @@ class Tag extends Model
     protected $fillable = [
         'name',
         'type',
+        'for',
         'icon',
     ];
 
@@ -19,6 +22,13 @@ class Tag extends Model
     {
         return [
             'type' => TagTypesEnum::class,
+            'for' => ReviewTypesEnum::class,
         ];
     }
+
+    public function reviews(): BelongsToMany
+    {
+        return $this->belongsToMany(Review::class, 'reviews_tags');
+    }
+
 }

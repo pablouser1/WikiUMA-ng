@@ -9,6 +9,7 @@ use App\Models\Tag;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
+use App\Wrappers\Stats;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -48,11 +49,13 @@ class ProfesoresController
         $reviews = Review::where('target', '=', $profesor->data->idnc)
             ->where('type', '=', ReviewTypesEnum::TEACHER)
             ->get();
-        $tags = Tag::all();
+        $stats = Stats::fromTarget($profesor->data->idnc, ReviewTypesEnum::TEACHER);
+        $tags = Tag::where('for', '=', ReviewTypesEnum::TEACHER)->get();
 
         return new HtmlResponse(Plates::render('views/profesor', [
             'profesor' => $profesor->data,
             'reviews' => $reviews,
+            'stats' => $stats,
             'tags' => $tags,
         ]));
     }
