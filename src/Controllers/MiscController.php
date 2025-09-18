@@ -11,16 +11,6 @@ use Laminas\Diactoros\Response\HtmlResponse;
 class MiscController
 {
     /**
-     * Main site.
-     *
-     * Route: `/`.
-     */
-    public static function home(): Response
-    {
-        return self::__render('views/home');
-    }
-
-    /**
      * About site, with info about the site and external libraries.
      *
      * Route: `/about`.

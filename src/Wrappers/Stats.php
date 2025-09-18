@@ -9,6 +9,15 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Stats
 {
+    public static function all(): object {
+        $reviews = Review::all();
+        $count = $reviews->count();
+
+        return (object) [
+            'total' => $count,
+        ];
+    }
+
     public static function fromTarget(string $target, ReviewTypesEnum $type): object
     {
         $reviews = Review::where('target', '=', $target)

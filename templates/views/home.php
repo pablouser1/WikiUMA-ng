@@ -16,4 +16,6 @@
         <?php endforeach ?>
     </div>
     <?php $this->insert('partials/search-server') ?>
+    <hr />
+    <p>Valoraciones totales: <?= $this->e($stats->total) ?></p>
 </div>
