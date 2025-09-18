@@ -16,7 +16,7 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class ProfesoresController
 {
-    public static function index(ServerRequestInterface $request)
+    public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
         $api = new Api;

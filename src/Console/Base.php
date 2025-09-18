@@ -12,7 +12,7 @@ abstract class Base
         $this->cli = $cli;
     }
 
-    protected function radio(array $options)
+    protected function radio(array $options): void
     {
         $names = array_column($options, 'name');
         $input = $this->cli->radio("Choose an option:", $names);
@@ -30,7 +30,7 @@ abstract class Base
         call_user_func($runner);
     }
 
-    protected function radioSection()
+    protected function radioSection(): void
     {
         $this->radio([
             [
