@@ -7,11 +7,12 @@ use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
 use App\Models\Tag;
 use App\Wrappers\Env;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
+use League\Route\Http\Exception\BadRequestException;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ProfesoresController
@@ -36,12 +37,12 @@ class ProfesoresController
     private static function __byEmail(string $email, Api $api): Response
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            return self::__invalidParams();
+            throw self::__invalidParams();
         }
 
         $profesor = $api->profesor($email);
         if (!$profesor->success) {
-            return ErrorHandler::showFromApiRes($profesor);
+            return MsgHandler::errorFromApi($profesor);
         }
 
         $reviews = Review::where('target', '=', $profesor->data->idnc)
@@ -60,7 +61,7 @@ class ProfesoresController
     {
         $profesor = $api->profesorWeb($idnc);
         if (!$profesor->success) {
-            return self::__invalidParams();
+            throw self::__invalidParams();
         }
 
         return new RedirectResponse(Env::app_url('/profesores', [
@@ -68,8 +69,8 @@ class ProfesoresController
         ]));
     }
 
-    private static function __invalidParams(): Response
+    private static function __invalidParams(): BadRequestException
     {
-        return ErrorHandler::show(400, Messages::INVALID_REQUEST, Messages::MUST_SEND_PARAMS);
+        return new BadRequestException(Messages::MUST_SEND_PARAMS);
     }
 }

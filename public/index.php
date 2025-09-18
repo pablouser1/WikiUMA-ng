@@ -14,7 +14,7 @@ use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
 use App\Controllers\TitulacionesController;
 use App\Wrappers\Env;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Http\Exception;
 use League\Route\RouteGroup;
@@ -55,14 +55,14 @@ $response = null;
 try {
     $response = $router->dispatch($request);
 } catch (Exception $e) {
-    $response = ErrorHandler::show($e->getStatusCode(), "Error {$e->getStatusCode()}", $e->getMessage());
+    $response = MsgHandler::error($e->getStatusCode(), "Error {$e->getStatusCode()}", $e->getMessage());
 } catch (\Throwable $e) {
     // Rethrow if debugging
     if (Env::app_debug()) {
         throw $e;
     }
 
-    $response = ErrorHandler::show(500, Messages::UNKNOWN_ERROR, $e->getMessage());
+    $response = MsgHandler::error(500, Messages::UNKNOWN_ERROR, $e->getMessage());
 }
 
 // send the response to the browser

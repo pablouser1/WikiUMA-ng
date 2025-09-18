@@ -7,7 +7,7 @@ use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\Env;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
 use App\Wrappers\Plates;
 use App\Wrappers\Profanity;
@@ -15,26 +15,29 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\CommonMark\CommonMarkConverter;
+use League\Route\Http\Exception\BadRequestException;
+use League\Route\Http\Exception\ForbiddenException;
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ReviewsController
 {
-    public static function create(ServerRequestInterface $request): RedirectResponse|Response
+    public static function create(ServerRequestInterface $request): RedirectResponse
     {
         $body = $request->getParsedBody();
         if (!($body !== null && isset($body['target'], $body['type'], $body['message'], $body['note'], $body['altcha']) && is_numeric($body['note']))) {
-            return self::__invalidBody();
+            throw self::__invalidBody();
         }
 
         $type = ReviewTypesEnum::tryFrom($body['type']);
         if ($type === null) {
-            return self::__invalidBody();
+            throw self::__invalidBody();
         }
 
         // Check captcha first
         $altcha = new Altcha(Env::app_key());
         if (!$altcha->verifySolution($body['altcha'], true)) {
-            return self::__invalidBody();
+            throw self::__invalidBody();
         }
 
         // Captcha is OK from now on
@@ -82,12 +85,17 @@ class ReviewsController
     public static function reportIndex(ServerRequestInterface $request, array $args): Response
     {
         $review_id = $args['review_id'];
+
+        /** @var ?Review */
         $review = Review::find($review_id);
 
         if ($review === null) {
-            // TODO: to Messages::class
-            return ErrorHandler::show(404, 'Not found', 'Report not found');
+            throw new NotFoundException('Valoración no encontrada');
         }
+
+        if ($review->accepted_report !== null) {
+            throw new ForbiddenException('Esta valoración ya ha sido eliminada');
+        };
 
         return new HtmlResponse(Plates::render('views/report', [
             'review' => $review,
@@ -107,19 +115,18 @@ class ReviewsController
         $review = Review::find($review_id);
 
         if ($review === null) {
-            // TODO: to Messages::class
-            return ErrorHandler::show(404, 'Not found', 'Report not found');
+            throw new NotFoundException('Valoración no encontrada');
         }
 
         $body = $request->getParsedBody();
         if (!($body !== null && isset($body['message'], $body['altcha']))) {
-            return self::__invalidBody();
+            throw self::__invalidBody();
         }
 
         // Check captcha first
         $altcha = new Altcha(Env::app_key());
         if (!$altcha->verifySolution($body['altcha'], true)) {
-            return self::__invalidBody();
+            throw self::__invalidBody();
         }
 
         $converter = new CommonMarkConverter([
@@ -144,23 +151,34 @@ class ReviewsController
 
         $report->save();
 
-        return self::__redirect($report->review->target, $report->review->type);
+        return MsgHandler::show(
+            200,
+            'Queja creada',
+            'Tu queja ha sido creada y está siendo valorada por la administración de WikiUMA.',
+            self::__buildRedirectUrl($review->target, $review->type),
+        );
+
     }
 
-    private static function __invalidBody(): Response
+    private static function __invalidBody(): BadRequestException
     {
-        return ErrorHandler::show(400, Messages::INVALID_REQUEST, Messages::MUST_SEND_PARAMS);
+        return new BadRequestException(Messages::MUST_SEND_PARAMS);
     }
 
     private static function __redirect(string $target, ReviewTypesEnum $type): Response
     {
+        return new RedirectResponse(self::__buildRedirectUrl($target, $type));
+    }
+
+    private static function __buildRedirectUrl(string $target, ReviewTypesEnum $type): string
+    {
         if ($type === ReviewTypesEnum::TEACHER) {
-            return new RedirectResponse(Env::app_url('/profesores', ['idnc' => $target]));
+            return Env::app_url('/profesores', ['idnc' => $target]);
         } else if ($type === ReviewTypesEnum::SUBJECT) {
             $arr = Misc::planAsignaturaSplit($target);
-            return new RedirectResponse(Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]));
+            return Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]);
         }
 
-        return new RedirectResponse(Env::app_url('/'));
+        return Env::app_url('/');
     }
 }

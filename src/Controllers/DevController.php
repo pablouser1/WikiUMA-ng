@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -21,6 +21,6 @@ class DevController
     public static function reactions(ServerRequestInterface $request, array $args): Response
     {
         $code = intval($args['code']);
-        return ErrorHandler::show($code, "Error $code", 'Example body');
+        return MsgHandler::error($code, "Error $code", 'Example body');
     }
 }

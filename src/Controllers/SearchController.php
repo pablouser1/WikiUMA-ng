@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -20,7 +20,7 @@ class SearchController {
         $search = $api->buscar($nombre, $apellido_1, $apellido_2);
 
         if (!$search->success) {
-            return ErrorHandler::showFromApiRes($search);
+            return MsgHandler::errorFromApi($search);
         }
 
         return new HtmlResponse(Plates::render('views/search', [

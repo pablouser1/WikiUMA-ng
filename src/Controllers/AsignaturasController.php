@@ -4,7 +4,7 @@ namespace App\Controllers;
 use App\Api;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
@@ -28,7 +28,7 @@ class AsignaturasController
         $api = new Api;
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
         if (!$asignatura->success) {
-            return ErrorHandler::showFromApiRes($asignatura);
+            return MsgHandler::errorFromApi($asignatura);
         }
 
         $reviews = Review::where('target', '=', Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']))

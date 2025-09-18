@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -15,7 +15,7 @@ class PlanesController
         $plan_id = $args['plan_id'];
         $plan = $api->plan($plan_id);
         if (!$plan->success) {
-            return ErrorHandler::showFromApiRes($plan);
+            return MsgHandler::errorFromApi($plan);
         }
 
         $cursos = [];

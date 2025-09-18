@@ -28,6 +28,9 @@ class Review extends Model
         ];
     }
 
+    /**
+     * Get first accepted report linked to review.
+     */
     public function getAcceptedReportAttribute(): ?Report
     {
         return $this->reports()->where('status', '=', ReportStatusEnum::ACCEPTED)->first();

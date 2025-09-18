@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 
@@ -21,7 +21,7 @@ class CentrosController
         $api = new Api;
         $centros = $api->centros();
         if (!$centros->success) {
-            return ErrorHandler::showFromApiRes($centros);
+            return MsgHandler::errorFromApi($centros);
         }
 
         return new HtmlResponse(Plates::render('views/centros', ['centros' => $centros->data]));

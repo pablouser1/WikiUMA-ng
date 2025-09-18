@@ -15,6 +15,12 @@ abstract class Reactions
                 'alt' => 'Ryo says no',
             ],
         ],
+        403 => [
+            [
+                'name' => 'naonao.jpg',
+                'alt' => 'Não, não amigão',
+            ],
+        ],
         404 => [
             [
                 'name' => '52.webp',

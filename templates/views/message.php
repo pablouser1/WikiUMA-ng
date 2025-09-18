@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/hero', ['title' => 'Inicio', 'withNavbar' => true,]) ?>
+<?php $this->layout('layouts/hero', ['title' => $title, 'withNavbar' => true,]) ?>
 
 <?php if (isset($reaction) && !empty($reaction)): ?>
     <figure class="image is-inline-block is-1by1 mb-2" style="width: 216px; height: 216px;">
@@ -12,4 +12,8 @@
     <p class="mb-4"><?= $this->e($body) ?></p>
 <?php endif ?>
 
-<button type="button" class="button is-link" onclick="history.back();">Atrás</a>
+<?php if (isset($back)): ?>
+    <a href="<?= $back ?>" class="button">Atrás</a>
+<?php else: ?>
+    <button type="button" class="button is-link" onclick="history.back();">Atrás</a>
+<?php endif ?>

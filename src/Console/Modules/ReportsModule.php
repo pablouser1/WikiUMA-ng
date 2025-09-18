@@ -5,9 +5,19 @@ use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReportStatusEnum;
 use App\Models\Report;
+use App\Wrappers\Mail;
+use League\CLImate\CLImate;
 
 class ReportsModule extends Base implements IBase
 {
+    private Mail $mail;
+
+    public function __construct(CLImate $cli)
+    {
+        parent::__construct($cli);
+        $this->mail = new Mail;
+    }
+
     private const array OPTIONS = [
         [
             'name' => 'Look pending',
@@ -18,15 +28,15 @@ class ReportsModule extends Base implements IBase
     private const array ACTIONS = [
         [
             'name' => 'Accept',
-            'runner' => [self::class, 'actions_accept'],
+            'runner' => [self::class, 'actionsAccept'],
         ],
         [
             'name' => 'Deny',
-            'runner' => [self::class, 'actions_deny'],
+            'runner' => [self::class, 'actionsDeny'],
         ],
         [
-            'name' => 'Ignore',
-            'runner' => [self::class, 'actions_ignore'],
+            'name' => 'Skip',
+            'runner' => [self::class, 'actionsSkip'],
         ],
     ];
 
@@ -55,25 +65,42 @@ class ReportsModule extends Base implements IBase
         }
     }
 
-    public function actions_accept(Report $report): void
+    public function actionsAccept(Report $report): void
     {
-        $report->status = ReportStatusEnum::ACCEPTED;
-        $report->save();
-        $this->cli->bold('Report accepted.');
-        // TODO: Send email if available
+        $this->__actionsCommon($report, ReportStatusEnum::ACCEPTED);
     }
 
-    public function actions_deny(Report $report): void
+    public function actionsDeny(Report $report): void
     {
-        $report->status = ReportStatusEnum::DENIED;
-        $report->save();
-        $this->cli->bold('Report denied.');
-        // TODO: Send email if available
+        $this->__actionsCommon($report, ReportStatusEnum::DENIED);
     }
 
-    public function actions_ignore(Report $report): void
+    public function actionsSkip(Report $report): void
     {
-        $this->cli->bold('Report ignored.');
-        // TODO: Send email if available
+        $this->__actionsCommon($report, ReportStatusEnum::PENDING);
+    }
+
+    private function __actionsCommon(Report $report, ReportStatusEnum $status): void
+    {
+        if ($status === ReportStatusEnum::PENDING) {
+            return;
+        }
+
+        $report->status = $status;
+
+        // Choose reason
+        $in = $this->cli->input("Choose a reason (or leave empty for none): ");
+        $reason = $in->prompt();
+
+        if (!empty($reason)) {
+            $report->reason = $reason;
+        }
+
+        // Save and send email if available
+        $report->save();
+        if (!empty($report->email)) {
+            $this->mail->reportStatus($report);
+        }
+        $this->cli->backgroundGreen()->bold('OK');
     }
 }

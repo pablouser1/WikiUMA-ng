@@ -32,7 +32,7 @@
                     <label class="label">
                         <span class="icon-text">
                             <span class="icon">
-                                <?php $this->insert('partials/icon', ['icon' => 'user']) ?>
+                                <?php $this->insert('partials/icon', ['icon' => 'mail']) ?>
                             </span>
                             <span>Correo electrónico (opcional)</span>
                         </span>
@@ -40,28 +40,34 @@
                     <div class="control">
                         <input name="email" class="input" type="email" autocomplete="off" />
                     </div>
-                    <p class="help">Lo usamos para contactarte en caso de necesitar información adicional.</p>
-                </div>
-                <div class="field">
-                    <label class="checkbox">
-                        <input name="accepted" type="checkbox" required>
-                        He leído y acepto los <a href="<?= $this->url('/legal') ?>">términos de uso</a>
-                    </label>
+                    <p class="help">Lo usamos para mantenerte informad@ acerca de tu queja.</p>
                 </div>
                 <div class="field">
                     <altcha-widget challengeurl="<?= $this->url('/challenge') ?>"></altcha-widget>
                 </div>
                 <div class="field">
-                    <div class="control">
-                        <button type="submit" class="button is-success">
-                            <span class="icon-text">
-                                <span class="icon">
-                                    <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
-                                </span>
-                                <span>Enviar</span>
-                            </span>
-                        </button>
-                    </div>
+                    <nav class="level">
+                        <div class="level-left">
+                            <div class="level-item">
+                                <div class="control">
+                                    <button type="submit" class="button is-success">
+                                        <span class="icon-text">
+                                            <span class="icon">
+                                                <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
+                                            </span>
+                                            <span>Enviar</span>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="level-right">
+                            <label class="checkbox">
+                                <input name="accepted" type="checkbox" required>
+                                He leído y acepto los <a href="<?= $this->url('/legal') ?>">términos de uso</a>
+                            </label>
+                        </div>
+                    </nav>
                 </div>
             </form>
         </div>

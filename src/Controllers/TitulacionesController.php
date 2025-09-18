@@ -2,7 +2,7 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Wrappers\ErrorHandler;
+use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -14,7 +14,7 @@ class TitulacionesController
         $api = new Api;
         $titulaciones = $api->titulaciones($args['centro_id']);
         if (!$titulaciones->success) {
-            return ErrorHandler::showFromApiRes($titulaciones);
+            return MsgHandler::errorFromApi($titulaciones);
         }
         return new HtmlResponse(Plates::render('views/titulaciones', ['titulaciones' => $titulaciones->data]));
     }
