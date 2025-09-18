@@ -69,14 +69,7 @@ class ReviewsController
             $review->tags()->attach($tags);
         }
 
-        if ($type === ReviewTypesEnum::TEACHER) {
-            return new RedirectResponse(Env::app_url('/profesores', ['idnc' => $target]));
-        } else if ($type === ReviewTypesEnum::SUBJECT) {
-            $arr = Misc::planAsignaturaSplit($target);
-            return new RedirectResponse(Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]));
-        }
-
-        return new RedirectResponse(Env::app_url('/'));
+        return self::__redirect($target, $type);
     }
 
     /**
@@ -151,11 +144,23 @@ class ReviewsController
 
         $report->save();
 
-        return new RedirectResponse(Env::app_url('/'));
+        return self::__redirect($report->review->target, $report->review->type);
     }
 
     private static function __invalidBody(): Response
     {
         return ErrorHandler::show(400, Messages::INVALID_REQUEST, Messages::MUST_SEND_PARAMS);
+    }
+
+    private static function __redirect(string $target, ReviewTypesEnum $type): Response
+    {
+        if ($type === ReviewTypesEnum::TEACHER) {
+            return new RedirectResponse(Env::app_url('/profesores', ['idnc' => $target]));
+        } else if ($type === ReviewTypesEnum::SUBJECT) {
+            $arr = Misc::planAsignaturaSplit($target);
+            return new RedirectResponse(Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]));
+        }
+
+        return new RedirectResponse(Env::app_url('/'));
     }
 }
