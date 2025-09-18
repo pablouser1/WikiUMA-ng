@@ -12,6 +12,7 @@ Para poder usar WikiUMA-ng necesitas como mínimo:
 * PHP >= 8.0
 * cURL + ext
 * ext-mbstring
+* Dart-Sass
 * Base de datos MySQL/MariaDB/PostgreSQL
 
 Recomendado:
@@ -20,6 +21,11 @@ Recomendado:
 
 ```bash
 composer install # Usa --no-dev si estás en producción
+```
+
+Una vez instaladas las dependencias, compila bulma usando:
+```bash
+composer run-script bulma
 ```
 
 ## Docs

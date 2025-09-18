@@ -4,3 +4,7 @@
 /node_modules
 /.phpdoc
 /docs
+
+# CSS
+/public/css/vendor/*
+!/public/css/vendor/.gitkeep
