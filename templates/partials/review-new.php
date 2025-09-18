@@ -1,5 +1,5 @@
 <div class="box">
-    <p class="title has-text-centered">Escribe tu reseña</p>
+    <p class="title has-text-centered">Escribe tu opinión</p>
     <form action="<?= $this->url('/reviews') ?>" method="POST">
         <input name="target" value="<?=$this->e($target)?>" type="hidden" hidden readonly />
         <input name="type" value="<?=$this->e($type->value)?>" type="hidden" hidden readonly />
@@ -9,7 +9,7 @@
                     <span class="icon">
                         <?php $this->insert('partials/icon', ['icon' => 'empty-page']) ?>
                     </span>
-                    <span>Reseña</span>
+                    <span>Opinión</span>
                 </span>
             </label>
             <div class="control">

@@ -7,9 +7,18 @@
     <div class="media-content">
         <div class="content">
             <p>
-                <strong><?= $this->e($review->username) ?></strong>
+                <strong><?= $this->e($review->accepted_report === null ? $review->username : 'Eliminado') ?></strong>
             </p>
-            <?= $review->message ?>
+            <?php if($review->accepted_report !== null): ?>
+                <p>
+                    <i>Este comentario ha sido eliminado por la administración.</i>
+                </p>
+                <?php if ($review->accepted_report->reason !== null): ?>
+                    <p>Motivo: <?= $this->e($review->accepted_report->reason) ?></p>
+                <?php endif ?>
+            <?php else: ?>
+                <?= $review->message ?>
+            <?php endif ?>
             <?php if (isset($review->tags) && count($review->tags) > 0): ?>
                 <div class="tags">
                     <?php foreach ($review->tags as $tag): ?>
@@ -26,7 +35,7 @@
                     <span class="icon" style="color: #e25555;">&#9829;</span>
                     <span><?= $this->e($review->votes) ?></span>
                 </p>
-                <?php if (isset($voting) && $voting): ?>
+                <?php if (isset($voting) && $voting && $review->accepted_report === null): ?>
                     <div class="level-item">
                         <nav class="breadcrumb has-bullet-separator is-small" aria-label="breadcrumbs">
                             <ul>
@@ -37,7 +46,7 @@
                     </div>
                 <?php endif ?>
             </div>
-            <?php if (isset($controls) && $controls): ?>
+            <?php if (isset($controls) && $controls && $review->accepted_report === null): ?>
                 <div class="level-right">
                     <div class="level-item">
                         <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
