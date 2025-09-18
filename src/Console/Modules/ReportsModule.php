@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Modules;
 
 use App\Console\Base;
