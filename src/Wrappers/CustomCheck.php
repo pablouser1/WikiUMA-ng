@@ -13,7 +13,7 @@ namespace App\Wrappers;
  */
 class CustomCheck
 {
-    const SEPARATOR_PLACEHOLDER = '{!!}';
+    public const SEPARATOR_PLACEHOLDER = '{!!}';
 
     /**
      * Escaped separator characters

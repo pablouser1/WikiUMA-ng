@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Modules;
 
 use App\Api;
@@ -13,7 +14,7 @@ class MigrateOldModule extends Base implements IBase
         $path = $in->prompt();
 
         $db = new \Sqlite3($path, SQLITE3_OPEN_READONLY);
-        $api = new Api;
+        $api = new Api();
 
         $this->__migrateTeachers($db, $api);
 

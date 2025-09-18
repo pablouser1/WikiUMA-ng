@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use AltchaOrg\Altcha\Altcha;
@@ -49,7 +50,7 @@ class ReviewsController
             'max_delimiters_per_line' => 200,
         ]);
 
-        $checker = new CustomCheck;
+        $checker = new CustomCheck();
 
         $target = $body['target'];
         $msg = $checker->cleanWords($converter->convert(trim($body['message'])));
@@ -177,7 +178,7 @@ class ReviewsController
     {
         if ($type === ReviewTypesEnum::TEACHER) {
             return Env::app_url('/profesores', ['idnc' => $target]);
-        } else if ($type === ReviewTypesEnum::SUBJECT) {
+        } elseif ($type === ReviewTypesEnum::SUBJECT) {
             $arr = Misc::planAsignaturaSplit($target);
             return Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]);
         }

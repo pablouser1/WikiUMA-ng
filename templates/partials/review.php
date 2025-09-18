@@ -8,14 +8,14 @@
         <div class="content">
             <p>
                 <strong>
-                    <?php if($review->accepted_report === null): ?>
+                    <?php if ($review->accepted_report === null): ?>
                         <?= $this->e($review->username ?? 'Anónimo') ?>
                     <?php else: ?>
                         <span class="tag is-danger">No disponible</span>
                     <?php endif ?>
                 </strong>
             </p>
-            <?php if($review->accepted_report !== null): ?>
+            <?php if ($review->accepted_report !== null): ?>
                 <p>
                     <i>Este comentario ha sido eliminado por la administración.</i>
                 </p>

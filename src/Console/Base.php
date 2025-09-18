@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Console;
+
 use Illuminate\Database\Eloquent\Collection;
 use League\CLImate\CLImate;
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Api;
@@ -27,7 +28,7 @@ class AsignaturasController
      */
     public static function index(ServerRequestInterface $request, array $args): Response
     {
-        $api = new Api;
+        $api = new Api();
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
         if (!$asignatura->success) {
             return MsgHandler::errorFromApi($asignatura);

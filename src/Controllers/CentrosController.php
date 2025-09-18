@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Api;
@@ -18,7 +19,7 @@ class CentrosController
      */
     public static function index()
     {
-        $api = new Api;
+        $api = new Api();
         $centros = $api->centros();
         if (!$centros->success) {
             return MsgHandler::errorFromApi($centros);

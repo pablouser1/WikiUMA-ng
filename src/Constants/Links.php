@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Constants;
 
 /**
  * Links used both in navbar and home.
  */
-abstract class Links {
+abstract class Links
+{
     public const array LIST = [
         [
             'name' => 'Centros',

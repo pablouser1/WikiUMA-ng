@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Api;
@@ -21,12 +22,12 @@ class ProfesoresController
     public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
-        $api = new Api;
+        $api = new Api();
 
         $response = null;
         if (isset($query['email'])) {
             $response = self::__byEmail($query['email'], $api);
-        } else if (isset($query['idnc'])) {
+        } elseif (isset($query['idnc'])) {
             $response = self::__byIdnc($query['idnc'], $api);
         } else {
             $response = self::__invalidParams();

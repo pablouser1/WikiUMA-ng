@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console;
 
 use App\Console\Modules\MigrateOldModule;

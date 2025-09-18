@@ -34,5 +34,11 @@ Con PHPDoc instalado, ejecuta:
 phpdoc run -d src -t docs
 ```
 
+## Desarrollo
+### Styling
+```bash
+./vendor/bin/php-cs-fixer fix src
+```
+
 ## TODO
 * Instrucciones de instalación

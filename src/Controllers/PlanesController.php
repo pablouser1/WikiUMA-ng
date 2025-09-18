@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Api;
@@ -11,7 +12,7 @@ class PlanesController
 {
     public static function index(ServerRequestInterface $request, array $args)
     {
-        $api = new Api;
+        $api = new Api();
         $plan_id = $args['plan_id'];
         $plan = $api->plan($plan_id);
         if (!$plan->success) {

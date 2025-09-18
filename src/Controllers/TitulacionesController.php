@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 use App\Api;
@@ -11,7 +12,7 @@ class TitulacionesController
 {
     public static function index(ServerRequestInterface $request, array $args)
     {
-        $api = new Api;
+        $api = new Api();
         $titulaciones = $api->titulaciones($args['centro_id']);
         if (!$titulaciones->success) {
             return MsgHandler::errorFromApi($titulaciones);

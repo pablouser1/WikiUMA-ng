@@ -34,7 +34,7 @@ class SeederModule extends Base implements IBase
             return;
         }
 
-        $checker = new CustomCheck;
+        $checker = new CustomCheck();
 
         $review_teacher = new Review([
             'target' => self::DEFAULT_TEACHER,

@@ -34,11 +34,11 @@ class Api
             switch ($cache) {
                 case CacheEnum::JSON:
                     // ONLY FOR DEBUGGING
-                    $this->cacheEngine = new JSONCache;
+                    $this->cacheEngine = new JSONCache();
                     break;
                 case CacheEnum::APCU:
                     // For small setups
-                    $this->cacheEngine = new ApcuCache;
+                    $this->cacheEngine = new ApcuCache();
                     break;
                 case CacheEnum::REDIS:
                     // RECOMMENDED
@@ -270,7 +270,9 @@ class Api
 
     private function __setCache(string $key, string $data): void
     {
-        if ($this->cacheEngine) $this->cacheEngine->set($key, $data);
+        if ($this->cacheEngine) {
+            $this->cacheEngine->set($key, $data);
+        }
     }
 
     private function __getUserAgent(): string

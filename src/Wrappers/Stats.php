@@ -9,7 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Stats
 {
-    public static function all(): object {
+    public static function all(): object
+    {
         $reviews = Review::all();
         $count = $reviews->count();
 

@@ -16,7 +16,7 @@ class ReportsModule extends Base implements IBase
     public function __construct(CLImate $cli)
     {
         parent::__construct($cli);
-        $this->mail = new Mail;
+        $this->mail = new Mail();
     }
 
     private const array OPTIONS = [

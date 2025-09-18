@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Models\Api;
 
 /**
  * Wrapped response from UMA servers.
  */
-class Response {
+class Response
+{
     public int $code;
     public bool $success;
     /**
@@ -13,7 +15,8 @@ class Response {
     public $data;
     public ?string $error = null;
 
-    function __construct(int $initialCode, $data, bool $isJson = true) {
+    public function __construct(int $initialCode, $data, bool $isJson = true)
+    {
         $code = $initialCode;
         // Check that it has data
         if ($data) {
@@ -34,11 +37,11 @@ class Response {
                     if (isset($jsonData->error) && $jsonData->error) {
                         $code = 404;
                         $this->error = $jsonData->nombre;
-                    // Usado en /plan, *generalmente* implica un 404
+                        // Usado en /plan, *generalmente* implica un 404
                     } elseif (isset($jsonData->creditos) && $jsonData->creditos === '') {
                         $code = 404;
                         $this->error = 'Este plan no existe';
-                    // Usado cuando SQL falla???
+                        // Usado cuando SQL falla???
                     } elseif (isset($jsonData->ERROR)) {
                         $code = 502;
                         $this->error = $jsonData->ERROR;

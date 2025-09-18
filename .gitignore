@@ -2,8 +2,13 @@
 /.vscode
 /vendor
 /node_modules
+
+# PHPDoc
 /.phpdoc
 /docs
+
+# Styling
+/.php-cs-fixer.cache
 
 # CSS
 /public/css/vendor/*

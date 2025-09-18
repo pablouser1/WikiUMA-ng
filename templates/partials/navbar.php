@@ -13,7 +13,7 @@
 
   <div id="navbar-menu" class="navbar-menu">
     <div class="navbar-start">
-      <?php foreach($this->links() as $link): ?>
+      <?php foreach ($this->links() as $link): ?>
       <a class="navbar-item" href="<?=$this->url($link['path'])?>">
            <?=$this->e($link['name'])?>
       </a>

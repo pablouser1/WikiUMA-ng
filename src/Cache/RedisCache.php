@@ -4,7 +4,6 @@ namespace App\Cache;
 
 use App\Models\Api\Response;
 
-
 /**
  * Cache using Redis. Recommended for general usage.
  */

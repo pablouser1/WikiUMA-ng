@@ -1,9 +1,11 @@
 <?php
+
 namespace App\Cache;
 
 use App\Models\Api\Response;
 
-interface ICache {
+interface ICache
+{
     /**
      * Get response from cache.
      */
