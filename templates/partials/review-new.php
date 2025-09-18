@@ -75,23 +75,23 @@
             <nav class="level">
                 <div class="level-left">
                     <div class="level-item">
-                        <div class="control">
-                            <button type="submit" class="button is-success">
-                                <span class="icon-text">
-                                    <span class="icon">
-                                        <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
-                                    </span>
-                                    <span>Enviar</span>
-                                </span>
-                            </button>
-                        </div>
+                        <label class="checkbox">
+                            <input name="accepted" type="checkbox" required>
+                            He leído y acepto los <a target="_blank" href="<?= $this->url('/legal') ?>">términos de uso</a>
+                        </label>
                     </div>
                 </div>
                 <div class="level-right">
-                    <label class="checkbox">
-                        <input name="accepted" type="checkbox" required>
-                        He leído y acepto los <a href="<?= $this->url('/legal') ?>">términos de uso</a>
-                    </label>
+                    <div class="control">
+                        <button type="submit" class="button is-success">
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
+                                </span>
+                                <span>Enviar</span>
+                            </span>
+                        </button>
+                    </div>
                 </div>
             </nav>
         </div>

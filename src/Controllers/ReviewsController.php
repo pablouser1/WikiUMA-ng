@@ -52,7 +52,7 @@ class ReviewsController
         $msg = Profanity::filter($converter->convert(trim($body['message'])));
         $note = intval($body['note']);
         // Optional
-        $username = '';
+        $username = null;
         if (isset($body['username']) && !empty($body['username'])) {
             $username = Profanity::filter(trim($body['username']));
         }
@@ -136,10 +136,10 @@ class ReviewsController
             'max_delimiters_per_line' => 200,
         ]);
 
-        $email = isset($body['email']) &&
-            !empty($body['email']) &&
-            filter_var($body['email'], FILTER_VALIDATE_EMAIL)
-            ? trim($body['email']) : null;
+        $email = null;
+        if (isset($body['email']) && !empty($body['email']) && filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
+            $email = trim($body['email']);
+        }
 
         $msg = $converter->convert(trim($body['message']));
 
