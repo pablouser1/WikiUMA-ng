@@ -7,7 +7,13 @@
     <div class="media-content">
         <div class="content">
             <p>
-                <strong><?= $this->e($review->accepted_report === null ? $review->username : 'Eliminado') ?></strong>
+                <strong>
+                    <?php if($review->accepted_report === null): ?>
+                        <?= $this->e($review->username) ?>
+                    <?php else: ?>
+                        <span class="tag is-danger">Eliminado</span>
+                    <?php endif ?>
+                </strong>
             </p>
             <?php if($review->accepted_report !== null): ?>
                 <p>
