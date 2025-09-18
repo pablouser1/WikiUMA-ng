@@ -1,11 +1,11 @@
-<?php $this->layout('layouts/default', ['title' => 'Acerca de']) ?>
+<?php $this->layout('layouts/default', ['title' => 'Legal']) ?>
 
 <?php $this->insert('partials/hero', [
     'title' => 'Legal',
 ])
-    ?>
+?>
 
-<div class="container">
+<section class="section">
     <div class="content">
         <p class="title">Términos de uso</p>
         <ul>
@@ -37,4 +37,4 @@
     <div class="content">
         <p><strong>Al usar el servicio confirmas haber leído y aceptado los términos de uso.</strong></p>
     </div>
-</div>
+</section>

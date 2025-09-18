@@ -11,5 +11,6 @@
 <body>
     <?php $this->insert('partials/navbar') ?>
     <?=$this->section('content')?>
+    <?php $this->insert('partials/footer') ?>
 </body>
 </html>

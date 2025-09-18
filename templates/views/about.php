@@ -2,7 +2,6 @@
 
 <?php $this->insert('partials/hero', [
     'title' => 'Acerca de WikiUMA',
-    'subtitle' => "Versión: {$this->version()}",
 ])
 ?>
 

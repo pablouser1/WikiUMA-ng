@@ -21,6 +21,9 @@
                 </div>
             </div>
         </div>
+        <div class="hero-foot">
+            <?php $this->insert('partials/footer') ?>
+        </div>
     </div>
 </body>
 </html>
