@@ -5,6 +5,7 @@ use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use App\Wrappers\Env;
 use App\Wrappers\Profanity;
 use Faker\Generator;
 
@@ -27,6 +28,11 @@ class SeederModule extends Base implements IBase
     public function entrypoint(): void
     {
         $this->cli->bold()->out('Seeder');
+        if (!Env::app_debug()) {
+            $this->cli->backgroundRed()->error('This command only runs on debug mode.');
+            return;
+        }
+
         $review_teacher = new Review([
             'target' => self::DEFAULT_TEACHER,
             'username' => $this->faker->optional()->userName(),
