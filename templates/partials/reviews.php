@@ -1,4 +1,5 @@
 <div class="block">
+    <?php $this->insert('partials/reviews-filter', ['uri' => $uri, 'query' => $query]) ?>
     <?php if ($reviews->isEmpty()): ?>
         <?php $this->insert('partials/reviews-empty') ?>
     <?php else: ?>

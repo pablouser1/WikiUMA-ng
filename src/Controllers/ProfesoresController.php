@@ -49,7 +49,8 @@ class ProfesoresController
             return MsgHandler::errorFromApi($profesor);
         }
 
-        $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1);
+        $filter = self::__getFilter($query['filter'] ?? null);
+        $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1, $filter);
         $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
         $tags = self::__getTags(ReviewTypesEnum::TEACHER);
 
