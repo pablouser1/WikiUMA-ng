@@ -11,6 +11,7 @@ class Report extends Model
     protected $table = 'reports';
 
     protected $fillable = [
+        'uuid',
         'review_id',
         'message',
         'reason',

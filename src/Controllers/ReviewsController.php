@@ -9,10 +9,8 @@ use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
-use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
 use App\Wrappers\Plates;
-use App\Wrappers\Profanity;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -21,6 +19,7 @@ use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\ForbiddenException;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
+use Ramsey\Uuid\Uuid;
 
 class ReviewsController
 {
@@ -101,7 +100,7 @@ class ReviewsController
             throw new ForbiddenException('Esta valoración ya ha sido eliminada');
         };
 
-        return new HtmlResponse(Plates::render('views/report', [
+        return new HtmlResponse(Plates::render('views/report-new', [
             'review' => $review,
         ]));
     }
@@ -147,7 +146,10 @@ class ReviewsController
 
         $msg = $converter->convert(trim($body['message']));
 
+        $uuid = Uuid::uuid4()->toString();
+
         $report = new Report([
+            'uuid' => $uuid,
             'review_id' => $review->id,
             'message' => $msg,
             'email' => $email,
@@ -155,13 +157,10 @@ class ReviewsController
 
         $report->save();
 
-        return MsgHandler::show(
-            200,
-            'Queja creada',
-            'Tu queja ha sido creada y está siendo valorada por la administración de WikiUMA.',
-            self::__buildRedirectUrl($review->target, $review->type),
-        );
-
+        return new HtmlResponse(Plates::render('views/report-created', [
+            'report' => $report,
+            'back' => self::__buildRedirectUrl($review->target, $review->type),
+        ]));
     }
 
     private static function __invalidBody(): BadRequestException
