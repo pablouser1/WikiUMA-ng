@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Api;
+use App\Constants\App;
 use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
@@ -16,17 +17,19 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\BadRequestException;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\UriInterface;
 
 class ProfesoresController
 {
     public static function index(ServerRequestInterface $request): Response
     {
+        $uri = $request->getUri();
         $query = $request->getQueryParams();
         $api = new Api();
 
         $response = null;
         if (isset($query['email'])) {
-            $response = self::__byEmail($query['email'], $api);
+            $response = self::__byEmail($query['email'], $api, $uri, $query);
         } elseif (isset($query['idnc'])) {
             $response = self::__byIdnc($query['idnc'], $api);
         } else {
@@ -36,7 +39,7 @@ class ProfesoresController
         return $response;
     }
 
-    private static function __byEmail(string $email, Api $api): Response
+    private static function __byEmail(string $email, Api $api, UriInterface $uri, array $query): Response
     {
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw self::__invalidParams();
@@ -49,7 +52,10 @@ class ProfesoresController
 
         $reviews = Review::where('target', '=', $profesor->data->idnc)
             ->where('type', '=', ReviewTypesEnum::TEACHER)
-            ->get();
+            ->paginate(
+                perPage: App::PAGINATION_MAX_ITEMS,
+                page: $query['page'] ?? 1
+            );
         $stats = Stats::fromTarget($profesor->data->idnc, ReviewTypesEnum::TEACHER);
         $tags = Tag::where('for', '=', ReviewTypesEnum::TEACHER)->get();
 
@@ -58,6 +64,8 @@ class ProfesoresController
             'reviews' => $reviews,
             'stats' => $stats,
             'tags' => $tags,
+            'uri' => $uri,
+            'query' => $query,
         ]));
     }
 

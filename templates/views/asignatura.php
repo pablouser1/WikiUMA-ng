@@ -41,6 +41,8 @@
                 'tags' => $tags,
                 'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),
                 'type' => \App\Enums\ReviewTypesEnum::SUBJECT,
+                'uri' => $uri,
+                'query' => $query,
             ]) ?>
         </div>
     </div>

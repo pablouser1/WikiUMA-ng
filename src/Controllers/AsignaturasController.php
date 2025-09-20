@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Api;
+use App\Constants\App;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
 use App\Models\Tag;
@@ -29,6 +30,9 @@ class AsignaturasController
     public static function index(ServerRequestInterface $request, array $args): Response
     {
         $api = new Api();
+        $uri = $request->getUri();
+        $query = $request->getQueryParams();
+
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
         if (!$asignatura->success) {
             return MsgHandler::errorFromApi($asignatura);
@@ -38,7 +42,10 @@ class AsignaturasController
 
         $reviews = Review::where('target', '=', $id)
             ->where('type', '=', ReviewTypesEnum::SUBJECT)
-            ->get();
+            ->paginate(
+                perPage: App::PAGINATION_MAX_ITEMS,
+                page: $query['page'] ?? 1
+            );
         $stats = Stats::fromTarget($id, ReviewTypesEnum::SUBJECT);
         $tags = Tag::where('for', '=', ReviewTypesEnum::TEACHER)->get();
 
@@ -48,6 +55,8 @@ class AsignaturasController
             'tags' => $tags,
             'stats' => $stats,
             'plan_id' => $args['plan_id'],
+            'uri' => $uri,
+            'query' => $query,
         ]));
     }
 }

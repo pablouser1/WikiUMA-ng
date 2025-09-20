@@ -6,6 +6,7 @@ use App\Constants\App;
 use App\Constants\Links;
 use App\Enums\TagTypesEnum;
 use League\Plates\Engine;
+use Psr\Http\Message\UriInterface;
 
 class Plates
 {
@@ -16,6 +17,8 @@ class Plates
         $engine->registerFunction('url', fn (string $path, ?array $query = null) => Env::app_url($path, $query));
         $engine->registerFunction('links', fn () => Links::LIST);
         $engine->registerFunction('version', fn () => App::VERSION);
+
+        $engine->registerFunction('uriQuery', fn (UriInterface $uri, array $origQuery, array $newData) => Misc::modifyQueryFromUri($uri, $origQuery, $newData));
 
         $engine->registerFunction('planAsignaturaSplit', fn (string $str) => Misc::planAsignaturaSplit($str));
         $engine->registerFunction('planAsignaturaJoin', fn (string $plan_id, string $asig_id) => Misc::planAsignaturaJoin($plan_id, $asig_id));

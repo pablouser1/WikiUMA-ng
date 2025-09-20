@@ -2,8 +2,20 @@
 
 namespace App\Wrappers;
 
+use Psr\Http\Message\UriInterface;
+
 class Misc
 {
+    public static function modifyQueryFromUri(UriInterface $uri, array $origQuery, array $newData): UriInterface
+    {
+        $newQuery = [
+            ...$origQuery,
+            ...$newData,
+        ];
+
+        return $uri->withQuery(http_build_query($newQuery));
+    }
+
     public static function parseHTML(?string $html): ?\DOMDocument
     {
         if ($html) {

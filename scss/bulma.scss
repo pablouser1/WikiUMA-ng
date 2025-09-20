@@ -4,8 +4,11 @@
 @forward "bulma/sass/base";
 
 // -- Components -- //
+@forward "bulma/sass/components/breadcrumb";
 @forward "bulma/sass/components/card";
+@forward "bulma/sass/components/message";
 @forward "bulma/sass/components/navbar";
+@forward "bulma/sass/components/pagination";
 
 // -- Elements -- //
 @forward "bulma/sass/elements/block";

@@ -21,6 +21,8 @@
             'tags' => $tags,
             'target' => $profesor->idnc,
             'type' => \App\Enums\ReviewTypesEnum::TEACHER,
+            'uri' => $uri,
+            'query' => $query,
         ]) ?>
     </div>
 </section>

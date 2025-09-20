@@ -1,5 +1,3 @@
-<section class="hero is-info">
-    <div class="hero-body has-text-centered">
-        <p class="title">No hay opiniones disponibles</p>
-    </div>
-</section>
+<article class="message is-danger">
+    <div class="message-body">No hay opiniones disponibles.</div>
+</article>
