@@ -3,14 +3,11 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Constants\App;
 use App\Enums\ReviewTypesEnum;
-use App\Models\Review;
-use App\Models\Tag;
+use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
 use App\Wrappers\Plates;
-use App\Wrappers\Stats;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -20,6 +17,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class AsignaturasController
 {
+    use HasReviews;
+
     /**
      * Subject info.
      *
@@ -40,14 +39,9 @@ class AsignaturasController
 
         $id = Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
 
-        $reviews = Review::where('target', '=', $id)
-            ->where('type', '=', ReviewTypesEnum::SUBJECT)
-            ->paginate(
-                perPage: App::PAGINATION_MAX_ITEMS,
-                page: $query['page'] ?? 1
-            );
-        $stats = Stats::fromTarget($id, ReviewTypesEnum::SUBJECT);
-        $tags = Tag::where('for', '=', ReviewTypesEnum::TEACHER)->get();
+        $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $query['page'] ?? 1);
+        $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
+        $tags = self::__getTags(ReviewTypesEnum::SUBJECT);
 
         return new HtmlResponse(Plates::render('views/asignatura', [
             'asignatura' => $asignatura->data,

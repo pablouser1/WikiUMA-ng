@@ -3,15 +3,12 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Constants\App;
 use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
-use App\Models\Review;
-use App\Models\Tag;
+use App\Traits\HasReviews;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Plates;
-use App\Wrappers\Stats;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -21,6 +18,8 @@ use Psr\Http\Message\UriInterface;
 
 class ProfesoresController
 {
+    use HasReviews;
+
     public static function index(ServerRequestInterface $request): Response
     {
         $uri = $request->getUri();
@@ -50,14 +49,9 @@ class ProfesoresController
             return MsgHandler::errorFromApi($profesor);
         }
 
-        $reviews = Review::where('target', '=', $profesor->data->idnc)
-            ->where('type', '=', ReviewTypesEnum::TEACHER)
-            ->paginate(
-                perPage: App::PAGINATION_MAX_ITEMS,
-                page: $query['page'] ?? 1
-            );
-        $stats = Stats::fromTarget($profesor->data->idnc, ReviewTypesEnum::TEACHER);
-        $tags = Tag::where('for', '=', ReviewTypesEnum::TEACHER)->get();
+        $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1);
+        $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
+        $tags = self::__getTags(ReviewTypesEnum::TEACHER);
 
         return new HtmlResponse(Plates::render('views/profesor', [
             'profesor' => $profesor->data,
