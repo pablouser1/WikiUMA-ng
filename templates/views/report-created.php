@@ -4,16 +4,18 @@
     <p class="title">Tu informe al usuario "<?= $this->e($report->review->username ?? "Anónimo") ?>" ha sido creado.</p>
     <div class="content">
         <p>Tu informe está siendo valorado por la administración.</p>
-
-        <p>Tu ID de informe es: <b><?= $this->e($report->uuid) ?></b>. Por favor, manténlo en privado y no lo pierdas.</p>
-
+        <p>Tu ID de informe es: <b><?= $this->e($report->uuid) ?></b>.</p>
         <p>
-            Recuerda que puedes saber en cualquier momento el estado de tu informe consultando
-            <a target="_blank" href="<?= $this->url('/reports/' . $report->uuid) ?>">aquí</a>.
+            <?php if ($report->email !== null): ?>
+                Se te enviará un correo electrónico cuando la administración tome una decisión.
+            <?php else: ?>
+                Si quieres saber el estado de tu informe, puedes enviar un correo electrónico a <b><?= $this->contact() ?></b>.
+                Recuerda especificar tu ID.
+            <?php endif ?>
         </p>
 
         <article class="message is-success">
-            <div class="message-body">Gracias por hacer de WikiUMA un espacio más cívico y respetuoso <span style="color: #e25555;">&#9829;</span>.</div>
+            <div class="message-body">Gracias por hacer de WikiUMA un espacio más cívico y respetuoso <span style="color: #e25555;">&#9829;</span></div>
         </article>
 
         <a href="<?= $back ?>" class="button">Atrás</a>

@@ -54,6 +54,11 @@ class Env
         return $_ENV['APP_KEY'] ?? '';
     }
 
+    public static function app_contact(): string
+    {
+        return $_ENV['APP_CONTACT'] ?? '';
+    }
+
     /**
      * Get cache engine to be used.
      */
@@ -82,6 +87,28 @@ class Env
             "database" => $name,
             "username" => $user,
             "password" => $password
+        ];
+    }
+
+    /**
+     * Get SMTP data.
+     */
+    public static function mail(): array
+    {
+        $host = $_ENV['MAIL_HOST'] ?? 'localhost';
+        $port = $_ENV['MAIL_PORT'] ?? 25;
+        $username = $_ENV['MAIL_USERNAME'] ?? '';
+        $password = $_ENV['MAIL_PASSWORD'] ?? '';
+        $secure = $_ENV['MAIL_SECURE'] ?? '';
+        $from = $_ENV['MAIL_FROM'] ?? '';
+
+        return [
+            'host' => $host,
+            'port' => $port,
+            'username' => $username,
+            'password' => $password,
+            'secure' => $secure,
+            'from' => $from,
         ];
     }
 

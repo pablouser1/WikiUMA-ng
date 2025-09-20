@@ -6,14 +6,17 @@ use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReportStatusEnum;
 use App\Models\Report;
+use App\Wrappers\Mail;
 use League\CLImate\CLImate;
 
 class ReportsModule extends Base implements IBase
 {
+    private Mail $mail;
 
     public function __construct(CLImate $cli)
     {
         parent::__construct($cli);
+        $this->mail = new Mail();
     }
 
     private const array OPTIONS = [
@@ -96,6 +99,9 @@ class ReportsModule extends Base implements IBase
 
         // Save and send email if available
         $report->save();
+        if (!empty($report->email)) {
+            $this->mail->reportStatus($report);
+        }
         $this->cli->backgroundGreen()->bold('OK');
     }
 }
