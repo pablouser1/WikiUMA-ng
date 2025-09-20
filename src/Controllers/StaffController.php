@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Constants\Messages;
 use App\Models\User;
+use App\Traits\HasReports;
 use App\Wrappers\Env;
 use App\Wrappers\Plates;
 use App\Wrappers\Session;
@@ -18,6 +19,8 @@ use Psr\Http\Message\ServerRequestInterface;
  */
 class StaffController
 {
+    use HasReports;
+
     /**
      * Login form.
      *
@@ -60,8 +63,16 @@ class StaffController
         return new RedirectResponse(Env::app_url('/staff'));
     }
 
-    public static function dashboard(): Response
+    public static function dashboard(ServerRequestInterface $request): Response
     {
-        return new HtmlResponse(Plates::render('views/staff/dashboard'));
+        $uri = $request->getUri();
+        $query = $request->getQueryParams();
+        $filter = self::__getFilter($query['filter'] ?? null);
+        $reports = self::__getReports($query['page'] ?? 1, $filter);
+        return new HtmlResponse(Plates::render('views/staff/dashboard', [
+            'reports' => $reports,
+            'uri' => $uri,
+            'query' => $query,
+        ]));
     }
 }

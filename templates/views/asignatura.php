@@ -36,7 +36,7 @@
             <?php endforeach ?>
         </div>
         <div class="block">
-            <?php $this->insert('partials/reviews', [
+            <?php $this->insert('partials/reviews/index', [
                 'reviews' => $reviews,
                 'tags' => $tags,
                 'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),

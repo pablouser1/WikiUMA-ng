@@ -16,7 +16,7 @@
 
 <section class="section">
     <div class="container">
-        <?php $this->insert('partials/reviews', [
+        <?php $this->insert('partials/reviews/index', [
             'reviews' => $reviews,
             'tags' => $tags,
             'target' => $profesor->idnc,

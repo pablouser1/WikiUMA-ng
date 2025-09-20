@@ -6,5 +6,11 @@
 ?>
 
 <section class="section">
-    <p>Hi</p>
+    <div class="container">
+        <?php $this->insert('partials/reports/index', [
+            'reports' => $reports,
+            'uri' => $uri,
+            'query' => $query,
+        ]) ?>
+    </div>
 </section>
