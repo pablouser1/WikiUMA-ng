@@ -139,20 +139,13 @@ class ReviewsController
             'max_delimiters_per_line' => 200,
         ]);
 
-        $email = null;
-        if (isset($body['email']) && !empty($body['email']) && filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
-            $email = trim($body['email']);
-        }
-
         $msg = $converter->convert(trim($body['message']));
-
         $uuid = Uuid::uuid4()->toString();
 
         $report = new Report([
             'uuid' => $uuid,
             'review_id' => $review->id,
             'message' => $msg,
-            'email' => $email,
         ]);
 
         $report->save();

@@ -15,7 +15,6 @@ class Report extends Model
         'review_id',
         'message',
         'reason',
-        'email',
         'status',
     ];
 

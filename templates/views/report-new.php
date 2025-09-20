@@ -1,11 +1,11 @@
 <?php $this->layout('layouts/default', [
-    'title' => 'Nueva queja a opinión de ' . $this->e($review->username),
+    'title' => 'Nueva queja a opinión de ' . $this->e($review->username ?? 'Anónimo'),
     'withReviews' => true,
     'withCaptcha' => true,
 ]) ?>
 
 <?php $this->insert('partials/hero', [
-    'title' => 'Nueva queja a opinión de ' . $this->e($review->username),
+    'title' => 'Nueva queja a opinión de ' . $this->e($review->username ?? 'Anónimo'),
 ])
 ?>
 
@@ -27,20 +27,6 @@
                         <textarea name="message" class="textarea" required></textarea>
                     </div>
                     <p class="help">Pssst... Puedes usar Markdown.</p>
-                </div>
-                <div class="field">
-                    <label class="label">
-                        <span class="icon-text">
-                            <span class="icon">
-                                <?php $this->insert('partials/icon', ['icon' => 'mail']) ?>
-                            </span>
-                            <span>Correo electrónico (opcional)</span>
-                        </span>
-                    </label>
-                    <div class="control">
-                        <input name="email" class="input" type="email" autocomplete="off" />
-                    </div>
-                    <p class="help">Lo usamos para mantenerte informad@ acerca de tu queja.</p>
                 </div>
                 <div class="field">
                     <altcha-widget challengeurl="<?= $this->url('/challenge') ?>"></altcha-widget>
