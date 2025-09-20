@@ -14,6 +14,7 @@
                         <span class="tag is-danger">No disponible</span>
                     <?php endif ?>
                 </strong>
+                <small><?= $this->e($review->created_at) ?></small>
             </p>
             <?php if ($review->accepted_report !== null): ?>
                 <p>
