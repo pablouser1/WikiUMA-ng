@@ -13,7 +13,9 @@ use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
 use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
+use App\Controllers\StaffController;
 use App\Controllers\TitulacionesController;
+use App\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
@@ -33,16 +35,27 @@ $router->get('/legal', [MiscController::class, 'legal']);
 
 $router->get('/centros', [CentrosController::class, 'index']);
 $router->get('/centros/{centro_id:number}/titulaciones', [TitulacionesController::class, 'index']);
-$router->get('/planes/{plan_id:number}', [PlanesController::class, 'index']);
-$router->get('/planes/{plan_id:number}/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
+$router->group('/planes/{plan_id:number}', function (RouteGroup $route) {
+    $route->get('/', [PlanesController::class, 'index']);
+    $route->get('/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
+});
+
 $router->get('/profesores', [ProfesoresController::class, 'index']);
 
 $router->get('/search', [SearchController::class, 'index']);
 $router->get('/challenge', [ChallengeController::class, 'index']);
 
 $router->post('/reviews', [ReviewsController::class, 'create']);
-$router->get('/reviews/{review_id:number}/report', [ReviewsController::class, 'reportIndex']);
-$router->post('/reviews/{review_id:number}/report', [ReviewsController::class, 'reportCreate']);
+$router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
+    $route->get('/report', [ReviewsController::class, 'reportIndex']);
+    $route->post('/report', [ReviewsController::class, 'reportCreate']);
+});
+
+$router->group('/staff', function (RouteGroup $route) {
+    $route->get('/', [StaffController::class, 'dashboard']);
+    $route->get('/login', [StaffController::class, 'loginGet']);
+    $route->post('/login', [StaffController::class, 'loginPost']);
+})->middleware(new AuthMiddleware());
 
 if (Env::app_debug()) {
     $router->group('/dev', function (RouteGroup $route) {

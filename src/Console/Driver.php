@@ -6,6 +6,7 @@ use App\Console\Modules\MigrateOldModule;
 use App\Console\Modules\ReportsModule;
 use App\Console\Modules\SeederModule;
 use App\Console\Modules\TagsModule;
+use App\Console\Modules\UsersModule;
 
 class Driver extends Base implements IBase
 {
@@ -17,6 +18,10 @@ class Driver extends Base implements IBase
         [
             'name' => 'Reports',
             'runner' => [ReportsModule::class, 'entrypoint'],
+        ],
+        [
+            'name' => 'Users',
+            'runner' => [UsersModule::class, 'entrypoint'],
         ],
         [
             'name' => 'Seed',
