@@ -2,7 +2,7 @@
     <div class="card-content">
         <p class="title is-4">Informe <?= $this->e($report->uuid) ?></p>
         <p class="subtitle is-6">
-            <a href="#" target="_blank">Consultar reseñado</a>
+            <a href="<?= $this->url('/redirect', ['target' => $report->review->target, 'type' => $report->review->type]) ?>" target="_blank">Consultar reseñado</a>
         </p>
 
         <?php $this->insert('partials/reviews/single', ['review' => $report->review]) ?>

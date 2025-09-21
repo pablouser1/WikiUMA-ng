@@ -9,7 +9,6 @@ use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
-use App\Wrappers\Misc;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
@@ -75,7 +74,7 @@ class ReviewsController
             $review->tags()->attach($tags);
         }
 
-        return self::__redirect($target, $type);
+        return new RedirectResponse(Env::app_url('/redirect', ['target' => $target, 'type' => $type]));
     }
 
     /**
@@ -158,29 +157,12 @@ class ReviewsController
 
         return new HtmlResponse(Plates::render('views/report-created', [
             'report' => $report,
-            'back' => self::__buildRedirectUrl($review->target, $review->type),
+            'back' => $review->type->url($review->target),
         ]));
     }
 
     private static function __invalidBody(): BadRequestException
     {
         return new BadRequestException(Messages::MUST_SEND_PARAMS);
-    }
-
-    private static function __redirect(string $target, ReviewTypesEnum $type): Response
-    {
-        return new RedirectResponse(self::__buildRedirectUrl($target, $type));
-    }
-
-    private static function __buildRedirectUrl(string $target, ReviewTypesEnum $type): string
-    {
-        if ($type === ReviewTypesEnum::TEACHER) {
-            return Env::app_url('/profesores', ['idnc' => $target]);
-        } elseif ($type === ReviewTypesEnum::SUBJECT) {
-            $arr = Misc::planAsignaturaSplit($target);
-            return Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]);
-        }
-
-        return Env::app_url('/');
     }
 }

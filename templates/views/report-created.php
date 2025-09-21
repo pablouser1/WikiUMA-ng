@@ -8,10 +8,12 @@
         <p>
             <?php if ($report->email !== null): ?>
                 Se te enviará un correo electrónico cuando la administración tome una decisión.
-            <?php else: ?>
-                Si quieres saber el estado de tu informe, puedes enviar un correo electrónico, especificando tu ID, a
-                <a href="mailto:<?= $this->contact() ?>"><?= $this->contact() ?>
             <?php endif ?>
+        </p>
+
+        <p>
+            Puedes saber en todo momento el estado de tu informe consultando el
+            <a href="<?= $this->url('/reports/' . $report->uuid) ?>">siguiente enlace</a>.
         </p>
 
         <a href="<?= $back ?>" class="button">Atrás</a>

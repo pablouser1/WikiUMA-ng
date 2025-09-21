@@ -11,6 +11,7 @@ use App\Controllers\HomeController;
 use App\Controllers\MiscController;
 use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
+use App\Controllers\RedirectController;
 use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
 use App\Controllers\StaffController;
@@ -32,6 +33,7 @@ $router = new League\Route\Router;
 $router->get('/', [HomeController::class, 'index']);
 $router->get('/about', [MiscController::class, 'about']);
 $router->get('/legal', [MiscController::class, 'legal']);
+$router->get('/redirect', [RedirectController::class, 'index']);
 
 $router->get('/centros', [CentrosController::class, 'index']);
 $router->get('/centros/{centro_id:number}/titulaciones', [TitulacionesController::class, 'index']);
