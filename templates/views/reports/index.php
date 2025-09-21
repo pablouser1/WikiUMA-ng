@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/hero', [
     'title' => 'Informes',
+    'withNavbar' => true,
     'withCaptcha' => true,
 ]) ?>
 
@@ -16,7 +17,7 @@
                 </span>
             </label>
             <div class="control">
-                <input name="username" class="input" type="text" autocomplete="off" />
+                <input name="uuid" class="input" type="text" autocomplete="off" />
             </div>
         </div>
         <div class="field">

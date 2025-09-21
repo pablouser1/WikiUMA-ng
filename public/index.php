@@ -39,6 +39,7 @@ $router->get('/search', [SearchController::class, 'index']);
 
 $router->group('/reports', function (RouteGroup $route) {
     $route->get('/', [ReportsController::class, 'index']);
+    $route->post('/', [ReportsController::class, 'post']);
 });
 
 $router->get('/centros', [CentrosController::class, 'index']);
