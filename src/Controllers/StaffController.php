@@ -3,15 +3,19 @@
 namespace App\Controllers;
 
 use App\Constants\Messages;
+use App\Enums\ReportStatusEnum;
+use App\Models\Report;
 use App\Models\User;
 use App\Traits\HasReports;
 use App\Wrappers\Env;
+use App\Wrappers\Mail;
 use App\Wrappers\Plates;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\BadRequestException;
+use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -74,5 +78,42 @@ class StaffController
             'uri' => $uri,
             'query' => $query,
         ]));
+    }
+
+    public static function reportStatus(ServerRequestInterface $request, array $args): RedirectResponse
+    {
+        $body = $request->getParsedBody();
+        if (!isset($body['status'])) {
+            throw new BadRequestException(Messages::MUST_SEND_BODY);
+        }
+
+        $statusStr = $body['status'];
+        $status = ReportStatusEnum::tryFrom($statusStr);
+        if ($status === null) {
+            throw new BadRequestException(Messages::MUST_SEND_BODY);
+        }
+
+        $report_id = $args['report_id'];
+
+        /** @var ?Report */
+        $report = Report::find($report_id);
+
+        if ($report === null) {
+            throw new NotFoundException();
+        }
+
+        $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;
+
+        $report->status = $status;
+        $report->reason = $reason;
+        $report->save();
+
+        // Send email if exists
+        if (!empty($report->email)) {
+            $mail = new Mail;
+            $mail->reportStatus($report);
+        }
+
+        return new RedirectResponse(Env::app_url('/staff'));
     }
 }

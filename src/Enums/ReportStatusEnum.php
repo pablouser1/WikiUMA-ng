@@ -11,6 +11,15 @@ enum ReportStatusEnum: int
     case ACCEPTED = 1;
     case DENIED = 2;
 
+    public function displayName(): string
+    {
+        return match ($this) {
+            self::PENDING => 'Pendiente',
+            self::ACCEPTED => 'Aceptado',
+            self::DENIED => 'Rechazado',
+        };
+    }
+
     public function actionTaken(): string
     {
         return match ($this) {

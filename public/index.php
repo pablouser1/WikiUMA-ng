@@ -55,6 +55,7 @@ $router->group('/staff', function (RouteGroup $route) {
     $route->get('/', [StaffController::class, 'dashboard']);
     $route->get('/login', [StaffController::class, 'loginGet']);
     $route->post('/login', [StaffController::class, 'loginPost']);
+    $route->post('/reports/{report_id:number}/status', [StaffController::class, 'reportStatus']);
 })->middleware(new AuthMiddleware());
 
 if (Env::app_debug()) {

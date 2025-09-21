@@ -3,12 +3,13 @@
     <?php if ($reports->isEmpty()): ?>
         <?php $this->insert('partials/reports/empty') ?>
     <?php else: ?>
-        <div class="box">
-            <?php foreach ($reports as $report): ?>
+        <?php foreach ($reports as $report): ?>
+            <div class="mb-4">
                 <?php $this->insert('partials/reports/single', [
                     'report' => $report,
                 ]) ?>
-            <?php endforeach ?>
-        </div>
+            </div>
+        <?php endforeach ?>
     <?php endif ?>
+    <?php $this->insert('partials/pagination', ['uri' => $uri, 'query' => $query, 'hasNext' => $reports->isNotEmpty()]) ?>
 </div>

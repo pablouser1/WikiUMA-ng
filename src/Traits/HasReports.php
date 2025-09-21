@@ -19,6 +19,9 @@ trait HasReports
     {
         $query = Report::query();
 
+        // Default filter to pending
+        $filter = $filter ?? ReportFilterEnum::PENDING;
+
         if ($filter !== null) {
             $action = $filter->action();
             if ($action !== null) {

@@ -9,7 +9,7 @@
             <?php endforeach ?>
         </div>
     <?php endif ?>
-    <?php $this->insert('partials/reviews/pagination', ['uri' => $uri, 'query' => $query, 'hasNext' => $reviews->isNotEmpty()]) ?>
+    <?php $this->insert('partials/pagination', ['uri' => $uri, 'query' => $query, 'hasNext' => $reviews->isNotEmpty()]) ?>
 </div>
 <div class="block">
     <?php $this->insert('partials/reviews/new', ['tags' => $tags ?? null, 'target' => $target, 'type' => $type]) ?>

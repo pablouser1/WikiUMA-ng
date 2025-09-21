@@ -11,7 +11,7 @@
 
 <section class="section">
     <div class="container">
-        <?php $this->insert('partials/review', ['review' => $review]) ?>
+        <?php $this->insert('partials/reviews/single', ['review' => $review]) ?>
         <div class="box">
             <form action="<?= $this->url('/reviews/' . $review->id . '/report') ?>" method="POST">
                 <div class="field">

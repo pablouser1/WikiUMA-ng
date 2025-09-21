@@ -6,10 +6,20 @@ use Illuminate\Database\Eloquent\Builder;
 
 enum ReportFilterEnum: string
 {
-    case ALL = 'all';
     case PENDING = 'pending';
     case ACCEPTED = 'accepted';
     case DENIED = 'denied';
+    case ALL = 'all';
+
+    public function displayName(): string
+    {
+        return match ($this) {
+            self::PENDING => 'Pendientes',
+            self::ACCEPTED => 'Aceptados',
+            self::DENIED => 'Denegados',
+            self::ALL => 'Todos',
+        };
+    }
 
     public function action(): ?\Closure
     {

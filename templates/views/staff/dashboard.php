@@ -1,4 +1,7 @@
-<?php $this->layout('layouts/default', ['title' => 'Panel de control']) ?>
+<?php $this->layout('layouts/default', [
+    'title' => 'Panel de control',
+    'withReviews' => true,
+]) ?>
 
 <?php $this->insert('partials/hero', [
     'title' => 'Panel de control',

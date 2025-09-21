@@ -37,6 +37,7 @@
         "league/climate": "^3.10",
         "league/commonmark": "^2.7",
         "ramsey/uuid": "^4.9",
+        "phpmailer/phpmailer": "^6.10",
         "npm-asset/bulma": "^1.0"
     },
     "require-dev": {
