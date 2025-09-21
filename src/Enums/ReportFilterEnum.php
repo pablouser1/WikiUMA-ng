@@ -28,8 +28,6 @@ enum ReportFilterEnum: string
      */
     private function __handleStatus(Builder &$builder, ReportStatusEnum $status): void
     {
-        $builder->whereDoesntHave('reports', function ($query) use ($status) {
-            $query->where('status', $status);
-        });
+        $builder->where('status', '=', $status);
     }
 }

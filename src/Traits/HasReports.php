@@ -3,7 +3,7 @@
 namespace App\Traits;
 
 use App\Constants\App;
-use App\Enums\ReviewFilterEnum;
+use App\Enums\ReportFilterEnum;
 use App\Models\Report;
 use App\Models\Review;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -15,7 +15,7 @@ trait HasReports
      *
      * @return LengthAwarePaginator<Review>
      */
-    private static function __getReports(int $page, ?ReviewFilterEnum $filter): LengthAwarePaginator
+    private static function __getReports(int $page, ?ReportFilterEnum $filter): LengthAwarePaginator
     {
         $query = Report::query();
 
@@ -32,8 +32,8 @@ trait HasReports
         );
     }
 
-    private static function __getFilter(?string $filter): ?ReviewFilterEnum
+    private static function __getFilter(?string $filter): ?ReportFilterEnum
     {
-        return $filter !== null ? ReviewFilterEnum::tryFrom($filter) : null;
+        return $filter !== null ? ReportFilterEnum::tryFrom($filter) : null;
     }
 }
