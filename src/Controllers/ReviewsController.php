@@ -99,7 +99,7 @@ class ReviewsController
             throw new ForbiddenException('Esta valoración ya ha sido eliminada');
         };
 
-        return new HtmlResponse(Plates::render('views/report-new', [
+        return new HtmlResponse(Plates::render('views/reports/new', [
             'review' => $review,
         ]));
     }
@@ -155,7 +155,7 @@ class ReviewsController
 
         $report->save();
 
-        return new HtmlResponse(Plates::render('views/report-created', [
+        return new HtmlResponse(Plates::render('views/reports/created', [
             'report' => $report,
             'back' => $review->type->url($review->target),
         ]));

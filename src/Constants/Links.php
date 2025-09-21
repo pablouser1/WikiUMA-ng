@@ -21,6 +21,12 @@ abstract class Links
             'icon' => 'info-circle',
         ],
         [
+            'name' => 'Informes',
+            'path' => '/reports',
+            'color' => 'is-link',
+            'icon' => 'stats-report',
+        ],
+        [
             'name' => 'Legal',
             'path' => '/legal',
             'color' => 'is-warning',

@@ -3,6 +3,7 @@
 <?php $this->insert('partials/head', [
     'title' => $title,
     'withNavbar' => $withNavbar ?? false,
+    'withCaptcha' => $withCaptcha ?? false,
 ]) ?>
 
 <body>
