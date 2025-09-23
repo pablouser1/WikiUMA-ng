@@ -13,6 +13,14 @@ enum ReviewTypesEnum: int
     case TEACHER = 0;
     case SUBJECT = 1;
 
+    public function displayName(): string
+    {
+        return match ($this) {
+            self::TEACHER => 'Profesor',
+            self::SUBJECT => 'Asignatura',
+        };
+    }
+
     /**
      * Get valid url for redirection to page containing specific reviews.
      */

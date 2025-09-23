@@ -30,6 +30,12 @@ try {
         throw $e;
     }
 
+    logger()->error('Unkown error happened', [
+        'message' => $e->getMessage(),
+        'file' => $e->getFile(),
+        'line' => $e->getLine(),
+    ]);
+
     $response = MsgHandler::error(500, Messages::UNKNOWN_ERROR, $e->getMessage());
 }
 
