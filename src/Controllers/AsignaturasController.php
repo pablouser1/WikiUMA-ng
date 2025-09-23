@@ -7,15 +7,13 @@ use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
-use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Asignaturas Controller
  */
-class AsignaturasController
+class AsignaturasController extends Controller
 {
     use HasReviews;
 
@@ -44,7 +42,7 @@ class AsignaturasController
         $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
         $tags = self::__getTags(ReviewTypesEnum::SUBJECT);
 
-        return new HtmlResponse(Plates::render('views/asignatura', [
+        return self::__render('views/asignatura', [
             'asignatura' => $asignatura->data,
             'reviews' => $reviews,
             'tags' => $tags,
@@ -52,6 +50,6 @@ class AsignaturasController
             'plan_id' => $args['plan_id'],
             'uri' => $uri,
             'query' => $query,
-        ]));
+        ]);
     }
 }

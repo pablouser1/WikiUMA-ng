@@ -4,19 +4,21 @@ namespace App\Controllers;
 
 use App\Api;
 use App\Wrappers\MsgHandler;
-use App\Wrappers\Plates;
-use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
-class TitulacionesController
+class TitulacionesController extends Controller
 {
-    public static function index(ServerRequestInterface $request, array $args)
+    public static function index(ServerRequestInterface $request, array $args): Response
     {
         $api = new Api();
         $titulaciones = $api->titulaciones($args['centro_id']);
         if (!$titulaciones->success) {
             return MsgHandler::errorFromApi($titulaciones);
         }
-        return new HtmlResponse(Plates::render('views/titulaciones', ['titulaciones' => $titulaciones->data]));
+
+        return self::__render('views/titulaciones', [
+            'titulaciones' => $titulaciones->data,
+        ]);
     }
 }

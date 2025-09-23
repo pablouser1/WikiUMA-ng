@@ -9,10 +9,8 @@ use App\Models\User;
 use App\Traits\HasReports;
 use App\Wrappers\Env;
 use App\Wrappers\Mail;
-use App\Wrappers\Plates;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\NotFoundException;
@@ -21,7 +19,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Staff Controller.
  */
-class StaffController
+class StaffController extends Controller
 {
     use HasReports;
 
@@ -32,7 +30,7 @@ class StaffController
      */
     public static function loginGet(): Response
     {
-        return new HtmlResponse(Plates::render('views/staff/login'));
+        return self::__render('views/staff/login');
     }
 
     /**
@@ -40,12 +38,12 @@ class StaffController
      *
      * Route: `/staff/login`.
      */
-    public static function loginPost(ServerRequestInterface $request): RedirectResponse
+    public static function loginPost(ServerRequestInterface $request): Response
     {
         $body = $request->getParsedBody();
 
         if (!isset($body['username'], $body['password'])) {
-            throw new BadRequestException(Messages::MUST_SEND_BODY);
+            throw self::__invalidBody();
         }
 
         $username = trim($body['username']);
@@ -73,24 +71,25 @@ class StaffController
         $query = $request->getQueryParams();
         $filter = self::__getFilter($query['filter'] ?? null);
         $reports = self::__getReports($query['page'] ?? 1, $filter);
-        return new HtmlResponse(Plates::render('views/staff/dashboard', [
+
+        return self::__render('views/staff/dashboard', [
             'reports' => $reports,
             'uri' => $uri,
             'query' => $query,
-        ]));
+        ]);
     }
 
     public static function reportStatus(ServerRequestInterface $request, array $args): RedirectResponse
     {
         $body = $request->getParsedBody();
         if (!isset($body['status'])) {
-            throw new BadRequestException(Messages::MUST_SEND_BODY);
+            throw self::__invalidBody();
         }
 
         $statusStr = $body['status'];
         $status = ReportStatusEnum::tryFrom($statusStr);
         if ($status === null) {
-            throw new BadRequestException(Messages::MUST_SEND_BODY);
+            throw self::__invalidBody();
         }
 
         $report_id = $args['report_id'];
@@ -99,7 +98,7 @@ class StaffController
         $report = Report::find($report_id);
 
         if ($report === null) {
-            throw new NotFoundException();
+            throw new NotFoundException('Informe no encontrado');
         }
 
         $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;

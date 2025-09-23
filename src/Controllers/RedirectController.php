@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
+use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\BadRequestException;
 use Psr\Http\Message\ServerRequestInterface;
@@ -11,19 +11,19 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Redirect Controller.
  */
-class RedirectController
+class RedirectController extends Controller
 {
     /**
      * Redirect by type value.
      *
      * Route: `/redirect`.
      */
-    public static function index(ServerRequestInterface $request): RedirectResponse
+    public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
 
         if (!(isset($query['target'], $query['type']) && is_numeric($query['type']))) {
-            throw new BadRequestException(Messages::MUST_SEND_PARAMS);
+            throw self::__invalidParams();
         }
 
         $target = $query['target'];
@@ -31,7 +31,7 @@ class RedirectController
         $type = ReviewTypesEnum::tryFrom($typeInt);
 
         if ($type === null) {
-            throw new BadRequestException(Messages::MUST_SEND_PARAMS);
+            throw self::__invalidParams();
         }
 
         $url = $type->url($target);

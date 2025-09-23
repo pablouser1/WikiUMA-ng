@@ -4,20 +4,19 @@ namespace App\Controllers;
 
 use App\Api;
 use App\Wrappers\MsgHandler;
-use App\Wrappers\Plates;
-use Laminas\Diactoros\Response\HtmlResponse;
+use Laminas\Diactoros\Response;
 
 /**
  * Centros controller
  */
-class CentrosController
+class CentrosController extends Controller
 {
     /**
      * Get all faculties.
      *
      * Route: `/centros`.
      */
-    public static function index()
+    public static function index(): Response
     {
         $api = new Api();
         $centros = $api->centros();
@@ -25,6 +24,8 @@ class CentrosController
             return MsgHandler::errorFromApi($centros);
         }
 
-        return new HtmlResponse(Plates::render('views/centros', ['centros' => $centros->data]));
+        return self::__render('views/centros', [
+            'centros' => $centros->data,
+        ]);
     }
 }

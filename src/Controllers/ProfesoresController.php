@@ -3,20 +3,16 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
-use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
-use League\Route\Http\Exception\BadRequestException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\UriInterface;
 
-class ProfesoresController
+class ProfesoresController extends Controller
 {
     use HasReviews;
 
@@ -54,14 +50,14 @@ class ProfesoresController
         $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
         $tags = self::__getTags(ReviewTypesEnum::TEACHER);
 
-        return new HtmlResponse(Plates::render('views/profesor', [
+        return self::__render('views/profesor', [
             'profesor' => $profesor->data,
             'reviews' => $reviews,
             'stats' => $stats,
             'tags' => $tags,
             'uri' => $uri,
             'query' => $query,
-        ]));
+        ]);
     }
 
     private static function __byIdnc(string $idnc, Api $api): Response
@@ -74,10 +70,5 @@ class ProfesoresController
         return new RedirectResponse(Env::app_url('/profesores', [
             'email' => $profesor->data->email,
         ]));
-    }
-
-    private static function __invalidParams(): BadRequestException
-    {
-        return new BadRequestException(Messages::MUST_SEND_PARAMS);
     }
 }

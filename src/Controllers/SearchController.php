@@ -4,12 +4,10 @@ namespace App\Controllers;
 
 use App\Api;
 use App\Wrappers\MsgHandler;
-use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
-class SearchController
+class SearchController extends Controller
 {
     public static function index(ServerRequestInterface $request): Response
     {
@@ -26,8 +24,8 @@ class SearchController
             return MsgHandler::errorFromApi($search);
         }
 
-        return new HtmlResponse(Plates::render('views/search', [
+        return self::__render('views/search', [
             'results' => $search->data,
-        ]));
+        ]);
     }
 }

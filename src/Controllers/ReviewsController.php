@@ -3,26 +3,22 @@
 namespace App\Controllers;
 
 use AltchaOrg\Altcha\Altcha;
-use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
-use App\Wrappers\Plates;
 use Laminas\Diactoros\Response;
-use Laminas\Diactoros\Response\HtmlResponse;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\CommonMark\CommonMarkConverter;
-use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\ForbiddenException;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
-class ReviewsController
+class ReviewsController extends Controller
 {
-    public static function create(ServerRequestInterface $request): RedirectResponse
+    public static function create(ServerRequestInterface $request): Response
     {
         $body = $request->getParsedBody();
         if (!($body !== null && isset($body['target'], $body['type'], $body['message'], $body['note'], $body['altcha']) && is_numeric($body['note']))) {
@@ -74,7 +70,10 @@ class ReviewsController
             $review->tags()->attach($tags);
         }
 
-        return new RedirectResponse(Env::app_url('/redirect', ['target' => $target, 'type' => $type]));
+        return new RedirectResponse(Env::app_url('/redirect', [
+            'target' => $target,
+            'type' => $type,
+        ]));
     }
 
     /**
@@ -99,9 +98,9 @@ class ReviewsController
             throw new ForbiddenException('Esta valoración ya ha sido eliminada');
         };
 
-        return new HtmlResponse(Plates::render('views/reports/new', [
+        return self::__render('views/reports/new', [
             'review' => $review,
-        ]));
+        ]);
     }
 
     /**
@@ -155,14 +154,9 @@ class ReviewsController
 
         $report->save();
 
-        return new HtmlResponse(Plates::render('views/reports/created', [
+        return self::__render('views/reports/created', [
             'report' => $report,
             'back' => $review->type->url($review->target),
-        ]));
-    }
-
-    private static function __invalidBody(): BadRequestException
-    {
-        return new BadRequestException(Messages::MUST_SEND_PARAMS);
+        ]);
     }
 }

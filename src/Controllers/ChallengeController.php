@@ -11,7 +11,7 @@ use Laminas\Diactoros\Response\JsonResponse;
 /**
  * Challenge controller
  */
-class ChallengeController
+class ChallengeController extends Controller
 {
     /**
      * Send Captcha challenge.

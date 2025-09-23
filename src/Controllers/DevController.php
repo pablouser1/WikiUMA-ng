@@ -9,7 +9,7 @@ use Psr\Http\Message\ServerRequestInterface;
 /**
  * Dev Controller. Only active when APP_DEBUG=true
  */
-class DevController
+class DevController extends Controller
 {
     /**
      * Emulate an error.
