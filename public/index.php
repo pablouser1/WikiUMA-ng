@@ -3,26 +3,10 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../bootstrap.php';
 
 use App\Constants\Messages;
-use App\Controllers\AsignaturasController;
-use App\Controllers\CentrosController;
-use App\Controllers\ChallengeController;
-use App\Controllers\DevController;
-use App\Controllers\HomeController;
-use App\Controllers\MiscController;
-use App\Controllers\PlanesController;
-use App\Controllers\ProfesoresController;
-use App\Controllers\RedirectController;
-use App\Controllers\ReportsController;
-use App\Controllers\ReviewsController;
-use App\Controllers\SearchController;
-use App\Controllers\StaffController;
-use App\Controllers\TitulacionesController;
-use App\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Http\Exception;
-use League\Route\RouteGroup;
 
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
