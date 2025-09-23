@@ -13,7 +13,7 @@ if (!function_exists('logger')) {
         }
 
         $logger = new Logger('wikiuma');
-        $logger->pushHandler(new StreamHandler(__DIR__ . '/storage/logs'));
+        $logger->pushHandler(new StreamHandler(__DIR__ . '/storage/wikiuma.log'));
 
         return $logger;
     }

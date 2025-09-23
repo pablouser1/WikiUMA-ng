@@ -15,5 +15,5 @@
 !/public/css/vendor/.gitkeep
 
 # Logging
-/storage/logs/*
-!/storage/logs/.gitkeep
+/storage/*
+!/storage/.gitkeep
