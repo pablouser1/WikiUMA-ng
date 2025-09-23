@@ -8,6 +8,8 @@ use App\Wrappers\MsgHandler;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Http\Exception;
 
+require __DIR__ . '/../functions.php';
+
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
 );
