@@ -32,8 +32,6 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `modified_at` datetime NOT NULL DEFAULT current_timestamp(),
   `first_name` varchar(128) NOT NULL,
   `last_name` varchar(128) NOT NULL,
   `username` varchar(64) NOT NULL,
