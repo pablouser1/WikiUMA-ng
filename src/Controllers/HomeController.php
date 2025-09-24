@@ -1,16 +1,25 @@
 <?php
+
 namespace App\Controllers;
 
-use App\Helpers\Wrappers;
-use App\Items\Review;
+use App\Wrappers\Stats;
+use Laminas\Diactoros\Response;
 
-class HomeController {
-    static public function get() {
-        $review = new Review();
-
-        $stats = $review->statsTotal();
-        Wrappers::plates('home', [
-            'stats' => $stats
+/**
+ * Home Controller.
+ */
+class HomeController extends Controller
+{
+    /**
+     * Main site.
+     *
+     * Route: `/`.
+     */
+    public static function index(): Response
+    {
+        $stats = Stats::all();
+        return self::__render('views/home', [
+            'stats' => $stats,
         ]);
     }
 }

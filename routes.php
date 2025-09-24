@@ -1,72 +1,61 @@
 <?php
-/** @var \Bramus\Router\Router $router */
 
-use App\Helpers\MsgHandler;
-use App\Helpers\Wrappers;
+use App\Controllers\AsignaturasController;
+use App\Controllers\CentrosController;
+use App\Controllers\ChallengeController;
+use App\Controllers\DevController;
+use App\Controllers\HomeController;
+use App\Controllers\MiscController;
+use App\Controllers\PlanesController;
+use App\Controllers\ProfesoresController;
+use App\Controllers\RedirectController;
+use App\Controllers\ReportsController;
+use App\Controllers\ReviewsController;
+use App\Controllers\SearchController;
+use App\Controllers\StaffController;
+use App\Controllers\TitulacionesController;
+use App\Middleware\AuthMiddleware;
+use App\Wrappers\Env;
+use League\Route\RouteGroup;
 
-$router->set404(function () {
-    MsgHandler::show(404, "Esta página no existe");
+/** @var League\Route\Router $router */
+
+$router->get('/', [HomeController::class, 'index']);
+$router->get('/about', [MiscController::class, 'about']);
+$router->get('/legal', [MiscController::class, 'legal']);
+$router->get('/redirect', [RedirectController::class, 'index']);
+$router->get('/search', [SearchController::class, 'index']);
+
+$router->group('/reports', function (RouteGroup $route) {
+    $route->get('/', [ReportsController::class, 'index']);
+    $route->post('/', [ReportsController::class, 'post']);
 });
 
-$router->get('/', 'HomeController@get');
-$router->get('/about', function () {
-    Wrappers::plates('about');
-});
-$router->get('/legal', function () {
-    Wrappers::plates('legal');
-});
-
-$router->get('/search', 'SearchController@get');
-$router->get('/centros', 'CentrosController@get');
-$router->get('/centros/titulaciones/(\d+)', 'TitulacionesController@get');
-$router->get('/plan/(\d+)', 'PlanController@get');
-$router->get('/asignaturas/(\d+)/(\d+)', 'AsignaturaController@get');
-$router->get('/profesores', 'ProfesorController@get');
-
-$router->mount('/reviews', function () use ($router) {
-    $router->post('/', 'ReviewController@post');
-    $router->get('/(\d+)/delete', 'ReviewController@delete');
-    $router->get('/(\d+)/like', 'ReviewController@like');
-    $router->get('/(\d+)/dislike', 'ReviewController@dislike');
+$router->get('/centros', [CentrosController::class, 'index']);
+$router->get('/centros/{centro_id:number}/titulaciones', [TitulacionesController::class, 'index']);
+$router->group('/planes/{plan_id:number}', function (RouteGroup $route) {
+    $route->get('/', [PlanesController::class, 'index']);
+    $route->get('/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
 });
 
-$router->mount('/reports', function () use ($router) {
-    $router->get('/new/(\d+)', 'ReporteController@get');
-    $router->post('/new/(\d+)', 'ReporteController@post');
-    $router->get('/(\d+)/delete', 'ReporteController@delete');
+$router->get('/profesores', [ProfesoresController::class, 'index']);
+$router->get('/challenge', [ChallengeController::class, 'index']);
+
+$router->post('/reviews', [ReviewsController::class, 'create']);
+$router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
+    $route->get('/report', [ReviewsController::class, 'reportIndex']);
+    $route->post('/report', [ReviewsController::class, 'reportCreate']);
 });
 
-$router->mount('/login', function () use ($router) {
-    $router->get('/', 'AuthController@loginGet');
-    $router->post('/', 'AuthController@loginPost');
-});
+$router->group('/staff', function (RouteGroup $route) {
+    $route->get('/', [StaffController::class, 'dashboard']);
+    $route->get('/login', [StaffController::class, 'loginGet']);
+    $route->post('/login', [StaffController::class, 'loginPost']);
+    $route->post('/reports/{report_id:number}/status', [StaffController::class, 'reportStatus']);
+})->middleware(new AuthMiddleware());
 
-$router->mount('/register', function () use ($router) {
-    $router->get('/', 'AuthController@registerGet');
-    $router->post('/', 'AuthController@registerPost');
-});
-
-$router->mount('/verify', function () use ($router) {
-    $router->get('/', 'AuthController@verifyGet');
-    $router->post('/', 'AuthController@verifyPost');
-});
-
-$router->get('/logout', 'AuthController@logout');
-
-$router->mount('/tags', function () use ($router) {
-    $router->post('/new', 'TagController@create');
-    $router->post('/(\d+)/edit', 'TagController@edit');
-    $router->get('/(\d+)/delete', 'TagController@delete');
-});
-
-$router->mount('/admin', function () use ($router) {
-    $router->get('/', 'AdminController@dashboard');
-    $router->get('/reports', 'AdminController@reports');
-    $router->get('/reviews', 'AdminController@reviews');
-    $router->get('/tags', 'AdminController@tags');
-});
-
-$router->mount('/lifehacks', function () use ($router) {
-    $router->get('/', 'LifehackController@index');
-    $router->get('/spam', 'LifehackController@spam');
-});
+if (Env::app_debug()) {
+    $router->group('/dev', function (RouteGroup $route) {
+        $route->get('/reactions/{code:number}', [DevController::class, 'reactions']);
+    });
+}

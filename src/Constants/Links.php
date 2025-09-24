@@ -1,31 +1,36 @@
 <?php
+
 namespace App\Constants;
 
-abstract class Links {
-    const list = [
+/**
+ * Links used both in navbar and home.
+ */
+abstract class Links
+{
+    public const array LIST = [
         [
             'name' => 'Centros',
-            'endpoint' => '/centros',
+            'path' => '/centros',
             'color' => 'is-primary',
-            'icon' => 'organisation'
+            'icon' => 'building',
         ],
         [
             'name' => 'Acerca de',
-            'endpoint' => '/about',
+            'path' => '/about',
             'color' => 'is-info',
-            'icon' => 'info'
+            'icon' => 'info-circle',
         ],
         [
-            'name' => 'Lifehacks',
-            'endpoint' => '/lifehacks',
-            'color' => 'is-success',
-            'icon' => 'bulb'
+            'name' => 'Informes',
+            'path' => '/reports',
+            'color' => 'is-link',
+            'icon' => 'stats-report',
         ],
         [
             'name' => 'Legal',
-            'endpoint' => '/legal',
+            'path' => '/legal',
             'color' => 'is-warning',
-            'icon' => 'danger'
-        ]
+            'icon' => 'warning-triangle',
+        ],
     ];
 }

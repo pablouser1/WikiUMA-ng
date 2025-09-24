@@ -1,97 +1,98 @@
 <?php
+
 namespace App;
 
 use App\Cache\ICache;
 use App\Cache\ApcuCache;
 use App\Cache\JSONCache;
 use App\Cache\RedisCache;
-use App\Constants\Caches;
-use App\Helpers\Misc;
-use App\Models\Response;
+use App\Constants\App;
+use App\Enums\CacheEnum;
+use App\Wrappers\Misc;
+use App\Models\Api\Response;
+use App\Wrappers\Env;
 
-class Api {
-    const BASE_API = "https://duma.uma.es/api/appuma";
-    const BASE_WEB = "https://duma.uma.es/duma";
+/**
+ * Wrapper for all UMA requests.
+ */
+class Api
+{
+    private const string BASE_API = "https://duma.uma.es/api/appuma";
+    private const string BASE_WEB = "https://duma.uma.es/duma";
     private ?ICache $cacheEngine = null;
     private string $csrfFile;
     private string $version;
 
-    function __construct() {
+    public function __construct()
+    {
         $this->csrfFile = sys_get_temp_dir() . '/uma_csrf.txt'; // Usado después en búsquedas de profesores
-        $this->version = \Composer\InstalledVersions::getVersion('consejoinfuma/wikiuma-ng');
+        $this->version = App::VERSION;
 
         // Cache config
-        if (isset($_ENV['API_CACHE'])) {
-            switch ($_ENV['API_CACHE']) {
-                case Caches::JSON:
+        $cache = Env::api_cache();
+        if ($cache !== null) {
+            switch ($cache) {
+                case CacheEnum::JSON:
                     // ONLY FOR DEBUGGING
-                    $this->cacheEngine = new JSONCache;
+                    $this->cacheEngine = new JSONCache();
                     break;
-                case Caches::APCU:
+                case CacheEnum::APCU:
                     // For small setups
-                    $this->cacheEngine = new ApcuCache;
+                    $this->cacheEngine = new ApcuCache();
                     break;
-                case Caches::REDIS:
+                case CacheEnum::REDIS:
                     // RECOMMENDED
-                    if (!(isset($_ENV['REDIS_URL']) || isset($_ENV['REDIS_HOST'], $_ENV['REDIS_PORT']))) {
-                        throw new \Exception('You need to set REDIS_URL or REDIS_HOST and REDIS_PORT to use Redis Cache!');
-                    }
-
-                    if (isset($_ENV['REDIS_URL'])) {
-                        // Soporte para Heroku
-                        $url = parse_url($_ENV['REDIS_URL']);
-                        $host = $url['host'];
-                        $port = intval($url['port']);
-                        $password = $url['pass'] ?? null;
-                    } else {
-                        // .env u otros
-                        $host = $_ENV['REDIS_HOST'];
-                        $port = intval($_ENV['REDIS_PORT']);
-                        $password = isset($_ENV['REDIS_PASSWORD']) ? $_ENV['REDIS_PASSWORD'] : null;
-                    }
-                    $this->cacheEngine = new RedisCache($host, $port, $password);
+                    $redis = Env::redis();
+                    $this->cacheEngine = new RedisCache($redis['host'], $redis['port'], $redis['password']);
                     break;
             }
         }
     }
 
-    public function centros(): Response {
+    public function centros(): Response
+    {
         return $this->__handleRequest('/centros/listado/', 'centros');
     }
 
     /**
      * Titulaciones a partir del id del centro
      */
-    public function titulaciones(int $id): Response {
+    public function titulaciones(int $id): Response
+    {
         return $this->__handleRequest("/centros/titulaciones/$id/", "titulaciones-" . $id);
     }
 
     /**
      * Plan a partir de su id
      */
-    public function plan(int $id): Response {
+    public function plan(int $id): Response
+    {
         return $this->__handleRequest("/plan/$id/", "plan-" . $id);
     }
 
     /**
      * Asignatura usando el ID de la asignatura y el ID del plan asociado
-     * NOTA: El id debe de estar presente aunque puede ser cualquier valor
+     *
+     * NOTA: El id de plan debe estar presente aunque puede ser cualquier valor
      */
-    public function asignatura(int $asignatura_id, int $plan_id): Response {
+    public function asignatura(int $asignatura_id, int $plan_id): Response
+    {
         return $this->__handleRequest("/asignatura/$asignatura_id/$plan_id/", 'asignatura-' . $asignatura_id);
     }
 
     /**
      * Profesor usando su correo electrónico
      */
-    public function profesor(string $email): Response {
+    public function profesor(string $email): Response
+    {
         return $this->__handleRequest("/profesor/$email/", 'profesor-' . $email);
     }
 
     /**
      * Convierte un idnc a email haciendo scraping en la web
      */
-    public function profesorWeb(string $idnc): Response {
+    public function profesorWeb(string $idnc): Response
+    {
         $email = '';
         $res = $this->__handleRequest('/buscador/persona/' . $idnc . '/', "", [], [], "", false);
         if (!$res->success) {
@@ -112,15 +113,19 @@ class Api {
             return new Response(200, (object) ['email' => $email], false);
         }
         return new Response(502, null);
-
     }
 
-    public function buscar(string $nombre, string $apellido_1, string $apellido_2): Response {
+    /**
+     * Hacer búsqueda por DUMA vía web scraping.
+     */
+    public function buscar(string $nombre, string $apellido_1, string $apellido_2): Response
+    {
         $results = [];
         $csrf = $this->__getCsrf();
         $headers = [
-            "Referer: https://duma.uma.es/duma/buscador/"
+            "Referer: https://duma.uma.es/duma/buscador/",
         ];
+
         $cookies = "csrftoken=" . $csrf;
 
         $res = $this->__handleRequest('/buscador/persona/', '', [
@@ -149,7 +154,7 @@ class Api {
                 // Take second child (a)
                 $a = $h4->childNodes->item(2);
                 if ($a) {
-                    $url = $a->getAttribute('href');
+                    $url = $a->attributes?->getNamedItem('href')?->value;
                     if ($url) {
                         $results[] = (object) [
                             'name' => mb_convert_encoding($a->textContent, 'ISO-8859-1'), // Sin el mb_convert_encoding los caractéres especiales salen mal
@@ -163,7 +168,8 @@ class Api {
         return new Response(200, $results, false);
     }
 
-    private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response {
+    private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response
+    {
         if ($key !== '' && $this->__hasCache($key)) {
             // Use cache
             return $this->__getCache($key, $isJson);
@@ -173,13 +179,14 @@ class Api {
         return $this->__send($endpoint, $key, $body, $headers, $cookies, $isJson);
     }
 
-    private function __send(string $endpoint, string $key, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response {
+    private function __send(string $endpoint, string $key, array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response
+    {
         $base = $isJson ? self::BASE_API : self::BASE_WEB;
 
         $options = [
             CURLOPT_HEADER => false,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/ConsejoInfUMA/WikiUMA-ng)"
+            CURLOPT_USERAGENT => $this->__getUserAgent(),
         ];
 
         $url = $base . $endpoint;
@@ -216,7 +223,8 @@ class Api {
         return new Response(502, null, $isJson);
     }
 
-    private function __getCsrf(): ?string {
+    private function __getCsrf(): ?string
+    {
         // Get csrf token if it already exists
         if (is_file($this->csrfFile)) {
             return file_get_contents($this->csrfFile);
@@ -226,7 +234,7 @@ class Api {
         curl_setopt_array($ch, [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => true,
-            CURLOPT_USERAGENT => "WikiUMA-ng/{$this->version} (https://github.com/ConsejoInfUMA/WikiUMA-ng)"
+            CURLOPT_USERAGENT => $this->__getUserAgent(),
         ]);
 
         $result = curl_exec($ch);
@@ -235,7 +243,7 @@ class Api {
             // Extract cookies
             preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
             $cookies = array();
-            foreach($matches[1] as $item) {
+            foreach ($matches[1] as $item) {
                 parse_str($item, $cookie);
                 $cookies = array_merge($cookies, $cookie);
             }
@@ -250,15 +258,26 @@ class Api {
         return null;
     }
 
-    private function __hasCache(string $key): bool {
+    private function __hasCache(string $key): bool
+    {
         return $this->cacheEngine && $this->cacheEngine->exists($key);
     }
 
-    private function __getCache(string $key, bool $isJson): Response {
+    private function __getCache(string $key, bool $isJson): Response
+    {
         return $this->cacheEngine->get($key, $isJson);
     }
 
-    private function __setCache(string $key, string $data) {
-        if ($this->cacheEngine) $this->cacheEngine->set($key, $data);
+    private function __setCache(string $key, string $data): void
+    {
+        if ($this->cacheEngine) {
+            $this->cacheEngine->set($key, $data);
+        }
+    }
+
+    private function __getUserAgent(): string
+    {
+        $pkgName = App::PACKAGE_NAME;
+        return "WikiUMA-ng/{$this->version} (https://github.com/$pkgName";
     }
 }
