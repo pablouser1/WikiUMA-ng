@@ -18,24 +18,26 @@
 
 <section class="section">
     <div class="container">
-        <div class="block">
-            <p class="title has-text-centered">Profesores</p>
-            <?php $this->insert('partials/search-client') ?>
-            <div class="columns is-centered is-vcentered is-multiline">
-                <?php foreach ($asignatura->grupos as $grupo): ?>
-                    <div class="column is-narrow">
-                        <?php $this->insert('partials/panel', [
-                            'title' => "Grupo {$grupo->nombre}",
-                            'items' => array_map(fn (object $profesor) => (object) [
-                                'name' => $profesor->nombre,
-                                'url' => $this->url('/profesores', ['email' => $profesor->email]),
-                            ], $grupo->profesores)
-                        ]);
-                        ?>
-                    </div>
-                <?php endforeach ?>
+        <?php if (is_array($asignatura->grupos) && count($asignatura->grupos) > 0): ?>
+            <div class="block">
+                <p class="title has-text-centered">Profesores</p>
+                <?php $this->insert('partials/search-client') ?>
+                <div class="columns is-centered is-vcentered is-multiline">
+                    <?php foreach ($asignatura->grupos as $grupo): ?>
+                        <div class="column is-narrow">
+                            <?php $this->insert('partials/panel', [
+                                'title' => "Grupo {$grupo->nombre}",
+                                'items' => array_map(fn(object $profesor) => (object) [
+                                    'name' => $profesor->nombre,
+                                    'url' => $this->url('/profesores', ['email' => $profesor->email]),
+                                ], $grupo->profesores)
+                            ]);
+                            ?>
+                        </div>
+                    <?php endforeach ?>
+                </div>
             </div>
-        </div>
+        <?php endif ?>
         <div class="block">
             <?php $this->insert('partials/reviews/index', [
                 'reviews' => $reviews,
