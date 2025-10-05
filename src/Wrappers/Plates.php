@@ -4,7 +4,6 @@ namespace App\Wrappers;
 
 use App\Constants\App;
 use App\Constants\Links;
-use App\Enums\TagTypesEnum;
 use League\Plates\Engine;
 use Psr\Http\Message\UriInterface;
 
@@ -46,14 +45,6 @@ class Plates
                 }
             }
             return $type;
-        });
-
-        $engine->registerFunction('tag', function (TagTypesEnum $type): string {
-            return match ($type) {
-                TagTypesEnum::POSITIVE => 'success',
-                TagTypesEnum::NEUTRAL => 'primary',
-                TagTypesEnum::NEGATIVE => 'danger',
-            };
         });
 
         return $engine->render($template, $data);

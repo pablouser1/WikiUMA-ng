@@ -55,7 +55,6 @@ class ReviewsController extends Controller
             $username = $checker->cleanWords(trim($body['username']));
         }
 
-        $tags = isset($body['tags']) && is_array($body['tags']) ? $body['tags'] : null;
 
         $review = new Review([
             'type' => $type,
@@ -65,10 +64,6 @@ class ReviewsController extends Controller
             'username' => $username,
         ]);
         $review->save();
-
-        if ($tags !== null) {
-            $review->tags()->attach($tags);
-        }
 
         return new RedirectResponse(Env::app_url('/redirect', [
             'target' => $target,

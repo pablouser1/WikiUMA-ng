@@ -12,5 +12,5 @@
     <?php $this->insert('partials/pagination', ['uri' => $uri, 'query' => $query, 'hasNext' => $reviews->isNotEmpty()]) ?>
 </div>
 <div class="block">
-    <?php $this->insert('partials/reviews/new', ['tags' => $tags ?? null, 'target' => $target, 'type' => $type]) ?>
+    <?php $this->insert('partials/reviews/new', ['target' => $target, 'type' => $type]) ?>
 </div>

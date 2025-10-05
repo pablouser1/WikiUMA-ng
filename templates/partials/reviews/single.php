@@ -26,15 +26,6 @@
             <?php else: ?>
                 <?= $review->message ?>
             <?php endif ?>
-            <?php if (isset($review->tags) && $review->tags->isNotEmpty()): ?>
-                <div class="tags">
-                    <?php foreach ($review->tags as $tag): ?>
-                        <span class="tag is-rounded is-<?= $this->tag($tag->type) ?>">
-                            <?php $this->insert('partials/tag', ['tag' => $tag]) ?>
-                        </span>
-                    <?php endforeach ?>
-                </div>
-            <?php endif ?>
         </div>
         <nav class="level is-mobile">
             <div class="level-left">

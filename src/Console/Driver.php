@@ -5,16 +5,11 @@ namespace App\Console;
 use App\Console\Modules\MigrateOldModule;
 use App\Console\Modules\ReportsModule;
 use App\Console\Modules\SeederModule;
-use App\Console\Modules\TagsModule;
 use App\Console\Modules\UsersModule;
 
 class Driver extends Base implements IBase
 {
     private const array OPTIONS = [
-        [
-            'name' => 'Tags',
-            'runner' => [TagsModule::class, 'entrypoint'],
-        ],
         [
             'name' => 'Reports',
             'runner' => [ReportsModule::class, 'entrypoint'],

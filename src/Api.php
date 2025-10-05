@@ -2,15 +2,9 @@
 
 namespace App;
 
-use App\Cache\ICache;
-use App\Cache\ApcuCache;
-use App\Cache\JSONCache;
-use App\Cache\RedisCache;
 use App\Constants\App;
-use App\Enums\CacheEnum;
 use App\Wrappers\Misc;
 use App\Models\Api\Response;
-use App\Wrappers\Env;
 
 /**
  * Wrapper for all UMA requests.
@@ -19,34 +13,15 @@ class Api
 {
     private const string BASE_API = "https://duma.uma.es/api/appuma";
     private const string BASE_WEB = "https://duma.uma.es/duma";
-    private ?ICache $cacheEngine = null;
+    private Cache $cache;
     private string $csrfFile;
     private string $version;
 
-    public function __construct()
+    public function __construct(?Cache $cache = null)
     {
+        $this->cache = $cache ?? new Cache();
         $this->csrfFile = sys_get_temp_dir() . '/uma_csrf.txt'; // Usado después en búsquedas de profesores
         $this->version = App::VERSION;
-
-        // Cache config
-        $cache = Env::api_cache();
-        if ($cache !== null) {
-            switch ($cache) {
-                case CacheEnum::JSON:
-                    // ONLY FOR DEBUGGING
-                    $this->cacheEngine = new JSONCache();
-                    break;
-                case CacheEnum::APCU:
-                    // For small setups
-                    $this->cacheEngine = new ApcuCache();
-                    break;
-                case CacheEnum::REDIS:
-                    // RECOMMENDED
-                    $redis = Env::redis();
-                    $this->cacheEngine = new RedisCache($redis['host'], $redis['port'], $redis['password']);
-                    break;
-            }
-        }
     }
 
     public function centros(): Response
@@ -59,7 +34,7 @@ class Api
      */
     public function titulaciones(int $id): Response
     {
-        return $this->__handleRequest("/centros/titulaciones/$id/", "titulaciones-" . $id);
+        return $this->__handleRequest("/centros/titulaciones/$id/", "titulaciones|" . $id);
     }
 
     /**
@@ -67,7 +42,7 @@ class Api
      */
     public function plan(int $id): Response
     {
-        return $this->__handleRequest("/plan/$id/", "plan-" . $id);
+        return $this->__handleRequest("/plan/$id/", "plan|" . $id);
     }
 
     /**
@@ -77,7 +52,7 @@ class Api
      */
     public function asignatura(int $asignatura_id, int $plan_id): Response
     {
-        return $this->__handleRequest("/asignatura/$asignatura_id/$plan_id/", 'asignatura-' . $asignatura_id);
+        return $this->__handleRequest("/asignatura/$asignatura_id/$plan_id/", 'asignatura|' . $asignatura_id);
     }
 
     /**
@@ -85,7 +60,7 @@ class Api
      */
     public function profesor(string $email): Response
     {
-        return $this->__handleRequest("/profesor/$email/", 'profesor-' . $email);
+        return $this->__handleRequest("/profesor/$email/", 'profesor|' . $email);
     }
 
     /**
@@ -170,9 +145,9 @@ class Api
 
     private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response
     {
-        if ($key !== '' && $this->__hasCache($key)) {
+        if ($key !== '' && $this->cache->exists($key)) {
             // Use cache
-            return $this->__getCache($key, $isJson);
+            return $this->cache->get($key, $isJson);
         }
 
         // Make request
@@ -216,7 +191,7 @@ class Api
             // Request sent
             $res = new Response($code, $data, $isJson);
             if ($res->success && $key !== '') {
-                $this->__setCache($key, $data);
+                $this->cache->set($key, $data);
             }
             return $res;
         }
@@ -256,23 +231,6 @@ class Api
         }
 
         return null;
-    }
-
-    private function __hasCache(string $key): bool
-    {
-        return $this->cacheEngine && $this->cacheEngine->exists($key);
-    }
-
-    private function __getCache(string $key, bool $isJson): Response
-    {
-        return $this->cacheEngine->get($key, $isJson);
-    }
-
-    private function __setCache(string $key, string $data): void
-    {
-        if ($this->cacheEngine) {
-            $this->cacheEngine->set($key, $data);
-        }
     }
 
     private function __getUserAgent(): string

@@ -41,7 +41,6 @@
         <div class="block">
             <?php $this->insert('partials/reviews/index', [
                 'reviews' => $reviews,
-                'tags' => $tags,
                 'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),
                 'type' => \App\Enums\ReviewTypesEnum::SUBJECT,
                 'uri' => $uri,

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Api;
+use App\Cache;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
@@ -26,7 +27,8 @@ class AsignaturasController extends Controller
      */
     public static function index(ServerRequestInterface $request, array $args): Response
     {
-        $api = new Api();
+        $cache = new Cache();
+        $api = new Api($cache);
         $uri = $request->getUri();
         $query = $request->getQueryParams();
 
@@ -39,13 +41,11 @@ class AsignaturasController extends Controller
 
         $filter = self::__getFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $query['page'] ?? 1, $filter);
-        $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
-        $tags = self::__getTags(ReviewTypesEnum::SUBJECT);
+        $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT, $cache);
 
         return self::__render('views/asignatura', [
             'asignatura' => $asignatura->data,
             'reviews' => $reviews,
-            'tags' => $tags,
             'stats' => $stats,
             'plan_id' => $args['plan_id'],
             'uri' => $uri,

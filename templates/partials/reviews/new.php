@@ -44,25 +44,6 @@
                     placeholder="Escribe tu valoración del 0 al 10" />
             </div>
         </div>
-        <?php if (isset($tags) && count($tags) > 0): ?>
-            <label class="label">
-                <span class="icon-text">
-                    <span class="icon">
-                        <?php $this->insert('partials/icon', ['icon' => 'hashtag']) ?>
-                    </span>
-                    <span>Etiquetas</span>
-                </span>
-            </label>
-            <div class="field">
-                <div class="control">
-                    <div class="tags">
-                        <?php foreach ($tags as $tag): ?>
-                            <?php $this->insert('partials/tag-edit', ['tag' => $tag]) ?>
-                        <?php endforeach ?>
-                    </div>
-                </div>
-            </div>
-        <?php endif ?>
         <div class="field">
             <altcha-widget challengeurl="<?= $this->url('/challenge') ?>"></altcha-widget>
         </div>

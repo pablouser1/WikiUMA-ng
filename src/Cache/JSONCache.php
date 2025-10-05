@@ -16,7 +16,7 @@ class JSONCache implements ICache
         if (isset($_ENV['API_CACHE_JSON']) && !empty($_ENV['API_CACHE_JSON'])) {
             $this->cache_path = $_ENV['API_CACHE_JSON'];
         } else {
-            $this->cache_path = sys_get_temp_dir() . '/wikiuma_api';
+            $this->cache_path = __DIR__ . '/../../storage/data';
             if (!is_dir($this->cache_path)) {
                 $created = mkdir($this->cache_path, 0777, true);
                 if (!$created) {

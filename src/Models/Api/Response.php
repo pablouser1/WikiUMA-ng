@@ -3,7 +3,7 @@
 namespace App\Models\Api;
 
 /**
- * Wrapped response from UMA servers.
+ * Wrapped response.
  */
 class Response
 {

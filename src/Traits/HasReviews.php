@@ -2,13 +2,12 @@
 
 namespace App\Traits;
 
+use App\Cache;
 use App\Constants\App;
 use App\Enums\ReviewFilterEnum;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
-use App\Models\Tag;
 use App\Wrappers\Stats;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 trait HasReviews
@@ -39,19 +38,9 @@ trait HasReviews
     /**
      * Get stats linked to target.
      */
-    private static function __getStats(string $target, ReviewTypesEnum $type): object
+    private static function __getStats(string $target, ReviewTypesEnum $type, Cache $cache): object
     {
-        return Stats::fromTarget($target, $type);
-    }
-
-    /**
-     * Get tags for specific type.
-     *
-     * @return Collection<int, Tag>
-     */
-    private static function __getTags(ReviewTypesEnum $type): Collection
-    {
-        return Tag::where('for', '=', $type)->get();
+        return Stats::fromTarget($target, $type, $cache);
     }
 
     private static function __getFilter(?string $filter): ?ReviewFilterEnum
