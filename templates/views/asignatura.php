@@ -8,8 +8,8 @@
 
 <section class="hero is-small has-text-centered">
     <div class="hero-body">
-        <p class="title"><?=$this->e($asignatura->nombre)?></p>
-        <p class="subtitle"><?=$this->e($asignatura->curso)?> año - <?=$this->e($asignatura->cuatrimestre) ?> cuatrimestre</p>
+        <p class="title"><?= $this->e($asignatura->nombre) ?></p>
+        <p class="subtitle"><?= $this->e($asignatura->curso) ?> año - <?= $this->e($asignatura->cuatrimestre) ?> cuatrimestre</p>
         <?php if ($stats->total > 0): ?>
             <?php $this->insert('partials/stats', ['stats' => $stats]) ?>
         <?php endif ?>
@@ -21,19 +21,20 @@
         <div class="block">
             <p class="title has-text-centered">Profesores</p>
             <?php $this->insert('partials/search-client') ?>
-            <?php foreach ($asignatura->grupos as $grupo): ?>
-                <p class="title has-text-centered">Grupo <?= $this->e($grupo->nombre) ?></p>
-                <div class="columns is-centered is-vcentered is-multiline">
-                    <?php foreach ($grupo->profesores as $profesor): ?>
-                        <div class="column item is-narrow" data-name="<?= $this->e($profesor->nombre) ?>">
-                            <?php $this->insert('partials/card', [
+            <div class="columns is-centered is-vcentered is-multiline">
+                <?php foreach ($asignatura->grupos as $grupo): ?>
+                    <div class="column is-narrow">
+                        <?php $this->insert('partials/panel', [
+                            'title' => "Grupo {$grupo->nombre}",
+                            'items' => array_map(fn (object $profesor) => (object) [
                                 'name' => $profesor->nombre,
-                                'url' => $this->url('/profesores', ['email' => $profesor->email])
-                            ]) ?>
-                        </div>
-                    <?php endforeach ?>
-                </div>
-            <?php endforeach ?>
+                                'url' => $this->url('/profesores', ['email' => $profesor->email]),
+                            ], $grupo->profesores)
+                        ]);
+                        ?>
+                    </div>
+                <?php endforeach ?>
+            </div>
         </div>
         <div class="block">
             <?php $this->insert('partials/reviews/index', [

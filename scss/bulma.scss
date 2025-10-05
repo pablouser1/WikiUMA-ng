@@ -9,6 +9,7 @@
 @forward "bulma/sass/components/message";
 @forward "bulma/sass/components/navbar";
 @forward "bulma/sass/components/pagination";
+@forward "bulma/sass/components/panel";
 
 // -- Elements -- //
 @forward "bulma/sass/elements/block";
@@ -49,3 +50,10 @@
 
 // Import the themes so that all CSS variables have a value
 @forward "bulma/sass/themes";
+
+nav.panel div.panel-content-scroll {
+  /* Set the maximum height before scrolling starts */
+  max-height: 500px;
+  /* Enable vertical scrollbar when content overflows */
+  overflow-y: auto;
+}
