@@ -30,7 +30,7 @@ try {
         throw $e;
     }
 
-    logger()->error('Unkown error happened', [
+    logger()->error('Unknown error happened', [
         'message' => $e->getMessage(),
         'file' => $e->getFile(),
         'line' => $e->getLine(),
