@@ -16,4 +16,7 @@ class Messages
 
     // -- LOGIN -- //
     public const LOGIN_FAILED = "No se ha podido iniciar sesión.";
+
+    // -- VOTING -- //
+    public const ALREADY_VOTED = "Ya has votado.";
 }

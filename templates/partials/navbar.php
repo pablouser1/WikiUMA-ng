@@ -20,7 +20,25 @@
             <?php endforeach ?>
         </div>
         <div class="navbar-end">
-            <a class="navbar-item" href="<?= $this->url('/staff') ?>">Restringido</a>
+            <?php if ($this->loggedin()): ?>
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        <?= $this->e($_SESSION['username']) ?>
+                    </a>
+                    <div class="navbar-dropdown is-right">
+                        <a class="navbar-item" href="<?= $this->url('/staff') ?>">
+                            Panel de control
+                        </a>
+                        <a class="navbar-item" href="<?= $this->url('/staff/logout') ?>">
+                            Cerrar sesión
+                        </a>
+                    </div>
+                </div>
+            <?php else: ?>
+                <a class="navbar-item" href="<?= $this->url('/staff/login') ?>">
+                    Restringido
+                </a>
+            <?php endif ?>
         </div>
     </div>
 </nav>

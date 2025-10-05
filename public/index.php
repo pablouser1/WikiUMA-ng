@@ -5,10 +5,13 @@ require __DIR__ . '/../bootstrap.php';
 use App\Constants\Messages;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
+use App\Wrappers\Session;
 use Laminas\HttpHandlerRunner\Emitter\SapiEmitter;
 use League\Route\Http\Exception;
 
 require __DIR__ . '/../functions.php';
+
+Session::start();
 
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES

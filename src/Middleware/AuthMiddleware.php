@@ -20,7 +20,6 @@ class AuthMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        Session::start();
         $path = $request->getUri()->getPath();
 
         if (!str_starts_with($path, '/staff/login') && !Session::isLoggedIn()) {

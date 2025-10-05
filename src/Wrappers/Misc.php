@@ -28,6 +28,11 @@ class Misc
         return null;
     }
 
+    public static function currentPath(): string
+    {
+        return $_SERVER['REQUEST_URI'];
+    }
+
     public static function planAsignaturaSplit(string $str): ?array
     {
         $arr = explode(';', $str);

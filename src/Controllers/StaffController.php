@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Constants\App;
 use App\Constants\Messages;
 use App\Enums\ReportStatusEnum;
 use App\Models\Report;
@@ -60,9 +61,15 @@ class StaffController extends Controller
             throw new BadRequestException(Messages::LOGIN_FAILED);
         }
 
-        Session::login($user->id);
+        Session::login($user->username);
 
         return new RedirectResponse(Env::app_url('/staff'));
+    }
+
+    public static function logout(ServerRequestInterface $request): Response
+    {
+        Session::destroy();
+        return new RedirectResponse(Env::app_url('/'));
     }
 
     public static function dashboard(ServerRequestInterface $request): Response

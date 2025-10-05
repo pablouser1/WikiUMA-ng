@@ -3,16 +3,19 @@
 namespace App\Controllers;
 
 use AltchaOrg\Altcha\Altcha;
+use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
+use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\CommonMark\CommonMarkConverter;
 use League\Route\Http\Exception\ForbiddenException;
 use League\Route\Http\Exception\NotFoundException;
+use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -69,6 +72,16 @@ class ReviewsController extends Controller
             'target' => $target,
             'type' => $type,
         ]));
+    }
+
+    public static function like(ServerRequestInterface $request, array $args): Response
+    {
+        return self::__vote($args['review_id'], true, $request->getQueryParams());
+    }
+
+    public static function dislike(ServerRequestInterface $request, array $args): Response
+    {
+        return self::__vote($args['review_id'], false, $request->getQueryParams());
     }
 
     /**
@@ -153,5 +166,29 @@ class ReviewsController extends Controller
             'report' => $report,
             'back' => $review->type->url($review->target),
         ]);
+    }
+
+    private static function __vote(int $id, bool $up, array $query): Response
+    {
+        if (Session::hasVoted($id)) {
+            throw new UnauthorizedException(Messages::ALREADY_VOTED);
+        }
+
+        if (!isset($query['back'])) {
+            throw self::__invalidParams();
+        }
+
+        $review = Review::find($id);
+
+        if ($review === null) {
+            throw new NotFoundException();
+        }
+
+        Session::vote($id);
+        $delta = $up ? $review->votes + 1 : $review->votes - 1;
+        $review->votes = $delta;
+        $review->save();
+
+        return new RedirectResponse(Env::app_url($query['back']));
     }
 }

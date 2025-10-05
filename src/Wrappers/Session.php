@@ -17,19 +17,28 @@ class Session
         session_destroy();
     }
 
-    public static function hasStarted(): bool
-    {
-        return session_status() === PHP_SESSION_ACTIVE;
-    }
-
     public static function isLoggedIn(): bool
     {
-        return self::hasStarted() && isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
+        return isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true;
     }
 
-    public static function login(int $id): void
+    public static function vote(int $id): void
+    {
+        if (!isset($_SESSION['voted'])) {
+            $_SESSION['voted'] = [];
+        }
+
+        $_SESSION['voted'][] = $id;
+    }
+
+    public static function hasVoted(int $id): bool
+    {
+        return isset($_SESSION['voted']) && in_array($id, $_SESSION['voted']);
+    }
+
+    public static function login(string $username): void
     {
         $_SESSION['loggedin'] = true;
-        $_SESSION['id'] = $id;
+        $_SESSION['username'] = $username;
     }
 }

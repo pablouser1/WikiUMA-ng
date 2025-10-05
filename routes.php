@@ -43,6 +43,8 @@ $router->get('/challenge', [ChallengeController::class, 'index']);
 
 $router->post('/reviews', [ReviewsController::class, 'create']);
 $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
+    $route->get('/like', [ReviewsController::class, 'like']);
+    $route->get('/dislike', [ReviewsController::class, 'dislike']);
     $route->get('/report', [ReviewsController::class, 'reportIndex']);
     $route->post('/report', [ReviewsController::class, 'reportCreate']);
 });
@@ -51,6 +53,7 @@ $router->group('/staff', function (RouteGroup $route) {
     $route->get('/', [StaffController::class, 'dashboard']);
     $route->get('/login', [StaffController::class, 'loginGet']);
     $route->post('/login', [StaffController::class, 'loginPost']);
+    $route->get('/logout', [StaffController::class, 'logout']);
     $route->post('/reports/{report_id:number}/status', [StaffController::class, 'reportStatus']);
 })->middleware(new AuthMiddleware());
 
