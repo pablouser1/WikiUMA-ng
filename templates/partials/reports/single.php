@@ -19,9 +19,7 @@
                     <div class="select">
                         <select name="status" required>
                             <?php foreach (\App\Enums\ReportStatusEnum::cases() as $status): ?>
-                                <?php if ($status != \App\Enums\ReportStatusEnum::PENDING): ?>
-                                    <option value="<?= $this->e($status->value)?>"><?= $this->e($status->displayName()) ?></option>
-                                <?php endif ?>
+                                <option <?= $report->status === $status ? 'selected' : '' ?> value="<?= $this->e($status->value)?>"><?= $this->e($status->displayName()) ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
