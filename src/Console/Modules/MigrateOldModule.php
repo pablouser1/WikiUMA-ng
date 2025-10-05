@@ -5,25 +5,38 @@ namespace App\Console\Modules;
 use App\Api;
 use App\Console\Base;
 use App\Console\IBase;
+use League\CLImate\CLImate;
 
+/**
+ * CLI migrator from old WikiUMA (rip).
+ */
 class MigrateOldModule extends Base implements IBase
 {
-    public function entrypoint(): void
+    private const string DB_FILENAME = "old.db";
+
+    private \SQLite3 $db;
+    private Api $api;
+
+    public function __construct(CLImate $cli)
     {
-        $in = $this->cli->input("Write path of SQLite3 DB:");
-        $path = $in->prompt();
-
-        $db = new \Sqlite3($path, SQLITE3_OPEN_READONLY);
-        $api = new Api();
-
-        $this->__migrateTeachers($db, $api);
-
-        $db->close();
+        parent::__construct($cli);
+        $this->db = new \Sqlite3(__DIR__ . '/../../../storage/' . self::DB_FILENAME, SQLITE3_OPEN_READONLY);
+        $this->api = new Api();
     }
 
-    private function __migrateTeachers(\SQLite3 $db, Api $api): void
+    public function __destruct()
     {
-        $res = $db->query('SELECT * FROM profesor');
+        $this->db->close();
+    }
+
+    public function entrypoint(): void
+    {
+        $this->__migrateTeachers();
+    }
+
+    private function __migrateTeachers(): void
+    {
+        $res = $this->db->query('SELECT * FROM profesor');
 
         if ($res === false) {
             $this->cli->backgroundRed()->error('DB error for teacher');
