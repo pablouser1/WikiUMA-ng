@@ -1,7 +1,7 @@
 <?php $this->layout('layouts/hero', ['title' => 'Informe creado', 'withNavbar' => true,]) ?>
 
 <div class="box">
-    <p class="title">Tu informe al usuario "<?= $this->e($report->review->username ?? "Anónimo") ?>" ha sido creado.</p>
+    <p class="title">Tu informe al usuario "<?= $this->e($report->review->username) ?>" ha sido creado.</p>
     <div class="content">
         <p>Tu informe está siendo valorado por la administración.</p>
         <p>Tu ID de informe es: <b><?= $this->e($report->uuid) ?></b>.</p>

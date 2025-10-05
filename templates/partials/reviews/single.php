@@ -9,7 +9,7 @@
             <p>
                 <strong>
                     <?php if ($review->accepted_report === null): ?>
-                        <?= $this->e($review->username ?? 'Anónimo') ?>
+                        <?= $this->e($review->username) ?>
                     <?php else: ?>
                         <span class="tag is-danger">No disponible</span>
                     <?php endif ?>

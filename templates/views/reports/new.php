@@ -1,11 +1,11 @@
 <?php $this->layout('layouts/default', [
-    'title' => 'Nueva queja a opinión de ' . $this->e($review->username ?? 'Anónimo'),
+    'title' => 'Nueva queja a opinión de ' . $this->e($review->username),
     'withReviews' => true,
     'withCaptcha' => true,
 ]) ?>
 
 <?php $this->insert('partials/hero', [
-    'title' => 'Nueva queja a opinión de ' . $this->e($review->username ?? 'Anónimo'),
+    'title' => 'Nueva queja a opinión de ' . $this->e($review->username),
 ])
 ?>
 
