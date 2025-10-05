@@ -17,5 +17,7 @@
     </div>
     <?php $this->insert('partials/search-server') ?>
     <hr />
-    <p>Valoraciones totales: <?= $this->e($stats->total) ?></p>
+    <div class="field is-grouped is-grouped-multiline is-grouped-centered">
+        <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total]) ?>
+    </div>
 </div>
