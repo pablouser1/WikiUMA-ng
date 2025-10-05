@@ -20,7 +20,7 @@ trait HasReviews
      */
     private static function __getReviews(string $target, ReviewTypesEnum $type, int $page, ?ReviewFilterEnum $filter): LengthAwarePaginator
     {
-        $query = Review::where('target', '=', $target)
+        $query = Review::latest()->where('target', '=', $target)
             ->where('type', '=', $type);
 
         if ($filter !== null) {

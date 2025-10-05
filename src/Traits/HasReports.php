@@ -17,7 +17,7 @@ trait HasReports
      */
     private static function __getReports(int $page, ?ReportFilterEnum $filter): LengthAwarePaginator
     {
-        $query = Report::query();
+        $query = Report::latest();
 
         // Default filter to pending
         $filter = $filter ?? ReportFilterEnum::PENDING;
