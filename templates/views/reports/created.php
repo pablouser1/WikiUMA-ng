@@ -13,7 +13,7 @@
 
         <p>
             Puedes saber en todo momento el estado de tu informe consultando el
-            <a href="<?= $this->url('/reports/' . $report->uuid) ?>">siguiente enlace</a>.
+            <a href="<?= $this->url('/reports') ?>">siguiente enlace</a>.
         </p>
 
         <a href="<?= $back ?>" class="button">Atrás</a>

@@ -21,7 +21,7 @@ class UsersModule extends Base implements IModule
         foreach ($users as $i => $user) {
             $this->cli->inline($i + 1);
             $this->cli->inline(". ");
-            $this->cli->out($user->full_name);
+            $this->cli->out("{$user->full_name} ({$user->username})");
         }
     }
 
