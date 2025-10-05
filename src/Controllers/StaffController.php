@@ -109,7 +109,7 @@ class StaffController extends Controller
 
         // Send email if exists
         if (!empty($report->email)) {
-            $mail = new Mail;
+            $mail = new Mail();
             $mail->reportStatus($report);
         }
 

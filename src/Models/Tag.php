@@ -30,5 +30,4 @@ class Tag extends Model
     {
         return $this->belongsToMany(Review::class, 'reviews_tags');
     }
-
 }

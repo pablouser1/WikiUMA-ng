@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Stats
 {
+    private const int MAX_TAGS = 3;
+
     public static function all(): object
     {
         $reviews = Review::all();
@@ -51,7 +53,7 @@ class Stats
         }])
             ->having('review_count', '>', 0)
             ->orderBy('review_count', 'desc')
-            ->limit(3)
+            ->limit(self::MAX_TAGS)
             ->get();
 
         return $tags;
