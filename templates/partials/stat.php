@@ -1,5 +1,5 @@
 <?php
-$color = $withColor ? $this->color($value) : 'primary'
+$color = isset($withColor) && $withColor ? $this->color($value) : 'primary'
 ?>
 
 <div class="control">
