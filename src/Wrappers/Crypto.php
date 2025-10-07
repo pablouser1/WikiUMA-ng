@@ -2,6 +2,10 @@
 
 namespace App\Wrappers;
 
+/**
+ * Helper class used for encrypting teacher's emails.
+ * This is done so the email isn't shown to the client in plaintext.
+ */
 class Crypto
 {
     private const string ALGO = "aes-128-cbc";
@@ -11,13 +15,13 @@ class Crypto
     {
         $ivlen = openssl_cipher_iv_length(self::ALGO);
         $iv = openssl_random_pseudo_bytes($ivlen);
-        return self::__join(openssl_encrypt($data, self::ALGO, Env::app_key(), 0, $iv), $iv);
+        return self::__join(openssl_encrypt($data, self::ALGO, Env::app_key_emails(), 0, $iv), $iv);
     }
 
     public static function decrypt(string $data): string
     {
         [$content, $iv] = self::__split($data);
-        return openssl_decrypt($content, self::ALGO, Env::app_key(), 0, $iv);
+        return openssl_decrypt($content, self::ALGO, Env::app_key_emails(), 0, $iv);
     }
 
     public static function __join(string $encrypted, string $iv): string

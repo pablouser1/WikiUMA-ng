@@ -59,6 +59,15 @@ class Env
         return $_ENV['APP_KEY'] ?? '';
     }
 
+    /**
+     * Get encryption key used for encrypting emails before sending to client.
+     */
+    public static function app_key_emails(): string
+    {
+        return $_ENV['APP_KEY_EMAILS'] ?? self::app_key();
+    }
+
+
     public static function app_contact(): string
     {
         return $_ENV['APP_CONTACT'] ?? '';
