@@ -55,15 +55,20 @@ class ReviewsController extends Controller
             throw self::__invalidBody();
         }
 
-        if (mb_strlen($body['message']) > Review::MESSAGE_MAX_LENGTH) {
+        if (mb_strlen($body['message'], 'UTF-8') > Review::MESSAGE_MAX_LENGTH) {
             throw self::__tooManyChars();
         }
 
-        if (isset($body['username']) && mb_strlen($body['username']) > Review::USERNAME_MAX_LENGTH) {
+        if (isset($body['username']) && mb_strlen($body['username'], 'UTF-8') > Review::USERNAME_MAX_LENGTH) {
             throw self::__tooManyChars();
         }
 
-        // Check captcha first
+        $note = intval($body['note']);
+        if ($note < 0 || $note > 10) {
+            throw self::__invalidBody();
+        }
+
+        // Check captcha
         $altcha = new Altcha(Env::app_key());
         if (!$altcha->verifySolution($body['altcha'], true)) {
             throw self::__invalidBody();
@@ -81,7 +86,7 @@ class ReviewsController extends Controller
 
         $target = $body['target'];
         $msg = $checker->cleanWords($converter->convert(trim($body['message'])));
-        $note = intval($body['note']);
+
         // Optional
         $username = null;
         if (isset($body['username']) && !empty($body['username'])) {
@@ -162,11 +167,11 @@ class ReviewsController extends Controller
             throw self::__invalidBody();
         }
 
-        if (mb_strlen($body['message']) > Report::MESSAGE_MAX_LENGTH) {
+        if (mb_strlen($body['message'], 'UTF-8') > Report::MESSAGE_MAX_LENGTH) {
             throw self::__tooManyChars();
         }
 
-        if (isset($body['email']) && mb_strlen($body['email']) > Report::EMAIL_MAX_LENGTH) {
+        if (isset($body['email']) && mb_strlen($body['email'], 'UTF-8') > Report::EMAIL_MAX_LENGTH) {
             throw self::__tooManyChars();
         }
 
