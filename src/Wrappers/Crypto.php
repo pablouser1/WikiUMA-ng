@@ -18,10 +18,14 @@ class Crypto
         return self::__join(openssl_encrypt($data, self::ALGO, Env::app_key_emails(), 0, $iv), $iv);
     }
 
-    public static function decrypt(string $data): string
+    public static function decrypt(string $data): ?string
     {
-        [$content, $iv] = self::__split($data);
-        return openssl_decrypt($content, self::ALGO, Env::app_key_emails(), 0, $iv);
+        $tuple = self::__split($data);
+        if ($tuple === null) {
+            return null;
+        }
+
+        return openssl_decrypt($tuple[0], self::ALGO, Env::app_key_emails(), 0, $tuple[1]);
     }
 
     public static function __join(string $encrypted, string $iv): string
@@ -30,10 +34,19 @@ class Crypto
         return base64_encode($encrypted . self::SEPARATOR . $ivBase64);
     }
 
-    public static function __split(string $data): array
+    public static function __split(string $data): ?array
     {
         $dataTmp = base64_decode($data);
+        if ($dataTmp === false) {
+            return null;
+        }
+
         $arr = explode(self::SEPARATOR, $dataTmp);
+
+        if (count($arr) !== 2) {
+            return null;
+        }
+
         $arr[1] = base64_decode($arr[1]);
         return $arr;
     }

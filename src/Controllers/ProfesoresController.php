@@ -40,6 +40,10 @@ class ProfesoresController extends Controller
     private static function __byEmail(string $emailEncrypted, Api $api, UriInterface $uri, array $query, Cache $cache): Response
     {
         $email = Crypto::decrypt($emailEncrypted);
+        if ($email === null) {
+            throw self::__invalidParams();
+        }
+
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw self::__invalidParams();
         }
