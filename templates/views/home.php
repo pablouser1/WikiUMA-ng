@@ -18,6 +18,6 @@
     <?php $this->insert('partials/search-server') ?>
     <hr />
     <div class="field is-grouped is-grouped-multiline is-grouped-centered">
-        <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total]) ?>
+        <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total, 'size' => 'medium']) ?>
     </div>
 </div>
