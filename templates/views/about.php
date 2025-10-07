@@ -13,19 +13,7 @@
         <h1>Preguntas frecuentes / Soporte</h1>
 
         <h4>¿Qué datos se recopilan acerca de mi?</h4>
-        <p>WikiUMA recoge la siguiente información:</p>
-        <ul>
-            <li>Dirección IP <b>SÓLO</b> en los siguientes casos:</li>
-            <ul>
-                <li>Fallos constantes de captcha.</li>
-                <li>Gran cantidad de solicitudes continuadas.</li>
-                <li>En el resto de casos, tu dirección IP no se almacena.</li>
-            </ul>
-            <li>
-                Al crear un informe, el correo electrónico dado es almacenado y
-                usado exclusivamente para enviar actualizaciones de su estado.
-            </li>
-        </ul>
+        <p>Consulta <a href="<?= $this->url('/legal') ?>">aquí</a> para información al respecto.</p>
 
         <h4>¿Dónde están las valoraciones de la antigua versión de WikiUMA?</h4>
         <p>Actualmente esos datos no están importados en la versión actual.</p>

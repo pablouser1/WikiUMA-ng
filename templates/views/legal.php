@@ -7,7 +7,7 @@
 
 <section class="section">
     <div class="content">
-        <p class="title">Términos de uso</p>
+        <h1>Términos de uso</h1>
         <ul>
             <li>
                 Esta página web <strong>NO ESTÁ AFILIADA</strong> a la Universidad de Málaga.
@@ -26,11 +26,18 @@
         </ul>
     </div>
     <div class="content">
-        <p class="title">Privacidad</p>
+        <h1>Privacidad</h1>
+        <p>WikiUMA recoge la siguiente información:</p>
         <ul>
+            <li>Dirección IP <b>SÓLO</b> en los siguientes casos:</li>
+            <ul>
+                <li>Fallos repetidos a la hora de resolver captchas.</li>
+                <li>Gran cantidad de solicitudes continuadas.</li>
+                <li>En el resto de casos, tu dirección IP no se almacena.</li>
+            </ul>
             <li>
-                Todas las publicaciones son <b>anónimas</b> y no se registra ningún tipo de información con el que se
-                pueda identificar al usuario que la haya realizado.
+                Al crear un informe, el correo electrónico dado es almacenado y
+                usado exclusivamente para enviar actualizaciones de su estado.
             </li>
         </ul>
     </div>
