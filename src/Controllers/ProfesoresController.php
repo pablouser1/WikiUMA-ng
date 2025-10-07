@@ -70,7 +70,7 @@ class ProfesoresController extends Controller
         }
 
         return new RedirectResponse(Env::app_url('/profesores', [
-            'email' => $profesor->data->email,
+            'email' => Crypto::encrypt($profesor->data->email),
         ]));
     }
 }
