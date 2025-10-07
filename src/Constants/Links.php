@@ -15,7 +15,7 @@ abstract class Links
             'icon' => 'building',
         ],
         [
-            'name' => 'Acerca de',
+            'name' => 'Acerca de / FAQ',
             'path' => '/about',
             'color' => 'is-info',
             'icon' => 'info-circle',
