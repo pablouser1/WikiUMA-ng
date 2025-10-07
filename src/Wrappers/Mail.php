@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
 {
-    private const string REPORT_STATUS_SUBJECT = "Resultado de su queja en WikiUMA";
+    private const string REPORT_STATUS_SUBJECT = "Resultado de su informe en WikiUMA";
     private PHPMailer $client;
 
     public function __construct()

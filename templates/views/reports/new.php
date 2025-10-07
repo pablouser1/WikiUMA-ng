@@ -1,11 +1,11 @@
 <?php $this->layout('layouts/default', [
-    'title' => 'Nueva queja a opinión de ' . $this->e($review->username),
+    'title' => 'Nuevo informe a opinión de ' . $this->e($review->username),
     'withReviews' => true,
     'withCaptcha' => true,
 ]) ?>
 
 <?php $this->insert('partials/hero', [
-    'title' => 'Nueva queja a opinión de ' . $this->e($review->username),
+    'title' => 'Nuevo informe a opinión de ' . $this->e($review->username),
 ])
 ?>
 
@@ -20,7 +20,7 @@
                             <span class="icon">
                                 <?php $this->insert('partials/icon', ['icon' => 'empty-page']) ?>
                             </span>
-                            <span>Queja</span>
+                            <span>Informe</span>
                         </span>
                     </label>
                     <div class="control">
@@ -40,7 +40,7 @@
                     <div class="control">
                         <input name="email" class="input" type="email" autocomplete="off" />
                     </div>
-                    <p class="help">Lo usamos para mantenerte informad@ acerca de tu queja.</p>
+                    <p class="help">Lo usamos para mantenerte informad@ acerca de tu informe.</p>
                 </div>
                 <div class="field">
                     <altcha-widget challengeurl="<?= $this->url('/challenge') ?>"></altcha-widget>

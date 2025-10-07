@@ -5,7 +5,7 @@
 ]) ?>
 
 <div class="box">
-    <p class="title">Consulta de estado de informe</p>
+    <p class="title">Consulta de informe</p>
     <form action="<?= $this->url('/reports') ?>" method="POST">
         <div class="field">
             <label class="label">

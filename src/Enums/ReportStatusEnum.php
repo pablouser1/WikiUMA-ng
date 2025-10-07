@@ -28,4 +28,13 @@ enum ReportStatusEnum: int
             default => '???',
         };
     }
+
+    public function color(): string
+    {
+        return match ($this) {
+            self::PENDING => 'is-primary',
+            self::ACCEPTED => 'is-success',
+            self::DENIED => 'is-danger',
+        };
+    }
 }
