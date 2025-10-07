@@ -15,7 +15,7 @@
     "authors": [
         {
             "name": "Pablo Ferreiro",
-            "email": "me@pabloferreiro.es"
+            "email": "contact@pabloferreiro.es"
         }
     ],
     "repositories": [
@@ -25,8 +25,9 @@
         }
     ],
     "require": {
-        "ext-mbstring": "*",
         "ext-curl": "*",
+        "ext-iconv": "*",
+        "ext-mbstring": "*",
         "league/route": "^6.2",
         "laminas/laminas-diactoros": "^3.6",
         "laminas/laminas-httphandlerrunner": "^2.12",

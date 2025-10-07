@@ -10,14 +10,14 @@ Valora a los profesores de la Universidad de Málaga.
 ## Instalación
 Para poder usar WikiUMA-ng necesitas como mínimo:
 * PHP >= 8.0
-* cURL + ext
+* ext-curl
+* ext-iconv
 * ext-mbstring
 * Dart-Sass
 * Base de datos MySQL/MariaDB/PostgreSQL
 
 Recomendado:
-* Redis
-* ext-redis
+* Redis + ext-redis
 
 ```bash
 composer install # Usa --no-dev si estás en producción
@@ -26,6 +26,11 @@ composer install # Usa --no-dev si estás en producción
 Una vez instaladas las dependencias, compila bulma usando:
 ```bash
 composer run-script bulma
+```
+
+Para terminar, copia el .env de ejemplo y modifícalo encajándolo con tu instalación:
+```bash
+cp .env.example .env
 ```
 
 ## Docs
@@ -39,6 +44,3 @@ phpdoc run -d src -t docs
 ```bash
 ./vendor/bin/php-cs-fixer fix src
 ```
-
-## TODO
-* Instrucciones de instalación
