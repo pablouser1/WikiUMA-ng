@@ -3,7 +3,9 @@
     'withSearch' => true,
 ]) ?>
 
-<?php $this->insert('partials/hero', ['title' => 'Centros']) ?>
+<?php $this->insert('partials/hero', [
+    'title' => 'Centros',
+]) ?>
 
 <section class="section">
     <?php $this->insert('partials/search-client') ?>
