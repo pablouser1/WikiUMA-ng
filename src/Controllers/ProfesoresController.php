@@ -30,7 +30,7 @@ class ProfesoresController extends Controller
         } elseif (isset($query['idnc'])) {
             $response = self::__byIdnc($query['idnc'], $api);
         } else {
-            $response = self::__invalidParams();
+            throw self::__invalidParams();
         }
 
         return $response;
