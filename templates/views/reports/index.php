@@ -3,7 +3,7 @@
     'withCaptcha' => true,
 ]) ?>
 
-<div class="box">
+<div class="box has-text-centered">
     <p class="title">Consulta de informe</p>
     <form action="<?= $this->url('/reports') ?>" method="POST">
         <div class="field">

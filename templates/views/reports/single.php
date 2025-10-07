@@ -2,7 +2,7 @@
     'title' => 'Informe',
 ]) ?>
 
-<div class="box">
+<div class="box has-text-centered">
     <div class="content">
         <h1>Estado de informe</h1>
         <p>

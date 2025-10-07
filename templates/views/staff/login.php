@@ -2,7 +2,7 @@
     'title' => 'Restringido',
 ]) ?>
 
-<div class="box">
+<div class="box has-text-centered">
     <form action="<?= $this->url('/staff/login') ?>" method="POST">
         <div class="field">
             <label class="label">Username</label>

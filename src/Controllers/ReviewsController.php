@@ -21,6 +21,28 @@ use Ramsey\Uuid\Uuid;
 
 class ReviewsController extends Controller
 {
+    /**
+     * Get specific review.
+     *
+     * Path: `/reviews/{review_id}`.
+     *
+     * @param array{"review_id": int} $args
+     */
+    public static function index(ServerRequestInterface $request, array $args): Response
+    {
+        $review_id = $args['review_id'];
+        /** @var ?Review */
+        $review = Review::find($review_id);
+        if ($review === null) {
+            throw new NotFoundException();
+        }
+
+        return self::__render('views/review', [
+            'review' => $review,
+            'uri' => $request->getUri(),
+        ]);
+    }
+
     public static function create(ServerRequestInterface $request): Response
     {
         $body = $request->getParsedBody();

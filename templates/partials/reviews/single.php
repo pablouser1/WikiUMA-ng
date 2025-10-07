@@ -47,11 +47,18 @@
             <?php if (isset($controls) && $controls && $review->accepted_report === null): ?>
                 <div class="level-right">
                     <div class="level-item">
-                        <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
-                            <span class="icon">
-                                <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
-                            </span>
-                        </a>
+                        <div class="buttons">
+                            <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
+                                <span class="icon">
+                                    <?php $this->insert('partials/icon', ['icon' => 'link', 'width' => 24, 'height' => 24]) ?>
+                                </span>
+                            </a>
+                            <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
+                                <span class="icon">
+                                    <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
+                                </span>
+                            </a>
+                        </div>
                     </div>
                 </div>
             <?php endif ?>

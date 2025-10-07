@@ -2,7 +2,7 @@
     'title' => 'Inicio',
 ]) ?>
 
-<div class="box">
+<div class="box has-text-centered">
     <p class="title">¡Bienvenid@ a WikiUMA <small title="nueva generación">ng</small>!</p>
     <p class="subtitle">Califica a tus profesores de forma anónima y más</p>
     <div class="buttons is-centered is-responsive">
