@@ -34,7 +34,8 @@ class Env
         if ($query !== null) {
             $queryFiltered = [];
             foreach ($query as $key => $value) {
-                $queryFiltered[$key] = htmlspecialchars(strval($value));
+                $valTmp = $value instanceof \BackedEnum ? $value->value : $value;
+                $queryFiltered[$key] = htmlspecialchars(strval($valTmp));
             }
             $queryStr = '?' . http_build_query($queryFiltered);
         }
