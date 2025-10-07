@@ -18,8 +18,8 @@
         <?php endforeach ?>
     </div>
     <?php $this->insert('partials/search-server') ?>
-    <hr />
     <?php if ($stats->total > 0): ?>
+        <hr />
         <div class="field is-grouped is-grouped-multiline is-grouped-centered">
             <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total, 'size' => 'medium']) ?>
             <?php $this->insert('partials/stat', ['title' => 'Nota media', 'value' => $stats->avg, 'size' => 'medium', 'withColor' => true]) ?>
