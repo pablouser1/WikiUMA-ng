@@ -1,4 +1,6 @@
-<?php $this->layout('layouts/default', ['title' => 'Legal']) ?>
+<?php $this->layout('layouts/default', [
+    'title' => 'Legal',
+]) ?>
 
 <?php $this->insert('partials/hero', [
     'title' => 'Legal',

@@ -1,6 +1,12 @@
-<?php $this->layout('layouts/default', ['title' => 'Titulaciones', 'withSearch' => true]) ?>
+<?php $this->layout('layouts/default', [
+    'title' => 'Titulaciones',
+    'withSearch' => true,
+]) ?>
 
-<?php $this->insert('partials/hero', ['title' => 'Titulaciones', 'subtitle' => $titulaciones[0]->CENTRO]) ?>
+<?php $this->insert('partials/hero', [
+    'title' => 'Titulaciones',
+    'subtitle' => $titulaciones[0]->CENTRO,
+]) ?>
 
 <section class="section">
     <?php $this->insert('partials/search-client') ?>

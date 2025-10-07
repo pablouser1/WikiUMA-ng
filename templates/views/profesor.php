@@ -3,8 +3,7 @@
     'withMaxChars' => true,
     'withReviews' => true,
     'withCaptcha' => true,
-])
-?>
+]) ?>
 
 <section class="hero is-small has-text-centered">
     <div class="hero-body">

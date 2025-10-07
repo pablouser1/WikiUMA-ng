@@ -1,6 +1,10 @@
-<?php $this->layout('layouts/default', ['title' => 'Resultados']) ?>
+<?php $this->layout('layouts/default', [
+    'title' => 'Resultados',
+]) ?>
 
-<?php $this->insert('partials/hero', ['title' => 'Resultados']) ?>
+<?php $this->insert('partials/hero', [
+    'title' => 'Resultados',
+]) ?>
 
 <div class="columns is-centered is-vcentered is-multiline">
     <?php foreach ($results as $result): ?>

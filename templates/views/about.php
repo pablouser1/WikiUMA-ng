@@ -1,4 +1,6 @@
-<?php $this->layout('layouts/default', ['title' => 'Acerca de']) ?>
+<?php $this->layout('layouts/default', [
+    'title' => 'Acerca de',
+]) ?>
 
 <?php $this->insert('partials/hero', [
     'title' => 'Acerca de WikiUMA',

@@ -1,4 +1,6 @@
-<?php $this->layout('layouts/hero', ['title' => 'Informe creado']) ?>
+<?php $this->layout('layouts/hero', [
+    'title' => 'Informe creado',
+]) ?>
 
 <div class="box">
     <p class="title">Tu informe al usuario "<?= $this->e($report->review->username) ?>" ha sido creado.</p>

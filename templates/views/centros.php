@@ -1,4 +1,7 @@
-<?php $this->layout('layouts/default', ['title' => 'Centros', 'withSearch' => true]) ?>
+<?php $this->layout('layouts/default', [
+    'title' => 'Centros',
+    'withSearch' => true,
+]) ?>
 
 <?php $this->insert('partials/hero', ['title' => 'Centros']) ?>
 

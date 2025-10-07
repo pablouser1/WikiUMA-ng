@@ -1,4 +1,6 @@
-<?php $this->layout('layouts/hero', ['title' => 'Inicio']) ?>
+<?php $this->layout('layouts/hero', [
+    'title' => 'Inicio',
+]) ?>
 
 <div class="box">
     <p class="title">¡Bienvenid@ a WikiUMA <small title="nueva generación">ng</small>!</p>
