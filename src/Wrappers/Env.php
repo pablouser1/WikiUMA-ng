@@ -32,7 +32,11 @@ class Env
         $queryStr = '';
 
         if ($query !== null) {
-            $queryStr = '?' . http_build_query($query);
+            $queryFiltered = [];
+            foreach ($query as $key => $value) {
+                $queryFiltered[$key] = htmlspecialchars(strval($value));
+            }
+            $queryStr = '?' . http_build_query($queryFiltered);
         }
 
         return $base . $path . $queryStr;

@@ -13,7 +13,13 @@ class Misc
             ...$newData,
         ];
 
-        return $uri->withQuery(http_build_query($newQuery));
+        $filteredQuery = [];
+
+        foreach ($newQuery as $key => $value) {
+            $filteredQuery[$key] = strval($value);
+        }
+
+        return $uri->withQuery(http_build_query($filteredQuery));
     }
 
     public static function parseHTML(?string $html): ?\DOMDocument
