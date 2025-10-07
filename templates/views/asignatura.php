@@ -29,7 +29,7 @@
                                 'title' => "Grupo {$grupo->nombre}",
                                 'items' => array_map(fn(object $profesor) => (object) [
                                     'name' => $profesor->nombre,
-                                    'url' => $this->url('/profesores', ['email' => $profesor->email]),
+                                    'url' => $this->url('/profesores', ['email' => $this->encrypt($profesor->email)]),
                                 ], $grupo->profesores)
                             ]);
                             ?>

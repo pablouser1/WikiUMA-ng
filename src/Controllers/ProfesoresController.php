@@ -6,6 +6,7 @@ use App\Api;
 use App\Cache;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
+use App\Wrappers\Crypto;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
@@ -36,8 +37,9 @@ class ProfesoresController extends Controller
         return $response;
     }
 
-    private static function __byEmail(string $email, Api $api, UriInterface $uri, array $query, Cache $cache): Response
+    private static function __byEmail(string $emailEncrypted, Api $api, UriInterface $uri, array $query, Cache $cache): Response
     {
+        $email = Crypto::decrypt($emailEncrypted);
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             throw self::__invalidParams();
         }
