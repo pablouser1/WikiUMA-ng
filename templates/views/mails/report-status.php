@@ -1,9 +1,9 @@
 Hola,
 
-Su queja con el ID <?= $this->e($report->uuid) ?> a la valoración del usuario "<?= $this->e($report->review->username) ?>" ha sido evaluada por la administración.
+Su informe con el ID <?= $this->e($report->uuid) ?> a la valoración del usuario "<?= $this->e($report->review->username) ?>" ha sido evaluada por la administración.
 Después de una revisión, hemos decidido <?= $this->e($report->status->actionTaken()) ?>.
 
-Motivo: <?= $report->reason === null ? 'Sin Especificar' : $this->e($report->reason) ?>.
+Motivo: <?= $this->e($report->reason) ?>.
 
 Si tiene alguna pregunta o desea discutir esta decisión, no dude en responder a este correo.
 
