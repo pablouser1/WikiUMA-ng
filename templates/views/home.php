@@ -19,7 +19,10 @@
     </div>
     <?php $this->insert('partials/search-server') ?>
     <hr />
-    <div class="field is-grouped is-grouped-multiline is-grouped-centered">
-        <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total, 'size' => 'medium']) ?>
-    </div>
+    <?php if ($stats->total > 0): ?>
+        <div class="field is-grouped is-grouped-multiline is-grouped-centered">
+            <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total, 'size' => 'medium']) ?>
+            <?php $this->insert('partials/stat', ['title' => 'Nota media', 'value' => $stats->avg, 'size' => 'medium', 'withColor' => true]) ?>
+        </div>
+    <?php endif ?>
 </div>

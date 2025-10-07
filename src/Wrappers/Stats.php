@@ -30,11 +30,15 @@ class Stats
 
     public static function all(): object
     {
-        $reviews = Review::all();
-        $count = $reviews->count();
+        $reviews = Review::whereDoesntHave('reports', function ($query) {
+            $query->where('status', ReportStatusEnum::ACCEPTED);
+        });
+        $total = $reviews->count();
+        $avg = round($reviews->avg('note'), 2);
 
         return (object) [
-            'total' => $count,
+            'total' => $total,
+            'avg' => $avg,
         ];
     }
 
