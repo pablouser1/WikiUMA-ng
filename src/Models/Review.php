@@ -15,6 +15,9 @@ class Review extends Model
 {
     private const string DEFAULT_USERNAME_VALUE = "Anónimo";
 
+    public const int USERNAME_MAX_LENGTH = 32;
+    public const int MESSAGE_MAX_LENGTH = 500;
+
     protected $table = 'reviews';
 
     protected $fillable = [

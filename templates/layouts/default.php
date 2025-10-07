@@ -4,8 +4,9 @@
     'title' => $title,
     'withNavbar' => true,
     'withSearch' => $withSearch ?? false,
-    'withReviews' => $withReviews ?? false,
+    'withMaxChars' => $withMaxChars ?? false,
     'withCaptcha' => $withCaptcha ?? false,
+    'withReviews' => $withReviews ?? false,
 ])
 ?>
 <body>

@@ -33,6 +33,14 @@ class ReviewsController extends Controller
             throw self::__invalidBody();
         }
 
+        if (mb_strlen($body['message']) > Review::MESSAGE_MAX_LENGTH) {
+            throw self::__tooManyChars();
+        }
+
+        if (isset($body['username']) && mb_strlen($body['username']) > Review::USERNAME_MAX_LENGTH) {
+            throw self::__tooManyChars();
+        }
+
         // Check captcha first
         $altcha = new Altcha(Env::app_key());
         if (!$altcha->verifySolution($body['altcha'], true)) {
@@ -130,6 +138,14 @@ class ReviewsController extends Controller
         $body = $request->getParsedBody();
         if (!($body !== null && isset($body['message'], $body['altcha']))) {
             throw self::__invalidBody();
+        }
+
+        if (mb_strlen($body['message']) > Report::MESSAGE_MAX_LENGTH) {
+            throw self::__tooManyChars();
+        }
+
+        if (isset($body['email']) && mb_strlen($body['email']) > Report::EMAIL_MAX_LENGTH) {
+            throw self::__tooManyChars();
         }
 
         // Check captcha first

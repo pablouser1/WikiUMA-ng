@@ -28,7 +28,7 @@
             <div class="field">
                 <label class="label">Razón (opcional)</label>
                 <div class="control">
-                    <input class="input" type="text" name="reason">
+                    <input class="input" type="text" name="reason" maxlength="<?= $this->e(\App\Models\Report::REASON_MAX_LENGTH) ?>">
                 </div>
             </div>
             <div class="field">

@@ -13,6 +13,7 @@ class Messages
 
     public const string MUST_SEND_BODY = "No hay cuerpo o es inválido";
     public const string MUST_SEND_PARAMS = "No hay parámetros requeridos o son inválidos";
+    public const string TOO_MANY_CHARACTERS = "Se han enviado más caracteres que los permitidos";
 
     // -- LOGIN -- //
     public const LOGIN_FAILED = "No se ha podido iniciar sesión.";

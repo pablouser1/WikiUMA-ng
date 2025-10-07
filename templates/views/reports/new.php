@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Nuevo informe a opinión de ' . $this->e($review->username),
+    'withMaxChars' => true,
     'withReviews' => true,
     'withCaptcha' => true,
 ]) ?>
@@ -24,7 +25,7 @@
                         </span>
                     </label>
                     <div class="control">
-                        <textarea name="message" class="textarea" required></textarea>
+                        <textarea name="message" class="textarea" maxlength="<?= $this->e(\App\Models\Report::MESSAGE_MAX_LENGTH) ?>" required></textarea>
                     </div>
                     <p class="help">Pssst... Puedes usar Markdown.</p>
                 </div>
@@ -38,7 +39,7 @@
                         </span>
                     </label>
                     <div class="control">
-                        <input name="email" class="input" type="email" autocomplete="off" />
+                        <input name="email" class="input" type="email" autocomplete="off" maxlength="<?= $this->e(\App\Models\Report::EMAIL_MAX_LENGTH) ?>" />
                     </div>
                     <p class="help">Lo usamos para mantenerte informad@ acerca de tu informe.</p>
                 </div>

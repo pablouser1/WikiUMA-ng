@@ -14,6 +14,10 @@ class Report extends Model
 {
     private const string DEFAULT_REASON_VALUE = "Sin especificar";
 
+    public const int MESSAGE_MAX_LENGTH = 500;
+    public const int EMAIL_MAX_LENGTH = 255;
+    public const int REASON_MAX_LENGTH = 500;
+
     protected $table = 'reports';
 
     protected $fillable = [

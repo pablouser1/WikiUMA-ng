@@ -1,6 +1,7 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Panel de control',
     'withReviews' => true,
+    'withMaxChars' => true,
 ]) ?>
 
 <?php $this->insert('partials/hero', [

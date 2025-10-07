@@ -13,7 +13,7 @@
                 </span>
             </label>
             <div class="control">
-                <textarea name="message" class="textarea" required></textarea>
+                <textarea name="message" class="textarea" maxlength="<?= $this->e(\App\Models\Review::MESSAGE_MAX_LENGTH) ?>" required></textarea>
             </div>
             <p class="help">Pssst... Puedes usar Markdown.</p>
         </div>
@@ -27,7 +27,7 @@
                 </span>
             </label>
             <div class="control">
-                <input name="username" class="input" type="text" autocomplete="off" />
+                <input name="username" class="input" type="text" autocomplete="off" maxlength="<?= $this->e(\App\Models\Review::USERNAME_MAX_LENGTH) ?>" />
             </div>
         </div>
         <div class="field">

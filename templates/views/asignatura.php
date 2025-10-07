@@ -1,6 +1,7 @@
 <?php $this->layout('layouts/default', [
     'title' => $asignatura->nombre,
     'withSearch' => true,
+    'withMaxChars' => true,
     'withReviews' => true,
     'withCaptcha' => true,
 ])

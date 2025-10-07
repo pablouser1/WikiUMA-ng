@@ -14,5 +14,8 @@
     <?php if (isset($withCaptcha) && $withCaptcha): ?>
         <script async defer src="https://cdn.jsdelivr.net/gh/altcha-org/altcha/dist/altcha.min.js" type="module"></script>
     <?php endif ?>
+    <?php if (isset($withMaxChars) && $withMaxChars): ?>
+        <script defer src="<?= $this->url('/js/maxchars.js') ?>"></script>
+    <?php endif ?>
     <title><?= $this->e($title) ?> - WikiUMA</title>
 </head>
