@@ -100,7 +100,8 @@ class ReportsModule extends Base implements IBase
         // Save and send email if available
         $report->save();
         if (!empty($report->email)) {
-            $this->mail->reportStatus($report);
+            $ok = $this->mail->reportStatus($report);
+            $this->cli->backgroundYellow()->bold('Report was saved, but could not send email');
         }
         $this->cli->backgroundGreen()->bold('OK');
     }
