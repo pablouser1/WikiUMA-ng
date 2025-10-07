@@ -1,6 +1,13 @@
 <footer class="footer has-text-centered mt-2">
-    <p>
-        Hecho con <span style="color: #e25555;">&#9829;</span> en <a target="_blank" href="https://github.com/pablouser1/WikiUMA-ng">Github</a>
-    </p>
-    <p>Versión: <b><?= $this->version() ?></b></p>
+    <div class="block">
+        <p>
+            Hecho con <span style="color: #e25555;">&#9829;</span> en <a target="_blank" href="https://github.com/pablouser1/WikiUMA-ng">Github</a>
+        </p>
+        <p>Versión: <b><?= $this->version() ?></b></p>
+    </div>
+    <div class="block">
+        <a href="https://github.com/pablouser1/WikiUMA-ng/blob/master/LICENSE" target="_blank">
+            <img src="<?= $this->url('/img/agplv3.png') ?>" />
+        </a>
+    </div>
 </footer>
