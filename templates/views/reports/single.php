@@ -1,6 +1,5 @@
 <?php $this->layout('layouts/hero', [
     'title' => 'Informe',
-    'withNavbar' => true,
 ]) ?>
 
 <div class="box">

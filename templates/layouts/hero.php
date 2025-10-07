@@ -1,18 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-theme="<?= $this->theme() ?>">
 <?php $this->insert('partials/head', [
     'title' => $title,
-    'withNavbar' => $withNavbar ?? false,
     'withCaptcha' => $withCaptcha ?? false,
 ]) ?>
 
 <body>
     <div class="hero is-fullheight">
-        <?php if ($withNavbar ?? false): ?>
-            <div class="hero-head">
-                <?php $this->insert('partials/navbar') ?>
-            </div>
-        <?php endif ?>
+        <div class="hero-head">
+            <?php $this->insert('partials/navbar') ?>
+        </div>
         <div class="hero-body">
             <div class="container has-text-centered">
                 <div class="columns is-centered">

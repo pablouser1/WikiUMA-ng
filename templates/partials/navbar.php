@@ -20,6 +20,9 @@
             <?php endforeach ?>
         </div>
         <div class="navbar-end">
+            <div class="navbar-item">
+                <?php $this->insert('partials/theme') ?>
+            </div>
             <?php if ($this->loggedin()): ?>
                 <div class="navbar-item has-dropdown is-hoverable">
                     <a class="navbar-link">

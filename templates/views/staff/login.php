@@ -1,4 +1,4 @@
-<?php $this->layout('layouts/hero', ['title' => 'Restringido', 'withNavbar' => true]) ?>
+<?php $this->layout('layouts/hero', ['title' => 'Restringido']) ?>
 
 <div class="box">
     <form action="<?= $this->url('/staff/login') ?>" method="POST">

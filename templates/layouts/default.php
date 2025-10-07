@@ -1,8 +1,7 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" data-theme="<?= $this->theme() ?>">
 <?php $this->insert('partials/head', [
     'title' => $title,
-    'withNavbar' => true,
     'withSearch' => $withSearch ?? false,
     'withMaxChars' => $withMaxChars ?? false,
     'withCaptcha' => $withCaptcha ?? false,

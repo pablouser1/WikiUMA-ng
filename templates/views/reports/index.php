@@ -1,6 +1,5 @@
 <?php $this->layout('layouts/hero', [
     'title' => 'Informes',
-    'withNavbar' => true,
     'withCaptcha' => true,
 ]) ?>
 

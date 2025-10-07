@@ -1,4 +1,4 @@
-<nav class="panel is-info">
+<nav class="panel is-primary">
     <p class="panel-heading"><?= $this->e($title) ?></p>
     <div class="panel-content-scroll">
         <?php foreach ($items as $item): ?>

@@ -17,6 +17,7 @@ class Plates
         $engine->registerFunction('links', fn () => Links::LIST);
         $engine->registerFunction('version', fn () => App::VERSION);
         $engine->registerFunction('loggedin', fn () => Session::isLoggedIn());
+        $engine->registerFunction('theme', fn () => Cookies::theme());
 
         $engine->registerFunction('pathWithQuery', fn (UriInterface $uri) => Misc::pathWithQuery($uri));
         $engine->registerFunction('uriQuery', fn (UriInterface $uri, array $origQuery, array $newData) => Misc::modifyQueryFromUri($uri, $origQuery, $newData));

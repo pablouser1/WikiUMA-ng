@@ -38,6 +38,7 @@
                     <?php endforeach ?>
                 </div>
             </div>
+            <hr />
         <?php endif ?>
         <div class="block">
             <?php $this->insert('partials/reviews/index', [

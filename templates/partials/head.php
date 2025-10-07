@@ -5,9 +5,8 @@
     <?php if (isset($withReviews) && $withReviews): ?>
         <link rel="stylesheet" href="<?= $this->url('/css/review.css') ?>">
     <?php endif ?>
-    <?php if (isset($withNavbar) && $withNavbar): ?>
-        <script defer src="<?= $this->url('/js/navbar.js') ?>"></script>
-    <?php endif ?>
+    <script defer src="<?= $this->url('/js/navbar.js') ?>"></script>
+    <script defer src="<?= $this->url('/js/theme.js') ?>"></script>
     <?php if (isset($withSearch) && $withSearch): ?>
         <script defer src="<?= $this->url('/js/search.js') ?>"></script>
     <?php endif ?>
