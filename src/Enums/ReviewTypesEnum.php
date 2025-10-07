@@ -30,6 +30,10 @@ enum ReviewTypesEnum: int
             return Env::app_url('/profesores', ['idnc' => $target]);
         } elseif ($this === self::SUBJECT) {
             $arr = Misc::planAsignaturaSplit($target);
+            if ($arr === null) {
+                return null;
+            }
+
             return Env::app_url('/planes/' . $arr[0] . '/asignaturas/' . $arr[1]);
         }
 
