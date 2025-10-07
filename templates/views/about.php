@@ -24,7 +24,7 @@
             la migración sería costosa, tanto en tiempo invertido como en recursos.
         </p>
 
-        <h4>Las palabras más usadas en las valoraciones de un profesor / una asignatura no coincide con los datos reales</h4>
+        <h4>Las palabras más usadas en las valoraciones de un profesor / una asignatura no coinciden con los datos reales</h4>
         <p>Estos datos no se actualizan en tiempo real, se calcula cada 7 días.</p>
     </div>
     <div class="content">
