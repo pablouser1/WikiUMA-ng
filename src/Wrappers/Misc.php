@@ -6,6 +6,16 @@ use Psr\Http\Message\UriInterface;
 
 class Misc
 {
+    public static function pathWithQuery(UriInterface $uri): string
+    {
+        $str = $uri->getPath();
+        if ($uri->getQuery() !== '') {
+            $str .= '?' . $uri->getQuery();
+        }
+
+        return $str;
+    }
+
     public static function modifyQueryFromUri(UriInterface $uri, array $origQuery, array $newData): UriInterface
     {
         $newQuery = [
@@ -32,11 +42,6 @@ class Misc
             }
         }
         return null;
-    }
-
-    public static function currentPath(): string
-    {
-        return $_SERVER['REQUEST_URI'];
     }
 
     public static function planAsignaturaSplit(string $str): ?array

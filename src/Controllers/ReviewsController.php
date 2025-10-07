@@ -189,6 +189,6 @@ class ReviewsController extends Controller
         $review->votes = $delta;
         $review->save();
 
-        return new RedirectResponse(Env::app_url($query['back']));
+        return new RedirectResponse(Env::app_url(htmlspecialchars_decode($query['back'])));
     }
 }

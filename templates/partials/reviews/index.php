@@ -5,7 +5,7 @@
     <?php else: ?>
         <div class="box">
             <?php foreach ($reviews as $review): ?>
-                <?php $this->insert('partials/reviews/single', ['review' => $review, 'voting' => true, 'controls' => true]) ?>
+                <?php $this->insert('partials/reviews/single', ['review' => $review, 'voting' => true, 'controls' => true, 'uri' => $uri]) ?>
             <?php endforeach ?>
         </div>
     <?php endif ?>
