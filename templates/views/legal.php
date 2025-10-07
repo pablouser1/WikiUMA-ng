@@ -27,7 +27,7 @@
     </div>
     <div class="content">
         <h1>Privacidad</h1>
-        <p>WikiUMA recoge la siguiente información:</p>
+        <h2>Información recopilada</h2>
         <ul>
             <li>Dirección IP <b>SÓLO</b> en los siguientes casos:</li>
             <ul>
@@ -40,6 +40,11 @@
                 usado exclusivamente para enviar actualizaciones de su estado.
             </li>
         </ul>
+        <h2>Uso de cookies</h2>
+        <p>
+            WikiUMA utiliza cookies, estas cookies se utilizan exclusivamente para el
+            correcto funcionamiento de la aplicación y NUNCA para analíticas o rastreo.
+        </p>
     </div>
     <div class="content">
         <p><strong>Al usar el servicio confirmas haber leído y aceptado los términos de uso.</strong></p>
