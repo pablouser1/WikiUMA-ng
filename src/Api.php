@@ -143,6 +143,11 @@ class Api
         return new Response(200, $results, false);
     }
 
+    public function departamentos(string $codigo): Response
+    {
+        return $this->__handleRequest("/departamentos/listado/$codigo/", "departamentos|$codigo");
+    }
+
     private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response
     {
         if ($key !== '' && $this->cache->exists($key)) {
@@ -217,7 +222,7 @@ class Api
         if ($result !== false) {
             // Extract cookies
             preg_match_all('/^Set-Cookie:\s*([^;]*)/mi', $result, $matches);
-            $cookies = array();
+            $cookies = [];
             foreach ($matches[1] as $item) {
                 parse_str($item, $cookie);
                 $cookies = array_merge($cookies, $cookie);
