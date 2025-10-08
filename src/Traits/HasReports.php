@@ -35,7 +35,7 @@ trait HasReports
         );
     }
 
-    private static function __getFilter(?string $filter): ?ReportFilterEnum
+    private static function __getReportFilter(?string $filter): ?ReportFilterEnum
     {
         return $filter !== null ? ReportFilterEnum::tryFrom($filter) : null;
     }

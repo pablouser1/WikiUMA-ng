@@ -3,6 +3,7 @@
 <?php $this->insert('partials/head', [
     'title' => $title,
     'withReviews' => $withReviews ?? false,
+    'withMaxChars' => $withMaxChars ?? false,
     'withCaptcha' => $withCaptcha ?? false,
 ]) ?>
 

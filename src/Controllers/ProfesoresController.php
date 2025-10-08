@@ -53,7 +53,7 @@ class ProfesoresController extends Controller
             return MsgHandler::errorFromApi($profesor);
         }
 
-        $filter = self::__getFilter($query['filter'] ?? null);
+        $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1, $filter);
         $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER, $cache);
 

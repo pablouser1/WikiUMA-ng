@@ -18,10 +18,12 @@
     <div class="container">
         <?php $this->insert('partials/reviews/index', [
             'reviews' => $reviews,
-            'target' => $profesor->idnc,
-            'type' => \App\Enums\ReviewTypesEnum::TEACHER,
             'uri' => $uri,
             'query' => $query,
+            'from' => [
+                'target' => $profesor->idnc,
+                'type' => \App\Enums\ReviewTypesEnum::TEACHER,
+            ],
         ]) ?>
     </div>
 </section>

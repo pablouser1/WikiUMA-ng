@@ -44,24 +44,26 @@
                     </div>
                 <?php endif ?>
             </div>
-            <?php if (isset($controls) && $controls && $review->accepted_report === null): ?>
+            <?php if (isset($controls) && $controls): ?>
                 <div class="level-right">
                     <div class="level-item">
                         <div class="buttons">
-                            <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
-                                <span class="icon">
-                                    <?php $this->insert('partials/icon', ['icon' => 'link', 'width' => 24, 'height' => 24]) ?>
-                                </span>
-                            </a>
-                            <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
-                                <span class="icon">
-                                    <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
-                                </span>
-                            </a>
+                            <?php if ($review->accepted_report === null): ?>
+                                <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
+                                    <span class="icon">
+                                        <?php $this->insert('partials/icon', ['icon' => 'link', 'width' => 24, 'height' => 24]) ?>
+                                    </span>
+                                </a>
+                                <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
+                                    <span class="icon">
+                                        <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
+                                    </span>
+                                </a>
+                            <?php endif ?>
                             <?php if (isset($solo) && $solo): ?>
-                            <a class="button is-small is-rounded is-primary" href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">
-                                Ver contexto original
-                            </a>
+                                <a class="button is-small is-rounded is-primary" href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">
+                                    Ver contexto original
+                                </a>
                             <?php endif ?>
                         </div>
                     </div>

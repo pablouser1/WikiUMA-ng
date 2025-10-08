@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AsignaturasController;
+use App\Controllers\AuthController;
 use App\Controllers\CentrosController;
 use App\Controllers\ChallengeController;
 use App\Controllers\DevController;
@@ -51,10 +52,15 @@ $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
 });
 
 $router->group('/staff', function (RouteGroup $route) {
-    $route->get('/', [StaffController::class, 'dashboard']);
-    $route->get('/login', [StaffController::class, 'loginGet']);
-    $route->post('/login', [StaffController::class, 'loginPost']);
-    $route->get('/logout', [StaffController::class, 'logout']);
+    // -- Auth -- //
+    $route->get('/login', [AuthController::class, 'index']);
+    $route->post('/login', [AuthController::class, 'post']);
+    $route->get('/logout', [AuthController::class, 'logout']);
+
+    // -- Dashboard -- //
+    $route->get('/reviews', [StaffController::class, 'reviewIndex']);
+    $route->post('/reviews/{review_id:number}/delete', [StaffController::class, 'reviewDelete']);
+    $route->get('/reports', [StaffController::class, 'reportIndex']);
     $route->post('/reports/{report_id:number}/status', [StaffController::class, 'reportStatus']);
 })->middleware(new AuthMiddleware());
 

@@ -1,20 +1,21 @@
 <?php $this->layout('layouts/default', [
-    'title' => 'Panel de control',
+    'title' => 'Valoraciones',
     'withReviews' => true,
     'withMaxChars' => true,
 ]) ?>
 
 <?php $this->insert('partials/hero', [
-    'title' => 'Panel de control',
+    'title' => 'Valoraciones',
 ])
 ?>
 
 <section class="section">
     <div class="container">
-        <?php $this->insert('partials/reports/index', [
-            'reports' => $reports,
+        <?php $this->insert('partials/reviews/index', [
+            'reviews' => $reviews,
             'uri' => $uri,
             'query' => $query,
+            'solo' => true,
         ]) ?>
     </div>
 </section>

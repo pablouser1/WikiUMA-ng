@@ -2,90 +2,91 @@
 
 namespace App\Controllers;
 
-use App\Constants\App;
-use App\Constants\Messages;
 use App\Enums\ReportStatusEnum;
 use App\Models\Report;
-use App\Models\User;
+use App\Models\Review;
 use App\Traits\HasReports;
+use App\Traits\HasReviews;
 use App\Wrappers\Env;
 use App\Wrappers\Mail;
-use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
-use League\Route\Http\Exception\BadRequestException;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Staff Controller.
  */
 class StaffController extends Controller
 {
+    use HasReviews;
     use HasReports;
 
-    /**
-     * Login form.
-     *
-     * Route: `/staff/login`.
-     */
-    public static function loginGet(): Response
-    {
-        return self::__render('views/staff/login');
-    }
-
-    /**
-     * Login POST.
-     *
-     * Route: `/staff/login`.
-     */
-    public static function loginPost(ServerRequestInterface $request): Response
-    {
-        $body = $request->getParsedBody();
-
-        if (!isset($body['username'], $body['password'])) {
-            throw self::__invalidBody();
-        }
-
-        $username = trim($body['username']);
-        $password = trim($body['password']);
-
-        /** @var User */
-        $user = User::where('username', '=', $username)->first();
-
-        if ($user === null) {
-            throw new BadRequestException(Messages::LOGIN_FAILED);
-        }
-
-        if (!$user->checkPassword($password)) {
-            throw new BadRequestException(Messages::LOGIN_FAILED);
-        }
-
-        Session::login($user->username);
-
-        return new RedirectResponse(Env::app_url('/staff'));
-    }
-
-    public static function logout(ServerRequestInterface $request): Response
-    {
-        Session::destroy();
-        return new RedirectResponse(Env::app_url('/'));
-    }
-
-    public static function dashboard(ServerRequestInterface $request): Response
+    public static function reviewIndex(ServerRequestInterface $request): Response
     {
         $uri = $request->getUri();
         $query = $request->getQueryParams();
-        $filter = self::__getFilter($query['filter'] ?? null);
+        $filter = self::__getReviewFilter($query['filter'] ?? null);
+        $reviews = self::__getReviews(null, null, $query['page'] ?? 1, $filter);
+
+        return self::__render('views/staff/reviews', [
+            'reviews' => $reviews,
+            'uri' => $uri,
+            'query' => $query,
+        ]);
+    }
+
+    /**
+     * Update status of review.
+     *
+     * @var array{"review_id": int} $args
+     */
+    public static function reviewDelete(ServerRequestInterface $request, array $args): Response
+    {
+        $body = $request->getParsedBody();
+        $review_id = $args['review_id'];
+        $review = Review::find($review_id);
+
+        if ($review === null) {
+            throw new NotFoundException();
+        }
+
+        $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;
+
+        $uuid = Uuid::uuid4()->toString();
+        $report = new Report([
+            'uuid' => $uuid,
+            'review_id' => $review->id,
+            'status' => ReportStatusEnum::ACCEPTED,
+            'message' => '',
+            'reason' => $reason,
+        ]);
+
+        $report->save();
+
+        return new RedirectResponse(Env::app_url('/staff/reviews'));
+    }
+
+    public static function reportIndex(ServerRequestInterface $request): Response
+    {
+        $uri = $request->getUri();
+        $query = $request->getQueryParams();
+        $filter = self::__getReportFilter($query['filter'] ?? null);
         $reports = self::__getReports($query['page'] ?? 1, $filter);
 
-        return self::__render('views/staff/dashboard', [
+        return self::__render('views/staff/reports', [
             'reports' => $reports,
             'uri' => $uri,
             'query' => $query,
         ]);
     }
 
+    /**
+     * Update status of report.
+     *
+     * @var array{"report_id": int} $args
+     */
     public static function reportStatus(ServerRequestInterface $request, array $args): RedirectResponse
     {
         $body = $request->getParsedBody();
@@ -120,6 +121,6 @@ class StaffController extends Controller
             $mail->reportStatus($report);
         }
 
-        return new RedirectResponse(Env::app_url('/staff'));
+        return new RedirectResponse(Env::app_url('/staff/reports'));
     }
 }

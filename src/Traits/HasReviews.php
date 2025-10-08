@@ -17,10 +17,14 @@ trait HasReviews
      *
      * @return LengthAwarePaginator<Review>
      */
-    private static function __getReviews(string $target, ReviewTypesEnum $type, int $page, ?ReviewFilterEnum $filter): LengthAwarePaginator
+    private static function __getReviews(?string $target, ?ReviewTypesEnum $type, int $page, ?ReviewFilterEnum $filter): LengthAwarePaginator
     {
-        $query = Review::latest()->where('target', '=', $target)
-            ->where('type', '=', $type);
+        $query = Review::latest();
+
+        if ($target !== null && $type !== null) {
+            $query->where('target', '=', $target)
+                ->where('type', '=', $type);
+        }
 
         if ($filter !== null) {
             $action = $filter->action();
@@ -43,7 +47,7 @@ trait HasReviews
         return Stats::fromTarget($target, $type, $cache);
     }
 
-    private static function __getFilter(?string $filter): ?ReviewFilterEnum
+    private static function __getReviewFilter(?string $filter): ?ReviewFilterEnum
     {
         return $filter !== null ? ReviewFilterEnum::tryFrom($filter) : null;
     }

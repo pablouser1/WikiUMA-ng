@@ -39,7 +39,7 @@ class AsignaturasController extends Controller
 
         $id = Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
 
-        $filter = self::__getFilter($query['filter'] ?? null);
+        $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $query['page'] ?? 1, $filter);
         $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT, $cache);
 

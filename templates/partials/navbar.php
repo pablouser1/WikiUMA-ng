@@ -29,8 +29,11 @@
                         <?= $this->e($_SESSION['username']) ?>
                     </a>
                     <div class="navbar-dropdown is-right">
-                        <a class="navbar-item" href="<?= $this->url('/staff') ?>">
-                            Panel de control
+                        <a class="navbar-item" href="<?= $this->url('/staff/reviews') ?>">
+                            Valoraciones
+                        </a>
+                        <a class="navbar-item" href="<?= $this->url('/staff/reports') ?>">
+                            Informes
                         </a>
                         <a class="navbar-item" href="<?= $this->url('/staff/logout') ?>">
                             Cerrar sesión
