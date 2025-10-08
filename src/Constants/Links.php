@@ -9,7 +9,7 @@ abstract class Links
 {
     public const array LIST = [
         [
-            'name' => 'Centros',
+            'name' => 'Directorio',
             'path' => '/centros',
             'color' => 'is-primary',
             'icon' => 'building',

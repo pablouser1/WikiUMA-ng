@@ -6,16 +6,14 @@
     <p class="title">¡Bienvenid@ a WikiUMA <small title="nueva generación">ng</small>!</p>
     <p class="subtitle">Califica a tus profesores de forma anónima y más</p>
     <div class="buttons is-centered is-responsive">
-        <?php foreach ($this->links() as $link) : ?>
-            <a class="button <?= $this->e($link['color']) ?>" href="<?= $this->url($link['path']) ?>">
-                <span class="icon-text">
-                    <span class="icon">
-                        <?php $this->insert('partials/icon', ['icon' => $this->e($link['icon'])]) ?>
-                    </span>
-                    <span><?= $this->e($link['name']) ?></span>
+        <a class="button is-primary" href="<?= $this->url('/centros') ?>">
+            <span class="icon-text">
+                <span class="icon">
+                    <?php $this->insert('partials/icon', ['icon' => 'building']) ?>
                 </span>
-            </a>
-        <?php endforeach ?>
+                <span>Encontrar profesor en directorio</span>
+            </span>
+        </a>
     </div>
     <?php $this->insert('partials/search-server') ?>
     <?php if ($stats->total > 0): ?>
