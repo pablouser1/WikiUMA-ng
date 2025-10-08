@@ -27,8 +27,7 @@ class AsignaturasController extends Controller
      */
     public static function index(ServerRequestInterface $request, array $args): Response
     {
-        $cache = new Cache();
-        $api = new Api($cache);
+        $api = new Api();
         $uri = $request->getUri();
         $query = $request->getQueryParams();
 
@@ -41,7 +40,7 @@ class AsignaturasController extends Controller
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $query['page'] ?? 1, $filter);
-        $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT, $cache);
+        $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
 
         return self::__render('views/asignatura', [
             'asignatura' => $asignatura->data,

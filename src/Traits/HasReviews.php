@@ -42,9 +42,9 @@ trait HasReviews
     /**
      * Get stats linked to target.
      */
-    private static function __getStats(string $target, ReviewTypesEnum $type, Cache $cache): object
+    private static function __getStats(string $target, ReviewTypesEnum $type): object
     {
-        return Stats::fromTarget($target, $type, $cache);
+        return Stats::fromTarget($target, $type);
     }
 
     private static function __getReviewFilter(?string $filter): ?ReviewFilterEnum

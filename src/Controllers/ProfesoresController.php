@@ -22,12 +22,11 @@ class ProfesoresController extends Controller
     {
         $uri = $request->getUri();
         $query = $request->getQueryParams();
-        $cache = new Cache();
-        $api = new Api($cache);
+        $api = new Api();
 
         $response = null;
         if (isset($query['email'])) {
-            $response = self::__byEmail($query['email'], $api, $uri, $query, $cache);
+            $response = self::__byEmail($query['email'], $api, $uri, $query);
         } elseif (isset($query['idnc'])) {
             $response = self::__byIdnc($query['idnc'], $api);
         } else {
@@ -37,7 +36,7 @@ class ProfesoresController extends Controller
         return $response;
     }
 
-    private static function __byEmail(string $emailEncrypted, Api $api, UriInterface $uri, array $query, Cache $cache): Response
+    private static function __byEmail(string $emailEncrypted, Api $api, UriInterface $uri, array $query): Response
     {
         $email = Crypto::decrypt($emailEncrypted);
         if ($email === null) {
@@ -55,7 +54,7 @@ class ProfesoresController extends Controller
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1, $filter);
-        $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER, $cache);
+        $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
 
         return self::__render('views/profesor', [
             'profesor' => $profesor->data,

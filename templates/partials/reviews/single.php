@@ -24,7 +24,7 @@
                     <p><b>Motivo</b>: <?= $this->e($review->accepted_report->reason) ?></p>
                 <?php endif ?>
             <?php else: ?>
-                <?= $review->message ?>
+                <div style="white-space: pre-wrap;"><?= $review->message ?></div>
             <?php endif ?>
         </div>
         <nav class="level is-mobile">
