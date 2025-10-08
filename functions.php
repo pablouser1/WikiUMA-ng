@@ -1,5 +1,6 @@
 <?php
 
+use App\Wrappers\Storage;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
@@ -13,7 +14,7 @@ if (!function_exists('logger')) {
         }
 
         $logger = new Logger('wikiuma');
-        $logger->pushHandler(new StreamHandler(__DIR__ . '/storage/wikiuma.log'));
+        $logger->pushHandler(new StreamHandler(Storage::path('wikiuma.log')));
 
         return $logger;
     }

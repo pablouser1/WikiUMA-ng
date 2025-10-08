@@ -5,6 +5,7 @@ namespace App\Console\Modules;
 use App\Api;
 use App\Console\Base;
 use App\Console\IBase;
+use App\Wrappers\Storage;
 use League\CLImate\CLImate;
 
 /**
@@ -20,7 +21,7 @@ class MigrateOldModule extends Base implements IBase
     public function __construct(CLImate $cli)
     {
         parent::__construct($cli);
-        $this->db = new \Sqlite3(__DIR__ . '/../../../storage/' . self::DB_FILENAME, SQLITE3_OPEN_READONLY);
+        $this->db = new \Sqlite3(Storage::path(self::DB_FILENAME), SQLITE3_OPEN_READONLY);
         $this->api = new Api();
     }
 
