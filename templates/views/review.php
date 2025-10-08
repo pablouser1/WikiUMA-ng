@@ -8,7 +8,7 @@
         'review' => $review,
         'voting' => true,
         'controls' => true,
+        'solo' => true,
         'uri' => $uri,
     ]) ?>
-    <a class="button is-link" href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">Ver en contexto original</a>
 </div>

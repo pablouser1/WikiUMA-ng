@@ -58,6 +58,11 @@
                                     <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
                                 </span>
                             </a>
+                            <?php if (isset($solo) && $solo): ?>
+                            <a class="button is-small is-rounded is-primary" href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">
+                                Ver contexto original
+                            </a>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>
