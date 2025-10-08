@@ -25,6 +25,10 @@ class MigrateOldModule extends Base implements IBase
             'runner' => [self::class, 'dbToEmail'],
         ],
         [
+            'name' => 'Link db users with email manually',
+            'runner' => [self::class, 'dbToEmailManual'],
+        ],
+        [
             'name' => 'Link email to idnc',
             'runner' => [self::class, 'emailToIdnc'],
         ],
@@ -105,6 +109,38 @@ class MigrateOldModule extends Base implements IBase
         $this->cli->out('Teachers linked: ' . count($relations));
         $this->cli->out('Failed: ' . count($failed));
         $this->cli->out('DUMA teachers saved: ' . count($teachersDuma));
+    }
+
+    public function dbToEmailManual(): void
+    {
+        $failed = json_decode(Storage::get('failed-email.json'));
+        if ($failed === false) {
+            $this->cli->backgroundRed()->error('Could not get failed json from last step');
+            return;
+        }
+
+        $relationsEmail = json_decode(Storage::get('relations-email.json'), true);
+        if ($relationsEmail === false) {
+            $this->cli->backgroundRed()->error('Could not get json from last step');
+            return;
+        }
+
+        $newLinks = [];
+
+        foreach ($failed as $link) {
+            $this->cli->out($link->name);
+            $in = $this->cli->input("Write email (empty for skip):");
+            $email = $in->prompt();
+            if ($email !== '') {
+                $newLinks[$link->id] = $email;
+            }
+        }
+
+
+
+        $mergedLinks = $relationsEmail + $newLinks;
+
+        Storage::save('relations-email-withmanual.json', json_encode($mergedLinks, JSON_PRETTY_PRINT));
     }
 
     public function emailToIdnc(): void
