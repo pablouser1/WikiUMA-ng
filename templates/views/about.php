@@ -28,6 +28,10 @@
         <p>Estos datos no se actualizan en tiempo real, se calcula cada 7 días.</p>
     </div>
     <div class="content">
+        <h1>Contacto</h1>
+        <p>Puedes ponerte en contacto con la administración directamente enviando un correo electrónico a wikiuma (at) pabloferreiro (dot) es</p>
+    </div>
+    <div class="content">
         <h1>Cŕeditos</h1>
         <p>Este proyecto no sería posible sin la ayuda de:</p>
         <ul>
