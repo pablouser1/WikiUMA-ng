@@ -148,6 +148,11 @@ class Api
         return $this->__handleRequest("/departamentos/listado/$codigo/", "departamentos|$codigo");
     }
 
+    public function personal(string $codigo): Response
+    {
+        return $this->__handleRequest("/departamentos/personal/$codigo/", "departamentos|$codigo");
+    }
+
     private function __handleRequest(string $endpoint, string $key = "", array $body = [], array $headers = [], string $cookies = "", bool $isJson = true): Response
     {
         if ($key !== '' && $this->cache->exists($key)) {

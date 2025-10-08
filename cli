@@ -10,6 +10,7 @@ if (PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) {
 }
 
 require __DIR__ . '/bootstrap.php';
+require __DIR__ . '/functions.php';
 
 $cli = new League\CLImate\CLImate;
 

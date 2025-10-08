@@ -4,7 +4,7 @@ CREATE TABLE `reviews` (
   `created_at` datetime NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
   `target` varchar(36) NOT NULL,
-  `username` varchar(32) DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
   `note` float NOT NULL,
   `message` text DEFAULT NULL,
   `votes` int(11) DEFAULT 0,

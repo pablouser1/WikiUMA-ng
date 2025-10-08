@@ -22,11 +22,11 @@ class Review extends Model
 
     protected $fillable = [
         'target',
+        'type',
         'username',
         'note',
         'message',
         'votes',
-        'type',
     ];
 
     protected function casts(): array
