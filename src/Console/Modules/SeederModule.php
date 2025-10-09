@@ -10,10 +10,21 @@ use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
 use Faker\Generator;
 
+/**
+ * DB Seeder for testing.
+ */
 class SeederModule extends Base implements IBase
 {
     private const int NUM_PROFANITIES = 10;
+
+    /**
+     * @link http://localhost:8000/redirect?target=ce4ca780-b501-45b7-9443-5c5acd4cacd3&type=0
+     */
     private const string DEFAULT_TEACHER = 'ce4ca780-b501-45b7-9443-5c5acd4cacd3';
+
+    /**
+     * @link http://localhost:8000/redirect?target=5389;55683&type=1
+     */
     private const string DEFAULT_SUBJECT = '5389;55683';
 
     private Generator $faker;
@@ -26,6 +37,9 @@ class SeederModule extends Base implements IBase
         $this->profanities = include __DIR__ . '/../../../misc/profanities.php';
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function entrypoint(): void
     {
         $this->cli->bold()->out('Seeder');
@@ -59,6 +73,9 @@ class SeederModule extends Base implements IBase
         $this->cli->backgroundGreen()->out('Done!');
     }
 
+    /**
+     * Random text that can randomly contain profanities.
+     */
     private function __message_with_spice(): string
     {
         $txt = $this->faker->text(200);

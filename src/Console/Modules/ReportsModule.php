@@ -9,6 +9,9 @@ use App\Models\Report;
 use App\Wrappers\Mail;
 use League\CLImate\CLImate;
 
+/**
+ * Reports administration.
+ */
 class ReportsModule extends Base implements IBase
 {
     private Mail $mail;
@@ -41,12 +44,18 @@ class ReportsModule extends Base implements IBase
         ],
     ];
 
+    /**
+     * {@inheritdoc}
+     */
     public function entrypoint(): void
     {
         $this->cli->bold()->out('Reports');
         $this->radio(self::OPTIONS);
     }
 
+    /**
+     * List pending reports and let the user choose between actions.
+     */
     public function pending(): void
     {
         $reports = Report::where('status', '=', ReportStatusEnum::PENDING)->get();
@@ -66,21 +75,33 @@ class ReportsModule extends Base implements IBase
         }
     }
 
+    /**
+     * Accept the report, deleting the review.
+     */
     public function actionsAccept(Report $report): void
     {
         $this->__actionsCommon($report, ReportStatusEnum::ACCEPTED);
     }
 
+    /**
+     * Deny the report, keeping the review.
+     */
     public function actionsDeny(Report $report): void
     {
         $this->__actionsCommon($report, ReportStatusEnum::DENIED);
     }
 
+    /**
+     * Temporally ignore review.
+     */
     public function actionsSkip(Report $report): void
     {
         $this->__actionsCommon($report, ReportStatusEnum::PENDING);
     }
 
+    /**
+     * Common function to handle actions.
+     */
     private function __actionsCommon(Report $report, ReportStatusEnum $status): void
     {
         if ($status === ReportStatusEnum::PENDING) {

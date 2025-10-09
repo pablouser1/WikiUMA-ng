@@ -6,14 +6,23 @@ use App\Console\Base;
 use App\Console\IModule;
 use App\Models\User;
 
+/**
+ * Staff Module.
+ */
 class UsersModule extends Base implements IModule
 {
+    /**
+     * {@inheritdoc}
+     */
     public function entrypoint(): void
     {
         $this->cli->bold()->out("Users");
         $this->radioSection();
     }
 
+    /**
+     * Get all available staff.
+     */
     public function list(): void
     {
         $users = User::all();
@@ -25,6 +34,11 @@ class UsersModule extends Base implements IModule
         }
     }
 
+    /**
+     * Add a staff.
+     *
+     * @todo Figure out how to avoid showing password in cleartext.
+     */
     public function add(): void
     {
         // First name
@@ -60,6 +74,9 @@ class UsersModule extends Base implements IModule
         $this->cli->backgroundGreen()->out("User created!");
     }
 
+    /**
+     * Delete staff.
+     */
     public function delete(): void
     {
         $users = User::all();

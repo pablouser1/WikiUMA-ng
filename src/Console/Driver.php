@@ -7,6 +7,9 @@ use App\Console\Modules\ReportsModule;
 use App\Console\Modules\SeederModule;
 use App\Console\Modules\UsersModule;
 
+/**
+ * Main entrypoint for CLI.
+ */
 class Driver extends Base implements IBase
 {
     private const array OPTIONS = [
@@ -28,6 +31,9 @@ class Driver extends Base implements IBase
         ],
     ];
 
+    /**
+     * {@inheritdoc}
+     */
     public function entrypoint(): void
     {
         $this->cli->bold()->out("Welcome to WikiUMA-ng!");

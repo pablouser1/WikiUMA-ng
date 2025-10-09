@@ -12,7 +12,7 @@ use App\Wrappers\Storage;
 use League\CLImate\CLImate;
 
 /**
- * CLI migrator from old WikiUMA (rip).
+ * Migrate from old WikiUMA (rip).
  */
 class MigrateOldModule extends Base implements IBase
 {
@@ -57,12 +57,19 @@ class MigrateOldModule extends Base implements IBase
         $this->db->close();
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function entrypoint(): void
     {
         $this->cli->bold()->out('Migrations');
         $this->radio(self::OPTIONS);
     }
 
+    /**
+     * Get teachers' names from db and attempt to
+     * relate them to data found on DUMA.
+     */
     public function dbToEmail(): void
     {
         $teachersDuma = $this->__buildTeachersList();
@@ -111,6 +118,11 @@ class MigrateOldModule extends Base implements IBase
         $this->cli->out('DUMA teachers saved: ' . count($teachersDuma));
     }
 
+    /**
+     * Used for teachers that couldn't be linked automatically
+     * on last step.
+     * Show names one by one and write email manually.
+     */
     public function dbToEmailManual(): void
     {
         $failed = json_decode(Storage::get('failed-email.json'));
@@ -143,6 +155,9 @@ class MigrateOldModule extends Base implements IBase
         Storage::save('relations-email-withmanual.json', json_encode($mergedLinks, JSON_PRETTY_PRINT));
     }
 
+    /**
+     * Relate email to idnc.
+     */
     public function emailToIdnc(): void
     {
         $relationsEmail = json_decode(Storage::get('relations-email.json'));
@@ -170,6 +185,9 @@ class MigrateOldModule extends Base implements IBase
         $this->cli->out('Failed: ' . count($failed));
     }
 
+    /**
+     * Write JSON with all importable reviews.
+     */
     public function buildReviewsJSON(): void
     {
         $relationsIdnc = json_decode(Storage::get('relations-idnc.json'), true);
@@ -187,6 +205,9 @@ class MigrateOldModule extends Base implements IBase
         Storage::save('reviews.json', json_encode($reviews, JSON_PRETTY_PRINT));
     }
 
+    /**
+     * Import `reviews.json`
+     */
     public function importReviews(): void
     {
         $reviews = json_decode(Storage::get('reviews.json'), true);
@@ -198,6 +219,9 @@ class MigrateOldModule extends Base implements IBase
         Review::insert($reviews);
     }
 
+    /**
+     * Get all teachers from all departments in ETSII and ETSIT.
+     */
     private function __buildTeachersList(): ?array
     {
         $dps = $this->api->departamentos('a02');
@@ -257,6 +281,9 @@ class MigrateOldModule extends Base implements IBase
         return $teachersDuma;
     }
 
+    /**
+     * Get useful section of department.
+     */
     private function __findArea(array $sections): ?string
     {
         $i = 0;
@@ -274,6 +301,9 @@ class MigrateOldModule extends Base implements IBase
         return $val;
     }
 
+    /**
+     * Get all teachers from backup db.
+     */
     private function __getTeachersDb(): ?array
     {
         $teachers = [];
@@ -292,6 +322,9 @@ class MigrateOldModule extends Base implements IBase
         return $teachers;
     }
 
+    /**
+     * Get reviews from linked teachers.
+     */
     private function __getReviewsDbByIds(array $relationsIdnc): ?array
     {
         $reviews = [];
@@ -386,10 +419,6 @@ class MigrateOldModule extends Base implements IBase
         return array_map(function ($index) use ($lookup) {
             return $lookup[$index];
         }, $common_indices);
-    }
-
-    private function __truncate(string $str, int $width) {
-        return strtok(wordwrap($str, $width, "...\n"), "\n");
     }
 
     private function __normalize(string $str): string
