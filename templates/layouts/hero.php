@@ -16,7 +16,7 @@
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-centered">
-                    <div class="column is-half">
+                    <div class="column is-narrow" style="max-width: 100%;">
                         <?=$this->section('content')?>
                     </div>
                 </div>
