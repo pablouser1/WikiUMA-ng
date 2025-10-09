@@ -12,7 +12,7 @@
     	</div>
         <div class="control">
             <button class="button is-info is-rounded" style="height: 100%" type="submit">
-                <?php $this->insert('partials/icon', ['icon' => 'search']) ?>
+                <?php $this->insert('partials/icon', ['icon' => 'search', 'width' => 32, 'height' => 32]) ?>
             </button>
         </div>
     </div>
