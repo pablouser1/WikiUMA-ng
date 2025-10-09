@@ -44,6 +44,19 @@ class Misc
         return null;
     }
 
+    public static function DOMInnerHTML(\DOMNode $element): string
+    {
+        $innerHTML = '';
+        $children = $element->childNodes;
+
+        foreach ($children as $child)
+        {
+            $innerHTML .= $element->ownerDocument->saveHTML($child);
+        }
+
+        return $innerHTML;
+    }
+
     public static function planAsignaturaSplit(string $str): ?array
     {
         $arr = explode(';', $str);

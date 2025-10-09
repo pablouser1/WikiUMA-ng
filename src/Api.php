@@ -78,9 +78,16 @@ class Api
         if ($doc) {
             $xpath = new \DOMXpath($doc);
             $elements = $xpath->query("/html/body/div[4]/div[2]/div[2]");
-            if ($elements) {
+            if ($elements !== false && $elements->count() > 0) {
                 $div = $elements->item(0);
-                $email = $div->textContent;
+
+                // Los correos electrónicos están separados con <br>
+                // Extraemos el primero disponible
+                $innerHtml = Misc::DOMInnerHTML($div);
+
+                $emailsUnfiltered = array_map(fn (string $email) => trim($email), explode('<br>', $innerHtml));
+                $emails = array_filter($emailsUnfiltered, fn (string $email) => !empty($email));
+                $email = $emails[0];
             }
         }
 
