@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/hero', [
     'title' => 'Informe creado',
+    'uri' => $uri,
 ]) ?>
 
 <div class="box has-text-centered">

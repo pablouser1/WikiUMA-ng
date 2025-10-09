@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Nuevo informe a opinión de ' . $this->e($review->username),
+    'uri' => $uri,
     'withMaxChars' => true,
     'withReviews' => true,
     'withCaptcha' => true,

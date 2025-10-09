@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => $profesor->nombre,
+    'uri' => $uri,
     'withMaxChars' => true,
     'withReviews' => true,
     'withCaptcha' => true,

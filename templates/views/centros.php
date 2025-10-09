@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Centros',
+    'uri' => $uri,
     'withSearch' => true,
 ]) ?>
 

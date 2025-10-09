@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/hero', [
     'title' => "Valoración de {$review->username}",
+    'uri' => $uri,
     'withReviews' => true,
     'withMaxChars' => $this->loggedin(),
 ]) ?>

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Wrappers\Stats;
 use Laminas\Diactoros\Response;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Home Controller.
@@ -15,10 +16,10 @@ class HomeController extends Controller
      *
      * Route: `/`.
      */
-    public static function index(): Response
+    public static function index(ServerRequestInterface $request): Response
     {
         $stats = Stats::all();
-        return self::__render('views/home', [
+        return self::__render('views/home', $request, [
             'stats' => $stats,
         ]);
     }

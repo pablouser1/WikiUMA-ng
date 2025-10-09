@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Resultados',
+    'uri' => $uri,
 ]) ?>
 
 <?php $this->insert('partials/hero', [

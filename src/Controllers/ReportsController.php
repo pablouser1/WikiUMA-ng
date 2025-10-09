@@ -19,9 +19,9 @@ class ReportsController extends Controller
      *
      * Route: `/reports`.
      */
-    public static function index(): Response
+    public static function index(ServerRequestInterface $request): Response
     {
-        return self::__render('views/reports/index');
+        return self::__render('views/reports/index', $request);
     }
 
     public static function post(ServerRequestInterface $request): Response
@@ -44,7 +44,7 @@ class ReportsController extends Controller
             throw new NotFoundException();
         }
 
-        return self::__render('views/reports/single', [
+        return self::__render('views/reports/single', $request, [
             'report' => $report,
         ]);
     }

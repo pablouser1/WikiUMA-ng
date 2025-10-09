@@ -2,6 +2,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="<?= $this->url('/css/vendor/bulma.min.css') ?>">
+    <meta property="og:title" content="<?= $this->e($title) ?> - WikiUMA" />
+    <meta property="og:url" content="<?= $uri ?>" />
+    <meta property="og:type" content="website" />
     <?php if (isset($withReviews) && $withReviews): ?>
         <link rel="stylesheet" href="<?= $this->url('/css/review.css') ?>">
     <?php endif ?>

@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Valoraciones',
+    'uri' => $uri,
     'withReviews' => true,
     'withMaxChars' => true,
 ]) ?>

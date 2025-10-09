@@ -24,7 +24,7 @@ class SearchController extends Controller
             return MsgHandler::errorFromApi($search);
         }
 
-        return self::__render('views/search', [
+        return self::__render('views/search', $request, [
             'results' => $search->data,
         ]);
     }

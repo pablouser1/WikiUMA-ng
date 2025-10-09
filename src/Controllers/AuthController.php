@@ -21,9 +21,9 @@ class AuthController extends Controller
      *
      * Route: `/staff/login`.
      */
-    public static function index(): Response
+    public static function index(ServerRequestInterface $request): Response
     {
-        return self::__render('views/staff/login');
+        return self::__render('views/staff/login', $request);
     }
 
     /**

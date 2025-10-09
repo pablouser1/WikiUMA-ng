@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Cache;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\Crypto;
@@ -12,7 +11,6 @@ use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Message\UriInterface;
 
 class ProfesoresController extends Controller
 {
@@ -20,13 +18,12 @@ class ProfesoresController extends Controller
 
     public static function index(ServerRequestInterface $request): Response
     {
-        $uri = $request->getUri();
         $query = $request->getQueryParams();
         $api = new Api();
 
         $response = null;
         if (isset($query['email'])) {
-            $response = self::__byEmail($query['email'], $api, $uri, $query);
+            $response = self::__byEmail($query['email'], $api, $request, $query);
         } elseif (isset($query['idnc'])) {
             $response = self::__byIdnc($query['idnc'], $api);
         } else {
@@ -36,7 +33,7 @@ class ProfesoresController extends Controller
         return $response;
     }
 
-    private static function __byEmail(string $emailEncrypted, Api $api, UriInterface $uri, array $query): Response
+    private static function __byEmail(string $emailEncrypted, Api $api, ServerRequestInterface $request, array $query): Response
     {
         $email = Crypto::decrypt($emailEncrypted);
         if ($email === null) {
@@ -56,11 +53,10 @@ class ProfesoresController extends Controller
         $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1, $filter);
         $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
 
-        return self::__render('views/profesor', [
+        return self::__render('views/profesor', $request, [
             'profesor' => $profesor->data,
             'reviews' => $reviews,
             'stats' => $stats,
-            'uri' => $uri,
             'query' => $query,
         ]);
     }

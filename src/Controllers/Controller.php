@@ -6,6 +6,7 @@ use App\Constants\Messages;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 use League\Route\Http\Exception\BadRequestException;
+use Psr\Http\Message\ServerRequestInterface;
 
 abstract class Controller
 {
@@ -24,8 +25,11 @@ abstract class Controller
         return new BadRequestException(Messages::TOO_MANY_CHARACTERS);
     }
 
-    protected static function __render(string $template, array $data = []): HtmlResponse
+    protected static function __render(string $template, ServerRequestInterface $request, array $data = []): HtmlResponse
     {
-        return new HtmlResponse(Plates::render($template, $data));
+        return new HtmlResponse(Plates::render($template, [
+            ...$data,
+            'uri' => $request->getUri(),
+        ]));
     }
 }

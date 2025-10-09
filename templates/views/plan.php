@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Plan',
+    'uri' => $uri,
     'withSearch' => true,
 ]) ?>
 

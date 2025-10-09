@@ -25,14 +25,12 @@ class StaffController extends Controller
 
     public static function reviewIndex(ServerRequestInterface $request): Response
     {
-        $uri = $request->getUri();
         $query = $request->getQueryParams();
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews(null, null, $query['page'] ?? 1, $filter);
 
-        return self::__render('views/staff/reviews', [
+        return self::__render('views/staff/reviews', $request, [
             'reviews' => $reviews,
-            'uri' => $uri,
             'query' => $query,
         ]);
     }
@@ -70,14 +68,12 @@ class StaffController extends Controller
 
     public static function reportIndex(ServerRequestInterface $request): Response
     {
-        $uri = $request->getUri();
         $query = $request->getQueryParams();
         $filter = self::__getReportFilter($query['filter'] ?? null);
         $reports = self::__getReports($query['page'] ?? 1, $filter);
 
-        return self::__render('views/staff/reports', [
+        return self::__render('views/staff/reports', $request, [
             'reports' => $reports,
-            'uri' => $uri,
             'query' => $query,
         ]);
     }

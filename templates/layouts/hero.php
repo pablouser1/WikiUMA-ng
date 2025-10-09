@@ -2,6 +2,7 @@
 <html lang="es" data-theme="<?= $this->theme() ?>">
 <?php $this->insert('partials/head', [
     'title' => $title,
+    'uri' => $uri,
     'withReviews' => $withReviews ?? false,
     'withMaxChars' => $withMaxChars ?? false,
     'withCaptcha' => $withCaptcha ?? false,

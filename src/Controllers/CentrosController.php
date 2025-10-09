@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Api;
 use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Centros controller
@@ -16,7 +17,7 @@ class CentrosController extends Controller
      *
      * Route: `/centros`.
      */
-    public static function index(): Response
+    public static function index(ServerRequestInterface $request): Response
     {
         $api = new Api();
         $centros = $api->centros();
@@ -24,7 +25,7 @@ class CentrosController extends Controller
             return MsgHandler::errorFromApi($centros);
         }
 
-        return self::__render('views/centros', [
+        return self::__render('views/centros', $request, [
             'centros' => $centros->data,
         ]);
     }

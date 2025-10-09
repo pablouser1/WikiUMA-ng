@@ -17,7 +17,7 @@ class TitulacionesController extends Controller
             return MsgHandler::errorFromApi($titulaciones);
         }
 
-        return self::__render('views/titulaciones', [
+        return self::__render('views/titulaciones', $request, [
             'titulaciones' => $titulaciones->data,
         ]);
     }

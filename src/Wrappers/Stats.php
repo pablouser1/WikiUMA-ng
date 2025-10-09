@@ -14,7 +14,8 @@ class Stats
             $query->where('status', ReportStatusEnum::ACCEPTED);
         });
         $total = $reviews->count();
-        $avg = round($reviews->avg('note'), 2);
+
+        $avg = $total > 0 ? round($reviews->avg('note'), 2) : -1;
 
         return (object) [
             'total' => $total,

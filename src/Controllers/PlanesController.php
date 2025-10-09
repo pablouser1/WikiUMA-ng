@@ -23,7 +23,7 @@ class PlanesController extends Controller
             $cursos[intval($asignatura->curso)][] = $asignatura;
         }
 
-        return self::__render('views/plan', [
+        return self::__render('views/plan', $request, [
             'plan_id' => $plan_id,
             'cursos' => $cursos,
         ]);

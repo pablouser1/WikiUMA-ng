@@ -28,7 +28,6 @@ class AsignaturasController extends Controller
     public static function index(ServerRequestInterface $request, array $args): Response
     {
         $api = new Api();
-        $uri = $request->getUri();
         $query = $request->getQueryParams();
 
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
@@ -42,12 +41,11 @@ class AsignaturasController extends Controller
         $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $query['page'] ?? 1, $filter);
         $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
 
-        return self::__render('views/asignatura', [
+        return self::__render('views/asignatura', $request, [
             'asignatura' => $asignatura->data,
             'reviews' => $reviews,
             'stats' => $stats,
             'plan_id' => $args['plan_id'],
-            'uri' => $uri,
             'query' => $query,
         ]);
     }

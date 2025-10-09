@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use Laminas\Diactoros\Response;
+use Psr\Http\Message\ServerRequestInterface;
 
 /**
  * Misc Controller. Used for read-only, static pages.
@@ -14,9 +15,9 @@ class MiscController extends Controller
      *
      * Route: `/about`.
      */
-    public static function about(): Response
+    public static function about(ServerRequestInterface $request): Response
     {
-        return self::__render('views/about');
+        return self::__render('views/about', $request);
     }
 
     /**
@@ -24,8 +25,8 @@ class MiscController extends Controller
      *
      * Route: `/legal`.
      */
-    public static function legal(): Response
+    public static function legal(ServerRequestInterface $request): Response
     {
-        return self::__render('views/legal');
+        return self::__render('views/legal', $request);
     }
 }

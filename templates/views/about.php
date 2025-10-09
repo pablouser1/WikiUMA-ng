@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Acerca de',
+    'uri' => $uri,
 ]) ?>
 
 <?php $this->insert('partials/hero', [

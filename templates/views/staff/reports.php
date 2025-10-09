@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Informes',
+    'uri' => $uri,
     'withReviews' => true,
     'withMaxChars' => true,
 ]) ?>

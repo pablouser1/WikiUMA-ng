@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => $asignatura->nombre,
+    'uri' => $uri,
     'withSearch' => true,
     'withMaxChars' => true,
     'withReviews' => true,

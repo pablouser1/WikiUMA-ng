@@ -37,9 +37,8 @@ class ReviewsController extends Controller
             throw new NotFoundException();
         }
 
-        return self::__render('views/review', [
+        return self::__render('views/review', $request, [
             'review' => $review,
-            'uri' => $request->getUri(),
         ]);
     }
 
@@ -141,7 +140,7 @@ class ReviewsController extends Controller
             throw new ForbiddenException('Esta valoración ya ha sido eliminada');
         };
 
-        return self::__render('views/reports/new', [
+        return self::__render('views/reports/new', $request, [
             'review' => $review,
         ]);
     }
@@ -205,7 +204,7 @@ class ReviewsController extends Controller
 
         $report->save();
 
-        return self::__render('views/reports/created', [
+        return self::__render('views/reports/created', $request, [
             'report' => $report,
             'back' => $review->type->url($review->target),
         ]);

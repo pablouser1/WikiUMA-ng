@@ -1,5 +1,6 @@
 <?php $this->layout('layouts/hero', [
     'title' => 'Informes',
+    'uri' => $uri,
     'withCaptcha' => true,
 ]) ?>
 
