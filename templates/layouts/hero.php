@@ -16,7 +16,7 @@
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-centered">
-                    <div class="column is-narrow">
+                    <div class="column is-half">
                         <?=$this->section('content')?>
                     </div>
                 </div>
