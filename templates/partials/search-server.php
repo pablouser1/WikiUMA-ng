@@ -16,4 +16,5 @@
             </button>
         </div>
     </div>
+    <p class="help">Sólo es obligatorio rellenar un campo</p>
 </form>
