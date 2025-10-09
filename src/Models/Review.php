@@ -39,7 +39,7 @@ class Review extends Model
     protected function username(): Attribute
     {
         return Attribute::make(
-            get: fn(?string $value) => $value === null ? self::DEFAULT_USERNAME_VALUE : $value,
+            get: fn (?string $value) => $value === null ? self::DEFAULT_USERNAME_VALUE : $value,
         );
     }
 

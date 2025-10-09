@@ -229,7 +229,7 @@ class MigrateOldModule extends Base implements IBase
             $this->cli->backgroundRed()->error('Could not get departments');
             return null;
         }
-        $dpNames = array_map(fn($dp) => $this->__normalize($dp->nombre), $dps->data);
+        $dpNames = array_map(fn ($dp) => $this->__normalize($dp->nombre), $dps->data);
 
         $dpsInformatica = $this->__getDepartamentosInformatica();
         if ($dpsInformatica === null) {

@@ -39,7 +39,7 @@ class Report extends Model
     protected function reason(): Attribute
     {
         return Attribute::make(
-            get: fn(?string $value) => $value === null ? self::DEFAULT_REASON_VALUE : $value,
+            get: fn (?string $value) => $value === null ? self::DEFAULT_REASON_VALUE : $value,
         );
     }
 

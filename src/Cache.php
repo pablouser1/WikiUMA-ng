@@ -42,7 +42,8 @@ class Cache implements ICache
         return $this->engine !== null;
     }
 
-    public function get(string $cache_key, bool $isJson): ?Response {
+    public function get(string $cache_key, bool $isJson): ?Response
+    {
         return $this->isEnabled() ? $this->engine->get($cache_key, $isJson) : null;
     }
 
