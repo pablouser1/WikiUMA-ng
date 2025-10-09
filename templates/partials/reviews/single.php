@@ -37,38 +37,50 @@
                     <div class="level-item">
                         <nav class="breadcrumb has-bullet-separator is-small" aria-label="breadcrumbs">
                             <ul>
-                                <li><a href="<?= $this->url('/reviews/' . $review->id . '/like', ['back' => $this->pathWithQuery($uri)]) ?>">Me gusta</a></li>
-                                <li><a href="<?= $this->url('/reviews/' . $review->id . '/dislike', ['back' => $this->pathWithQuery($uri)]) ?>">No me gusta</a></li>
+                                <li>
+                                    <a href="<?= $this->url('/reviews/' . $review->id . '/like', ['back' => $this->pathWithQuery($uri)]) ?>">
+                                        Me gusta
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="<?= $this->url('/reviews/' . $review->id . '/dislike', ['back' => $this->pathWithQuery($uri)]) ?>">
+                                        No me gusta
+                                    </a>
+                                </li>
                             </ul>
                         </nav>
                     </div>
                 <?php endif ?>
             </div>
-            <?php if (isset($controls) && $controls): ?>
-                <div class="level-right">
-                    <div class="level-item">
-                        <div class="buttons">
-                            <?php if ($review->accepted_report === null): ?>
-                                <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
-                                    <span class="icon">
-                                        <?php $this->insert('partials/icon', ['icon' => 'link', 'width' => 24, 'height' => 24]) ?>
-                                    </span>
-                                </a>
-                                <a class="button is-small is-rounded is-danger" href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
-                                    <span class="icon">
-                                        <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
-                                    </span>
-                                </a>
-                            <?php endif ?>
-                            <?php if (isset($solo) && $solo): ?>
-                                <a class="button is-small is-rounded is-primary" href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">
-                                    Ver contexto original
-                                </a>
-                            <?php endif ?>
-                        </div>
-                    </div>
-                </div>
-            <?php endif ?>
+            <div class="level-right">
+                <?php if (isset($solo) && $solo): ?>
+                    <p class="level-item">
+                        <a class="button is-small is-rounded is-primary"
+                            href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">
+                            Ver contexto original
+                        </a>
+                    </p>
+                <?php endif ?>
+            </div>
         </nav>
+    </div>
+    <div class="media-right">
+        <?php if (isset($controls) && $controls): ?>
+            <div class="buttons">
+                <?php if ($review->accepted_report === null): ?>
+                    <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
+                        <span class="icon">
+                            <?php $this->insert('partials/icon', ['icon' => 'link', 'width' => 24, 'height' => 24]) ?>
+                        </span>
+                    </a>
+                    <a class="button is-small is-rounded is-danger"
+                        href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
+                        <span class="icon">
+                            <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
+                        </span>
+                    </a>
+                <?php endif ?>
+            </div>
+        <?php endif ?>
     </div>
 </article>
