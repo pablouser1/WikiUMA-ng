@@ -11,8 +11,8 @@
     		<input name="apellido_2" type="text" class="input is-rounded" placeholder="Segundo apellido" />
     	</div>
         <div class="control">
-            <button class="button is-info is-rounded" type="submit">
-                <?php $this->insert('partials/icon', ['icon' => 'search', 'width' => 24, 'height' => 24]) ?>
+            <button class="button is-info is-rounded" style="height: 100%" type="submit">
+                <?php $this->insert('partials/icon', ['icon' => 'search']) ?>
             </button>
         </div>
     </div>
