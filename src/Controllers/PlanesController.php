@@ -15,7 +15,7 @@ class PlanesController extends Controller
         $plan_id = $args['plan_id'];
         $plan = $api->plan($plan_id);
         if (!$plan->success) {
-            return MsgHandler::errorFromApi($plan);
+            return MsgHandler::errorFromApi($plan, $request);
         }
 
         $cursos = [];

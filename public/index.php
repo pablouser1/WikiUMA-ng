@@ -26,7 +26,7 @@ $response = null;
 try {
     $response = $router->dispatch($request);
 } catch (Exception $e) {
-    $response = MsgHandler::error($e->getStatusCode(), "Error {$e->getStatusCode()}", $e->getMessage());
+    $response = MsgHandler::error($e->getStatusCode(), "Error {$e->getStatusCode()}", $e->getMessage(), $request);
 } catch (\Throwable $e) {
     // Rethrow if debugging
     if (Env::app_debug()) {
@@ -39,7 +39,7 @@ try {
         'line' => $e->getLine(),
     ]);
 
-    $response = MsgHandler::error(500, Messages::UNKNOWN_ERROR, $e->getMessage());
+    $response = MsgHandler::error(500, Messages::UNKNOWN_ERROR, $e->getMessage(), $request);
 }
 
 // send the response to the browser

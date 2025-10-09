@@ -22,7 +22,7 @@ class CentrosController extends Controller
         $api = new Api();
         $centros = $api->centros();
         if (!$centros->success) {
-            return MsgHandler::errorFromApi($centros);
+            return MsgHandler::errorFromApi($centros, $request);
         }
 
         return self::__render('views/centros', $request, [

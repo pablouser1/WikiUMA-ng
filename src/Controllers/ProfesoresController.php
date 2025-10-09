@@ -46,7 +46,7 @@ class ProfesoresController extends Controller
 
         $profesor = $api->profesor($email);
         if (!$profesor->success) {
-            return MsgHandler::errorFromApi($profesor);
+            return MsgHandler::errorFromApi($profesor, $request);
         }
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);

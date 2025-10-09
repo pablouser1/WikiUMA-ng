@@ -21,7 +21,7 @@ class SearchController extends Controller
         $search = $api->buscar($nombre, $apellido_1, $apellido_2);
 
         if (!$search->success) {
-            return MsgHandler::errorFromApi($search);
+            return MsgHandler::errorFromApi($search, $request);
         }
 
         return self::__render('views/search', $request, [

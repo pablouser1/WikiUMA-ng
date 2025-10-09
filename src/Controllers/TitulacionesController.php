@@ -14,7 +14,7 @@ class TitulacionesController extends Controller
         $api = new Api();
         $titulaciones = $api->titulaciones($args['centro_id']);
         if (!$titulaciones->success) {
-            return MsgHandler::errorFromApi($titulaciones);
+            return MsgHandler::errorFromApi($titulaciones, $request);
         }
 
         return self::__render('views/titulaciones', $request, [

@@ -7,10 +7,11 @@ use App\Constants\Reactions;
 use App\Models\Api\Response as ApiResponse;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
+use Psr\Http\Message\ServerRequestInterface;
 
 class MsgHandler
 {
-    public static function show(int $code, string $title, string $body, ?string $back = null, ?object $reaction = null): Response
+    public static function show(int $code, string $title, string $body, ServerRequestInterface $request, ?string $back = null, ?object $reaction = null): Response
     {
         return new HtmlResponse(
             Plates::render('views/message', [
@@ -18,19 +19,20 @@ class MsgHandler
                 'body' => $body,
                 'back' => $back,
                 'reaction' => $reaction,
+                'uri' => $request->getUri(),
             ]),
             $code,
         );
     }
 
-    public static function error(int $code, string $title, string $body): Response
+    public static function error(int $code, string $title, string $body, ServerRequestInterface $request): Response
     {
         $reaction = Reactions::random($code);
-        return self::show($code, $title, $body, null, $reaction);
+        return self::show($code, $title, $body, $request, null, $reaction);
     }
 
-    public static function errorFromApi(ApiResponse $response): Response
+    public static function errorFromApi(ApiResponse $response, ServerRequestInterface $request): Response
     {
-        return self::error(502, Messages::API_ERROR, $response->error);
+        return self::error(502, Messages::API_ERROR, $response->error, $request);
     }
 }

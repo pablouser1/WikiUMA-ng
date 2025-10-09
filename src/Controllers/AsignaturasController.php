@@ -32,7 +32,7 @@ class AsignaturasController extends Controller
 
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
         if (!$asignatura->success) {
-            return MsgHandler::errorFromApi($asignatura);
+            return MsgHandler::errorFromApi($asignatura, $request);
         }
 
         $id = Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
