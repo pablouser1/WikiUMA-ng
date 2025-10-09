@@ -14,7 +14,6 @@ use App\Controllers\ReportsController;
 use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
 use App\Controllers\StaffController;
-use App\Controllers\TitulacionesController;
 use App\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
 use League\Route\RouteGroup;
@@ -33,7 +32,7 @@ $router->group('/reports', function (RouteGroup $route) {
 });
 
 $router->get('/centros', [CentrosController::class, 'index']);
-$router->get('/centros/{centro_id:number}/titulaciones', [TitulacionesController::class, 'index']);
+$router->get('/centros/{centro_id:number}/titulaciones', [CentrosController::class, 'titulaciones']);
 $router->group('/planes/{plan_id:number}', function (RouteGroup $route) {
     $route->get('/', [PlanesController::class, 'index']);
     $route->get('/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
