@@ -1,4 +1,4 @@
-<div>
+<section class="section">
     <nav class="level">
         <div class="level-left">
             <div class="level-item">
@@ -57,7 +57,7 @@
             <div style="white-space: pre-wrap;"><?= $review->message ?></div>
         <?php endif ?>
     </div>
-    <nav class="level">
+    <nav class="level mt-1">
         <div class="level-left">
             <p class="level-item">
                 <span class="icon" style="color: #e25555;">&#9829;</span>
@@ -95,4 +95,4 @@
             <?php endif ?>
         </div>
     </nav>
-</div>
+</section>
