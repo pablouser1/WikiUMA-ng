@@ -1,3 +1,5 @@
+/** Handle navbar when using burger menu */
+
 const navbar_menu = document.getElementById('navbar-menu');
 const burger = document.getElementById('navbar-burger');
 burger.addEventListener('click', () => {

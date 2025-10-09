@@ -1,3 +1,8 @@
+/**
+ * Handle theme switching.
+ * Change theme and set cookie.
+ */
+
 const COOKIE_THEME_NAME = 'theme';
 const THEME_SWITCHER_ID = 'theme-switcher';
 

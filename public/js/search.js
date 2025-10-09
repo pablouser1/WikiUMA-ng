@@ -1,3 +1,8 @@
+/**
+ * Handle client-side items filtering.
+ * Get all .item elements and remove based on search term.
+*/
+
 const items = document.getElementsByClassName('item');
 const normalize = str => str.toUpperCase().normalize('NFD').replace(/\p{Diacritic}/gu, "");
 

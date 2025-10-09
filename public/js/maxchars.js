@@ -1,3 +1,9 @@
+/** Handles input with a maximum amount of characters */
+
+/**
+ * Update number of characters written.
+ * Change color to red if >= maxLength
+ */
 const updateCounter = (maxLength, inputElement, counterElement) => {
     const currentLength = inputElement.value.length;
     const remaining = maxLength - currentLength;
@@ -12,7 +18,9 @@ const updateCounter = (maxLength, inputElement, counterElement) => {
     }
 };
 
-
+/**
+ * Set listeners for all inputs with maxlength attributes.
+ */
 const initMaxChars = () => {
     const inputs = document.querySelectorAll('input[maxlength], textarea[maxlength]');
 
