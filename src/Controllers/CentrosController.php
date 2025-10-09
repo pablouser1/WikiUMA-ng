@@ -8,14 +8,15 @@ use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Centros controller
+ * Centros controller.
  */
 class CentrosController extends Controller
 {
     /**
      * Get all faculties.
      *
-     * Route: `/centros`.
+     * - Route: `/centros`
+     * - Method: `GET`
      */
     public static function index(ServerRequestInterface $request): Response
     {

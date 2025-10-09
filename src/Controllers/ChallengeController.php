@@ -9,14 +9,15 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\JsonResponse;
 
 /**
- * Challenge controller
+ * Challenge controller.
  */
 class ChallengeController extends Controller
 {
     /**
      * Send Captcha challenge.
      *
-     * Route: `/challenge`.
+     * - Route: `/challenge`
+     * - Method: `GET`
      */
     public static function index(): Response
     {

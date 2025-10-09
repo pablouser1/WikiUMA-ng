@@ -19,7 +19,8 @@ class AuthController extends Controller
     /**
      * Login form.
      *
-     * Route: `/staff/login`.
+     * - Route: `/staff/login`
+     * - Method: `GET`
      */
     public static function index(ServerRequestInterface $request): Response
     {
@@ -27,9 +28,10 @@ class AuthController extends Controller
     }
 
     /**
-     * Login POST.
+     * Login check.
      *
-     * Route: `/staff/login`.
+     * - Route: `/staff/login`
+     * - Method: `POST`
      */
     public static function post(ServerRequestInterface $request): Response
     {
@@ -58,6 +60,12 @@ class AuthController extends Controller
         return new RedirectResponse(Env::app_url('/'));
     }
 
+    /**
+     * Logout user
+     *
+     * Route: `/staff/logout`
+     * Method: `GET`
+     */
     public static function logout(ServerRequestInterface $request): Response
     {
         Session::destroy();

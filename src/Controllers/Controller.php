@@ -8,6 +8,9 @@ use Laminas\Diactoros\Response\HtmlResponse;
 use League\Route\Http\Exception\BadRequestException;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Common class for all controllers.
+ */
 abstract class Controller
 {
     protected static function __invalidParams(): BadRequestException

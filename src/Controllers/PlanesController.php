@@ -7,8 +7,17 @@ use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Planes Controller.
+ */
 class PlanesController extends Controller
 {
+    /**
+     * Planes details.
+     *
+     * - Route: `/planes/{plan_id}`
+     * - Method: `GET`
+     */
     public static function index(ServerRequestInterface $request, array $args): Response
     {
         $api = new Api();

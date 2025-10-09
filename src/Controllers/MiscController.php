@@ -13,7 +13,8 @@ class MiscController extends Controller
     /**
      * About site, with info about the site and external libraries.
      *
-     * Route: `/about`.
+     * - Route: `/about`
+     * - Method: `GET`
      */
     public static function about(ServerRequestInterface $request): Response
     {
@@ -23,7 +24,8 @@ class MiscController extends Controller
     /**
      * Legal site, with info about terms and conditions.
      *
-     * Route: `/legal`.
+     * - Route: `/legal`
+     * - Method: `GET`
      */
     public static function legal(ServerRequestInterface $request): Response
     {

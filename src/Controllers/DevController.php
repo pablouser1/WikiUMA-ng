@@ -12,9 +12,10 @@ use Psr\Http\Message\ServerRequestInterface;
 class DevController extends Controller
 {
     /**
-     * Emulate an error.
+     * Simulate an error.
      *
-     * Route: `/dev/reactions/{code}`.
+     * - Route: `/dev/reactions/{code}`
+     * - Method: `GET`
      *
      * @param array{"code": int} $args
      */

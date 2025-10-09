@@ -3,7 +3,7 @@
 namespace App\Constants;
 
 /**
- * Links used both in navbar and home.
+ * Links used on Navbar.
  */
 abstract class Links
 {

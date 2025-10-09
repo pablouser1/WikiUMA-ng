@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Api;
-use App\Cache;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
@@ -12,7 +11,7 @@ use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Asignaturas Controller
+ * Asignaturas Controller.
  */
 class AsignaturasController extends Controller
 {
@@ -21,7 +20,8 @@ class AsignaturasController extends Controller
     /**
      * Subject info.
      *
-     * Route: `/planes/{plan_id}/asignaturas/{asignatura_id}`.
+     * - Route: `/planes/{plan_id}/asignaturas/{asignatura_id}`
+     * - Method: `GET`
      *
      * @param array{"asignatura_id": int, "plan_id": int} $args
      */

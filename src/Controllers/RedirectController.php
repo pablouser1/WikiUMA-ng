@@ -16,7 +16,8 @@ class RedirectController extends Controller
     /**
      * Redirect by type value.
      *
-     * Route: `/redirect`.
+     * - Route: `/redirect`
+     * - Method: `GET`
      */
     public static function index(ServerRequestInterface $request): Response
     {

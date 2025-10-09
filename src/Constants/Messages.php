@@ -7,6 +7,7 @@ namespace App\Constants;
  */
 class Messages
 {
+    // -- COMMON -- //
     public const string API_ERROR = "Error en servidores de la UMA";
     public const string UNKNOWN_ERROR = "Error desconocido";
     public const string INVALID_REQUEST = "Solicitud inválida";

@@ -14,7 +14,8 @@ class HomeController extends Controller
     /**
      * Main site.
      *
-     * Route: `/`.
+     * Route: `/`
+     * Method: `GET`
      */
     public static function index(ServerRequestInterface $request): Response
     {

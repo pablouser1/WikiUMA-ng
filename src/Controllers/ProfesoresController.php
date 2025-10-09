@@ -12,10 +12,20 @@ use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Teachers Controller.
+ */
 class ProfesoresController extends Controller
 {
     use HasReviews;
 
+    /**
+     * Get teacher info.
+     *
+     * - Route: `/profesores`
+     * - Method: `GET`
+     * - Query: email OR idnc
+     */
     public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();

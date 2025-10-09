@@ -24,6 +24,12 @@ class ReportsController extends Controller
         return self::__render('views/reports/index', $request);
     }
 
+    /**
+     * See report details from UUID.
+     *
+     * - Route: `/reports`
+     * - Method: `POST`
+     */
     public static function post(ServerRequestInterface $request): Response
     {
         $body = $request->getParsedBody();
