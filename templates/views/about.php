@@ -19,11 +19,9 @@
         <p>Consulta <a href="<?= $this->url('/legal') ?>">aquí</a> para información al respecto.</p>
 
         <h4>¿Dónde están las valoraciones de la antigua versión de WikiUMA?</h4>
-        <p>Actualmente esos datos no están importados en la versión actual.</p>
-        <p>
-            La estructura de estos datos son considerablemente distintos a la actual y
-            la migración sería costosa, tanto en tiempo invertido como en recursos.
-        </p>
+        <p>Actualmente esos datos están parcialmente importados.</p>
+        <p>Las valoraciones vinculadas a profesores que siguen impartiendo clases están disponibles.</p>
+        <p>Las valoraciones a asignaturas no están implementadas.</p>
     </div>
     <div class="content">
         <h1>Contacto</h1>
