@@ -2,8 +2,12 @@
 
 namespace App\Enums;
 
+use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
 
+/**
+ * Enumerate all available filters applicable to reviews.
+ */
 enum ReviewFilterEnum: string
 {
     case ALL = 'all';
