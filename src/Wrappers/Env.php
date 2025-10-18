@@ -71,7 +71,7 @@ class Env
     public static function app_contact(): string
     {
         $contact = htmlspecialchars($_ENV['APP_CONTACT'] ?? '');
-        return str_replace('@', '(at)', str_replace('.', '(dot)', $contact));
+        return str_replace('@', ' (at) ', str_replace('.', ' (dot) ', $contact));
     }
 
     /**
