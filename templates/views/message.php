@@ -20,6 +20,5 @@
         <a href="<?= $back ?>" class="button">Atrás</a>
     <?php else: ?>
         <button type="button" class="button is-link" onclick="history.back();">Atrás</a>
-        <?php endif ?>
-
+    <?php endif ?>
 </div>
