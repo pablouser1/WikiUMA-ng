@@ -17,8 +17,8 @@ class Messages
     public const string TOO_MANY_CHARACTERS = "Se han enviado más caracteres que los permitidos";
 
     // -- LOGIN -- //
-    public const LOGIN_FAILED = "No se ha podido iniciar sesión.";
+    public const string LOGIN_FAILED = "No se ha podido iniciar sesión.";
 
     // -- VOTING -- //
-    public const ALREADY_VOTED = "Ya has votado.";
+    public const string ALREADY_VOTED = "Ya has votado.";
 }

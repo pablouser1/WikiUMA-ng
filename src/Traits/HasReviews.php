@@ -2,7 +2,6 @@
 
 namespace App\Traits;
 
-use App\Cache;
 use App\Constants\App;
 use App\Enums\ReviewFilterEnum;
 use App\Enums\ReviewTypesEnum;
