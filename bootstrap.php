@@ -7,8 +7,8 @@ use Illuminate\Events\Dispatcher;
 // -- ENV -- //
 Env::parse(__DIR__ . '/.env');
 
-// TODO: Timezone from env
-date_default_timezone_set('Europe/Madrid');
+// -- TIMEZONE -- //
+date_default_timezone_set(Env::app_tz());
 
 // -- DATABASE -- //
 $db = Env::db();

@@ -67,11 +67,15 @@ class Env
         return $_ENV['APP_KEY_EMAILS'] ?? self::app_key();
     }
 
-
     public static function app_contact(): string
     {
         $contact = htmlspecialchars($_ENV['APP_CONTACT'] ?? '');
         return str_replace('@', ' (at) ', str_replace('.', ' (dot) ', $contact));
+    }
+
+    public static function app_tz(): string
+    {
+        return $_ENV['APP_TZ'] ?? 'UTC';
     }
 
     /**
