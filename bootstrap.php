@@ -7,6 +7,9 @@ use Illuminate\Events\Dispatcher;
 // -- ENV -- //
 Env::parse(__DIR__ . '/.env');
 
+// TODO: Timezone from env
+date_default_timezone_set('Europe/Madrid');
+
 // -- DATABASE -- //
 $db = Env::db();
 $capsule = new Capsule;
@@ -14,7 +17,7 @@ $capsule = new Capsule;
 $capsule->addConnection(array_merge($db, [
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
-    'prefix' => ''
+    'prefix' => '',
 ]));
 
 $capsule->setEventDispatcher(new Dispatcher());
