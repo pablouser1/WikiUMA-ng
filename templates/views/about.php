@@ -24,10 +24,6 @@
         <p>Las valoraciones a asignaturas no están implementadas.</p>
     </div>
     <div class="content">
-        <h1>Contacto</h1>
-        <p>Puedes ponerte en contacto con la administración directamente enviando un correo electrónico a <?= $this->contact() ?></p>
-    </div>
-    <div class="content">
         <h1>Cŕeditos</h1>
         <p>Este proyecto no sería posible sin la ayuda de:</p>
         <ul>

@@ -23,6 +23,7 @@ use League\Route\RouteGroup;
 $router->get('/', [HomeController::class, 'index']);
 $router->get('/about', [MiscController::class, 'about']);
 $router->get('/legal', [MiscController::class, 'legal']);
+$router->get('/contact', [MiscController::class, 'contact']);
 $router->get('/redirect', [RedirectController::class, 'index']);
 $router->get('/search', [SearchController::class, 'index']);
 

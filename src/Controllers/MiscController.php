@@ -31,4 +31,9 @@ class MiscController extends Controller
     {
         return self::__render('views/legal', $request);
     }
+
+    public static function contact(ServerRequestInterface $request): Response
+    {
+        return self::__render('views/contact', $request);
+    }
 }
