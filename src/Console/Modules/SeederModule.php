@@ -6,7 +6,6 @@ use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
-use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
 use Faker\Generator;
 
@@ -48,13 +47,11 @@ class SeederModule extends Base implements IBase
             return;
         }
 
-        $checker = new CustomCheck();
-
         $review_teacher = new Review([
             'target' => self::DEFAULT_TEACHER,
             'username' => $this->faker->optional()->userName(),
             'note' => $this->faker->numberBetween(0, 10),
-            'message' => $checker->cleanWords($this->__message_with_spice()),
+            'message' => $this->faker->text(200),
             'votes' => $this->faker->numberBetween(0, 100),
             'type' => ReviewTypesEnum::TEACHER,
         ]);
@@ -64,26 +61,12 @@ class SeederModule extends Base implements IBase
             'target' => self::DEFAULT_SUBJECT,
             'username' => $this->faker->optional()->userName(),
             'note' => $this->faker->numberBetween(0, 10),
-            'message' => $checker->cleanWords($this->__message_with_spice()),
+            'message' => $this->faker->text(200),
             'votes' => $this->faker->numberBetween(0, 100),
             'type' => ReviewTypesEnum::SUBJECT,
         ]);
         $review_subject->save();
 
         $this->cli->backgroundGreen()->out('Done!');
-    }
-
-    /**
-     * Random text that can randomly contain profanities.
-     */
-    private function __message_with_spice(): string
-    {
-        $txt = $this->faker->text(200);
-
-        for ($i = 0; $i < self::NUM_PROFANITIES; $i++) {
-            $txt .= ' ' . $this->profanities[array_rand($this->profanities)];
-        }
-
-        return $txt;
     }
 }

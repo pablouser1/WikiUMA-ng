@@ -7,7 +7,6 @@ use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
-use App\Wrappers\CustomCheck;
 use App\Wrappers\Env;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
@@ -81,19 +80,13 @@ class ReviewsController extends Controller
             'max_delimiters_per_line' => 200,
         ]);
 
-        $checker = new CustomCheck();
-
         $target = $body['target'];
         $msg = $converter->convert(trim($body['message']));
-
-        if (Env::app_filter_profanities()) {
-            $msg = $checker->cleanWords($msg);
-        }
 
         // Optional
         $username = null;
         if (isset($body['username']) && !empty($body['username'])) {
-            $username = $checker->cleanWords(trim($body['username']));
+            $username = trim($body['username']);
         }
 
 
