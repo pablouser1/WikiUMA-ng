@@ -11,7 +11,7 @@
         <p class="title"><?= $this->e($profesor->nombre) ?></p>
         <div class="tags is-centered">
             <?php foreach ($profesor->departamentos as $departamento): ?>
-                <span class="tag is-info"><?= $this->e($departamento[0]->nombre) ?></p>
+                <span class="tag is-info"><?= $this->e($departamento[0]->nombre) ?></span>
             <?php endforeach ?>
         </div>
         <?php if (isset($profesor->departamentos[0])): ?>
