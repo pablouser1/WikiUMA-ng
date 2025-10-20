@@ -74,6 +74,11 @@ class Env
         return str_replace('@', ' (at) ', str_replace('.', ' (dot) ', $contact));
     }
 
+    public static function app_filter_profanities(): bool
+    {
+        return $_ENV['APP_FILTER_PROFANITIES'] ?? true;
+    }
+
     /**
      * Get cache engine to be used.
      */

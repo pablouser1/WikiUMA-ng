@@ -84,7 +84,11 @@ class ReviewsController extends Controller
         $checker = new CustomCheck();
 
         $target = $body['target'];
-        $msg = $checker->cleanWords($converter->convert(trim($body['message'])));
+        $msg = $converter->convert(trim($body['message']));
+
+        if (Env::app_filter_profanities()) {
+            $msg = $checker->cleanWords($msg);
+        }
 
         // Optional
         $username = null;
