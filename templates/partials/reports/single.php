@@ -1,10 +1,22 @@
 <div class="card">
     <div class="card-content">
-        <p class="title is-4">Informe <?= $this->e($report->uuid) ?></p>
-        <p class="subtitle is-6">
-            <a href="<?= $this->url('/redirect', ['target' => $report->review->target, 'type' => $report->review->type]) ?>" target="_blank">Consultar reseñado</a>
-        </p>
-
+        <nav class="level">
+            <div class="level-left">
+                <div class="level-item">
+                    <div>
+                        <p class="title is-4">Informe <?= $this->e($report->uuid) ?></p>
+                        <p class="subtitle is-6">
+                           <?= $this->e($report->email === null ? 'No se ha especificado correo electrónico' : $report->email) ?>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="level-right">
+                <div class="level-item">
+                    <a href="<?= $this->url('/redirect', ['target' => $report->review->target, 'type' => $report->review->type]) ?>" target="_blank">Consultar reseñado</a>
+                </div>
+            </div>
+        </nav>
         <?php $this->insert('partials/reviews/single', ['review' => $report->review]) ?>
 
         <p class="title is-4">Informe</p>
@@ -19,7 +31,7 @@
                     <div class="select">
                         <select name="status" required>
                             <?php foreach (\App\Enums\ReportStatusEnum::cases() as $status): ?>
-                                <option <?= $report->status === $status ? 'selected' : '' ?> value="<?= $this->e($status->value)?>"><?= $this->e($status->displayName()) ?></option>
+                                <option <?= $report->status === $status ? 'selected' : '' ?> value="<?= $this->e($status->value) ?>"><?= $this->e($status->displayName()) ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>
