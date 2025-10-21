@@ -10,12 +10,19 @@ class Stats
 {
     public static function all(): object
     {
-        $reviews = Review::whereDoesntHave('reports', function ($query) {
+        $query = Review::whereDoesntHave('reports', function ($query) {
             $query->where('status', ReportStatusEnum::ACCEPTED);
         });
-        $total = $reviews->count();
 
-        $avg = $total > 0 ? round($reviews->avg('note'), 2) : -1;
+        $total = $query->count();
+
+        // Get average of averages of all targets
+        $targetAverages = $query
+            ->selectRaw('target, AVG(note) as avg_note')
+            ->groupBy('target')
+            ->get();
+
+        $avg = $total > 0 && $targetAverages->isNotEmpty() ? round($targetAverages->avg('avg_note'), 2) : -1;
 
         return (object) [
             'total' => $total,
