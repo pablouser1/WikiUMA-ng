@@ -23,8 +23,19 @@
                 puede ser eliminada por la administración.
             </li>
             <li>
-                Las publicaciones pueden ser manualmente denunciadas, en este caso la administración de la página web
-                valorará el caso y puede borrar el comentario.
+                Las publicaciones pueden ser manualmente denunciadas por el usuario:
+                <ul>
+                    <li>Esta denuncia se puede realizar haciendo click a la bandera encontrada arriba a la derecha de la valoración.</li>
+                    <li>
+                        Una vez realizada la denuncia, la administración decidirá si eliminar o no la valoración
+                        teniendo en consideración los argumentos expuestos por el denunciante.
+                    </li>
+                    <li>
+                        El denunciante puede comprobar el estado de su denuncia en todo momento con el ID dado
+                        al finalizar el proceso. También, en caso de haberlo incluido,
+                        puede ser informado de forma automática a través de correo electrónico.
+                    </li>
+                </ul>
             </li>
         </ul>
     </div>
@@ -32,11 +43,10 @@
         <h1>Privacidad</h1>
         <h2>Información recopilada</h2>
         <ul>
-            <li>Dirección IP <b>SÓLO</b> en los siguientes casos:</li>
+            <li>Dirección IP, con un tiempo máximo de almacenamiento de dos semanas, <b>SÓLO</b> en los siguientes casos:</li>
             <ul>
                 <li>Fallos repetidos a la hora de resolver captchas.</li>
                 <li>Gran cantidad de solicitudes continuadas.</li>
-                <li>En el resto de casos, tu dirección IP no se almacena.</li>
             </ul>
             <li>
                 Al crear un informe, el correo electrónico dado es almacenado y
