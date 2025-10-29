@@ -49,8 +49,7 @@ class Misc
         $innerHTML = '';
         $children = $element->childNodes;
 
-        foreach ($children as $child)
-        {
+        foreach ($children as $child) {
             $innerHTML .= $element->ownerDocument->saveHTML($child);
         }
 
