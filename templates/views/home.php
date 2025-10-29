@@ -16,7 +16,7 @@
             </span>
         </a>
     </div>
-    <?php $this->insert('partials/search-server') ?>
+    <?php $this->insert('partials/search-duma') ?>
     <?php if ($stats->total > 0): ?>
         <hr />
         <div class="field is-grouped is-grouped-multiline is-grouped-centered">
