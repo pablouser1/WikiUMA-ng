@@ -69,7 +69,7 @@ class ReviewsController extends Controller
         // Check captcha
         $captchaOk = Security::captcha($body['h-captcha-response']);
         if (!$captchaOk) {
-            throw self::__invalidBody();
+            throw self::__invalidCaptcha();
         }
 
         // Captcha is OK from now on
@@ -174,7 +174,7 @@ class ReviewsController extends Controller
         // Check captcha first
         $captchaOk = Security::captcha($body['h-captcha-response']);
         if (!$captchaOk) {
-            throw self::__invalidBody();
+            throw self::__invalidCaptcha();
         }
 
         $converter = new CommonMarkConverter([

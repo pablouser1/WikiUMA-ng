@@ -6,6 +6,7 @@ use App\Constants\Messages;
 use App\Wrappers\Plates;
 use Laminas\Diactoros\Response\HtmlResponse;
 use League\Route\Http\Exception\BadRequestException;
+use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -21,6 +22,11 @@ abstract class Controller
     protected static function __invalidBody(): BadRequestException
     {
         return new BadRequestException(Messages::MUST_SEND_BODY);
+    }
+
+    protected static function __invalidCaptcha(): UnauthorizedException
+    {
+        return new UnauthorizedException(Messages::INVALID_CAPTCHA);
     }
 
     protected static function __tooManyChars(): BadRequestException
