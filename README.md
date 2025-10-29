@@ -15,6 +15,7 @@ Para poder usar WikiUMA-ng necesitas como mínimo:
 * ext-mbstring
 * Dart-Sass
 * Base de datos MySQL/MariaDB/PostgreSQL
+* Token de [hCaptcha](https://www.hcaptcha.com)
 
 Recomendado:
 * Redis + ext-redis
