@@ -22,7 +22,7 @@ class MaintenanceMiddleware implements MiddlewareInterface
     {
         $path = $request->getUri()->getPath();
 
-        if (!str_starts_with($path, '/maintenance') && Env::app_maintenance()) {
+        if (!Session::isLoggedIn() && !str_starts_with($path, '/maintenance') && Env::app_maintenance()) {
             return new RedirectResponse(Env::app_url('/maintenance'));
         }
 
