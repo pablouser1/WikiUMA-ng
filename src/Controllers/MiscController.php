@@ -2,7 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Wrappers\Env;
+use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -35,5 +38,14 @@ class MiscController extends Controller
     public static function contact(ServerRequestInterface $request): Response
     {
         return self::__render('views/contact', $request);
+    }
+
+    public static function maintenance(ServerRequestInterface $request): Response
+    {
+        if (!Env::app_maintenance()) {
+            return new RedirectResponse('/');
+        }
+
+        return MsgHandler::error(503, 'Mantenimiento', 'WikiUMA está en mantenimiento', $request);
     }
 }

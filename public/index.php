@@ -3,6 +3,7 @@ require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../bootstrap.php';
 
 use App\Constants\Messages;
+use App\Middleware\MaintenanceMiddleware;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Session;
@@ -18,6 +19,7 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
 );
 
 $router = new League\Route\Router;
+$router->middleware(new MaintenanceMiddleware());
 
 require __DIR__ . '/../routes.php';
 

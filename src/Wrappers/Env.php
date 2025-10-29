@@ -52,6 +52,14 @@ class Env
     }
 
     /**
+     * Get app's maintenance state.
+     */
+    public static function app_maintenance(): bool
+    {
+        return $_ENV['APP_MAINTENANCE'] ?? false;
+    }
+
+    /**
      * Get app's encryption key.
      */
     public static function app_key(): string
