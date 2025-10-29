@@ -45,7 +45,7 @@
                     <p class="help">Lo usamos para mantenerte informad@ acerca de tu informe.</p>
                 </div>
                 <div class="field">
-                    <altcha-widget challengeurl="<?= $this->url('/challenge') ?>"></altcha-widget>
+                    <?php $this->insert('partials/captcha') ?>
                 </div>
                 <div class="field">
                     <nav class="level">

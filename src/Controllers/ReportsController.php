@@ -2,9 +2,8 @@
 
 namespace App\Controllers;
 
-use AltchaOrg\Altcha\Altcha;
 use App\Models\Report;
-use App\Wrappers\Env;
+use App\Wrappers\Security;
 use Laminas\Diactoros\Response;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
@@ -34,13 +33,13 @@ class ReportsController extends Controller
     {
         $body = $request->getParsedBody();
 
-        if (!isset($body['uuid'], $body['altcha'])) {
+        if (!isset($body['uuid'], $body['h-captcha-response'])) {
             throw self::__invalidBody();
         }
 
         // Check captcha first
-        $altcha = new Altcha(Env::app_key());
-        if (!$altcha->verifySolution($body['altcha'], true)) {
+        $captchaOk = Security::captcha($body['h-captcha-response'] ?? null);
+        if (!$captchaOk) {
             throw self::__invalidBody();
         }
 

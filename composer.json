@@ -34,7 +34,6 @@
         "league/plates": "^3.6",
         "illuminate/database": "^12.28",
         "illuminate/pagination": "^12.30",
-        "altcha-org/altcha": "^1.1",
         "league/climate": "^3.10",
         "league/commonmark": "^2.7",
         "ramsey/uuid": "^4.9",

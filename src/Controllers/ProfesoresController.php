@@ -5,9 +5,9 @@ namespace App\Controllers;
 use App\Api;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
-use App\Wrappers\Crypto;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
+use App\Wrappers\Security;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -45,7 +45,7 @@ class ProfesoresController extends Controller
 
     private static function __byEmail(string $emailEncrypted, Api $api, ServerRequestInterface $request, array $query): Response
     {
-        $email = Crypto::decrypt($emailEncrypted);
+        $email = Security::decrypt($emailEncrypted);
         if ($email === null) {
             throw self::__invalidParams();
         }
@@ -79,7 +79,7 @@ class ProfesoresController extends Controller
         }
 
         return new RedirectResponse(Env::app_url('/profesores', [
-            'email' => Crypto::encrypt($profesor->data->email),
+            'email' => Security::encrypt($profesor->data->email),
         ]));
     }
 }

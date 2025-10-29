@@ -41,7 +41,6 @@ $router->group('/planes/{plan_id:number}', function (RouteGroup $route) {
 });
 
 $router->get('/profesores', [ProfesoresController::class, 'index']);
-$router->get('/challenge', [ChallengeController::class, 'index']);
 
 $router->post('/reviews', [ReviewsController::class, 'create']);
 $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {

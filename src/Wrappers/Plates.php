@@ -19,7 +19,8 @@ class Plates
         $engine->registerFunction('loggedin', fn () => Session::isLoggedIn());
         $engine->registerFunction('theme', fn () => Cookies::theme());
 
-        $engine->registerFunction('encrypt', fn (string $data) => Crypto::encrypt($data));
+        $engine->registerFunction('encrypt', fn (string $data) => Security::encrypt($data));
+        $engine->registerFunction('hcaptcha_sitekey', fn () => Env::hcaptcha_sitekey());
 
         $engine->registerFunction('pathWithQuery', fn (UriInterface $uri) => Misc::pathWithQuery($uri));
         $engine->registerFunction('uriQuery', fn (UriInterface $uri, array $origQuery, array $newData) => Misc::modifyQueryFromUri($uri, $origQuery, $newData));

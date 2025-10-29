@@ -14,8 +14,7 @@
         <script defer src="<?= $this->url('/js/search.js') ?>"></script>
     <?php endif ?>
     <?php if (isset($withCaptcha) && $withCaptcha): ?>
-        <script async defer src="https://cdn.jsdelivr.net/gh/altcha-org/altcha/dist/altcha.min.js" type="module"></script>
-        <script async defer src="https://cdn.jsdelivr.net/gh/altcha-org/altcha/dist_i18n/es-es.min.js" type="module"></script>
+        <script async defer src="https://www.hCaptcha.com/1/api.js"></script>
     <?php endif ?>
     <?php if (isset($withMaxChars) && $withMaxChars): ?>
         <script defer src="<?= $this->url('/js/maxchars.js') ?>"></script>

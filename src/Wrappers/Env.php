@@ -67,14 +67,6 @@ class Env
         return $_ENV['APP_KEY'] ?? '';
     }
 
-    /**
-     * Get encryption key used for encrypting emails before sending to client.
-     */
-    public static function app_key_emails(): string
-    {
-        return $_ENV['APP_KEY_EMAILS'] ?? self::app_key();
-    }
-
     public static function app_contact(): string
     {
         $contact = htmlspecialchars($_ENV['APP_CONTACT'] ?? '');
@@ -84,6 +76,16 @@ class Env
     public static function app_tz(): string
     {
         return $_ENV['APP_TZ'] ?? 'UTC';
+    }
+
+    public static function hcaptcha_sitekey(): string
+    {
+        return $_ENV['HCAPTCHA_SITEKEY'] ?? '';
+    }
+
+    public static function hcaptcha_secret(): string
+    {
+        return $_ENV['HCAPTCHA_SECRET'] ?? '';
     }
 
     /**

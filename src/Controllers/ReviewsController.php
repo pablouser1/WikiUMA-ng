@@ -2,12 +2,12 @@
 
 namespace App\Controllers;
 
-use AltchaOrg\Altcha\Altcha;
 use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\Env;
+use App\Wrappers\Security;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -44,7 +44,7 @@ class ReviewsController extends Controller
     public static function create(ServerRequestInterface $request): Response
     {
         $body = $request->getParsedBody();
-        if (!($body !== null && isset($body['target'], $body['type'], $body['message'], $body['note'], $body['altcha']) && is_numeric($body['note']))) {
+        if (!($body !== null && isset($body['target'], $body['type'], $body['message'], $body['note'], $body['h-captcha-response']) && is_numeric($body['note']))) {
             throw self::__invalidBody();
         }
 
@@ -67,8 +67,8 @@ class ReviewsController extends Controller
         }
 
         // Check captcha
-        $altcha = new Altcha(Env::app_key());
-        if (!$altcha->verifySolution($body['altcha'], true)) {
+        $captchaOk = Security::captcha($body['h-captcha-response']);
+        if (!$captchaOk) {
             throw self::__invalidBody();
         }
 
@@ -159,7 +159,7 @@ class ReviewsController extends Controller
         }
 
         $body = $request->getParsedBody();
-        if (!($body !== null && isset($body['message'], $body['altcha']))) {
+        if (!($body !== null && isset($body['message'], $body['h-captcha-response']))) {
             throw self::__invalidBody();
         }
 
@@ -172,8 +172,8 @@ class ReviewsController extends Controller
         }
 
         // Check captcha first
-        $altcha = new Altcha(Env::app_key());
-        if (!$altcha->verifySolution($body['altcha'], true)) {
+        $captchaOk = Security::captcha($body['h-captcha-response'] ?? null);
+        if (!$captchaOk) {
             throw self::__invalidBody();
         }
 
