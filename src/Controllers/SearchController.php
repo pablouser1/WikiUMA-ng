@@ -3,8 +3,10 @@
 namespace App\Controllers;
 
 use App\Api;
+use App\Constants\SearchExtra;
 use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;
+use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
 
 class SearchController extends Controller
@@ -15,6 +17,11 @@ class SearchController extends Controller
         $nombre = $query['nombre'] ?? '';
         $apellido_1 = $query['apellido_1'] ?? '';
         $apellido_2 = $query['apellido_2'] ?? '';
+
+        $url = SearchExtra::redirect($query);
+        if ($url !== null) {
+            return new RedirectResponse($url);
+        }
 
         $api = new Api();
 
