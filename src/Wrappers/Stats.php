@@ -10,6 +10,8 @@ use App\Models\Review;
 
 class Stats
 {
+    private const int HALL_MIN_REVIEWS_NEEDED = 10;
+
     public static function all(): object
     {
         $query = Review::whereDoesntHave('reports', function ($query) {
@@ -34,15 +36,21 @@ class Stats
 
     public static function hallOfFame(): object
     {
+        $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
         $api = new Api();
+
+        $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)->avg('note');
         $tops = Review::query()
             ->where('type', ReviewTypesEnum::TEACHER)
             ->groupBy('target')
             ->select('target')
-            ->selectRaw('AVG(note) as average_note')
-            ->selectRaw('COUNT(*) as review_count')
-            ->orderByDesc('average_note')
-            ->orderByDesc('review_count')
+            ->selectRaw('AVG(note) as average_note') // R
+            ->selectRaw('COUNT(*) as review_count') // v
+            // WR = ( (v / (v+m)) * R ) + ( (m / (v+m)) * C )
+            ->selectRaw(
+                "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating"
+            )
+            ->orderByDesc('weighted_rating')
             ->limit(5)
             ->get();
 
@@ -58,7 +66,7 @@ class Stats
                 if ($lastRes->success) {
                     $hallOfFame[] = (object) [
                         'teacher' => $lastRes->data,
-                        'avg' => $top->average_note,
+                        'avg' => round($top->average_note, 2),
                         'total' => $top->review_count,
                     ];
                 }
