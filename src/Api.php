@@ -66,6 +66,11 @@ class Api
      */
     public function profesorWeb(string $idnc): Response
     {
+        $cacheKey = 'buscador-persona|' . $idnc;
+        if ($this->cache->exists($cacheKey)) {
+            return $this->cache->get($cacheKey, true);
+        }
+
         $email = '';
         $res = $this->__handleRequest('/buscador/persona/' . $idnc . '/', "", [], [], "", false);
         if (!$res->success) {
@@ -90,7 +95,9 @@ class Api
         }
 
         if ($email) {
-            return new Response(200, (object) ['email' => $email], false);
+            $data = (object) ['email' => $email];
+            $this->cache->set($cacheKey, json_encode($data));
+            return new Response(200, $data, false);
         }
         return new Response(502, null);
     }

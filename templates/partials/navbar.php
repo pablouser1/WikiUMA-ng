@@ -19,6 +19,9 @@
             <a class="navbar-item" href="<?= $this->url('/reports') ?>">
                 Informes
             </a>
+            <a class="navbar-item" href="<?= $this->url('/hall') ?>">
+                Salón de la fama
+            </a>
             <div class="navbar-item has-dropdown is-hoverable">
                 <div class="navbar-link">
                     Información

@@ -2,8 +2,10 @@
 
 namespace App\Wrappers;
 
+use App\Api;
 use App\Enums\ReportStatusEnum;
 use App\Enums\ReviewTypesEnum;
+use App\Models\Api\Response;
 use App\Models\Review;
 
 class Stats
@@ -27,6 +29,46 @@ class Stats
         return (object) [
             'total' => $total,
             'avg' => $avg,
+        ];
+    }
+
+    public static function hallOfFame(): object
+    {
+        $api = new Api();
+        $tops = Review::query()
+            ->where('type', ReviewTypesEnum::TEACHER)
+            ->groupBy('target')
+            ->select('target')
+            ->selectRaw('AVG(note) as average_note')
+            ->selectRaw('COUNT(*) as review_count')
+            ->orderByDesc('average_note')
+            ->orderByDesc('review_count')
+            ->limit(5)
+            ->get();
+
+        $hallOfFame = [];
+        $lastRes = new Response(200, ['ok' => true], false);
+        $i = 0;
+        while ($lastRes->success && $i < $tops->count()) {
+            $top = $tops[$i];
+            $lastRes = $api->profesorWeb($top->target);
+            if ($lastRes->success) {
+                $email = $lastRes->data->email;
+                $lastRes = $api->profesor($email);
+                if ($lastRes->success) {
+                    $hallOfFame[] = (object) [
+                        'teacher' => $lastRes->data,
+                        'avg' => $top->average_note,
+                        'total' => $top->review_count,
+                    ];
+                }
+            }
+            $i++;
+        }
+
+        return (object) [
+            'lastRes' => $lastRes,
+            'data' => $hallOfFame,
         ];
     }
 

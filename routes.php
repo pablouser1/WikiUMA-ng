@@ -4,6 +4,7 @@ use App\Controllers\AsignaturasController;
 use App\Controllers\AuthController;
 use App\Controllers\CentrosController;
 use App\Controllers\DevController;
+use App\Controllers\HallController;
 use App\Controllers\HomeController;
 use App\Controllers\MiscController;
 use App\Controllers\PlanesController;
@@ -26,6 +27,7 @@ $router->get('/contact', [MiscController::class, 'contact']);
 $router->get('/maintenance', [MiscController::class, 'maintenance']);
 $router->get('/redirect', [RedirectController::class, 'index']);
 $router->get('/search', [SearchController::class, 'index']);
+$router->get('/hall', [HallController::class, 'index']);
 
 $router->group('/reports', function (RouteGroup $route) {
     $route->get('/', [ReportsController::class, 'index']);
