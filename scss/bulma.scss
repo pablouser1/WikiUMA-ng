@@ -52,8 +52,8 @@
 @forward "bulma/sass/themes";
 
 nav.panel div.panel-content-scroll {
-  /* Set the maximum height before scrolling starts */
-  max-height: 500px;
-  /* Enable vertical scrollbar when content overflows */
-  overflow-y: auto;
+    /* Set the maximum height before scrolling starts */
+    max-height: 500px;
+    /* Enable vertical scrollbar when content overflows */
+    overflow-y: auto;
 }

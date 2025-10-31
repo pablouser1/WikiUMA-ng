@@ -9,12 +9,8 @@
 <section class="hero is-small has-text-centered">
     <div class="hero-body">
         <p class="title"><?= $this->e($profesor->nombre) ?></p>
-        <div class="tags is-centered">
-            <?php foreach ($profesor->departamentos as $departamento): ?>
-                <span class="tag is-info"><?= $this->e($departamento[0]->nombre) ?></span>
-            <?php endforeach ?>
-        </div>
         <?php if (isset($profesor->departamentos[0])): ?>
+            <span class="tag is-info"><?= $this->e($profesor->departamentos[0][0]->nombre) ?></span>
         <?php endif ?>
         <?php if ($stats->total > 0): ?>
             <?php $this->insert('partials/stats', ['stats' => $stats]) ?>
