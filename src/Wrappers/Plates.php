@@ -16,7 +16,6 @@ class Plates
         $engine->loadExtension(new Asset(__DIR__ . '/../../public'));
 
         $engine->registerFunction('url', fn (string $path, ?array $query = null) => Env::app_url($path, $query));
-        $engine->registerFunction('links', fn () => Links::LIST);
         $engine->registerFunction('version', fn () => App::VERSION);
         $engine->registerFunction('loggedin', fn () => Session::isLoggedIn());
         $engine->registerFunction('theme', fn () => Cookies::theme());

@@ -13,11 +13,28 @@
 
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
-            <?php foreach ($this->links() as $link): ?>
-                <a class="navbar-item" href="<?= $this->url($link['path']) ?>">
-                    <?= $this->e($link['name']) ?>
-                </a>
-            <?php endforeach ?>
+            <a class="navbar-item" href="<?= $this->url('/centros') ?>">
+                Directorio
+            </a>
+            <a class="navbar-item" href="<?= $this->url('/reports') ?>">
+                Informes
+            </a>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-link">
+                    Información
+                </div>
+                <div class="navbar-dropdown is-right">
+                    <a class="navbar-item" href="<?= $this->url('/about') ?>">
+                        Acerca de / FAQ
+                    </a>
+                    <a class="navbar-item" href="<?= $this->url('/legal') ?>">
+                        Legal
+                    </a>
+                    <a class="navbar-item" href="<?= $this->url('/contact') ?>">
+                        Contacto
+                    </a>
+                </div>
+            </div>
         </div>
         <div class="navbar-end">
             <div class="navbar-item">
@@ -25,9 +42,9 @@
             </div>
             <?php if ($this->loggedin()): ?>
                 <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
+                    <div class="navbar-link">
                         <?= $this->e($_SESSION['username']) ?>
-                    </a>
+                    </div>
                     <div class="navbar-dropdown is-right">
                         <a class="navbar-item" href="<?= $this->url('/staff/reviews') ?>">
                             Valoraciones
