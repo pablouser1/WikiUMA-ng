@@ -5,6 +5,7 @@ namespace App\Wrappers;
 use App\Constants\App;
 use App\Constants\Links;
 use League\Plates\Engine;
+use League\Plates\Extension\Asset;
 use Psr\Http\Message\UriInterface;
 
 class Plates
@@ -12,6 +13,7 @@ class Plates
     public static function render(string $template, array $data = []): string
     {
         $engine = new Engine(__DIR__ . '/../../templates');
+        $engine->loadExtension(new Asset(__DIR__ . '/../../public'));
 
         $engine->registerFunction('url', fn (string $path, ?array $query = null) => Env::app_url($path, $query));
         $engine->registerFunction('links', fn () => Links::LIST);

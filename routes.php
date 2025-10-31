@@ -3,7 +3,6 @@
 use App\Controllers\AsignaturasController;
 use App\Controllers\AuthController;
 use App\Controllers\CentrosController;
-use App\Controllers\ChallengeController;
 use App\Controllers\DevController;
 use App\Controllers\HomeController;
 use App\Controllers\MiscController;
