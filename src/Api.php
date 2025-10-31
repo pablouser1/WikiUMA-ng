@@ -47,8 +47,6 @@ class Api
 
     /**
      * Asignatura usando el ID de la asignatura y el ID del plan asociado
-     *
-     * NOTA: El id de plan debe estar presente aunque puede ser cualquier valor
      */
     public function asignatura(int $asignatura_id, int $plan_id): Response
     {
@@ -253,6 +251,6 @@ class Api
     private function __getUserAgent(): string
     {
         $pkgName = App::PACKAGE_NAME;
-        return "WikiUMA-ng/{$this->version} (https://github.com/$pkgName";
+        return "WikiUMA-ng/{$this->version} (https://github.com/$pkgName)";
     }
 }
