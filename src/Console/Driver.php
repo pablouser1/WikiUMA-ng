@@ -5,6 +5,7 @@ namespace App\Console;
 use App\Console\Modules\MigrateOldModule;
 use App\Console\Modules\ReportsModule;
 use App\Console\Modules\SeederModule;
+use App\Console\Modules\StatsModule;
 use App\Console\Modules\UsersModule;
 
 /**
@@ -20,6 +21,10 @@ class Driver extends Base implements IBase
         [
             'name' => 'Users',
             'runner' => [UsersModule::class, 'entrypoint'],
+        ],
+        [
+            'name' => 'Stats',
+            'runner' => [StatsModule::class, 'entrypoint'],
         ],
         [
             'name' => 'Seed',

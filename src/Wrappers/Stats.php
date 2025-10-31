@@ -35,7 +35,7 @@ class Stats
         ];
     }
 
-    public static function hallOfFame(): object
+    public static function weighted(bool $best = true): object
     {
         $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
         $api = new Api();
@@ -51,7 +51,7 @@ class Stats
             ->selectRaw(
                 "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating"
             )
-            ->orderByDesc('weighted_rating')
+            ->orderBy('weighted_rating', $best ? 'DESC' : 'ASC')
             ->limit(self::HALL_MAX_COUNT)
             ->get();
 

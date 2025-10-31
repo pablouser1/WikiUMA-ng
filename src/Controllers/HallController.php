@@ -20,7 +20,7 @@ class HallController extends Controller
      */
     public static function index(ServerRequestInterface $request): Response
     {
-        $hall = Stats::hallOfFame();
+        $hall = Stats::weighted();
         if (!$hall->lastRes->success) {
             return MsgHandler::errorFromApi($hall->lastRes, $request);
         }
