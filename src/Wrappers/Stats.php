@@ -11,6 +11,7 @@ use App\Models\Review;
 class Stats
 {
     private const int HALL_MIN_REVIEWS_NEEDED = 10;
+    private const int HALL_MAX_COUNT = 5;
 
     public static function all(): object
     {
@@ -39,7 +40,7 @@ class Stats
         $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
         $api = new Api();
 
-        $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)->avg('note');
+        $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)->avg('note'); // C
         $tops = Review::query()
             ->where('type', ReviewTypesEnum::TEACHER)
             ->groupBy('target')
@@ -51,7 +52,7 @@ class Stats
                 "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating"
             )
             ->orderByDesc('weighted_rating')
-            ->limit(5)
+            ->limit(self::HALL_MAX_COUNT)
             ->get();
 
         $hallOfFame = [];
