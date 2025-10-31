@@ -14,8 +14,6 @@ use Faker\Generator;
  */
 class SeederModule extends Base implements IBase
 {
-    private const int NUM_PROFANITIES = 10;
-
     /**
      * @link http://localhost:8000/redirect?target=ce4ca780-b501-45b7-9443-5c5acd4cacd3&type=0
      */
@@ -27,13 +25,11 @@ class SeederModule extends Base implements IBase
     private const string DEFAULT_SUBJECT = '5389;55683';
 
     private Generator $faker;
-    private array $profanities;
 
     public function __construct(\League\CLImate\CLImate $cli)
     {
         parent::__construct($cli);
         $this->faker = \Faker\Factory::create();
-        $this->profanities = include __DIR__ . '/../../../misc/profanities.php';
     }
 
     /**
