@@ -10,8 +10,16 @@ use Illuminate\Database\Eloquent\Builder;
  */
 enum ReviewFilterEnum: string
 {
-    case ALL = 'all';
     case AVAILABLE = 'available';
+    case ALL = 'all';
+
+    public function displayName(): string
+    {
+        return match ($this) {
+            self::AVAILABLE => 'Disponibles',
+            self::ALL => 'Todos',
+        };
+    }
 
     public function action(): ?\Closure
     {

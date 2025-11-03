@@ -25,11 +25,10 @@ trait HasReviews
                 ->where('type', '=', $type);
         }
 
-        if ($filter !== null) {
-            $action = $filter->action();
-            if ($action !== null) {
-                $action($query);
-            }
+        $filter = $filter ?? ReviewFilterEnum::AVAILABLE;
+        $action = $filter->action();
+        if ($action !== null) {
+            $action($query);
         }
 
         return $query->paginate(
