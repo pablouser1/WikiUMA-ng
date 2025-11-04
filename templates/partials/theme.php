@@ -1,11 +1,11 @@
 <button id="theme-switcher" class="button is-info" type="button">
     <span class="icon-text">
         <span class="icon">
-            <?php $this->insert('partials/icon', ['icon' => 'sun-light']) ?>
+            <?= icon('fa7-solid:sun') ?>
         </span>
         <span>/</span>
         <span class="icon">
-            <?php $this->insert('partials/icon', ['icon' => 'half-moon']) ?>
+            <?= icon('fa7-solid:moon') ?>
         </span>
     </span>
 </button>

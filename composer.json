@@ -40,7 +40,8 @@
         "phpmailer/phpmailer": "^6.10",
         "npm-asset/bulma": "^1.0",
         "monolog/monolog": "^3.9",
-        "illuminate/events": "^12.30"
+        "illuminate/events": "^12.30",
+        "yassinedoghri/php-icons": "^1.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
