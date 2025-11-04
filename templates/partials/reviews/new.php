@@ -7,7 +7,7 @@
             <label class="label">
                 <span class="icon-text">
                     <span class="icon">
-                        <?php $this->insert('partials/icon', ['icon' => 'empty-page']) ?>
+                        <?= icon('fa7-solid:pencil') ?>
                     </span>
                     <span>Opinión</span>
                 </span>
@@ -21,7 +21,7 @@
             <label class="label">
                 <span class="icon-text">
                     <span class="icon">
-                        <?php $this->insert('partials/icon', ['icon' => 'user']) ?>
+                        <?= icon('fa7-solid:user') ?>
                     </span>
                     <span>Nombre de usuario (opcional)</span>
                 </span>
@@ -34,7 +34,7 @@
             <label class="label">
                 <span class="icon-text">
                     <span class="icon">
-                        <?php $this->insert('partials/icon', ['icon' => 'emoji']) ?>
+                        <?= icon('fa7-solid:face-smile') ?>
                     </span>
                     <span>Valoración (sobre 10)</span>
                 </span>
@@ -62,7 +62,7 @@
                         <button type="submit" class="button is-success">
                             <span class="icon-text">
                                 <span class="icon">
-                                    <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
+                                    <?= icon('fa7-solid:paper-plane') ?>
                                 </span>
                                 <span>Enviar</span>
                             </span>

@@ -11,7 +11,7 @@
             <label class="label">
                 <span class="icon-text">
                     <span class="icon">
-                        <?php $this->insert('partials/icon', ['icon' => 'user-scan']) ?>
+                        <?= icon('fa7-solid:id-card') ?>
                     </span>
                     <span>UUID</span>
                 </span>
@@ -28,7 +28,7 @@
                 <button type="submit" class="button is-success">
                     <span class="icon-text">
                         <span class="icon">
-                            <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
+                            <?= icon('fa7-solid:paper-plane') ?>
                         </span>
                         <span>Consultar</span>
                     </span>

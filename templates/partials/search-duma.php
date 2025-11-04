@@ -12,7 +12,9 @@
     	</div>
         <div class="control">
             <button class="button is-info is-rounded" type="submit">
-                <?php $this->insert('partials/icon', ['icon' => 'search', 'width' => 24, 'height' => 24]) ?>
+                <span class="icon">
+                   <?= icon('fa7-solid:search') ?>
+                </span>
             </button>
         </div>
     </div>

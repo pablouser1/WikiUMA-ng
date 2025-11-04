@@ -38,7 +38,10 @@
                 (con algunas modificaciones)
             </li>
             <li>
-                <a rel="nofollow" href="https://iconoir.com">Iconoir</a>
+                <a rel="nofollow" href="https://github.com/yassinedoghri/php-icons">yassinedoghri/php-icons</a>
+            </li>
+            <li>
+                <a rel="nofollow" href="https://fontawesome.com">FontAwesome</a>
             </li>
         </ul>
     </div>

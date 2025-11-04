@@ -20,7 +20,7 @@
                     <label class="label">
                         <span class="icon-text">
                             <span class="icon">
-                                <?php $this->insert('partials/icon', ['icon' => 'empty-page']) ?>
+                                <?= icon('fa7-solid:pencil') ?>
                             </span>
                             <span>Informe</span>
                         </span>
@@ -34,7 +34,7 @@
                     <label class="label">
                         <span class="icon-text">
                             <span class="icon">
-                                <?php $this->insert('partials/icon', ['icon' => 'mail']) ?>
+                                <?= icon('fa7-solid:envelope') ?>
                             </span>
                             <span>Correo electrónico (opcional)</span>
                         </span>
@@ -62,7 +62,7 @@
                                 <button type="submit" class="button is-success">
                                     <span class="icon-text">
                                         <span class="icon">
-                                            <?php $this->insert('partials/icon', ['icon' => 'send']) ?>
+                                            <?= icon('fa7-solid:paper-plane') ?>
                                         </span>
                                         <span>Enviar</span>
                                     </span>

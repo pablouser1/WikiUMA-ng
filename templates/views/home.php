@@ -10,7 +10,7 @@
         <a class="button is-primary" href="<?= $this->url('/centros') ?>">
             <span class="icon-text">
                 <span class="icon">
-                    <?php $this->insert('partials/icon', ['icon' => 'building']) ?>
+                    <?= icon('fa7-solid:list') ?>
                 </span>
                 <span>Encontrar profesor en directorio</span>
             </span>

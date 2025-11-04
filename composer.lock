@@ -4,8 +4,81 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "002f482b8858dc79b55f053d1108f555",
+    "content-hash": "8f88e6e0276ae8fab02709584d9bce20",
     "packages": [
+        {
+            "name": "adhocore/cli",
+            "version": "v1.9.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/adhocore/php-cli.git",
+                "reference": "474dc3d7ab139796be98b104d891476e3916b6f4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/adhocore/php-cli/zipball/474dc3d7ab139796be98b104d891476e3916b6f4",
+                "reference": "474dc3d7ab139796be98b104d891476e3916b6f4",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0"
+            },
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php"
+                ],
+                "psr-4": {
+                    "Ahc\\Cli\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jitendra Adhikari",
+                    "email": "jiten.adhikary@gmail.com"
+                }
+            ],
+            "description": "Command line interface library for PHP",
+            "keywords": [
+                "argument-parser",
+                "argv-parser",
+                "cli",
+                "cli-action",
+                "cli-app",
+                "cli-color",
+                "cli-option",
+                "cli-writer",
+                "command",
+                "console",
+                "console-app",
+                "php-cli",
+                "php8",
+                "stream-input",
+                "stream-output"
+            ],
+            "support": {
+                "issues": "https://github.com/adhocore/php-cli/issues",
+                "source": "https://github.com/adhocore/php-cli/tree/v1.9.4"
+            },
+            "funding": [
+                {
+                    "url": "https://paypal.me/ji10",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/adhocore",
+                    "type": "github"
+                }
+            ],
+            "time": "2025-05-11T13:23:54+00:00"
+        },
         {
             "name": "brick/math",
             "version": "0.14.0",
@@ -3531,6 +3604,66 @@
                 }
             ],
             "time": "2024-11-21T01:49:47+00:00"
+        },
+        {
+            "name": "yassinedoghri/php-icons",
+            "version": "v1.3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yassinedoghri/php-icons.git",
+                "reference": "ae5d7727431f6891a0660d2b20818795fae40b41"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yassinedoghri/php-icons/zipball/ae5d7727431f6891a0660d2b20818795fae40b41",
+                "reference": "ae5d7727431f6891a0660d2b20818795fae40b41",
+                "shasum": ""
+            },
+            "require": {
+                "adhocore/cli": "^v1.9.3",
+                "composer-runtime-api": "^2.2",
+                "php": ">=8.1"
+            },
+            "require-dev": {
+                "kint-php/kint": "^6.0.1",
+                "pestphp/pest": "^3.7.4",
+                "pestphp/pest-plugin-type-coverage": "^3.4.0",
+                "phpstan/phpstan": "^2.1.10",
+                "rector/rector": "^2.0.10",
+                "symplify/coding-standard": "^12.2.3",
+                "symplify/easy-coding-standard": "^12.5.9"
+            },
+            "bin": [
+                "bin/php-icons"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "src/functions.php",
+                    "src/Console/helpers.php"
+                ],
+                "psr-4": {
+                    "PHPIcons\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Yassine Doghri",
+                    "email": "yassine@doghri.fr",
+                    "homepage": "https://yassinedoghri.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A PHP library based on iconify's API to download and render svg icons from popular open source icon sets.",
+            "support": {
+                "issues": "https://github.com/yassinedoghri/php-icons/issues",
+                "source": "https://github.com/yassinedoghri/php-icons/tree/v1.3.0"
+            },
+            "time": "2025-03-23T16:46:25+00:00"
         }
     ],
     "packages-dev": [

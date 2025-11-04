@@ -30,13 +30,13 @@
                         <?php if ($review->accepted_report === null): ?>
                             <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
                                 <span class="icon">
-                                    <?php $this->insert('partials/icon', ['icon' => 'link', 'width' => 24, 'height' => 24]) ?>
+                                    <?= icon('fa7-solid:link') ?>
                                 </span>
                             </a>
                             <a class="button is-small is-rounded is-danger"
                                 href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
                                 <span class="icon">
-                                    <?php $this->insert('partials/icon', ['icon' => 'white-flag', 'width' => 24, 'height' => 24]) ?>
+                                    <?= icon('fa7-solid:flag') ?>
                                 </span>
                             </a>
                         <?php endif ?>
