@@ -25,7 +25,7 @@
     ]) ?>
 </div>
 <div class="block">
-    <?php if(isset($from) && !empty($from)): ?>
+    <?php if (isset($from) && !empty($from)): ?>
         <?php $this->insert('partials/reviews/new', [
             'target' => $from['target'],
             'type' => $from['type'],
