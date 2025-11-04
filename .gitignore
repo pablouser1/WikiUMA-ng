@@ -7,6 +7,9 @@
 /.phpdoc
 /docs
 
+# Code quality
+/.scannerwork
+
 # Styling
 /.php-cs-fixer.cache
 

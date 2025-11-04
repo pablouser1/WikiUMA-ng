@@ -11,10 +11,14 @@ use App\Models\Api\Response;
  */
 class ApcuCache implements ICache
 {
+    /**
+     * @throws \RuntimeException APCu extension not available
+     * @todo Add custom exception
+     */
     public function __construct()
     {
         if (!(extension_loaded('apcu') && apcu_enabled())) {
-            throw new \Exception('APCu not enabled');
+            throw new \RuntimeException('APCu not enabled');
         }
     }
 

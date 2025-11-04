@@ -3,35 +3,33 @@
 namespace App\Cache;
 
 use App\Models\Api\Response;
-use App\Wrappers\Storage;
+use App\Wrappers\Env;
 
 /**
  * Cache using JSON files. Should only be used when debugging!
  */
 class JSONCache implements ICache
 {
-    private string $cache_path;
+    private string $cachePath;
 
+    /**
+     * @todo Add custom exception
+     */
     public function __construct()
     {
-        if (isset($_ENV['API_CACHE_JSON']) && !empty($_ENV['API_CACHE_JSON'])) {
-            $this->cache_path = $_ENV['API_CACHE_JSON'];
-        } else {
-            $this->cache_path = Storage::path('data');
-            if (!is_dir($this->cache_path)) {
-                $created = mkdir($this->cache_path, 0777, true);
-                if (!$created) {
-                    throw new \Exception('Error creating cache folder');
-                }
+        $this->cachePath = Env::api_cache_json();
+        if (!is_dir($this->cachePath)) {
+            $created = mkdir($this->cachePath, 0777, true);
+            if (!$created) {
+                throw new \RuntimeException('Error creating cache folder');
             }
         }
     }
 
     public function get(string $cache_key, bool $isJson): ?Response
     {
-        $filename = $this->cache_path . '/' . $cache_key . '.json';
-        if (is_file($filename)) {
-            $json_string = file_get_contents($filename);
+        if ($this->exists($cache_key)) {
+            $json_string = file_get_contents($this->buildFilename($cache_key));
             return new Response(200, $json_string, $isJson);
         }
         return null;
@@ -39,12 +37,16 @@ class JSONCache implements ICache
 
     public function exists(string $cache_key): bool
     {
-        $filename = $this->cache_path . '/' . $cache_key . '.json';
-        return is_file($filename);
+        return is_file($this->buildFilename($cache_key));
     }
 
     public function set(string $cache_key, string $data, int $timeout = 3600): void
     {
-        file_put_contents($this->cache_path . '/' . $cache_key . '.json', $data);
+        file_put_contents($this->buildFilename($cache_key), $data);
+    }
+
+    private function buildFilename(string $cache_key): string
+    {
+        return $this->cachePath . '/' . $cache_key . '.json';
     }
 }

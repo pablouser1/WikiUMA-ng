@@ -97,6 +97,11 @@ class Env
         return $value !== null ? CacheEnum::tryFrom($value) : null;
     }
 
+    public static function api_cache_json(): string
+    {
+        return $_ENV['API_CACHE_JSON'] ?? Storage::path('data');
+    }
+
     /**
      * Get db credentials.
      */

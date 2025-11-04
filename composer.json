@@ -11,6 +11,7 @@
     ],
     "require": {
         "ext-curl": "*",
+        "ext-dom": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
         "illuminate/database": "^12.28",

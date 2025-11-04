@@ -8,8 +8,7 @@ const normalize = str => str.toUpperCase().normalize('NFD').replace(/\p{Diacriti
 
 const filterItems = term => {
     const upper_term = normalize(term);
-    for (let i = 0; i < items.length; i++) {
-        const item = items[i];
+    for (const item of items) {
         const name = normalize(item.dataset.name);
         if (name.indexOf(upper_term) > -1) {
             item.classList.remove('is-hidden');

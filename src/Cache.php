@@ -2,11 +2,7 @@
 
 namespace App;
 
-use App\Cache\ApcuCache;
 use App\Cache\ICache;
-use App\Cache\JSONCache;
-use App\Cache\RedisCache;
-use App\Enums\CacheEnum;
 use App\Models\Api\Response;
 use App\Wrappers\Env;
 
@@ -16,25 +12,8 @@ class Cache implements ICache
 
     public function __construct()
     {
-        // Cache config
         $cache = Env::api_cache();
-        if ($cache !== null) {
-            switch ($cache) {
-                case CacheEnum::JSON:
-                    // ONLY FOR DEBUGGING
-                    $this->engine = new JSONCache();
-                    break;
-                case CacheEnum::APCU:
-                    // For small setups
-                    $this->engine = new ApcuCache();
-                    break;
-                case CacheEnum::REDIS:
-                    // RECOMMENDED
-                    $redis = Env::redis();
-                    $this->engine = new RedisCache($redis['host'], $redis['port'], $redis['password']);
-                    break;
-            }
-        }
+        $this->engine = $cache?->engine() ?? null;
     }
 
     public function isEnabled(): bool

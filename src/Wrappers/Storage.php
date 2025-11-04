@@ -2,6 +2,8 @@
 
 namespace App\Wrappers;
 
+use Nette\Utils\FileSystem;
+
 class Storage
 {
     public static function get(string $filename): string|false
