@@ -135,7 +135,7 @@ class ReviewsController extends Controller
 
         if ($review->accepted_report !== null) {
             throw new ForbiddenException('Esta valoración ya ha sido eliminada');
-        };
+        }
 
         return self::__render('views/reports/new', $request, [
             'review' => $review,
