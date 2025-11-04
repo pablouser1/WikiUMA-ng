@@ -31,6 +31,7 @@ composer run-script bulma
 
 Descarga los iconos usando:
 ```bash
+./vendor/bin/php-icons init # Sólo la primera vez
 ./vendor/bin/php-icons scan
 ```
 
