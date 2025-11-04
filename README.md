@@ -29,6 +29,11 @@ Una vez instaladas las dependencias, compila bulma usando:
 composer run-script bulma
 ```
 
+Descarga los iconos usando:
+```bash
+./vendor/bin/php-icons scan
+```
+
 Para terminar, copia el .env de ejemplo y modifícalo encajándolo con tu instalación:
 ```bash
 cp .env.example .env
