@@ -22,6 +22,9 @@
                     <?php $this->insert('partials/stat', ['title' => 'Nota media', 'value' => $item->avg, 'withColor' => true]) ?>
                 </div>
             </div>
+            <footer class="card-footer">
+              <a href="<?= $this->url('/profesores', ['email' => $this->encrypt($item->teacher->email)]) ?>" class="card-footer-item">Ver perfil</a>
+            </footer>
         </div>
     <?php endforeach ?>
 </div>
