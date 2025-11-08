@@ -3,7 +3,6 @@
 namespace App\Controllers;
 
 use App\Models\Report;
-use App\Wrappers\Security;
 use Laminas\Diactoros\Response;
 use League\Route\Http\Exception\NotFoundException;
 use Psr\Http\Message\ServerRequestInterface;
@@ -38,10 +37,7 @@ class ReportsController extends Controller
         }
 
         // Check captcha first
-        $captchaOk = Security::captcha($body['h-captcha-response']);
-        if (!$captchaOk) {
-            throw self::__invalidCaptcha();
-        }
+        self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
         $uuid = trim($body['uuid']);
         $report = Report::where('uuid', '=', $uuid)->first();

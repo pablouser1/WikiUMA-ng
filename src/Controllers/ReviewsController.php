@@ -7,7 +7,6 @@ use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\Env;
-use App\Wrappers\Security;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
@@ -67,10 +66,7 @@ class ReviewsController extends Controller
         }
 
         // Check captcha
-        $captchaOk = Security::captcha($body['h-captcha-response']);
-        if (!$captchaOk) {
-            throw self::__invalidCaptcha();
-        }
+        self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
         // Captcha is OK from now on
         $converter = new CommonMarkConverter([
@@ -172,10 +168,7 @@ class ReviewsController extends Controller
         }
 
         // Check captcha first
-        $captchaOk = Security::captcha($body['h-captcha-response']);
-        if (!$captchaOk) {
-            throw self::__invalidCaptcha();
-        }
+        self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
         $converter = new CommonMarkConverter([
             'html_input' => 'escape',

@@ -27,12 +27,8 @@ class Security
         return openssl_decrypt($tuple[0], self::ALGO, Env::app_key(), 0, $tuple[1]);
     }
 
-    public static function captcha(?string $response): bool
+    public static function captcha(string $response): object
     {
-        if ($response === null) {
-            return false;
-        }
-
         $data = [
             'secret' => Env::hcaptcha_secret(),
             'response' => $response,
@@ -47,7 +43,7 @@ class Security
         $res = curl_exec($verify);
         $resData = json_decode($res);
 
-        return $resData->success;
+        return $resData;
     }
 
     private static function __join(string $encrypted, string $iv): string
