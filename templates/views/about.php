@@ -34,10 +34,6 @@
                 <a rel="nofollow" href="https://github.com/jgthms/bulma">Bulma</a>
             </li>
             <li>
-                <a rel="nofollow" href="https://github.com/developerdino/ProfanityFilter">developerdino/ProfanityFilter</a>
-                (con algunas modificaciones)
-            </li>
-            <li>
                 <a rel="nofollow" href="https://github.com/yassinedoghri/php-icons">yassinedoghri/php-icons</a>
             </li>
             <li>
