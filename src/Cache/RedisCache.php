@@ -17,10 +17,9 @@ class RedisCache implements ICache
         if (!$this->client->connect($host, $port)) {
             throw new \Exception('REDIS: Could not connnect to server');
         }
-        if ($password) {
-            if (!$this->client->auth($password)) {
-                throw new \Exception('REDIS: Could not authenticate');
-            }
+
+        if ($password !== null && !$this->client->auth($password)) {
+            throw new \Exception('REDIS: Could not authenticate');
         }
     }
 

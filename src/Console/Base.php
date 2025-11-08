@@ -71,7 +71,6 @@ abstract class Base
         $input = $this->cli->radio("Choose an option:", $names);
         $res = $input->prompt();
 
-        $index = array_search($res, $names);
-        return $index;
+        return array_search($res, $names);
     }
 }
