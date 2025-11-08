@@ -40,7 +40,7 @@ class JSONCache implements ICache
         return is_file($this->buildFilename($cache_key));
     }
 
-    public function set(string $cache_key, string $data, int $timeout = 3600): void
+    public function set(string $cache_key, string $data, int $timeout = 86400): void
     {
         file_put_contents($this->buildFilename($cache_key), $data);
     }

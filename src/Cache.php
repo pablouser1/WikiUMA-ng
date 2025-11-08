@@ -31,7 +31,7 @@ class Cache implements ICache
         return $this->isEnabled() ? $this->engine->exists($cache_key) : false;
     }
 
-    public function set(string $cache_key, string $data, int $timeout = 3600): void
+    public function set(string $cache_key, string $data, int $timeout = 86400): void
     {
         if ($this->isEnabled()) {
             $this->engine->set($cache_key, $data, $timeout);

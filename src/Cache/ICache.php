@@ -19,5 +19,5 @@ interface ICache
     /**
      * Write response to cache.
      */
-    public function set(string $cache_key, string $data, int $timeout = 3600): void;
+    public function set(string $cache_key, string $data, int $timeout = 86400): void;
 }

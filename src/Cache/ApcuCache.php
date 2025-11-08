@@ -45,7 +45,7 @@ class ApcuCache implements ICache
     /**
      * {@inheritdoc}
      */
-    public function set(string $cache_key, string $data, int $timeout = 3600): void
+    public function set(string $cache_key, string $data, int $timeout = 86400): void
     {
         apcu_store($cache_key, $data, $timeout);
     }
