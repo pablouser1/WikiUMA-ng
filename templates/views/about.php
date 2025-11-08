@@ -24,7 +24,7 @@
         <p>Las valoraciones a asignaturas no están implementadas.</p>
     </div>
     <div class="content">
-        <h1>Cŕeditos</h1>
+        <h1>Créditos</h1>
         <p>Este proyecto no sería posible sin la ayuda de:</p>
         <ul>
             <li>
