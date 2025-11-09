@@ -117,7 +117,7 @@ class Api
 
         $res = $this->__handleRequest('/buscador/persona/', '', [
             "csrfmiddlewaretoken" => $csrf,
-            "pas" => "on",
+            "pas" => "off",
             "pdi" => "on",
             "nombre" => $nombre,
             "apellido_1" => $apellido_1,
