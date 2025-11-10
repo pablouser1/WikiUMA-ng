@@ -23,6 +23,12 @@
                 </div>
             </div>
             <div class="field">
+                <label class="checkbox">
+                    <input name="force" type="checkbox" />
+                    Eliminar completamente
+                </label>
+            </div>
+            <div class="field">
                 <div class="control">
                     <button class="button is-primary" type="submit">Submit</button>
                 </div>

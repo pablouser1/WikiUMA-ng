@@ -38,7 +38,7 @@ class StaffController extends Controller
     /**
      * Update status of review.
      *
-     * @var array{"review_id": int} $args
+     * @var array{"review_id": int, "force": ?string} $args
      */
     public static function reviewDelete(ServerRequestInterface $request, array $args): Response
     {
@@ -50,18 +50,22 @@ class StaffController extends Controller
             throw new NotFoundException();
         }
 
-        $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;
+        if (isset($body['force']) && $body['force'] === 'on') {
+            $review->delete();
+        } else {
+            $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;
 
-        $uuid = Uuid::uuid4()->toString();
-        $report = new Report([
-            'uuid' => $uuid,
-            'review_id' => $review->id,
-            'status' => ReportStatusEnum::ACCEPTED,
-            'message' => '',
-            'reason' => $reason,
-        ]);
+            $uuid = Uuid::uuid4()->toString();
+            $report = new Report([
+                'uuid' => $uuid,
+                'review_id' => $review->id,
+                'status' => ReportStatusEnum::ACCEPTED,
+                'message' => '',
+                'reason' => $reason,
+            ]);
 
-        $report->save();
+            $report->save();
+        }
 
         return new RedirectResponse(Env::app_url('/staff/reviews'));
     }
