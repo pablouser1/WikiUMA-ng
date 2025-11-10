@@ -9,6 +9,7 @@ use App\Traits\HasReports;
 use App\Traits\HasReviews;
 use App\Wrappers\Env;
 use App\Wrappers\Mail;
+use Illuminate\Database\Eloquent\Collection;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\NotFoundException;
@@ -109,18 +110,34 @@ class StaffController extends Controller
             throw new NotFoundException('Informe no encontrado');
         }
 
+        $mail = new Mail();
         $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;
 
+        // Set state of original report
+        self::__setReportState($report, $reason, $status, $mail);
+
+        // Set state of all reports linked to review if the original report was accepted
+        if ($status === ReportStatusEnum::ACCEPTED) {
+            /** @var Collection<int, Report> */
+            $allReports = $report->review->reports()->where('id', '!=', $report->id)->where('status', '=', ReportStatusEnum::PENDING)->get();
+
+            foreach ($allReports as $indirectReport) {
+                self::__setReportState($indirectReport, $reason, ReportStatusEnum::ACCEPTED, $mail);
+            }
+        }
+
+        return new RedirectResponse(Env::app_url('/staff/reports'));
+    }
+
+    private static function __setReportState(Report $report, string $reason, ReportStatusEnum $status, Mail $mail): void
+    {
         $report->status = $status;
         $report->reason = $reason;
         $report->save();
 
         // Send email if exists
         if (!empty($report->email)) {
-            $mail = new Mail();
             $mail->reportStatus($report);
         }
-
-        return new RedirectResponse(Env::app_url('/staff/reports'));
     }
 }
