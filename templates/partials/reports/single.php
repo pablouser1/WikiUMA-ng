@@ -20,7 +20,7 @@
         <?php $this->insert('partials/reviews/single', [
             'review' => $report->review,
             'isAdmin' => true,
-            'linkOriginal' => true,
+            'linkToOriginal' => true,
             'uri' => $uri,
         ]) ?>
 
