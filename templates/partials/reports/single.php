@@ -21,6 +21,7 @@
             'review' => $report->review,
             'isAdmin' => true,
             'linkOriginal' => true,
+            'uri' => $uri,
         ]) ?>
 
         <p class="title is-4">Informe</p>

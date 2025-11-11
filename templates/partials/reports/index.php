@@ -10,6 +10,7 @@
             <div class="mb-4">
                 <?php $this->insert('partials/reports/single', [
                     'report' => $report,
+                    'uri' => $uri,
                 ]) ?>
             </div>
         <?php endforeach ?>
