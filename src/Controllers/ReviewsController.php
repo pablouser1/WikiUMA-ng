@@ -7,10 +7,10 @@ use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
 use App\Wrappers\Env;
+use App\Wrappers\Render;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
-use League\CommonMark\CommonMarkConverter;
 use League\Route\Http\Exception\ForbiddenException;
 use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\Exception\UnauthorizedException;
@@ -69,15 +69,8 @@ class ReviewsController extends Controller
         self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
         // Captcha is OK from now on
-        $converter = new CommonMarkConverter([
-            'html_input' => 'escape',
-            'allow_unsafe_links' => false,
-            'max_nesting_level' => 15,
-            'max_delimiters_per_line' => 200,
-        ]);
-
         $target = $body['target'];
-        $msg = $converter->convert(trim($body['message']));
+        $msg = Render::markdown(trim($body['message']));
 
         // Optional
         $username = null;
@@ -170,19 +163,12 @@ class ReviewsController extends Controller
         // Check captcha first
         self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
-        $converter = new CommonMarkConverter([
-            'html_input' => 'escape',
-            'allow_unsafe_links' => false,
-            'max_nesting_level' => 15,
-            'max_delimiters_per_line' => 200,
-        ]);
-
         $email = null;
         if (isset($body['email']) && !empty($body['email']) && filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
             $email = trim($body['email']);
         }
 
-        $msg = $converter->convert(trim($body['message']));
+        $msg = Render::markdown(trim($body['message']));
         $uuid = Uuid::uuid4()->toString();
 
         $report = new Report([

@@ -40,7 +40,7 @@ class Mail
         $this->client->addAddress($report->email);
         $this->client->Subject = sprintf(self::REPORT_STATUS_SUBJECT);
 
-        $body = Plates::render('views/mails/report-status', [
+        $body = Render::plates('views/mails/report-status', [
             'report' => $report,
         ]);
 

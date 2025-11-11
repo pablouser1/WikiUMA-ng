@@ -14,7 +14,7 @@ class MsgHandler
     public static function show(int $code, string $title, string $body, ServerRequestInterface $request, ?string $back = null, ?object $reaction = null): Response
     {
         return new HtmlResponse(
-            Plates::render('views/message', [
+            Render::plates('views/message', [
                 'title' => $title,
                 'body' => $body,
                 'back' => $back,

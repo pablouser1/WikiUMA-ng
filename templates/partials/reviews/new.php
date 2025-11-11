@@ -15,7 +15,6 @@
             <div class="control">
                 <textarea name="message" class="textarea" maxlength="<?= $this->e(\App\Models\Review::MESSAGE_MAX_LENGTH) ?>" required></textarea>
             </div>
-            <p class="help">Pssst... Puedes usar Markdown.</p>
         </div>
         <div class="field">
             <label class="label">

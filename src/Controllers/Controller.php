@@ -3,7 +3,7 @@
 namespace App\Controllers;
 
 use App\Constants\Messages;
-use App\Wrappers\Plates;
+use App\Wrappers\Render;
 use App\Wrappers\Security;
 use Laminas\Diactoros\Response\HtmlResponse;
 use League\Route\Http\Exception\BadRequestException;
@@ -50,7 +50,7 @@ abstract class Controller
 
     protected static function __render(string $template, ServerRequestInterface $request, array $data = []): HtmlResponse
     {
-        return new HtmlResponse(Plates::render($template, [
+        return new HtmlResponse(Render::plates($template, [
             ...$data,
             'uri' => $request->getUri(),
         ]));
