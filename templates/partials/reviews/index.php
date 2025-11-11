@@ -10,9 +10,7 @@
             <?php foreach ($reviews as $review): ?>
                 <?php $this->insert('partials/reviews/single', [
                     'review' => $review,
-                    'voting' => true,
-                    'controls' => true,
-                    'solo' => $solo ?? false,
+                    'isAdmin' => $this->loggedin(),
                     'uri' => $uri,
                 ]) ?>
             <?php endforeach ?>

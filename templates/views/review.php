@@ -8,9 +8,7 @@
 <div class="box">
     <?php $this->insert('partials/reviews/single', [
         'review' => $review,
-        'voting' => true,
-        'controls' => true,
-        'solo' => true,
+        'linkToOriginal' => true,
         'uri' => $uri,
     ]) ?>
 

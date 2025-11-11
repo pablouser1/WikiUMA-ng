@@ -16,7 +16,7 @@
             'reviews' => $reviews,
             'uri' => $uri,
             'query' => $query,
-            'solo' => true,
+            'linkToOriginal' => true,
         ]) ?>
     </div>
 </section>

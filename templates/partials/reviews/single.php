@@ -1,3 +1,8 @@
+<?php
+$isAdmin ??= false;
+$linkToOriginal ??= false;
+?>
+
 <section class="section">
     <nav class="level">
         <div class="level-left">
@@ -10,10 +15,11 @@
                 <div>
                     <p class="is-size-6" style="text-overflow: ellipsis;">
                         <strong>
-                            <?php if ($review->accepted_report === null): ?>
-                                <?= $this->e($review->username) ?>
-                            <?php else: ?>
+                            <?php if ($review->accepted_report !== null): ?>
                                 <span class="tag is-danger">No disponible</span>
+                            <?php endif ?>
+                            <?php if ($review->accepted_report === null || $isAdmin): ?>
+                                <?= $this->e($review->username) ?>
                             <?php endif ?>
                         </strong>
                     </p>
@@ -25,28 +31,26 @@
         </div>
         <div class="level-right">
             <div class="level-item">
-                <?php if (isset($controls) && $controls): ?>
-                    <div class="buttons">
-                        <?php if ($review->accepted_report === null): ?>
-                            <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
-                                <span class="icon">
-                                    <?= icon('fa7-solid:link') ?>
-                                </span>
-                            </a>
-                            <a class="button is-small is-rounded is-danger"
-                                href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
-                                <span class="icon">
-                                    <?= icon('fa7-solid:flag') ?>
-                                </span>
-                            </a>
-                        <?php endif ?>
-                    </div>
-                <?php endif ?>
+                <div class="buttons">
+                    <?php if ($review->accepted_report === null): ?>
+                        <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
+                            <span class="icon">
+                                <?= icon('fa7-solid:link') ?>
+                            </span>
+                        </a>
+                        <a class="button is-small is-rounded is-danger"
+                            href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
+                            <span class="icon">
+                                <?= icon('fa7-solid:flag') ?>
+                            </span>
+                        </a>
+                    <?php endif ?>
+                </div>
             </div>
         </div>
     </nav>
     <div class="content pl-2 mb-0">
-        <?php if ($review->accepted_report !== null): ?>
+        <?php if ($review->accepted_report !== null && !$isAdmin): ?>
             <p>
                 <i>Este comentario ha sido eliminado por la administración.</i>
             </p>
@@ -63,7 +67,7 @@
                 <span class="icon" style="color: #e25555;">&#9829;</span>
                 <span><?= $this->e($review->votes) ?></span>
             </p>
-            <?php if (isset($voting) && $voting && $review->accepted_report === null): ?>
+            <?php if ($review->accepted_report === null): ?>
                 <div class="level-item">
                     <nav class="breadcrumb has-bullet-separator is-small" aria-label="breadcrumbs">
                         <ul>
@@ -85,7 +89,7 @@
             <?php endif ?>
         </div>
         <div class="level-right">
-            <?php if (isset($solo) && $solo): ?>
+            <?php if ($linkToOriginal): ?>
                 <p class="level-item">
                     <a class="button is-small is-rounded is-primary"
                         href="<?= $this->url('/redirect', ['target' => $review->target, 'type' => $review->type]) ?>">

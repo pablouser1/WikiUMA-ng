@@ -17,7 +17,11 @@
                 </div>
             </div>
         </nav>
-        <?php $this->insert('partials/reviews/single', ['review' => $report->review]) ?>
+        <?php $this->insert('partials/reviews/single', [
+            'review' => $report->review,
+            'isAdmin' => true,
+            'linkOriginal' => true,
+        ]) ?>
 
         <p class="title is-4">Informe</p>
         <div class="content">

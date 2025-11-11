@@ -1,5 +1,8 @@
 <div class="block">
-    <?php $this->insert('partials/reports/filter', ['uri' => $uri, 'query' => $query]) ?>
+    <?php $this->insert('partials/reports/filter', [
+        'uri' => $uri,
+        'query' => $query,
+    ]) ?>
     <?php if ($reports->isEmpty()): ?>
         <?php $this->insert('partials/reports/empty') ?>
     <?php else: ?>
@@ -11,5 +14,9 @@
             </div>
         <?php endforeach ?>
     <?php endif ?>
-    <?php $this->insert('partials/pagination', ['uri' => $uri, 'query' => $query, 'hasNext' => $reports->isNotEmpty()]) ?>
+    <?php $this->insert('partials/pagination', [
+        'uri' => $uri,
+        'query' => $query,
+        'hasNext' => $reports->isNotEmpty(),
+    ]) ?>
 </div>
