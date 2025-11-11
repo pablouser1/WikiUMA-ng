@@ -56,6 +56,12 @@ class Misc
         return $innerHTML;
     }
 
+    public static function isXss(string $input): bool
+    {
+        $pattern = '/<\s*script[^>]*>|javascript\s*:|on\w+\s*=/i';
+        return preg_match($pattern, $input) === 1;
+    }
+
     public static function planAsignaturaSplit(string $str): ?array
     {
         $arr = explode(';', $str);

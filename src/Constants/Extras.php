@@ -2,12 +2,14 @@
 
 namespace App\Constants;
 
+use App\Wrappers\Misc;
+
 /**
  * Easter-eggs when searching
  */
-class SearchExtra
+class Extras
 {
-    public const array ITEMS = [
+    private const array SEARCH_ITEMS = [
         [
             'key' => 'apellido_1',
             'value' => '/enfiso/i',
@@ -15,12 +17,14 @@ class SearchExtra
         ],
     ];
 
-    public static function redirect(array $query): ?string
+    private const string MY_FIRST_XSS_REDIRECT = 'https://youtu.be/g7_I6kj9fTc';
+
+    public static function search(array $query): ?string
     {
         $url = null;
         $i = 0;
-        while ($url === null && $i < count(self::ITEMS)) {
-            $item = self::ITEMS[$i];
+        while ($url === null && $i < count(self::SEARCH_ITEMS)) {
+            $item = self::SEARCH_ITEMS[$i];
             $val = $query[$item['key']] ?? null;
             $match = preg_match($item['value'], $val);
             if ($match !== false && $match === 1) {
@@ -31,5 +35,10 @@ class SearchExtra
         }
 
         return $url;
+    }
+
+    public static function review(string $rawBody): ?string
+    {
+        return Misc::isXss($rawBody) ? self::MY_FIRST_XSS_REDIRECT : null;
     }
 }

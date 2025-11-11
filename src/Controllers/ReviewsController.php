@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Constants\Extras;
 use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
@@ -68,8 +69,14 @@ class ReviewsController extends Controller
         // Check captcha
         self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
-        // Captcha is OK from now on
         $target = $body['target'];
+        $rawMsg = trim($body['message']);
+        // Check if user is trying to be funny
+        $url = Extras::review($rawMsg);
+        if ($url !== null) {
+            return new RedirectResponse($url);
+        }
+
         $msg = Render::markdown(trim($body['message']));
 
         // Optional
