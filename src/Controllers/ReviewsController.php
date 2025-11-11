@@ -7,7 +7,9 @@ use App\Constants\Messages;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Report;
 use App\Models\Review;
+use App\Models\User;
 use App\Wrappers\Env;
+use App\Wrappers\Mail;
 use App\Wrappers\Render;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
@@ -186,6 +188,13 @@ class ReviewsController extends Controller
         ]);
 
         $report->save();
+
+        $mail = new Mail();
+
+        // Send report notification to all admins
+        User::all()->each(function (User $user) use ($report, $mail) {
+            $mail->reportNew($report, $user);
+        });
 
         return self::__render('views/reports/created', $request, [
             'report' => $report,

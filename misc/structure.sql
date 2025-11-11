@@ -38,6 +38,7 @@ CREATE TABLE `users` (
   `first_name` varchar(128) NOT NULL,
   `last_name` varchar(128) NOT NULL,
   `username` varchar(64) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `password` binary(60) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_unique` (`username`)

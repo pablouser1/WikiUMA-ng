@@ -3,10 +3,12 @@
 namespace App\Wrappers;
 
 use App\Models\Report;
+use App\Models\User;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class Mail
 {
+    private const string REPORT_NEW_SUBJECT = "Nuevo informe en WikiUMA";
     private const string REPORT_STATUS_SUBJECT = "Resultado de su informe en WikiUMA";
     private PHPMailer $client;
 
@@ -32,17 +34,32 @@ class Mail
         $this->client->setFrom($mail['username'], $mail['from']);
     }
 
+    public function reportNew(Report $report, User $user): bool
+    {
+        $body = Render::plates('views/mails/report-new', [
+            'report' => $report,
+            'user' => $user,
+        ]);
+
+        return $this->__sendEmail($user->email, sprintf(self::REPORT_NEW_SUBJECT), $body);
+    }
+
     /**
      * Send report status to user
      */
     public function reportStatus(Report $report): bool
     {
-        $this->client->addAddress($report->email);
-        $this->client->Subject = sprintf(self::REPORT_STATUS_SUBJECT);
-
         $body = Render::plates('views/mails/report-status', [
             'report' => $report,
         ]);
+
+        return $this->__sendEmail($report->email, sprintf(self::REPORT_STATUS_SUBJECT), $body);
+    }
+
+    private function __sendEmail(string $to, string $subject, string $body): bool
+    {
+        $this->client->addAddress($to);
+        $this->client->Subject = sprintf($subject);
 
         $this->client->Body = $body;
         $ok = $this->client->send();
