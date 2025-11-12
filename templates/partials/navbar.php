@@ -82,7 +82,12 @@
                 </div>
             <?php else: ?>
                 <a class="navbar-item" href="<?= $this->url('/staff/login') ?>">
-                    Restringido
+                    <span class="icon-text">
+                        <span class="icon">
+                            <?= icon('fa7-solid:user') ?>
+                        </span>
+                        <span>Restringido</span>
+                    </span>
                 </a>
             <?php endif ?>
         </div>
