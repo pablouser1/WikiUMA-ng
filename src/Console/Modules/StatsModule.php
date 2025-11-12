@@ -2,15 +2,9 @@
 
 namespace App\Console\Modules;
 
-use App\Api;
 use App\Console\Base;
 use App\Console\IBase;
-use App\Enums\ReviewTypesEnum;
-use App\Models\Review;
-use App\Wrappers\Misc;
 use App\Wrappers\Stats;
-use App\Wrappers\Storage;
-use League\CLImate\CLImate;
 
 /**
  * Migrate from old WikiUMA (rip).

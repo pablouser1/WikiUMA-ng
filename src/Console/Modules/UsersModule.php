@@ -54,6 +54,10 @@ class UsersModule extends Base implements IModule
         $username = $in->prompt();
 
         // Password
+        $in = $this->cli->input("Write the email:");
+        $email = $in->prompt();
+
+        // Password
         $in = $this->cli->input("Write the password:");
         $plainPassword = $in->prompt();
 
@@ -61,6 +65,7 @@ class UsersModule extends Base implements IModule
             'first_name' => $firstName,
             'last_name' => $lastName,
             'username' => $username,
+            'email' => $email,
         ]);
 
         $user->password = password_hash($plainPassword, PASSWORD_BCRYPT);
