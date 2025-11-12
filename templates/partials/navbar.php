@@ -14,17 +14,37 @@
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
             <a class="navbar-item" href="<?= $this->url('/centros') ?>">
-                Directorio
+                <span class="icon-text">
+                    <span class="icon">
+                        <?= icon('fa7-solid:list') ?>
+                    </span>
+                    <span>Directorio</span>
+                </span>
             </a>
             <a class="navbar-item" href="<?= $this->url('/reports') ?>">
-                Informes
+                <span class="icon-text">
+                    <span class="icon">
+                        <?= icon('fa7-solid:file-text') ?>
+                    </span>
+                    <span>Informes</span>
+                </span>
             </a>
             <a class="navbar-item" href="<?= $this->url('/hall') ?>">
-                Salón de la fama
+                <span class="icon-text">
+                    <span class="icon">
+                        <?= icon('fa7-solid:trophy') ?>
+                    </span>
+                    <span>Salón de la fama</span>
+                </span>
             </a>
             <div class="navbar-item has-dropdown is-hoverable">
                 <div class="navbar-link">
-                    Información
+                    <span class="icon-text">
+                        <span class="icon">
+                            <?= icon('fa7-solid:circle-info') ?>
+                        </span>
+                        <span>Información</span>
+                    </span>
                 </div>
                 <div class="navbar-dropdown is-right">
                     <a class="navbar-item" href="<?= $this->url('/about') ?>">
