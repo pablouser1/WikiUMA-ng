@@ -18,6 +18,10 @@ class SearchController extends Controller
         $apellido_1 = $query['apellido_1'] ?? '';
         $apellido_2 = $query['apellido_2'] ?? '';
 
+        if ($nombre === '' && $apellido_1 === '' && $apellido_2 === '') {
+            throw self::__invalidParams();
+        }
+
         $url = Extras::search($query);
         if ($url !== null) {
             return new RedirectResponse($url);
