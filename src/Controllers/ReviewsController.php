@@ -32,6 +32,10 @@ class ReviewsController extends Controller
 
         $target = $query['target'];
 
+        if (!$type->isValidTarget($target)) {
+            throw self::__inconsistentData();
+        }
+
         return self::__render('views/reviews/new', $request, [
             'type' => $type,
             'target' => $target,
@@ -71,6 +75,12 @@ class ReviewsController extends Controller
             throw self::__invalidBody();
         }
 
+        $target = $body['target'];
+
+        if (!$type->isValidTarget($target)) {
+            throw self::__inconsistentData();
+        }
+
         if (mb_strlen($body['message'], 'UTF-8') > Review::MESSAGE_MAX_LENGTH) {
             throw self::__tooManyChars();
         }
@@ -87,7 +97,6 @@ class ReviewsController extends Controller
         // Check captcha
         self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
 
-        $target = $body['target'];
         $rawMsg = trim($body['message']);
         // Check if user is trying to be funny
         $url = Extras::review($rawMsg);

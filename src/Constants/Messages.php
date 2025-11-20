@@ -14,6 +14,7 @@ class Messages
 
     public const string MUST_SEND_BODY = "No hay cuerpo o es inválido";
     public const string MUST_SEND_PARAMS = "No hay parámetros requeridos o son inválidos";
+    public const string INCONSISTENT_DATA = "Datos incongruentes";
     public const string INVALID_CAPTCHA = "Captcha inválido";
     public const string TOO_MANY_CHARACTERS = "Se han enviado más caracteres que los permitidos";
 

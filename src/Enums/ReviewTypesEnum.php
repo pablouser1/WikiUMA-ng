@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use App\Wrappers\Env;
 use App\Wrappers\Misc;
+use Ramsey\Uuid\Uuid;
 
 /**
  * Enumarate all valid review types.
@@ -18,6 +19,14 @@ enum ReviewTypesEnum: int
         return match ($this) {
             self::TEACHER => 'Profesor',
             self::SUBJECT => 'Asignatura',
+        };
+    }
+
+    public function isValidTarget(string $target): bool
+    {
+        return match ($this) {
+            self::TEACHER => Uuid::isValid($target),
+            self::SUBJECT => preg_match('/^\d+;\d+$/', $target) === 1,
         };
     }
 

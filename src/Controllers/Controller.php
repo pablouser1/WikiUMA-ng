@@ -25,6 +25,11 @@ abstract class Controller
         return new BadRequestException(Messages::MUST_SEND_BODY);
     }
 
+    protected static function __inconsistentData(): BadRequestException
+    {
+        return new BadRequestException(Messages::INCONSISTENT_DATA);
+    }
+
     protected static function __invalidCaptcha(): UnauthorizedException
     {
         return new UnauthorizedException(Messages::INVALID_CAPTCHA);
