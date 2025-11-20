@@ -7,7 +7,8 @@ use Monolog\Logger;
 if (!function_exists('logger')) {
     /** @var ?Logger */
     $logger = null;
-    function logger(): Logger {
+    function logger(): Logger
+    {
         global $logger;
         if ($logger !== null) {
             return $logger;

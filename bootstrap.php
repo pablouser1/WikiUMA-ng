@@ -12,7 +12,7 @@ date_default_timezone_set(Env::app_tz());
 
 // -- DATABASE -- //
 $db = Env::db();
-$capsule = new Capsule;
+$capsule = new Capsule();
 
 $capsule->addConnection(array_merge($db, [
     'charset' => 'utf8mb4',

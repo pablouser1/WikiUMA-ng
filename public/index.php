@@ -1,4 +1,5 @@
 <?php
+
 require __DIR__ . '/../vendor/autoload.php';
 require __DIR__ . '/../bootstrap.php';
 
@@ -15,10 +16,14 @@ require __DIR__ . '/../functions.php';
 Session::start();
 
 $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
-    $_SERVER, $_GET, $_POST, $_COOKIE, $_FILES
+    $_SERVER,
+    $_GET,
+    $_POST,
+    $_COOKIE,
+    $_FILES
 );
 
-$router = new League\Route\Router;
+$router = new League\Route\Router();
 $router->middleware(new MaintenanceMiddleware());
 
 require __DIR__ . '/../routes.php';
@@ -45,4 +50,4 @@ try {
 }
 
 // send the response to the browser
-(new SapiEmitter)->emit($response);
+(new SapiEmitter())->emit($response);
