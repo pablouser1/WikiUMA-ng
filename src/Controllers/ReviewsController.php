@@ -15,8 +15,17 @@ use League\Route\Http\Exception\NotFoundException;
 use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 
+/**
+ * Reviews Controller.
+ */
 class ReviewsController extends Controller
 {
+    /**
+     * Show review form.
+     *
+     * - Route: `/reviews`
+     * - Method: `GET`
+     */
     public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
@@ -63,6 +72,12 @@ class ReviewsController extends Controller
         ]);
     }
 
+    /**
+     * Create review.
+     *
+     * - Route: `/reviews`
+     * - Method: `POST`
+     */
     public static function create(ServerRequestInterface $request): Response
     {
         $body = $request->getParsedBody();
