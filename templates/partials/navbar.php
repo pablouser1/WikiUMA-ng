@@ -1,7 +1,12 @@
 <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="navbar-brand">
         <a href="<?= $this->url('/') ?>" class="navbar-item">
-            WikiUMA
+            <span class="icon-text">
+                <span class="icon">
+                    <?= icon('fa7-solid:home') ?>
+                </span>
+                <span><b>WikiUMA</b></span>
+            </span>
         </a>
 
         <a role="button" id="navbar-burger" class="navbar-burger" aria-label="menu" aria-expanded="false">
