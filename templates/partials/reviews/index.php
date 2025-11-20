@@ -19,7 +19,8 @@
     <?php $this->insert('partials/pagination', [
         'uri' => $uri,
         'query' => $query,
-        'hasNext' => $reviews->isNotEmpty(),
+        'lastPage' => $reviews->lastPage(),
+        'hasNext' => $reviews->hasMorePages(),
     ]) ?>
 </div>
 <div class="block">
