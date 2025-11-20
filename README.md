@@ -43,7 +43,7 @@ cp .env.example .env
 ## Docs
 Con PHPDoc instalado, ejecuta:
 ```bash
-phpdoc run -d src -t docs
+phpdoc
 ```
 
 ## Desarrollo

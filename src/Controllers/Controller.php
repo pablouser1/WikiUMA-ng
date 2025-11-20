@@ -68,7 +68,7 @@ abstract class Controller
             return $default;
         }
 
-        if (!is_numeric($valStr))  {
+        if (!is_numeric($valStr)) {
             return null;
         }
 

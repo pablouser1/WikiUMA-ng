@@ -17,21 +17,21 @@ class Render
         $engine = new Engine(__DIR__ . '/../../templates');
         $engine->loadExtension(new Asset(__DIR__ . '/../../public'));
 
-        $engine->registerFunction('url', fn(string $path, ?array $query = null) => Env::app_url($path, $query));
-        $engine->registerFunction('version', fn() => App::VERSION);
-        $engine->registerFunction('loggedin', fn() => Session::isLoggedIn());
-        $engine->registerFunction('theme', fn() => Cookies::theme());
+        $engine->registerFunction('url', fn (string $path, ?array $query = null) => Env::app_url($path, $query));
+        $engine->registerFunction('version', fn () => App::VERSION);
+        $engine->registerFunction('loggedin', fn () => Session::isLoggedIn());
+        $engine->registerFunction('theme', fn () => Cookies::theme());
 
-        $engine->registerFunction('encrypt', fn(string $data) => Security::encrypt($data));
-        $engine->registerFunction('hcaptcha_sitekey', fn() => Env::hcaptcha_sitekey());
+        $engine->registerFunction('encrypt', fn (string $data) => Security::encrypt($data));
+        $engine->registerFunction('hcaptcha_sitekey', fn () => Env::hcaptcha_sitekey());
 
-        $engine->registerFunction('pathWithQuery', fn(UriInterface $uri) => Misc::pathWithQuery($uri));
-        $engine->registerFunction('uriQuery', fn(UriInterface $uri, array $origQuery, array $newData) => Misc::modifyQueryFromUri($uri, $origQuery, $newData));
+        $engine->registerFunction('pathWithQuery', fn (UriInterface $uri) => Misc::pathWithQuery($uri));
+        $engine->registerFunction('uriQuery', fn (UriInterface $uri, array $origQuery, array $newData) => Misc::modifyQueryFromUri($uri, $origQuery, $newData));
 
-        $engine->registerFunction('planAsignaturaSplit', fn(string $str) => Misc::planAsignaturaSplit($str));
-        $engine->registerFunction('planAsignaturaJoin', fn(string $plan_id, string $asig_id) => Misc::planAsignaturaJoin($plan_id, $asig_id));
+        $engine->registerFunction('planAsignaturaSplit', fn (string $str) => Misc::planAsignaturaSplit($str));
+        $engine->registerFunction('planAsignaturaJoin', fn (string $plan_id, string $asig_id) => Misc::planAsignaturaJoin($plan_id, $asig_id));
 
-        $engine->registerFunction('contact', fn() => Env::app_contact());
+        $engine->registerFunction('contact', fn () => Env::app_contact());
         // -- STYLING -- //
         $engine->registerFunction('color', function (float $note, bool $isComment = false): string {
             $type = '';
