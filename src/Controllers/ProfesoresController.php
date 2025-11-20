@@ -54,7 +54,7 @@ class ProfesoresController extends Controller
             throw self::__invalidParams();
         }
 
-        $page = self::__parsePageFromQuery($query);
+        $page = self::__parseIntFromQuery('page', $query);
         if ($page === null) {
             throw self::__invalidParams();
         }

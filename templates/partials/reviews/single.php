@@ -39,7 +39,7 @@ $linkToOriginal ??= false;
                             </span>
                         </a>
                         <a class="button is-small is-rounded is-danger"
-                            href="<?= $this->url('/reviews/' . $review->id . '/report') ?>">
+                            href="<?= $this->url('/reports', ['review' => $review->id]) ?>">
                             <span class="icon">
                                 <?= icon('fa7-solid:flag') ?>
                             </span>

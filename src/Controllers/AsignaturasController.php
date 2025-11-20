@@ -30,7 +30,7 @@ class AsignaturasController extends Controller
         $api = new Api();
         $query = $request->getQueryParams();
 
-        $page = self::__parsePageFromQuery($query);
+        $page = self::__parseIntFromQuery('page', $query);
         if ($page === null) {
             throw self::__invalidParams();
         }

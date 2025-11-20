@@ -26,7 +26,7 @@
                     <span>Directorio</span>
                 </span>
             </a>
-            <a class="navbar-item" href="<?= $this->url('/reports') ?>">
+            <a class="navbar-item" href="<?= $this->url('/reports/checker') ?>">
                 <span class="icon-text">
                     <span class="icon">
                         <?= icon('fa7-solid:file-text') ?>

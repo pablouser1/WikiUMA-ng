@@ -6,7 +6,7 @@
 
 <div class="box has-text-centered">
     <p class="title">Consulta de informe</p>
-    <form action="<?= $this->url('/reports') ?>" method="POST">
+    <form action="<?= $this->url('/reports/checker') ?>" method="POST">
         <div class="field">
             <label class="label">
                 <span class="icon-text">

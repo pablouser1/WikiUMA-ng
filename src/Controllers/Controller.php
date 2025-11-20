@@ -56,17 +56,17 @@ abstract class Controller
         ]));
     }
 
-    protected static function __parsePageFromQuery(array $query): ?int
+    protected static function __parseIntFromQuery(string $key, array $query, ?int $default = 1): ?int
     {
-        $pageStr = $query['page'] ?? null;
-        if ($pageStr === null) {
-            return 1;
+        $valStr = $query[$key] ?? null;
+        if ($valStr === null) {
+            return $default;
         }
 
-        if (!is_numeric($pageStr))  {
+        if (!is_numeric($valStr))  {
             return null;
         }
 
-        return intval($pageStr);
+        return intval($valStr);
     }
 }

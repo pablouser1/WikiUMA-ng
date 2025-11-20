@@ -18,7 +18,7 @@
             'uri' => $uri,
         ]) ?>
         <div class="box">
-            <form action="<?= $this->url('/reviews/' . $review->id . '/report') ?>" method="POST">
+            <form action="<?= $this->url('/reports', ['review' => $review->id]) ?>" method="POST">
                 <div class="field">
                     <label class="label">
                         <span class="icon-text">

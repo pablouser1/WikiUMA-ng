@@ -10,6 +10,7 @@ use App\Controllers\MiscController;
 use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
 use App\Controllers\RedirectController;
+use App\Controllers\ReportsCheckerController;
 use App\Controllers\ReportsController;
 use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
@@ -31,7 +32,12 @@ $router->get('/hall', [HallController::class, 'index']);
 
 $router->group('/reports', function (RouteGroup $route) {
     $route->get('/', [ReportsController::class, 'index']);
-    $route->post('/', [ReportsController::class, 'post']);
+    $route->post('/', [ReportsController::class, 'create']);
+});
+
+$router->group('/reports/checker', function (RouteGroup $route) {
+    $route->get('/', [ReportsCheckerController::class, 'index']);
+    $route->post('/', [ReportsCheckerController::class, 'post']);
 });
 
 $router->get('/centros', [CentrosController::class, 'index']);
@@ -49,8 +55,6 @@ $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
     $route->get('/', [ReviewsController::class, 'show']);
     $route->get('/like', [ReviewsController::class, 'like']);
     $route->get('/dislike', [ReviewsController::class, 'dislike']);
-    $route->get('/report', [ReviewsController::class, 'reportIndex']);
-    $route->post('/report', [ReviewsController::class, 'reportCreate']);
 });
 
 $router->group('/staff', function (RouteGroup $route) {
