@@ -49,18 +49,4 @@ trait HasReviews
     {
         return $filter !== null ? ReviewFilterEnum::tryFrom($filter) : null;
     }
-
-    private static function __parsePageFromQuery(array $query): ?int
-    {
-        $pageStr = $query['page'] ?? null;
-        if ($pageStr === null) {
-            return 1;
-        }
-
-        if (!is_numeric($pageStr))  {
-            return null;
-        }
-
-        return intval($pageStr);
-    }
 }

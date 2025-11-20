@@ -55,4 +55,18 @@ abstract class Controller
             'uri' => $request->getUri(),
         ]));
     }
+
+    protected static function __parsePageFromQuery(array $query): ?int
+    {
+        $pageStr = $query['page'] ?? null;
+        if ($pageStr === null) {
+            return 1;
+        }
+
+        if (!is_numeric($pageStr))  {
+            return null;
+        }
+
+        return intval($pageStr);
+    }
 }
