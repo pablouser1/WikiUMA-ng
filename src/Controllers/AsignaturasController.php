@@ -30,6 +30,11 @@ class AsignaturasController extends Controller
         $api = new Api();
         $query = $request->getQueryParams();
 
+        $page = self::__parsePageFromQuery($query);
+        if ($page === null) {
+            throw self::__invalidParams();
+        }
+
         $asignatura = $api->asignatura($args['asignatura_id'], $args['plan_id']);
         if (!$asignatura->success) {
             return MsgHandler::errorFromApi($asignatura, $request);
@@ -38,7 +43,7 @@ class AsignaturasController extends Controller
         $id = Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
-        $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $query['page'] ?? 1, $filter);
+        $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $page, $filter);
         $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
 
         return self::__render('views/asignatura', $request, [

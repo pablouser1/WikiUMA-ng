@@ -27,8 +27,14 @@ class StaffController extends Controller
     public static function reviewIndex(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
+
+        $page = self::__parsePageFromQuery($query);
+        if ($page === null) {
+            throw self::__invalidParams();
+        }
+
         $filter = self::__getReviewFilter($query['filter'] ?? null);
-        $reviews = self::__getReviews(null, null, $query['page'] ?? 1, $filter);
+        $reviews = self::__getReviews(null, null, $page, $filter);
 
         return self::__render('views/staff/reviews', $request, [
             'reviews' => $reviews,

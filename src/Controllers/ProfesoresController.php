@@ -54,13 +54,18 @@ class ProfesoresController extends Controller
             throw self::__invalidParams();
         }
 
+        $page = self::__parsePageFromQuery($query);
+        if ($page === null) {
+            throw self::__invalidParams();
+        }
+
         $profesor = $api->profesor($email);
         if (!$profesor->success) {
             return MsgHandler::errorFromApi($profesor, $request);
         }
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
-        $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $query['page'] ?? 1, $filter);
+        $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $page, $filter);
         $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
 
         return self::__render('views/profesor', $request, [
