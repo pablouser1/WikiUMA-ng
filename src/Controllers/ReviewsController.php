@@ -22,6 +22,27 @@ use Ramsey\Uuid\Uuid;
 
 class ReviewsController extends Controller
 {
+    public static function index(ServerRequestInterface $request): Response
+    {
+        $query = $request->getQueryParams();
+
+        if (!isset($query['target'], $query['type'])) {
+            throw self::__invalidParams();
+        }
+
+        $type = ReviewTypesEnum::tryFrom($query['type']);
+        if ($type === null) {
+            throw self::__invalidParams();
+        }
+
+        $target = $query['target'];
+
+        return self::__render('views/reviews/new', $request, [
+            'type' => $type,
+            'target' => $target,
+        ]);
+    }
+
     /**
      * Get specific review.
      *
@@ -29,7 +50,7 @@ class ReviewsController extends Controller
      *
      * @param array{"review_id": int} $args
      */
-    public static function index(ServerRequestInterface $request, array $args): Response
+    public static function show(ServerRequestInterface $request, array $args): Response
     {
         $review_id = $args['review_id'];
         /** @var ?Review */
@@ -38,7 +59,7 @@ class ReviewsController extends Controller
             throw new NotFoundException();
         }
 
-        return self::__render('views/review', $request, [
+        return self::__render('views/reviews/single', $request, [
             'review' => $review,
         ]);
     }

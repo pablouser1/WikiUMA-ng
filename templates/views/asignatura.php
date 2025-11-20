@@ -2,9 +2,7 @@
     'title' => $asignatura->nombre,
     'uri' => $uri,
     'withSearch' => true,
-    'withMaxChars' => true,
     'withReviews' => true,
-    'withCaptcha' => true,
 ]) ?>
 
 <section class="hero is-small has-text-centered">

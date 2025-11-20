@@ -43,9 +43,10 @@ $router->group('/planes/{plan_id:number}', function (RouteGroup $route) {
 
 $router->get('/profesores', [ProfesoresController::class, 'index']);
 
+$router->get('/reviews', [ReviewsController::class, 'index']);
 $router->post('/reviews', [ReviewsController::class, 'create']);
 $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
-    $route->get('/', [ReviewsController::class, 'index']);
+    $route->get('/', [ReviewsController::class, 'show']);
     $route->get('/like', [ReviewsController::class, 'like']);
     $route->get('/dislike', [ReviewsController::class, 'dislike']);
     $route->get('/report', [ReviewsController::class, 'reportIndex']);

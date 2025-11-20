@@ -1,4 +1,10 @@
 <div class="block">
+    <?php if (isset($from) && !empty($from)): ?>
+        <?php $this->insert('partials/reviews/new', [
+            'target' => $from['target'],
+            'type' => $from['type'],
+        ]) ?>
+    <?php endif ?>
     <?php $this->insert('partials/reviews/filter', [
         'uri' => $uri,
         'query' => $query,
@@ -22,12 +28,4 @@
         'lastPage' => $reviews->lastPage(),
         'hasNext' => $reviews->hasMorePages(),
     ]) ?>
-</div>
-<div class="block">
-    <?php if (isset($from) && !empty($from)): ?>
-        <?php $this->insert('partials/reviews/new', [
-            'target' => $from['target'],
-            'type' => $from['type'],
-        ]) ?>
-    <?php endif ?>
 </div>
