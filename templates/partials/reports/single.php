@@ -1,22 +1,10 @@
 <div class="card">
     <div class="card-content">
-        <nav class="level">
-            <div class="level-left">
-                <div class="level-item">
-                    <div>
-                        <p class="title is-4">Informe <?= $this->e($report->uuid) ?></p>
-                        <p class="subtitle is-6">
-                           <?= $this->e($report->email === null ? 'No se ha especificado correo electrónico' : $report->email) ?>
-                        </p>
-                    </div>
-                </div>
-            </div>
-            <div class="level-right">
-                <div class="level-item">
-                    <a href="<?= $this->url('/redirect', ['target' => $report->review->target, 'type' => $report->review->type]) ?>" target="_blank">Consultar reseñado</a>
-                </div>
-            </div>
-        </nav>
+        <p class="title is-4">Informe <?= $this->e($report->uuid) ?></p>
+        <p class="subtitle is-6">
+           <?= $this->e($report->email === null ? 'No se ha especificado correo electrónico' : $report->email) ?>
+        </p>
+
         <?php $this->insert('partials/reviews/single', [
             'review' => $report->review,
             'isAdmin' => true,
