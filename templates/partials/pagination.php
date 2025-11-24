@@ -1,5 +1,5 @@
 <?php
-$range = 1;
+$range = 2;
 $page = isset($query['page']) ? intval($query['page']) : 1;
 
 // Sliding window
