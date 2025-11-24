@@ -1,8 +1,11 @@
-/** Handles input with a maximum amount of characters */
+/** Handles forms */
 
 /**
- * Update number of characters written.
- * Change color to red if >= maxLength
+ * Update number of characters written, change color to red if >= maxLength.
+ *
+ * @param {number} maxLength
+ * @param {HTMLInputElement} inputElement
+ * @param {HTMLElement} counterElement
  */
 const updateCounter = (maxLength, inputElement, counterElement) => {
     const currentLength = inputElement.value.length;
@@ -49,4 +52,26 @@ const initMaxChars = () => {
     });
 }
 
+/**
+ * Event listener when form is submitted.
+ *
+ * @param {HTMLButtonElement} submit
+ */
+const onFormSubmit = (submit) => {
+    submit.classList.add('is-loading');
+    submit.disabled = true;
+}
+
+/**
+ * Set listener for forms submitting data to the db.
+ */
+const initFormSubmit = () => {
+    const form = document.getElementById('data-form');
+    const submit = document.getElementById('data-submit');
+    if (form !== null && submit !== null) {
+        form.addEventListener('submit', () => onFormSubmit(submit));
+    }
+}
+
+initFormSubmit();
 initMaxChars();

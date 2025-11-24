@@ -2,7 +2,7 @@
     'title' => "Valoración de {$review->username}",
     'uri' => $uri,
     'withReviews' => true,
-    'withMaxChars' => $this->loggedin(),
+    'withForm' => $this->loggedin(),
 ]) ?>
 
 <div class="box">
@@ -13,7 +13,7 @@
     ]) ?>
 
     <?php if ($this->loggedin()): ?>
-        <form action="<?= $this->url('/staff/reviews/' . $review->id . '/delete') ?>" method="POST">
+        <form id="data-form" action="<?= $this->url('/staff/reviews/' . $review->id . '/delete') ?>" method="POST">
             <div class="field">
                 <label class="label">Razón (opcional)</label>
                 <div class="control">
@@ -28,7 +28,7 @@
             </div>
             <div class="field">
                 <div class="control">
-                    <button class="button is-primary" type="submit">Submit</button>
+                    <button id="data-submit" class="button is-primary" type="submit">Enviar</button>
                 </div>
             </div>
         </form>

@@ -1,6 +1,6 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Nueva valoración',
-    'withMaxChars' => true,
+    'withForm' => true,
     'withCaptcha' => true,
     'uri' => $uri,
 ]) ?>
@@ -9,7 +9,7 @@
     <div class="container">
         <div class="box">
             <p class="title has-text-centered">Escribe tu opinión</p>
-            <form action="<?= $this->url('/reviews') ?>" method="POST">
+            <form id="data-form" action="<?= $this->url('/reviews') ?>" method="POST">
                 <input name="target" value="<?= $this->e($target) ?>" type="hidden" hidden readonly />
                 <input name="type" value="<?= $this->e($type->value) ?>" type="hidden" hidden readonly />
                 <div class="field">
@@ -67,7 +67,7 @@
                         </div>
                         <div class="level-right">
                             <div class="control">
-                                <button type="submit" class="button is-success">
+                                <button id="data-submit" type="submit" class="button is-success">
                                     <span class="icon-text">
                                         <span class="icon">
                                             <?= icon('fa7-solid:paper-plane') ?>

@@ -16,8 +16,8 @@
     <?php if (isset($withCaptcha) && $withCaptcha): ?>
         <script async defer src="https://www.hCaptcha.com/1/api.js"></script>
     <?php endif ?>
-    <?php if (isset($withMaxChars) && $withMaxChars): ?>
-        <script defer src="<?= $this->url($this->asset('/js/maxchars.js')) ?>"></script>
+    <?php if (isset($withForm) && $withForm): ?>
+        <script defer src="<?= $this->url($this->asset('/js/form.js')) ?>"></script>
     <?php endif ?>
     <title><?= $this->e($title) ?> - WikiUMA</title>
 </head>

@@ -2,7 +2,7 @@
     'title' => 'Informes',
     'uri' => $uri,
     'withReviews' => true,
-    'withMaxChars' => true,
+    'withForm' => true,
 ]) ?>
 
 <?php $this->insert('partials/hero', [

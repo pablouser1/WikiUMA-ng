@@ -1,7 +1,7 @@
 <?php $this->layout('layouts/default', [
     'title' => 'Nuevo informe a opinión de ' . $this->e($review->username),
     'uri' => $uri,
-    'withMaxChars' => true,
+    'withForm' => true,
     'withReviews' => true,
     'withCaptcha' => true,
 ]) ?>
@@ -18,7 +18,7 @@
             'uri' => $uri,
         ]) ?>
         <div class="box">
-            <form action="<?= $this->url('/reports', ['review' => $review->id]) ?>" method="POST">
+            <form id="data-form" action="<?= $this->url('/reports', ['review' => $review->id]) ?>" method="POST">
                 <div class="field">
                     <label class="label">
                         <span class="icon-text">
@@ -61,7 +61,7 @@
                         </div>
                         <div class="level-right">
                             <div class="control">
-                                <button type="submit" class="button is-success">
+                                <button id="data-submit" type="submit" class="button is-success">
                                     <span class="icon-text">
                                         <span class="icon">
                                             <?= icon('fa7-solid:paper-plane') ?>

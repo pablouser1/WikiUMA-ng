@@ -4,7 +4,7 @@
     'title' => $title,
     'uri' => $uri,
     'withReviews' => $withReviews ?? false,
-    'withMaxChars' => $withMaxChars ?? false,
+    'withForm' => $withForm ?? false,
     'withCaptcha' => $withCaptcha ?? false,
 ]) ?>
 
