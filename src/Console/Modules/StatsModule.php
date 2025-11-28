@@ -46,7 +46,6 @@ class StatsModule extends Base implements IBase
         $weighted = Stats::weighted($best);
         if (!$weighted->lastRes->success) {
             $this->cli->error($weighted->lastRes->error);
-            return;
         }
 
         foreach ($weighted->data as $item) {
