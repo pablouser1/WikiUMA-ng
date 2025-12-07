@@ -7,7 +7,7 @@ namespace App\Wrappers;
  */
 class Security
 {
-    private const string ALGO = "aes-128-cbc";
+    private const string ALGO = "aes-128-ctr";
     private const string SEPARATOR = "|";
 
     public static function encrypt(string $data): string
@@ -48,13 +48,12 @@ class Security
 
     private static function __join(string $encrypted, string $iv): string
     {
-        $ivBase64 = base64_encode($iv);
-        return base64_encode($encrypted . self::SEPARATOR . $ivBase64);
+        return Encoding::base64url_encode($encrypted . self::SEPARATOR . $iv);
     }
 
     private static function __split(string $data): ?array
     {
-        $dataTmp = base64_decode($data);
+        $dataTmp = Encoding::base64url_decode($data);
         if ($dataTmp === false) {
             return null;
         }
@@ -65,7 +64,6 @@ class Security
             return null;
         }
 
-        $arr[1] = base64_decode($arr[1]);
         return $arr;
     }
 }
