@@ -34,14 +34,13 @@ class Misc
 
     public static function parseHTML(?string $html): ?\DOMDocument
     {
-        if ($html) {
-            $doc = new \DOMDocument();
-            $success = @$doc->loadHTML($html);
-            if ($success) {
-                return $doc;
-            }
+        if ($html === null) {
+            return null;
         }
-        return null;
+
+        $doc = new \DOMDocument();
+        $success = @$doc->loadHTML($html);
+        return $success ? $doc : null;
     }
 
     public static function DOMInnerHTML(\DOMNode $element): string
