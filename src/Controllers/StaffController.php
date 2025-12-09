@@ -8,8 +8,6 @@ use App\Models\Review;
 use App\Traits\HasReports;
 use App\Traits\HasReviews;
 use App\Wrappers\Env;
-use App\Wrappers\Mail;
-use Illuminate\Database\Eloquent\Collection;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\NotFoundException;
