@@ -31,7 +31,7 @@ class Render
         $engine->registerFunction('planAsignaturaSplit', fn (string $str) => Misc::planAsignaturaSplit($str));
         $engine->registerFunction('planAsignaturaJoin', fn (string $plan_id, string $asig_id) => Misc::planAsignaturaJoin($plan_id, $asig_id));
 
-        $engine->registerFunction('contact', fn () => Env::app_contact());
+        $engine->registerFunction('contact', fn (bool $antiSpam = true) => Env::app_contact($antiSpam));
         // -- STYLING -- //
         $engine->registerFunction('color', function (float $note, bool $isComment = false): string {
             $type = '';

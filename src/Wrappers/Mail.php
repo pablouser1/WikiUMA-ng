@@ -9,7 +9,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 class Mail
 {
     private const string REPORT_NEW_SUBJECT = "Nuevo informe en WikiUMA";
-    private const string REPORT_STATUS_SUBJECT = "Resultado de su informe en WikiUMA";
     private PHPMailer $client;
 
     public function __construct()
@@ -42,18 +41,6 @@ class Mail
         ]);
 
         return $this->__sendEmail($user->email, sprintf(self::REPORT_NEW_SUBJECT), $body);
-    }
-
-    /**
-     * Send report status to user
-     */
-    public function reportStatus(Report $report): bool
-    {
-        $body = Render::plates('views/mails/report-status', [
-            'report' => $report,
-        ]);
-
-        return $this->__sendEmail($report->email, sprintf(self::REPORT_STATUS_SUBJECT), $body);
     }
 
     private function __sendEmail(string $to, string $subject, string $body): bool

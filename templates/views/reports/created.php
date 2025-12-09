@@ -8,14 +8,9 @@
     <div class="content">
         <p>Tu informe está siendo valorado por la administración.</p>
         <p>Tu ID de informe es: <b><?= $this->e($report->uuid) ?></b>.</p>
-        <p>
-            <?php if ($report->email !== null): ?>
-                Se te enviará un correo electrónico cuando la administración tome una decisión.
-            <?php endif ?>
-        </p>
 
         <p>
-            Puedes saber en todo momento el estado de tu informe consultando el
+            Puedes saber en todo momento el estado de tu informe usando tu ID en el
             <a href="<?= $this->url('/reports/checker') ?>">siguiente enlace</a>.
         </p>
 

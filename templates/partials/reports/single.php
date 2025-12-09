@@ -1,9 +1,6 @@
 <div class="card">
     <div class="card-content">
         <p class="title is-4">Informe <?= $this->e($report->uuid) ?></p>
-        <p class="subtitle is-6">
-           <?= $this->e($report->email === null ? 'No se ha especificado correo electrónico' : $report->email) ?>
-        </p>
 
         <?php $this->insert('partials/reviews/single', [
             'review' => $report->review,

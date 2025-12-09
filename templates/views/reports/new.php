@@ -33,20 +33,6 @@
                     </div>
                 </div>
                 <div class="field">
-                    <label class="label">
-                        <span class="icon-text">
-                            <span class="icon">
-                                <?= icon('fa7-solid:envelope') ?>
-                            </span>
-                            <span>Correo electrónico (opcional)</span>
-                        </span>
-                    </label>
-                    <div class="control">
-                        <input name="email" class="input" type="email" autocomplete="off" maxlength="<?= $this->e(\App\Models\Report::EMAIL_MAX_LENGTH) ?>" />
-                    </div>
-                    <p class="help">Lo usamos para mantenerte informad@ acerca de tu informe.</p>
-                </div>
-                <div class="field">
                     <?php $this->insert('partials/captcha') ?>
                 </div>
                 <div class="field">

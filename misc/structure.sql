@@ -22,7 +22,6 @@ CREATE TABLE `reports` (
   `review_id` int(11) NOT NULL,
   `message` text NOT NULL,
   `reason` varchar(500) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
   `status` tinyint(1) DEFAULT 0,
   PRIMARY KEY (`id`),
   KEY `reports_FK` (`review_id`),

@@ -72,17 +72,8 @@ class ReportsController extends Controller
             throw self::__tooManyChars();
         }
 
-        if (isset($body['email']) && mb_strlen($body['email'], 'UTF-8') > Report::EMAIL_MAX_LENGTH) {
-            throw self::__tooManyChars();
-        }
-
         // Check captcha first
         self::__runCaptcha($body['h-captcha-response'], $request->getServerParams());
-
-        $email = null;
-        if (isset($body['email']) && !empty($body['email']) && filter_var($body['email'], FILTER_VALIDATE_EMAIL)) {
-            $email = trim($body['email']);
-        }
 
         $msg = Render::markdown(trim($body['message']));
         $uuid = Uuid::uuid4()->toString();
@@ -91,7 +82,6 @@ class ReportsController extends Controller
             'uuid' => $uuid,
             'review_id' => $review->id,
             'message' => $msg,
-            'email' => $email,
         ]);
 
         $report->save();

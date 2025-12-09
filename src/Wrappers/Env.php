@@ -67,10 +67,10 @@ class Env
         return $_ENV['APP_KEY'] ?? '';
     }
 
-    public static function app_contact(): string
+    public static function app_contact(bool $antiSpam = true): string
     {
         $contact = htmlspecialchars($_ENV['APP_CONTACT'] ?? '');
-        return str_replace('@', ' (at) ', str_replace('.', ' (dot) ', $contact));
+        return $antiSpam ? str_replace('@', ' (at) ', str_replace('.', ' (dot) ', $contact)) : $contact;
     }
 
     public static function app_tz(): string
