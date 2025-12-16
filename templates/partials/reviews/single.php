@@ -65,7 +65,7 @@ $linkToOriginal ??= false;
         <div class="level-left">
             <p class="level-item">
                 <span class="icon" style="color: #e25555;">&#9829;</span>
-                <span><?= $this->e($review->votes) ?></span>
+                <span class="has-text-<?= $review->votes < 0 ? 'danger' : 'current' ?>"><?= $this->e($review->votes) ?></span>
             </p>
             <?php if ($review->accepted_report === null): ?>
                 <div class="level-item">
