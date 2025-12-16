@@ -31,9 +31,8 @@
                         teniendo en consideración los argumentos expuestos por el denunciante.
                     </li>
                     <li>
-                        El denunciante puede comprobar el estado de su denuncia en todo momento con el ID dado
-                        al finalizar el proceso. También, en caso de haberlo incluido,
-                        puede ser informado de forma automática a través de correo electrónico.
+                        El denunciante puede comprobar el estado de su denuncia
+                        en todo momento con el ID dado al finalizar el proceso.
                     </li>
                 </ul>
             </li>
