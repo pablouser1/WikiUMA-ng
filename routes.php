@@ -15,6 +15,7 @@ use App\Controllers\ReportsController;
 use App\Controllers\ReviewsController;
 use App\Controllers\SearchController;
 use App\Controllers\StaffController;
+use App\Controllers\TipsController;
 use App\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
 use League\Route\RouteGroup;
@@ -29,6 +30,11 @@ $router->get('/maintenance', [MiscController::class, 'maintenance']);
 $router->get('/redirect', [RedirectController::class, 'index']);
 $router->get('/search', [SearchController::class, 'index']);
 $router->get('/hall', [HallController::class, 'index']);
+
+$router->group('/tips', function (RouteGroup $route) {
+    $route->get('/', [TipsController::class, 'index']);
+    $route->get('/email', [TipsController::class, 'email']);
+});
 
 $router->group('/reports', function (RouteGroup $route) {
     $route->get('/', [ReportsController::class, 'index']);

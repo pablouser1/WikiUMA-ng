@@ -7,7 +7,7 @@ use App\Console\IBase;
 use App\Wrappers\Stats;
 
 /**
- * Migrate from old WikiUMA (rip).
+ * Generate stats.
  */
 class StatsModule extends Base implements IBase
 {

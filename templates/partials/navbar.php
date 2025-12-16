@@ -42,6 +42,14 @@
                     <span>Salón de la fama</span>
                 </span>
             </a>
+            <a class="navbar-item" href="<?= $this->url('/tips') ?>">
+                <span class="icon-text">
+                    <span class="icon">
+                        <?= icon('fa7-solid:lightbulb') ?>
+                    </span>
+                    <span>Consejos</span>
+                </span>
+            </a>
             <div class="navbar-item has-dropdown is-hoverable">
                 <div class="navbar-link">
                     <span class="icon-text">
