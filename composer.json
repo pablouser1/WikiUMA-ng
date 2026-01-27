@@ -14,24 +14,24 @@
         "ext-dom": "*",
         "ext-iconv": "*",
         "ext-mbstring": "*",
-        "illuminate/database": "^12.28",
-        "illuminate/events": "^12.30",
-        "illuminate/pagination": "^12.30",
-        "laminas/laminas-diactoros": "^3.6",
-        "laminas/laminas-httphandlerrunner": "^2.12",
+        "illuminate/database": "^12.48",
+        "illuminate/events": "^12.48",
+        "illuminate/pagination": "^12.48",
+        "laminas/laminas-diactoros": "^3.8",
+        "laminas/laminas-httphandlerrunner": "^2.13",
         "league/climate": "^3.10",
-        "league/commonmark": "^2.7",
+        "league/commonmark": "^2.8",
         "league/plates": "^3.6",
         "league/route": "^6.2",
-        "monolog/monolog": "^3.9",
+        "monolog/monolog": "^3.10",
         "npm-asset/bulma": "^1.0",
-        "phpmailer/phpmailer": "^6.10",
+        "phpmailer/phpmailer": "^7.0",
         "ramsey/uuid": "^4.9",
         "yassinedoghri/php-icons": "^1.3"
     },
     "require-dev": {
         "fakerphp/faker": "^1.24",
-        "friendsofphp/php-cs-fixer": "^3.91"
+        "friendsofphp/php-cs-fixer": "^3.93"
     },
     "suggest": {
         "ext-apcu": "APCu cache support",
