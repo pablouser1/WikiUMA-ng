@@ -52,13 +52,13 @@ class Stats
                 "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating"
             )
             ->orderBy('weighted_rating', $best ? 'DESC' : 'ASC')
-            ->limit(self::HALL_MAX_COUNT)
+            ->limit(self::HALL_MAX_COUNT * 2)
             ->get();
 
         $hallOfFame = [];
         $lastRes = new Response(200, ['ok' => true], false);
         $i = 0;
-        while ($lastRes->success && $i < $tops->count()) {
+        while (count($hallOfFame) < self::HALL_MAX_COUNT && $i < $tops->count()) {
             $top = $tops[$i];
             $lastRes = $api->profesorWeb($top->target);
             if ($lastRes->success) {
