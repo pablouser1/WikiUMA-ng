@@ -35,6 +35,10 @@ class ReportsController extends Controller
             throw new NotFoundException('Valoración no encontrada');
         }
 
+        if ($review->type->isReadOnly()) {
+            throw self::__inconsistentData();
+        }
+
         if ($review->accepted_report !== null) {
             throw new ForbiddenException('Esta valoración ya ha sido eliminada');
         }
@@ -61,6 +65,10 @@ class ReportsController extends Controller
         $review = Review::find($review_id);
         if ($review === null) {
             throw new NotFoundException('Valoración no encontrada');
+        }
+
+        if ($review->type->isReadOnly()) {
+            throw self::__inconsistentData();
         }
 
         $body = $request->getParsedBody();

@@ -1,5 +1,6 @@
 <?php
 $isAdmin ??= false;
+$isReadOnly ??= false;
 $linkToOriginal ??= false;
 ?>
 
@@ -32,7 +33,7 @@ $linkToOriginal ??= false;
         <div class="level-right">
             <div class="level-item">
                 <div class="buttons">
-                    <?php if ($review->accepted_report === null): ?>
+                    <?php if (!$isReadOnly && $review->accepted_report === null): ?>
                         <a class="button is-small is-rounded is-link" href="<?= $this->url('/reviews/' . $review->id) ?>">
                             <span class="icon">
                                 <?= icon('fa7-solid:link') ?>
@@ -67,7 +68,7 @@ $linkToOriginal ??= false;
                 <span class="icon" style="color: #e25555;">&#9829;</span>
                 <span class="has-text-<?= $review->votes < 0 ? 'danger' : 'current' ?>"><?= $this->e($review->votes) ?></span>
             </p>
-            <?php if ($review->accepted_report === null): ?>
+            <?php if (!$isReadOnly && $review->accepted_report === null): ?>
                 <div class="level-item">
                     <nav class="breadcrumb has-bullet-separator is-small" aria-label="breadcrumbs">
                         <ul>

@@ -34,6 +34,14 @@
                     <span>Informes</span>
                 </span>
             </a>
+            <a class="navbar-item" href="<?= $this->url('/legends') ?>">
+                <span class="icon-text">
+                    <span class="icon">
+                        <?= icon('fa7-solid:award') ?>
+                    </span>
+                    <span>Leyendas</span>
+                </span>
+            </a>
             <a class="navbar-item" href="<?= $this->url('/hall') ?>">
                 <span class="icon-text">
                     <span class="icon">

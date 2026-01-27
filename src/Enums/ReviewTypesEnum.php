@@ -13,11 +13,12 @@ enum ReviewTypesEnum: int
 {
     case TEACHER = 0;
     case SUBJECT = 1;
+    case LEGEND = 2;
 
     public function displayName(): string
     {
         return match ($this) {
-            self::TEACHER => 'Profesor',
+            self::TEACHER, self::LEGEND => 'Profesor',
             self::SUBJECT => 'Asignatura',
         };
     }
@@ -27,6 +28,14 @@ enum ReviewTypesEnum: int
         return match ($this) {
             self::TEACHER => Uuid::isValid($target),
             self::SUBJECT => preg_match('/^\d+;\d+$/', $target) === 1,
+            self::LEGEND => is_numeric($target),
+        };
+    }
+
+    public function isReadOnly(): bool {
+        return match ($this) {
+            self::LEGEND => true,
+            default => false,
         };
     }
 
@@ -37,6 +46,8 @@ enum ReviewTypesEnum: int
     {
         if ($this === self::TEACHER) {
             return Env::app_url('/profesores', ['idnc' => $target]);
+        } elseif ($this === Self::LEGEND) {
+            return Env::app_url('/legends/' . $target);
         } elseif ($this === self::SUBJECT) {
             $arr = Misc::planAsignaturaSplit($target);
             if ($arr === null) {

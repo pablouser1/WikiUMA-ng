@@ -39,6 +39,10 @@ class ReviewsController extends Controller
             throw self::__invalidParams();
         }
 
+        if ($type->isReadOnly()) {
+            throw self::__inconsistentData();
+        }
+
         $target = $query['target'];
 
         if (!$type->isValidTarget($target)) {
@@ -88,6 +92,10 @@ class ReviewsController extends Controller
         $type = ReviewTypesEnum::tryFrom($body['type']);
         if ($type === null) {
             throw self::__invalidBody();
+        }
+
+        if ($type->isReadOnly()) {
+            throw self::__inconsistentData();
         }
 
         $target = $body['target'];

@@ -1,5 +1,10 @@
+<?php
+$hasFrom = isset($from) && !empty($from);
+$isReadOnly = $hasFrom && $from['type']->isReadOnly();
+?>
+
 <div class="block">
-    <?php if (isset($from) && !empty($from)): ?>
+    <?php if (!$isReadOnly && $hasFrom): ?>
         <?php $this->insert('partials/reviews/new', [
             'target' => $from['target'],
             'type' => $from['type'],
@@ -17,6 +22,7 @@
                 <?php $this->insert('partials/reviews/single', [
                     'review' => $review,
                     'isAdmin' => $this->loggedin(),
+                    'isReadOnly' => $isReadOnly,
                     'uri' => $uri,
                 ]) ?>
             <?php endforeach ?>

@@ -6,6 +6,7 @@ use App\Controllers\CentrosController;
 use App\Controllers\DevController;
 use App\Controllers\HallController;
 use App\Controllers\HomeController;
+use App\Controllers\LegendsController;
 use App\Controllers\MiscController;
 use App\Controllers\PlanesController;
 use App\Controllers\ProfesoresController;
@@ -30,6 +31,11 @@ $router->get('/maintenance', [MiscController::class, 'maintenance']);
 $router->get('/redirect', [RedirectController::class, 'index']);
 $router->get('/search', [SearchController::class, 'index']);
 $router->get('/hall', [HallController::class, 'index']);
+
+$router->group('/legends', function (RouteGroup $route) {
+    $route->get('/', [LegendsController::class, 'index']);
+    $route->get('/{legend_id:number}', [LegendsController::class, 'show']);
+});
 
 $router->group('/tips', function (RouteGroup $route) {
     $route->get('/', [TipsController::class, 'index']);
