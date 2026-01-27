@@ -6,6 +6,7 @@ use App\Api;
 use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReviewTypesEnum;
+use App\Models\Legend;
 use App\Models\Review;
 use App\Wrappers\Misc;
 use App\Wrappers\Storage;
@@ -39,6 +40,10 @@ class MigrateOldModule extends Base implements IBase
         [
             'name' => 'Import reviews from JSON',
             'runner' => [self::class, 'importReviews'],
+        ],
+        [
+            'name' => 'Add teacher (and reviews) to legends',
+            'runner' => [self::class, 'importLegends'],
         ],
     ];
 
@@ -219,6 +224,60 @@ class MigrateOldModule extends Base implements IBase
         Review::insert($reviews);
     }
 
+    public function importLegends(): void {
+        $in = $this->cli->input("Write ID from old DB:");
+        $idStr = $in->prompt();
+        if (!($idStr !== '' && is_numeric($idStr))) {
+            $this->cli->backgroundRed()->error('No ID provided');
+            return;
+        }
+        $id = intval($idStr);
+
+        // -- Teacher info -- //
+        $stmt = $this->db->prepare('SELECT * FROM profesor WHERE ID=:id');
+        $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
+        $res = $stmt->execute();
+        if ($res === false) {
+            $this->cli->backgroundRed()->error('Db error');
+            return;
+        }
+
+        $row = $res->fetchArray(SQLITE3_ASSOC);
+        if ($row === false) {
+            $this->cli->backgroundRed()->error('ID Not found');
+            return;
+        }
+
+        // Copy teacher name to new db
+        $legend = new Legend();
+        $legend->full_name = $row['Nombre'];
+        $legend->save();
+
+        // -- Reviews info -- //
+        $stmt = $this->db->prepare('SELECT * FROM valoraciones WHERE ID_Profesor=:id');
+        $stmt->bindValue(':id', $id, SQLITE3_INTEGER);
+        $res = $stmt->execute();
+        if ($res === false) {
+            $this->cli->backgroundRed()->error('Db error');
+            return;
+        }
+
+        $reviews = [];
+        while ($row = $res->fetchArray(SQLITE3_ASSOC)) {
+            $reviews[] = [
+                'created_at' => $row['Fecha'],
+                'target' => $legend->id,
+                'type' => ReviewTypesEnum::LEGEND,
+                'username' => $row['Nick'] !== "" ? trim($row['Nick']) : null,
+                'note' => $row['Valoracion'],
+                'message' => trim($row['Comentario']),
+                'votes' => $row['VotosPositivos'] - $row['VotosNegativos'],
+            ];
+        }
+
+        Review::insert($reviews);
+    }
+
     /**
      * Get all teachers from all departments in ETSII and ETSIT.
      */
@@ -329,7 +388,9 @@ class MigrateOldModule extends Base implements IBase
     {
         $reviews = [];
         $idsStr = implode(',', array_keys($relationsIdnc));
-        $res = $this->db->query("SELECT * FROM valoraciones WHERE ID_Profesor IN ($idsStr)");
+        $stmt = $this->db->prepare('SELECT * FROM valoraciones WHERE ID_Profesor IN (:ids)');
+        $stmt->bindValue(':ids', $idsStr, SQLITE3_TEXT);
+        $res = $stmt->execute();
         if ($res === false) {
             return null;
         }
