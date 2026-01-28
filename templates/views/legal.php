@@ -47,10 +47,6 @@
                 <li>Fallos repetidos a la hora de resolver captchas.</li>
                 <li>Gran cantidad de solicitudes continuadas.</li>
             </ul>
-            <li>
-                Al crear un informe, el correo electrónico dado es almacenado y
-                usado exclusivamente para enviar actualizaciones de su estado.
-            </li>
         </ul>
         <h2>Uso de cookies</h2>
         <p>
