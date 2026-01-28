@@ -177,6 +177,10 @@ class ReviewsController extends Controller
             throw new NotFoundException();
         }
 
+        if ($review->type->isReadOnly()) {
+            throw self::__inconsistentData();
+        }
+
         Session::vote($id);
         $delta = $up ? $review->votes + 1 : $review->votes - 1;
         $review->votes = $delta;
