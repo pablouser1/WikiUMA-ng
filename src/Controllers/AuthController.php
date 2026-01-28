@@ -44,7 +44,6 @@ class AuthController extends Controller
         $username = trim($body['username']);
         $password = trim($body['password']);
 
-        /** @var User */
         $user = User::where('username', '=', $username)->first();
 
         if ($user === null) {

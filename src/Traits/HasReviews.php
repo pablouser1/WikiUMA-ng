@@ -25,7 +25,7 @@ trait HasReviews
                 ->where('type', '=', $type);
         }
 
-        $filter = $filter ?? ReviewFilterEnum::AVAILABLE;
+        $filter ??= ReviewFilterEnum::AVAILABLE;
         $action = $filter->action();
         if ($action !== null) {
             $action($query);
