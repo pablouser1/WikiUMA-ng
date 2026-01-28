@@ -113,7 +113,7 @@ class Api
             "Referer: https://duma.uma.es/duma/buscador/",
         ];
 
-        $cookies = "csrftoken=" . $csrf;
+        $cookies = "csrftoken=$csrf";
 
         $res = $this->__handleRequest('/buscador/persona/', '', [
             "csrfmiddlewaretoken" => $csrf,
@@ -134,20 +134,18 @@ class Api
         }
 
         $doc = Misc::parseHTML($res->data);
-        if ($doc) {
+        if ($doc !== null) {
             // Get all h4 in the doc
             $h4s = $doc->getElementsByTagName('h4');
             foreach ($h4s as $h4) {
                 // Take second child (a)
                 $a = $h4->childNodes->item(2);
-                if ($a) {
-                    $url = $a->attributes?->getNamedItem('href')?->value;
-                    if ($url) {
-                        $results[] = (object) [
-                            'name' => mb_convert_encoding($a->textContent, 'ISO-8859-1'), // Sin el mb_convert_encoding los caractéres especiales salen mal
-                            'idnc' => basename($url)
-                        ];
-                    }
+                $url = $a?->attributes?->getNamedItem('href')?->nodeValue;
+                if ($url) {
+                    $results[] = (object) [
+                        'name' => mb_convert_encoding($a->textContent, 'ISO-8859-1'), // Sin el mb_convert_encoding los caractéres especiales salen mal
+                        'idnc' => basename($url)
+                    ];
                 }
             }
         }
