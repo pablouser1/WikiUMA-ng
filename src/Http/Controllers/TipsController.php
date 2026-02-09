@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;

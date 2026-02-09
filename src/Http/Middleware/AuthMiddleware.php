@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Middleware;
+namespace App\Http\Middleware;
 
 use App\Wrappers\Env;
 use App\Wrappers\Session;
@@ -11,9 +11,9 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
 /**
- * Check if app is in maintenance mode and redirect to page
+ * Check if admin is logged in before entering restricted routes.
  */
-class MaintenanceMiddleware implements MiddlewareInterface
+class AuthMiddleware implements MiddlewareInterface
 {
     /**
      * {@inheritdoc}
@@ -22,8 +22,8 @@ class MaintenanceMiddleware implements MiddlewareInterface
     {
         $path = $request->getUri()->getPath();
 
-        if (!Session::isLoggedIn() && !str_starts_with($path, '/maintenance') && Env::app_maintenance()) {
-            return new RedirectResponse(Env::app_url('/maintenance'));
+        if (!str_starts_with($path, '/staff/login') && !Session::isLoggedIn()) {
+            return new RedirectResponse(Env::app_url('/staff/login'));
         }
 
         return $handler->handle($request);

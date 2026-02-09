@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
 use App\Enums\ReviewTypesEnum;
 use Laminas\Diactoros\Response;

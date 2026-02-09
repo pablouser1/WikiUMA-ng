@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
 use App\Wrappers\MsgHandler;
 use Laminas\Diactoros\Response;

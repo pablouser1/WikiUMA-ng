@@ -1,23 +1,23 @@
 <?php
 
-use App\Controllers\AsignaturasController;
-use App\Controllers\AuthController;
-use App\Controllers\CentrosController;
-use App\Controllers\DevController;
-use App\Controllers\HallController;
-use App\Controllers\HomeController;
-use App\Controllers\LegendsController;
-use App\Controllers\MiscController;
-use App\Controllers\PlanesController;
-use App\Controllers\ProfesoresController;
-use App\Controllers\RedirectController;
-use App\Controllers\ReportsCheckerController;
-use App\Controllers\ReportsController;
-use App\Controllers\ReviewsController;
-use App\Controllers\SearchController;
-use App\Controllers\StaffController;
-use App\Controllers\TipsController;
-use App\Middleware\AuthMiddleware;
+use App\Http\Controllers\AsignaturasController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CentrosController;
+use App\Http\Controllers\DevController;
+use App\Http\Controllers\HallController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LegendsController;
+use App\Http\Controllers\MiscController;
+use App\Http\Controllers\PlanesController;
+use App\Http\Controllers\ProfesoresController;
+use App\Http\Controllers\RedirectController;
+use App\Http\Controllers\ReportsCheckerController;
+use App\Http\Controllers\ReportsController;
+use App\Http\Controllers\ReviewsController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\StaffController;
+use App\Http\Controllers\TipsController;
+use App\Http\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
 use League\Route\RouteGroup;
 
