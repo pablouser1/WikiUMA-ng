@@ -161,7 +161,7 @@ class Env
         ];
 
         if ($password !== null) {
-            $data['auth'] = $password;
+            $data['auth'] = [$password];
         }
 
         return $data;
