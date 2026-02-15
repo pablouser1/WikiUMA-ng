@@ -158,7 +158,7 @@ class Env
         return [
             'host' => $host,
             'port' => $port,
-            'password' => $password,
+            'auth' => $password,
         ];
     }
 }
