@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Api;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Security;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
+use UMA\Api;
 
 /**
  * Teachers Controller.
@@ -29,7 +30,7 @@ class ProfesoresController extends Controller
     public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
-        $api = new Api();
+        $api = UMA::api();
 
         $response = null;
         if (isset($query['email'])) {

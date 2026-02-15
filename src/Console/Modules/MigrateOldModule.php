@@ -2,7 +2,6 @@
 
 namespace App\Console\Modules;
 
-use App\Api;
 use App\Console\Base;
 use App\Console\IBase;
 use App\Enums\ReviewTypesEnum;
@@ -10,7 +9,9 @@ use App\Models\Legend;
 use App\Models\Review;
 use App\Wrappers\Misc;
 use App\Wrappers\Storage;
+use App\Wrappers\UMA;
 use League\CLImate\CLImate;
+use UMA\Api;
 
 /**
  * Migrate from old WikiUMA (rip).
@@ -54,7 +55,7 @@ class MigrateOldModule extends Base implements IBase
     {
         parent::__construct($cli);
         $this->db = new \Sqlite3(Storage::path(self::DB_FILENAME), SQLITE3_OPEN_READONLY);
-        $this->api = new Api();
+        $this->api = UMA::api();
     }
 
     public function __destruct()
@@ -224,7 +225,8 @@ class MigrateOldModule extends Base implements IBase
         Review::insert($reviews);
     }
 
-    public function importLegends(): void {
+    public function importLegends(): void
+    {
         $in = $this->cli->input("Write ID from old DB:");
         $idStr = $in->prompt();
         if (!($idStr !== '' && is_numeric($idStr))) {

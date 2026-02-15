@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Api;
 use App\Constants\Extras;
 use App\Wrappers\MsgHandler;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,7 +27,7 @@ class SearchController extends Controller
             return new RedirectResponse($url);
         }
 
-        $api = new Api();
+        $api = UMA::api();
 
         $search = $api->buscar($nombre, $apellido_1, $apellido_2);
 

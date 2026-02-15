@@ -2,28 +2,29 @@
 
 namespace App\Enums;
 
-use App\Cache\ApcuCache;
-use App\Cache\ICache;
-use App\Cache\JSONCache;
-use App\Cache\RedisCache;
 use App\Wrappers\Env;
+use chillerlan\SimpleCache\APCUCache;
+use chillerlan\SimpleCache\CacheOptions;
+use chillerlan\SimpleCache\FileCache;
+use chillerlan\SimpleCache\RedisCache;
+use Psr\SimpleCache\CacheInterface;
 
 /**
  * Enumerate all avilable cache engines.
  */
 enum CacheEnum: string
 {
-    case JSON = "json";
+    case FILE = "file";
     case APCU = "apcu";
     case REDIS = "redis";
 
-    public function engine(): ?ICache
+    public function engine(): ?CacheInterface
     {
         $redis = Env::redis();
         return match ($this) {
-            CacheEnum::JSON => new JSONCache(),
-            CacheEnum::APCU => new ApcuCache(),
-            CacheEnum::REDIS => new RedisCache($redis['host'], $redis['port'], $redis['password']),
+            CacheEnum::FILE => new FileCache(new CacheOptions(['cacheFilestorage' => __DIR__.'/../../storage/data'])),
+            CacheEnum::APCU => new APCUCache(),
+            CacheEnum::REDIS => new RedisCache(new \Redis($redis)),
             default => null,
         };
     }

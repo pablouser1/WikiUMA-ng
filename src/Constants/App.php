@@ -7,7 +7,6 @@ namespace App\Constants;
  */
 abstract class App
 {
-    public const string VERSION = "v1.2.0";
-    public const string PACKAGE_NAME = "pablouser1/wikiuma-ng";
+    public const string VERSION = "v1.2.1";
     public const int PAGINATION_MAX_ITEMS = 15;
 }

@@ -4,7 +4,7 @@ namespace App\Wrappers;
 
 use App\Constants\Messages;
 use App\Constants\Reactions;
-use App\Models\Api\Response as ApiResponse;
+use UMA\Models\Response as ApiResponse;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\HtmlResponse;
 use Psr\Http\Message\ServerRequestInterface;

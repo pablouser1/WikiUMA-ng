@@ -28,6 +28,9 @@
         <p>Este proyecto no sería posible sin la ayuda de:</p>
         <ul>
             <li>
+                <a rel="nofollow" href="https://github.com/chillerlan/php-cache">chillerlan/php-cache</a>
+            </li>
+            <li>
                 <a rel="nofollow" href="https://github.com/thephpleague/plates">Plates</a>
             </li>
             <li>

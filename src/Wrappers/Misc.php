@@ -43,18 +43,6 @@ class Misc
         return $success ? $doc : null;
     }
 
-    public static function DOMInnerHTML(\DOMNode $element): string
-    {
-        $innerHTML = '';
-        $children = $element->childNodes;
-
-        foreach ($children as $child) {
-            $innerHTML .= $element->ownerDocument->saveHTML($child);
-        }
-
-        return $innerHTML;
-    }
-
     public static function isXss(string $input): bool
     {
         $pattern = '/<\s*script[^>]*>|javascript\s*:|on\w+\s*=/i';

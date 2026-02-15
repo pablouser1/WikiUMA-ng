@@ -10,10 +10,8 @@
         }
     ],
     "require": {
-        "ext-curl": "*",
-        "ext-dom": "*",
         "ext-iconv": "*",
-        "ext-mbstring": "*",
+        "chillerlan/php-cache": "^5.1",
         "illuminate/database": "^12.48",
         "illuminate/events": "^12.48",
         "illuminate/pagination": "^12.48",
@@ -25,6 +23,7 @@
         "league/route": "^6.2",
         "monolog/monolog": "^3.10",
         "npm-asset/bulma": "^1.0",
+        "pablouser1/umawrapper": "^1.0",
         "phpmailer/phpmailer": "^7.0",
         "ramsey/uuid": "^4.9",
         "yassinedoghri/php-icons": "^1.3"

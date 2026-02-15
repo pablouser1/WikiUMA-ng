@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Api;
 use App\Wrappers\MsgHandler;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -20,7 +20,7 @@ class CentrosController extends Controller
      */
     public static function index(ServerRequestInterface $request): Response
     {
-        $api = new Api();
+        $api = UMA::api();
         $centros = $api->centros();
         if (!$centros->success) {
             return MsgHandler::errorFromApi($centros, $request);
@@ -33,7 +33,7 @@ class CentrosController extends Controller
 
     public static function titulaciones(ServerRequestInterface $request, array $args): Response
     {
-        $api = new Api();
+        $api = UMA::api();
         $titulaciones = $api->titulaciones($args['centro_id']);
         if (!$titulaciones->success) {
             return MsgHandler::errorFromApi($titulaciones, $request);

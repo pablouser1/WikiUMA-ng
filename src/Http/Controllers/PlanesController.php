@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Api;
 use App\Wrappers\MsgHandler;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -20,7 +20,7 @@ class PlanesController extends Controller
      */
     public static function index(ServerRequestInterface $request, array $args): Response
     {
-        $api = new Api();
+        $api = UMA::api();
         $plan_id = $args['plan_id'];
         $plan = $api->plan($plan_id);
         if (!$plan->success) {

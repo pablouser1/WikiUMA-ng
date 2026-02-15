@@ -32,7 +32,8 @@ enum ReviewTypesEnum: int
         };
     }
 
-    public function isReadOnly(): bool {
+    public function isReadOnly(): bool
+    {
         return match ($this) {
             self::LEGEND => true,
             default => false,
@@ -46,7 +47,7 @@ enum ReviewTypesEnum: int
     {
         if ($this === self::TEACHER) {
             return Env::app_url('/profesores', ['idnc' => $target]);
-        } elseif ($this === Self::LEGEND) {
+        } elseif ($this === self::LEGEND) {
             return Env::app_url('/legends/' . $target);
         } elseif ($this === self::SUBJECT) {
             $arr = Misc::planAsignaturaSplit($target);

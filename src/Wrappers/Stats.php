@@ -2,11 +2,10 @@
 
 namespace App\Wrappers;
 
-use App\Api;
 use App\Enums\ReportStatusEnum;
 use App\Enums\ReviewTypesEnum;
-use App\Models\Api\Response;
 use App\Models\Review;
+use UMA\Models\Response;
 
 class Stats
 {
@@ -38,7 +37,7 @@ class Stats
     public static function weighted(bool $best = true): object
     {
         $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
-        $api = new Api();
+        $api = UMA::api();
 
         $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)->avg('note'); // C
         $tops = Review::query()
@@ -56,7 +55,7 @@ class Stats
             ->get();
 
         $hallOfFame = [];
-        $lastRes = new Response(200, ['ok' => true], false);
+        $lastRes = new Response(200, ['ok' => true]);
         $i = 0;
         while (count($hallOfFame) < self::HALL_MAX_COUNT && $i < $tops->count()) {
             $top = $tops[$i];

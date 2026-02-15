@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Api;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Misc;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -27,7 +27,7 @@ class AsignaturasController extends Controller
      */
     public static function index(ServerRequestInterface $request, array $args): Response
     {
-        $api = new Api();
+        $api = UMA::api();
         $query = $request->getQueryParams();
 
         $page = self::__parseIntFromQuery('page', $query);

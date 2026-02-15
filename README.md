@@ -9,10 +9,8 @@ Valora a los profesores de la Universidad de Málaga.
 
 ## Instalación
 Para poder usar WikiUMA-ng necesitas como mínimo:
-* PHP >= 8.0
-* ext-curl
+* Cumplir los requisitos mínimos de [UMAWrapper](https://github.com/pablouser1/UMAWrapper?tab=readme-ov-file#requisitos)
 * ext-iconv
-* ext-mbstring
 * Dart-Sass
 * Base de datos MySQL/MariaDB/PostgreSQL
 * Token de [hCaptcha](https://www.hcaptcha.com)
