@@ -155,10 +155,15 @@ class Env
         $port = $_ENV['REDIS_PORT'] ?? null;
         $password = $_ENV['REDIS_PASSWORD'] ?? null;
 
-        return [
+        $data = [
             'host' => $host,
             'port' => $port,
-            'auth' => $password,
         ];
+
+        if ($password !== null) {
+            $data['auth'] = $password;
+        }
+
+        return $data;
     }
 }
