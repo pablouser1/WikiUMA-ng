@@ -147,9 +147,9 @@ class Env
     }
 
     /**
-     * Get Redis credentials.
+     * Get Redis client.
      */
-    public static function redis(): array
+    public static function redis(): \Redis
     {
         $host = $_ENV['REDIS_HOST'] ?? null;
         $port = $_ENV['REDIS_PORT'] ?? null;
@@ -164,6 +164,9 @@ class Env
             $data['auth'] = [$password];
         }
 
-        return $data;
+        $redis = new \Redis($data);
+        $redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
+
+        return $redis;
     }
 }

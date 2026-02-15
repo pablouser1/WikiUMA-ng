@@ -20,11 +20,10 @@ enum CacheEnum: string
 
     public function engine(): ?CacheInterface
     {
-        $redis = Env::redis();
         return match ($this) {
             CacheEnum::FILE => new FileCache(new CacheOptions(['cacheFilestorage' => __DIR__.'/../../storage/data'])),
             CacheEnum::APCU => new APCUCache(),
-            CacheEnum::REDIS => new RedisCache(new \Redis($redis)),
+            CacheEnum::REDIS => new RedisCache(Env::redis()),
             default => null,
         };
     }
