@@ -38,7 +38,7 @@ class Render
             if ($isComment) {
                 if ($note < 0) {
                     $type = 'danger';
-                } elseif ($note === 0) {
+                } elseif ($note === 0.0) {
                     $type = 'primary';
                 } elseif ($note > 0) {
                     $type = 'success';
