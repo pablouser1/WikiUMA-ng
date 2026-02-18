@@ -145,10 +145,15 @@ class ReviewsController extends Controller
         ]);
         $review->save();
 
-        return new RedirectResponse(Env::app_url('/redirect', [
+        $back = Env::app_url('/redirect', [
             'target' => $target,
             'type' => $type,
-        ]));
+        ]);
+
+        return self::__render('views/reviews/created', $request, [
+            'review' => $review,
+            'back' => $back,
+        ]);
     }
 
     public static function like(ServerRequestInterface $request, array $args): Response
