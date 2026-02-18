@@ -24,7 +24,8 @@ class Security
             return null;
         }
 
-        return openssl_decrypt($tuple[0], self::ALGO, Env::app_key(), 0, $tuple[1]);
+        $out = openssl_decrypt($tuple[0], self::ALGO, Env::app_key(), 0, $tuple[1]);
+        return $out ?: null;
     }
 
     public static function captcha(string $response): object
