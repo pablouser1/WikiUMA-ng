@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var string $target
+ * @var \App\Enums\ReviewTypesEnum $type
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Nueva valoración',
     'withForm' => true,

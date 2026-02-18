@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \UMA\Models\SearchResult[] $results
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Resultados',
     'uri' => $uri,
@@ -11,7 +19,7 @@
     <?php foreach ($results as $result): ?>
         <div class="column is-narrow">
             <?php $this->insert('partials/card', [
-                'name' => $result->name,
+                'name' => $result->nombre,
                 'url' => $this->url('/profesores', ['idnc' => $result->idnc])
             ]) ?>
         </div>

@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var array $query
+ * @var \Illuminate\Support\Collection<\App\Models\Report> $reports
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Informes',
     'uri' => $uri,

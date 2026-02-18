@@ -2,9 +2,11 @@
 
 namespace App\Wrappers;
 
+use App\Dto\StatsData;
 use App\Enums\ReportStatusEnum;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use UMA\Models\Profesor;
 use UMA\Models\Response;
 
 class Stats
@@ -12,7 +14,7 @@ class Stats
     private const int HALL_MIN_REVIEWS_NEEDED = 10;
     private const int HALL_MAX_COUNT = 5;
 
-    public static function all(): object
+    public static function all(): StatsData
     {
         $query = Review::whereDoesntHave('reports', function ($query) {
             $query->where('status', ReportStatusEnum::ACCEPTED);
@@ -28,12 +30,12 @@ class Stats
 
         $avg = $total > 0 && $targetAverages->isNotEmpty() ? round($targetAverages->avg('avg_note'), 2) : -1;
 
-        return (object) [
-            'total' => $total,
-            'avg' => $avg,
-        ];
+        return new StatsData($total, $avg);
     }
 
+    /**
+     * @return object{lastRes: Response<Profesor>|Response<string>, data: StatsData<Profesor>}
+     */
     public static function weighted(bool $best = true): object
     {
         $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
@@ -55,20 +57,22 @@ class Stats
             ->get();
 
         $hallOfFame = [];
-        $lastRes = new Response(200, ['ok' => true]);
+
+        /** @var Response<Profesor>|Response<string> */
+        $lastRes = null;
         $i = 0;
         while (count($hallOfFame) < self::HALL_MAX_COUNT && $i < $tops->count()) {
             $top = $tops[$i];
             $lastRes = $api->profesorWeb($top->target);
             if ($lastRes->success) {
-                $email = $lastRes->data->email;
+                $email = $lastRes->data;
                 $lastRes = $api->profesor($email);
                 if ($lastRes->success) {
-                    $hallOfFame[] = (object) [
-                        'teacher' => $lastRes->data,
-                        'avg' => round($top->average_note, 2),
-                        'total' => $top->review_count,
-                    ];
+                    $hallOfFame[] = new StatsData(
+                        total: $top->review_count,
+                        avg: round($top->average_note, 2),
+                        for: $lastRes->data,
+                    );
                 }
             }
             $i++;
@@ -80,7 +84,7 @@ class Stats
         ];
     }
 
-    public static function fromTarget(string $target, ReviewTypesEnum $type): object
+    public static function fromTarget(string $target, ReviewTypesEnum $type): StatsData
     {
         $reviews = Review::where('target', '=', $target)
             ->where('type', '=', $type)
@@ -93,11 +97,6 @@ class Stats
         $min = $reviews->min('note');
         $max = $reviews->max('note');
 
-        return (object) [
-            'total' => $total,
-            'avg' => $avg,
-            'min' => $min,
-            'max' => $max,
-        ];
+        return new StatsData($total, $avg, $min, $max);
     }
 }

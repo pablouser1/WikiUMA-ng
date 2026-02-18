@@ -1,3 +1,14 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var array $query
+ * @var \UMA\Models\Profesor $profesor
+ * @var \Illuminate\Support\Collection<\App\Models\Review> $reviews
+ * @var \App\Dto\StatsData $stats
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => $profesor->nombre,
     'uri' => $uri,

@@ -1,3 +1,12 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \App\Models\Legend $legend
+ * @var \App\Dto\StatsData $stats
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => $legend->full_name,
     'uri' => $uri,

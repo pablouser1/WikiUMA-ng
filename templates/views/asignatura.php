@@ -1,3 +1,14 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var array $query
+ * @var \UMA\Models\Asignatura $asignatura
+ * @var \App\Models\Review[] $reviews
+ * @var \App\Dto\StatsData $stats
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => $asignatura->nombre,
     'uri' => $uri,
@@ -26,7 +37,7 @@
                         <div class="column is-narrow">
                             <?php $this->insert('partials/panel', [
                                 'title' => "Grupo {$grupo->nombre}",
-                                'items' => array_map(fn (object $profesor) => (object) [
+                                'items' => array_map(fn ($profesor) => (object) [
                                     'name' => $profesor->nombre,
                                     'url' => $this->url('/profesores', ['email' => $this->encrypt($profesor->email)]),
                                 ], $grupo->profesores)
@@ -43,7 +54,7 @@
                 'uri' => $uri,
                 'query' => $query,
                 'from' => [
-                    'target' => $this->planAsignaturaJoin($plan_id, $asignatura->cod_asig),
+                    'target' => $this->planAsignaturaJoin($plan_id, $asignatura->codAsig),
                     'type' => \App\Enums\ReviewTypesEnum::SUBJECT,
                 ],
             ]) ?>

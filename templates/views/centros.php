@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \UMA\Models\Centro[] $centros
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Centros',
     'uri' => $uri,
@@ -16,7 +24,7 @@
                 <div class="column item is-narrow" data-name="<?= $this->e($centro->nombre) ?>">
                     <?php $this->insert('partials/card', [
                         'name' => $centro->nombre,
-                        'url' => $this->url('/centros/' . $centro->alfilws . '/titulaciones'),
+                        'url' => $this->url("/centros/{$centro->alfilws}/titulaciones"),
                     ]) ?>
                 </div>
             <?php endif ?>

@@ -1,3 +1,13 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var int $plan_id
+ * @var array $cursos
+ * @todo Consider adding better title
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Plan',
     'uri' => $uri,

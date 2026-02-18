@@ -23,7 +23,7 @@
         "league/route": "^6.2",
         "monolog/monolog": "^3.10",
         "npm-asset/bulma": "^1.0",
-        "pablouser1/umawrapper": "^1.0",
+        "pablouser1/umawrapper": "^1.1",
         "phpmailer/phpmailer": "^7.0",
         "ramsey/uuid": "^4.9",
         "yassinedoghri/php-icons": "^1.3"

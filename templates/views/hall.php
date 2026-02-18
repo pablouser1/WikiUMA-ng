@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \App\Dto\StatsData<\UMA\Models\Profesor>[] $hall
+ */
+?>
+
 <?php $this->layout('layouts/hero', [
     'title' => 'Salón de la fama',
     'uri' => $uri,
@@ -10,9 +18,9 @@
             <div class="card-content">
                 <div class="media">
                     <div class="media-content">
-                        <p class="title is-4"><?= $this->e($item->teacher->nombre) ?></p>
-                        <?php if (isset($item->teacher->departamentos[0])): ?>
-                            <p class="subtitle is-6"><?= $this->e($item->teacher->departamentos[0][0]->nombre) ?></p>
+                        <p class="title is-4"><?= $this->e($item->for->nombre) ?></p>
+                        <?php if (isset($item->for->departamentos[0])): ?>
+                            <p class="subtitle is-6"><?= $this->e($item->for->departamentos[0][0]->nombre) ?></p>
                         <?php endif ?>
                     </div>
                 </div>
@@ -23,7 +31,7 @@
                 </div>
             </div>
             <footer class="card-footer">
-              <a href="<?= $this->url('/profesores', ['email' => $this->encrypt($item->teacher->email)]) ?>" class="card-footer-item">Ver perfil</a>
+              <a href="<?= $this->url('/profesores', ['email' => $this->encrypt($item->for->email)]) ?>" class="card-footer-item">Ver perfil</a>
             </footer>
         </div>
     <?php endforeach ?>

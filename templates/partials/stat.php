@@ -1,5 +1,5 @@
 <?php
-$size = $size ?? 'small';
+$size ??= 'small';
 $color = isset($withColor) && $withColor ? $this->color($value) : 'primary'
 ?>
 

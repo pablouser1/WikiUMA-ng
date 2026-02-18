@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \Illuminate\Support\Collection<\App\Models\Legend> $legends
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Leyendas',
     'uri' => $uri,
@@ -15,7 +23,7 @@
             <div class="column item is-narrow" data-name="<?= $this->e($legend->full_name) ?>">
                 <?php $this->insert('partials/card', [
                     'name' => $legend->full_name,
-                    'url' => $this->url('/legends/' . $legend->id),
+                    'url' => $this->url("/legends/{$legend->id}"),
                 ]) ?>
             </div>
         <?php endforeach ?>

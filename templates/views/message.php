@@ -1,3 +1,15 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var string $title
+ * @var string $body
+ * @var ?string $back
+ * @todo Add reaction typing
+ * @todo Consider refactoring to avoid JS
+ */
+?>
+
 <?php $this->layout('layouts/hero', [
     'title' => $title,
     'uri' => $uri,
@@ -6,7 +18,7 @@
 <div class="box has-text-centered">
     <?php if (isset($reaction) && !empty($reaction)): ?>
         <figure class="image is-inline-block is-1by1 mb-2" style="width: 216px; height: 216px;">
-            <img src="<?= $this->url('/img/' . $reaction->name) ?>" />
+            <img src="<?= $this->url("/img/{$reaction->name}") ?>" />
         </figure>
     <?php endif ?>
 

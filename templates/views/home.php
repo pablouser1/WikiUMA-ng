@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \App\Dto\StatsData $stats
+ */
+?>
+
 <?php $this->layout('layouts/hero', [
     'title' => 'Inicio',
     'uri' => $uri,
@@ -20,8 +28,17 @@
     <?php if ($stats->total > 0): ?>
         <hr />
         <div class="field is-grouped is-grouped-multiline is-grouped-centered">
-            <?php $this->insert('partials/stat', ['title' => 'Valoraciones totales', 'value' => $stats->total, 'size' => 'medium']) ?>
-            <?php $this->insert('partials/stat', ['title' => 'Nota media', 'value' => $stats->avg, 'size' => 'medium', 'withColor' => true]) ?>
+            <?php $this->insert('partials/stat', [
+                'title' => 'Valoraciones totales',
+                'value' => $stats->total,
+                'size' => 'medium',
+            ]) ?>
+            <?php $this->insert('partials/stat', [
+                'title' => 'Nota media',
+                'value' => $stats->avg,
+                'size' => 'medium',
+                'withColor' => true,
+            ]) ?>
         </div>
     <?php endif ?>
 </div>

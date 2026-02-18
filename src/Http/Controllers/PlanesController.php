@@ -29,7 +29,7 @@ class PlanesController extends Controller
 
         $cursos = [];
         foreach ($plan->data->asignaturas as $asignatura) {
-            $cursos[intval($asignatura->curso)][] = $asignatura;
+            $cursos[$asignatura->curso][] = $asignatura;
         }
 
         return self::__render('views/plan', $request, [

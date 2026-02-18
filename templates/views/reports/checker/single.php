@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \App\Models\Report $report
+ */
+?>
+
 <?php $this->layout('layouts/hero', [
     'title' => 'Informe',
     'uri' => $uri,

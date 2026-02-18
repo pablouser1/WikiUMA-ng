@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \App\Models\Review $review
+ */
+?>
+
 <?php $this->layout('layouts/default', [
     'title' => 'Nuevo informe a opinión de ' . $this->e($review->username),
     'uri' => $uri,

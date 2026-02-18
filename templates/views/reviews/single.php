@@ -1,3 +1,11 @@
+<?php
+/**
+ * @var \League\Plates\Template\Template $this
+ * @var \Psr\Http\Message\UriInterface $uri
+ * @var \App\Models\Review $review
+ */
+?>
+
 <?php $this->layout('layouts/hero', [
     'title' => "Valoración de {$review->username}",
     'uri' => $uri,
