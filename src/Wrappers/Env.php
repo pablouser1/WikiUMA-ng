@@ -170,7 +170,7 @@ class Env
         }
 
         $redis = new \Redis($data);
-        $redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_PHP);
+        $redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_IGBINARY);
 
         return $redis;
     }
