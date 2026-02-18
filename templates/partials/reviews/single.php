@@ -25,7 +25,9 @@ $linkToOriginal ??= false;
                         </strong>
                     </p>
                     <p class="heading">
-                        <small><?= $this->e($review->created_at) ?></small>
+                        <small title="<?= $this->e($review->created_at) ?>">
+                            <?= $this->e($review->created_at->diffForHumans()) ?>
+                        </small>
                     </p>
                 </div>
             </div>

@@ -73,6 +73,11 @@ class Env
         return $antiSpam ? str_replace('@', ' (at) ', str_replace('.', ' (dot) ', $contact)) : $contact;
     }
 
+    public static function app_lang(): string
+    {
+        return $_ENV['APP_LANG'] ?? 'en';
+    }
+
     public static function app_tz(): string
     {
         return $_ENV['APP_TZ'] ?? 'UTC';

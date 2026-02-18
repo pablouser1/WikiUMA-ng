@@ -3,11 +3,13 @@
 use App\Wrappers\Env;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Events\Dispatcher;
+use Illuminate\Support\Carbon;
 
 // -- ENV -- //
 Env::parse(__DIR__ . '/.env');
 
-// -- TIMEZONE -- //
+// -- LANGUAGE & TIMEZONE -- //
+Carbon::setLocale(Env::app_lang());
 date_default_timezone_set(Env::app_tz());
 
 // -- DATABASE -- //
