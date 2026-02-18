@@ -42,10 +42,11 @@ abstract class Controller
 
     protected static function __runCaptcha(string $token, array $serverParams): void
     {
-        $captcha = Security::captcha($token);
+        $client_ip = $serverParams['REMOTE_ADDR'];
+        $captcha = Security::captcha($token, $client_ip);
         if (!$captcha->success) {
             logger()->error('Captcha failed', [
-                'client_ip' => $serverParams['REMOTE_ADDR'],
+                'client_ip' => $client_ip,
                 'errors' => $captcha->{'error-codes'},
             ]);
 

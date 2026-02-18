@@ -28,11 +28,12 @@ class Security
         return $out ?: null;
     }
 
-    public static function captcha(string $response): object
+    public static function captcha(string $response, string $client_ip): object
     {
         $data = [
             'secret' => Env::hcaptcha_secret(),
             'response' => $response,
+            'remoteip' => $client_ip,
         ];
 
         $verify = curl_init();
