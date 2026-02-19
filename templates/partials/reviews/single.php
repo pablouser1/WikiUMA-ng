@@ -53,14 +53,13 @@ $linkToOriginal ??= false;
         </div>
     </nav>
     <div class="content pl-2 mb-0">
-        <?php if ($review->accepted_report !== null && !$isAdmin): ?>
+        <?php if ($review->accepted_report !== null): ?>
             <p>
                 <i>Este comentario ha sido eliminado por la administración.</i>
             </p>
-            <?php if ($review->accepted_report->reason !== null): ?>
-                <p><b>Motivo</b>: <?= $this->e($review->accepted_report->reason) ?></p>
-            <?php endif ?>
-        <?php else: ?>
+            <p><b>Motivo</b>: <?= $this->e($review->accepted_report->reason) ?></p>
+        <?php endif ?>
+        <?php if ($review->accepted_report === null || $isAdmin): ?>
             <div style="white-space: pre-wrap;"><?= $review->message ?></div>
         <?php endif ?>
     </div>
