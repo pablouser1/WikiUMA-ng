@@ -8,7 +8,7 @@ use App\Wrappers\Env;
 use App\Wrappers\Session;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
-use League\Route\Http\Exception\BadRequestException;
+use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
@@ -47,11 +47,11 @@ class AuthController extends Controller
         $user = User::where('username', '=', $username)->first();
 
         if ($user === null) {
-            throw new BadRequestException(Messages::LOGIN_FAILED);
+            throw new UnauthorizedException(Messages::LOGIN_FAILED);
         }
 
         if (!$user->checkPassword($password)) {
-            throw new BadRequestException(Messages::LOGIN_FAILED);
+            throw new UnauthorizedException(Messages::LOGIN_FAILED);
         }
 
         Session::login($user->username);
