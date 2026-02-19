@@ -48,11 +48,11 @@ class ProfesoresController extends Controller
     {
         $email = Security::decrypt($emailEncrypted);
         if ($email === null) {
-            throw self::__invalidParams();
+            throw self::__invalidEmail();
         }
 
         if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw self::__invalidParams();
+            throw self::__invalidEmail();
         }
 
         $page = self::__parseIntFromQuery('page', $query);

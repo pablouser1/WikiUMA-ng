@@ -20,6 +20,11 @@ abstract class Controller
         return new BadRequestException(Messages::MUST_SEND_PARAMS);
     }
 
+    protected static function __invalidEmail(): BadRequestException
+    {
+        return new BadRequestException(Messages::INVALID_EMAIL);
+    }
+
     protected static function __invalidBody(): BadRequestException
     {
         return new BadRequestException(Messages::MUST_SEND_BODY);
