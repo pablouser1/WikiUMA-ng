@@ -3,6 +3,7 @@
     "description": "Valoraciones a profesores de la UMA",
     "license": "AGPL-3.0-or-later",
     "type": "project",
+    "version": "1.2.2",
     "authors": [
         {
             "name": "Pablo Ferreiro",

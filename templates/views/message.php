@@ -5,7 +5,7 @@
  * @var string $title
  * @var string $body
  * @var ?string $back
- * @todo Add reaction typing
+ * @var ?object{"name": string, "alt": string} $reaction
  * @todo Consider refactoring to avoid JS
  */
 ?>

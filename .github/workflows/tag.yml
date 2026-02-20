@@ -1,0 +1,45 @@
+name: Auto Tag Composer Version
+
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'composer.json'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # Required to push tags back to the repo
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches all tags and history
+
+      - name: Get version from composer.json
+        id: composer_version
+        run: |
+          # Uses 'jq' to extract the version field
+          VERSION=$(jq -r '.version' composer.json)
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Check if tag exists
+        id: tag_check
+        run: |
+          if git rev-parse "v${{ steps.composer_version.outputs.VERSION }}" >/dev/null 2>&1; then
+            echo "exists=true" >> $GITHUB_OUTPUT
+          else
+            echo "exists=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create and push tag
+        if: steps.tag_check.outputs.exists == 'false'
+        run: |
+          VERSION="v${{ steps.composer_version.outputs.VERSION }}"
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag $VERSION
+          git push origin $VERSION

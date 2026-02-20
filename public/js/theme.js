@@ -6,7 +6,7 @@
 const COOKIE_THEME_NAME = 'theme';
 const THEME_SWITCHER_ID = 'theme-switcher';
 
-function cookieExists(name) {
+const cookieExists = (name) => {
     const searchString = name + "=";
 
     return document.cookie.split(';').some(cookie => {
