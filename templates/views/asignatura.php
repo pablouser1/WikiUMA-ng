@@ -31,7 +31,7 @@
         <?php if (is_array($asignatura->grupos) && count($asignatura->grupos) > 0): ?>
             <div class="block">
                 <p class="title has-text-centered">Profesores</p>
-                <?php $this->insert('partials/search-client') ?>
+                <?php $this->insert('partials/search/client') ?>
                 <div class="columns is-centered is-vcentered is-multiline">
                     <?php foreach ($asignatura->grupos as $grupo): ?>
                         <div class="column is-narrow">

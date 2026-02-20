@@ -17,7 +17,7 @@
 ]) ?>
 
 <section class="section">
-    <?php $this->insert('partials/search-client') ?>
+    <?php $this->insert('partials/search/client') ?>
     <div class="columns is-centered is-vcentered is-multiline">
         <?php foreach ($centros as $centro): ?>
             <?php if ($centro->alfilws !== ""): ?>

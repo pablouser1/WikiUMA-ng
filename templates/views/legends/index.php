@@ -17,7 +17,7 @@
 ]) ?>
 
 <section class="section">
-    <?php $this->insert('partials/search-client') ?>
+    <?php $this->insert('partials/search/client') ?>
     <div class="columns is-centered is-vcentered is-multiline">
         <?php foreach ($legends as $legend): ?>
             <div class="column item is-narrow" data-name="<?= $this->e($legend->full_name) ?>">

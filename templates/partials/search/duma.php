@@ -1,5 +1,5 @@
 <form method="GET" action="<?= $this->url('/search') ?>">
-    <label class="label">Buscar profesor</label>
+    <label class="label">Buscar profesor por nombre</label>
     <div class="field has-addons has-addons-centered">
         <div class="control">
             <input name="nombre" type="text" class="input is-rounded" placeholder="Nombre" />

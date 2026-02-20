@@ -20,7 +20,7 @@
 ]) ?>
 
 <section class="section">
-    <?php $this->insert('partials/search-client') ?>
+    <?php $this->insert('partials/search/client') ?>
     <div class="columns is-centered is-vcentered is-multiline">
         <?php foreach ($cursos as $i => $curso): ?>
             <div class="column is-narrow">
