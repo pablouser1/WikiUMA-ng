@@ -21,7 +21,7 @@ enum CacheEnum: string
     public function engine(): ?CacheInterface
     {
         return match ($this) {
-            CacheEnum::FILE => new FileCache(new CacheOptions(['cacheFilestorage' => __DIR__.'/../../storage/data'])),
+            CacheEnum::FILE => new FileCache(new CacheOptions(['cacheFilestorage' => Env::api_cache_file_path()])),
             CacheEnum::APCU => new APCUCache(),
             CacheEnum::REDIS => new RedisCache(Env::redis()),
             default => null,

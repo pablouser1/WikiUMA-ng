@@ -102,9 +102,9 @@ class Env
         return $value !== null ? CacheEnum::tryFrom($value) : null;
     }
 
-    public static function api_cache_json(): string
+    public static function api_cache_file_path(): string
     {
-        return $_ENV['API_CACHE_JSON'] ?? Storage::path('data');
+        return $_ENV['API_CACHE_FILE_PATH'] ?? Storage::path('data');
     }
 
     /**
