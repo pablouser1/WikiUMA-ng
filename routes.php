@@ -53,11 +53,12 @@ $router->group('/reports/checker', function (RouteGroup $route) {
 });
 
 $router->get('/centros', [CentrosController::class, 'index']);
-$router->get('/centros/{centro_id:number}/titulaciones', [CentrosController::class, 'titulaciones']);
-$router->group('/planes/{plan_id:number}', function (RouteGroup $route) {
-    $route->get('/', [PlanesController::class, 'index']);
-    $route->get('/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
+$router->group('/centros/{centro_id:number}/titulaciones', function (RouteGroup $route) {
+    $route->get('/', [CentrosController::class, 'titulaciones']);
+    $route->get('/{titulacion_id:number}/plan', [PlanesController::class, 'index']);
 });
+
+$router->get('/planes/{plan_id:number}/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
 
 $router->get('/profesores', [ProfesoresController::class, 'index']);
 

@@ -2,7 +2,8 @@
 /**
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
- * @var int $plan_id
+ * @var int $titulacion_id
+ * @var \UMA\Models\Titulacion $titulacion
  * @var array $cursos
  * @todo Consider adding better title
  */
@@ -14,7 +15,10 @@
     'withSearch' => true,
 ]) ?>
 
-<?php $this->insert('partials/hero', ['title' => 'Plan']) ?>
+<?php $this->insert('partials/hero', [
+    'title' => 'Plan',
+    'subtitle' => $titulacion?->plan,
+]) ?>
 
 <section class="section">
     <?php $this->insert('partials/search-client') ?>
@@ -25,7 +29,7 @@
                     'title' => "{$i}º año",
                     'items' => array_map(fn (object $asignatura) => (object) [
                         'name' => $asignatura->nombre,
-                        'url' =>  $this->url('/planes/' . $plan_id . '/asignaturas/' . $asignatura->codigo),
+                        'url' =>  $this->url('/planes/' . $titulacion_id . '/asignaturas/' . $asignatura->codigo),
                     ], $curso)
                 ]) ?>
             </div>

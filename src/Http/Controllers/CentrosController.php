@@ -31,6 +31,12 @@ class CentrosController extends Controller
         ]);
     }
 
+    /**
+     * Get all degrees linked to a faculty.
+     *
+     * - Route: `/centros/{centro_id}/titulaciones`
+     * - Method: `GET`
+     */
     public static function titulaciones(ServerRequestInterface $request, array $args): Response
     {
         $api = UMA::api();

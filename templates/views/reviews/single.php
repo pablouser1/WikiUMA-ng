@@ -21,6 +21,7 @@
     ]) ?>
 
     <?php if ($this->loggedin()): ?>
+        <p class="title">Moderación</p>
         <form id="data-form" action="<?= $this->url('/staff/reviews/' . $review->id . '/delete') ?>" method="POST">
             <div class="field">
                 <label class="label">Razón (opcional)</label>

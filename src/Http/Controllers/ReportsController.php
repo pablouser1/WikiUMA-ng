@@ -8,8 +8,8 @@ use App\Models\User;
 use App\Wrappers\Mail;
 use App\Wrappers\Render;
 use Laminas\Diactoros\Response;
-use League\Route\Http\Exception\ForbiddenException;
 use League\Route\Http\Exception\NotFoundException;
+use League\Route\Http\Exception\UnauthorizedException;
 use Psr\Http\Message\ServerRequestInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -40,7 +40,7 @@ class ReportsController extends Controller
         }
 
         if ($review->accepted_report !== null) {
-            throw new ForbiddenException('Esta valoración ya ha sido eliminada');
+            throw new UnauthorizedException('Esta valoración ya ha sido eliminada');
         }
 
         return self::__render('views/reports/new', $request, [

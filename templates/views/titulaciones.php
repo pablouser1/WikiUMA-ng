@@ -24,7 +24,7 @@
             <div class="column item is-narrow" data-name="<?= $this->e($titulacion->plan) ?>">
                 <?php $this->insert('partials/card', [
                     'name' => $titulacion->plan,
-                    'url' => $this->url('/planes/' . $titulacion->codigoPlan)
+                    'url' => $this->url("/centros/{$titulacion->codigoCentro}/titulaciones/{$titulacion->codigoPlan}/plan")
                 ]) ?>
             </div>
         <?php endforeach ?>
