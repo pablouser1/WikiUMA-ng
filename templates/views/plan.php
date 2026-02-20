@@ -5,7 +5,6 @@
  * @var int $titulacion_id
  * @var \UMA\Models\Titulacion $titulacion
  * @var array $cursos
- * @todo Consider adding better title
  */
 ?>
 
