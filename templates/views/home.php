@@ -26,12 +26,12 @@
     <?php if ($stats->total > 0): ?>
         <hr />
         <div class="field is-grouped is-grouped-multiline is-grouped-centered">
-            <?php $this->insert('partials/stat', [
+            <?php $this->insert('partials/stats/single', [
                 'title' => 'Valoraciones totales',
                 'value' => $stats->total,
                 'size' => 'medium',
             ]) ?>
-            <?php $this->insert('partials/stat', [
+            <?php $this->insert('partials/stats/single', [
                 'title' => 'Nota media',
                 'value' => $stats->avg,
                 'size' => 'medium',

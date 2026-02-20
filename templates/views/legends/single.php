@@ -17,7 +17,7 @@
     <div class="hero-body">
         <p class="title"><?= $this->e($legend->full_name) ?></p>
         <?php if ($stats->total > 0): ?>
-            <?php $this->insert('partials/stats', ['stats' => $stats]) ?>
+            <?php $this->insert('partials/stats/index', ['stats' => $stats]) ?>
         <?php endif ?>
     </div>
 </section>

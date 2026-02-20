@@ -21,7 +21,7 @@
         <p class="title"><?= $this->e($asignatura->nombre) ?></p>
         <p class="subtitle"><?= $this->e($asignatura->curso) ?> año - <?= $this->e($asignatura->cuatrimestre) ?> cuatrimestre</p>
         <?php if ($stats->total > 0): ?>
-            <?php $this->insert('partials/stats', ['stats' => $stats]) ?>
+            <?php $this->insert('partials/stats/index', ['stats' => $stats]) ?>
         <?php endif ?>
     </div>
 </section>

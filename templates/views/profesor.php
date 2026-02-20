@@ -22,7 +22,7 @@
             <span class="tag is-info"><?= $this->e($profesor->departamentos[0][0]->nombre) ?></span>
         <?php endif ?>
         <?php if ($stats->total > 0): ?>
-            <?php $this->insert('partials/stats', ['stats' => $stats]) ?>
+            <?php $this->insert('partials/stats/index', ['stats' => $stats]) ?>
         <?php endif ?>
     </div>
 </section>

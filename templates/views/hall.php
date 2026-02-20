@@ -26,8 +26,8 @@
                 </div>
 
                 <div class="field is-grouped is-grouped-multiline is-grouped-centered">
-                    <?php $this->insert('partials/stat', ['title' => 'Nº de valoraciones', 'value' => $item->total]) ?>
-                    <?php $this->insert('partials/stat', ['title' => 'Nota media', 'value' => $item->avg, 'withColor' => true]) ?>
+                    <?php $this->insert('partials/stats/single', ['title' => 'Nº de valoraciones', 'value' => $item->total]) ?>
+                    <?php $this->insert('partials/stats/single', ['title' => 'Nota media', 'value' => $item->avg, 'withColor' => true]) ?>
                 </div>
             </div>
             <footer class="card-footer">
