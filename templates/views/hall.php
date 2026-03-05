@@ -14,7 +14,14 @@
 ]) ?>
 
 <div class="has-text-centered">
-    <p class="title">Salón de la fama</p>
+    <p class="title">
+        <span class="icon-text">
+            <span class="icon">
+                <?= icon('fa7-solid:trophy') ?>
+            </span>
+            <span>Salón de la fama</span>
+        </span>
+    </p>
     <div class="tabs is-centered is-toggle">
         <ul>
             <?php foreach ($ranges as $range): ?>

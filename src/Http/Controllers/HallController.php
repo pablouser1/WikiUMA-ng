@@ -22,9 +22,9 @@ class HallController extends Controller
     public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
-        $range = isset($query['range']) ? HallRangeEnum::tryFrom($query['range']) : HallRangeEnum::ALL_TIMES;
 
-        $hall = Stats::weighted(within: $range?->carbon());
+        $range = HallRangeEnum::tryFrom($query['range'] ?? '') ?? HallRangeEnum::ALL_TIMES;
+        $hall = Stats::weighted(within: $range->carbon());
         if (!$hall->lastRes->success) {
             return MsgHandler::errorFromApi($hall->lastRes, $request);
         }
