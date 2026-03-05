@@ -16,7 +16,7 @@ class UsersModule extends Base implements IModule
      */
     public function entrypoint(): void
     {
-        $this->cli->bold()->out("Users");
+        $this->cli->bold()->out('Users');
         $this->radioSection();
     }
 
@@ -29,7 +29,7 @@ class UsersModule extends Base implements IModule
 
         foreach ($users as $i => $user) {
             $this->cli->inline($i + 1);
-            $this->cli->inline(". ");
+            $this->cli->inline('. ');
             $this->cli->out("{$user->full_name} ({$user->username})");
         }
     }
@@ -42,23 +42,23 @@ class UsersModule extends Base implements IModule
     public function add(): void
     {
         // First name
-        $in = $this->cli->input("Write the first name:");
+        $in = $this->cli->input('Write the first name:');
         $firstName = $in->prompt();
 
         // Last name
-        $in = $this->cli->input("Write the last name:");
+        $in = $this->cli->input('Write the last name:');
         $lastName = $in->prompt();
 
         // Username
-        $in = $this->cli->input("Write the username:");
+        $in = $this->cli->input('Write the username:');
         $username = $in->prompt();
 
         // Password
-        $in = $this->cli->input("Write the email:");
+        $in = $this->cli->input('Write the email:');
         $email = $in->prompt();
 
         // Password
-        $in = $this->cli->input("Write the password:");
+        $in = $this->cli->input('Write the password:');
         $plainPassword = $in->prompt();
 
         $user = new User([
@@ -72,11 +72,11 @@ class UsersModule extends Base implements IModule
 
         $ok = $user->save();
         if (!$ok) {
-            $this->cli->backgroundRed()->error("Could not create user!");
+            $this->cli->backgroundRed()->error('Could not create user!');
             return;
         }
 
-        $this->cli->backgroundGreen()->out("User created!");
+        $this->cli->backgroundGreen()->out('User created!');
     }
 
     /**
@@ -85,13 +85,13 @@ class UsersModule extends Base implements IModule
     public function delete(): void
     {
         $users = User::all();
-        $index = $this->radioModel($users, "full_name");
+        $index = $this->radioModel($users, 'full_name');
         $user = $users[$index];
         $ok = $user->delete();
         if (!$ok) {
-            $this->cli->backgroundRed()->error("Could not delete user!");
+            $this->cli->backgroundRed()->error('Could not delete user!');
         }
 
-        $this->cli->backgroundGreen()->out("Deleted!");
+        $this->cli->backgroundGreen()->out('Deleted!');
     }
 }

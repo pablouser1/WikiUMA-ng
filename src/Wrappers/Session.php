@@ -2,6 +2,8 @@
 
 namespace App\Wrappers;
 
+use function in_array;
+
 class Session
 {
     public static function start(): void

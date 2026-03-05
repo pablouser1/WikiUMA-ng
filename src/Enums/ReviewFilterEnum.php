@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
+use Closure;
 
 /**
  * Enumerate all available filters applicable to reviews.
@@ -21,10 +22,10 @@ enum ReviewFilterEnum: string
         };
     }
 
-    public function action(): ?\Closure
+    public function action(): ?Closure
     {
         return match ($this) {
-            self::AVAILABLE => fn ($builder) => $this->__handleAvailable($builder),
+            self::AVAILABLE => fn($builder) => $this->__handleAvailable($builder),
             default => null,
         };
     }

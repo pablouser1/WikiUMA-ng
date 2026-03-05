@@ -33,7 +33,7 @@ trait HasReviews
 
         return $query->paginate(
             perPage: App::PAGINATION_MAX_ITEMS,
-            page: $page
+            page: $page,
         );
     }
 

@@ -112,7 +112,7 @@ class ReviewsController extends Controller
             throw self::__tooManyChars();
         }
 
-        $note = intval($body['note']);
+        $note = (int) $body['note'];
         if ($note < 0 || $note > 10) {
             throw self::__invalidBody();
         }

@@ -78,6 +78,6 @@ abstract class Controller
             return null;
         }
 
-        return intval($valStr);
+        return (int) $valStr;
     }
 }

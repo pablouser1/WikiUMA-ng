@@ -35,7 +35,7 @@ class PlanesController extends Controller
             return MsgHandler::errorFromApi($titulaciones, $request);
         }
 
-        $titulacion = array_find($titulaciones->data, fn (Titulacion $titulacion) => $titulacion->codigoCentro === $centro_id && $titulacion->codigoPlan === $titulacion_id);
+        $titulacion = array_find($titulaciones->data, fn(Titulacion $titulacion) => $titulacion->codigoCentro === $centro_id && $titulacion->codigoPlan === $titulacion_id);
         $cursos = [];
         foreach ($plan->data->asignaturas as $asignatura) {
             $cursos[$asignatura->curso][] = $asignatura;

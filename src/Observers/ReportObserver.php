@@ -11,7 +11,7 @@ class ReportObserver
         logger()->info('New report registered', [
             'uuid' => $report->uuid,
             'target' => $report->review->target,
-            'type' => $report->review->type->displayName()
+            'type' => $report->review->type->displayName(),
         ]);
     }
 }

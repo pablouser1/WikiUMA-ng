@@ -8,20 +8,20 @@ namespace App\Constants;
 class Messages
 {
     // -- COMMON -- //
-    public const string API_ERROR = "Error en servidores de la UMA";
-    public const string UNKNOWN_ERROR = "Error desconocido";
-    public const string INVALID_REQUEST = "Solicitud inválida";
+    public const string API_ERROR = 'Error en servidores de la UMA';
+    public const string UNKNOWN_ERROR = 'Error desconocido';
+    public const string INVALID_REQUEST = 'Solicitud inválida';
 
-    public const string MUST_SEND_BODY = "No hay cuerpo o es inválido";
-    public const string MUST_SEND_PARAMS = "No hay parámetros requeridos o son inválidos";
-    public const string INCONSISTENT_DATA = "Datos incongruentes";
-    public const string INVALID_CAPTCHA = "Captcha inválido";
-    public const string INVALID_EMAIL = "El correo electrónico dado no es válido";
-    public const string TOO_MANY_CHARACTERS = "Se han enviado más caracteres que los permitidos";
+    public const string MUST_SEND_BODY = 'No hay cuerpo o es inválido';
+    public const string MUST_SEND_PARAMS = 'No hay parámetros requeridos o son inválidos';
+    public const string INCONSISTENT_DATA = 'Datos incongruentes';
+    public const string INVALID_CAPTCHA = 'Captcha inválido';
+    public const string INVALID_EMAIL = 'El correo electrónico dado no es válido';
+    public const string TOO_MANY_CHARACTERS = 'Se han enviado más caracteres que los permitidos';
 
     // -- LOGIN -- //
-    public const string LOGIN_FAILED = "No se ha podido iniciar sesión.";
+    public const string LOGIN_FAILED = 'No se ha podido iniciar sesión.';
 
     // -- VOTING -- //
-    public const string ALREADY_VOTED = "Ya has votado.";
+    public const string ALREADY_VOTED = 'Ya has votado.';
 }

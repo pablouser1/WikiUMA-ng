@@ -111,7 +111,7 @@ class ReportsModule extends Base implements IBase
         $report->status = $status;
 
         // Choose reason
-        $in = $this->cli->input("Choose a reason (or leave empty for none): ");
+        $in = $this->cli->input('Choose a reason (or leave empty for none): ');
         $reason = $in->prompt();
 
         if (!empty($reason)) {

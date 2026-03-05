@@ -1,6 +1,6 @@
 <?php
 $range = 2;
-$page = isset($query['page']) ? intval($query['page']) : 1;
+$page = isset($query['page']) ? (int) $query['page'] : 1;
 
 // Sliding window
 $startPage = max(1, $page - $range);

@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 #[ObservedBy(ReviewObserver::class)]
 class Review extends Model
 {
-    private const string DEFAULT_USERNAME_VALUE = "Anónimo";
+    private const string DEFAULT_USERNAME_VALUE = 'Anónimo';
 
     public const int USERNAME_MAX_LENGTH = 32;
     public const int MESSAGE_MAX_LENGTH = 500;
@@ -39,7 +39,7 @@ class Review extends Model
     protected function username(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => $value === null ? self::DEFAULT_USERNAME_VALUE : $value,
+            get: fn(?string $value) => $value === null ? self::DEFAULT_USERNAME_VALUE : $value,
         );
     }
 

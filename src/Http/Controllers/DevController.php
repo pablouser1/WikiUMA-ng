@@ -21,7 +21,7 @@ class DevController extends Controller
      */
     public static function reactions(ServerRequestInterface $request, array $args): Response
     {
-        $code = intval($args['code']);
+        $code = (int) $args['code'];
         return MsgHandler::error($code, "Error $code", 'Example body', $request);
     }
 }

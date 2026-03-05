@@ -26,10 +26,10 @@
             <div class="column is-narrow">
                 <?php $this->insert('partials/panel', [
                     'title' => "{$i}º año",
-                    'items' => array_map(fn (object $asignatura) => (object) [
+                    'items' => array_map(fn(object $asignatura) => (object) [
                         'name' => $asignatura->nombre,
                         'url' =>  $this->url('/planes/' . $titulacion_id . '/asignaturas/' . $asignatura->codigo),
-                    ], $curso)
+                    ], $curso),
                 ]) ?>
             </div>
         <?php endforeach ?>

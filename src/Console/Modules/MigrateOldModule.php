@@ -12,14 +12,18 @@ use App\Wrappers\Storage;
 use App\Wrappers\UMA;
 use League\CLImate\CLImate;
 use UMA\Api;
+use DOMXPath;
+use SQLite3;
+
+use function count;
 
 /**
  * Migrate from old WikiUMA (rip).
  */
 class MigrateOldModule extends Base implements IBase
 {
-    private const string DB_FILENAME = "old.db";
-    private const string USER_AGENT = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36";
+    private const string DB_FILENAME = 'old.db';
+    private const string USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
 
     private const array OPTIONS = [
         [
@@ -48,13 +52,13 @@ class MigrateOldModule extends Base implements IBase
         ],
     ];
 
-    private \SQLite3 $db;
+    private SQLite3 $db;
     private Api $api;
 
     public function __construct(CLImate $cli)
     {
         parent::__construct($cli);
-        $this->db = new \Sqlite3(Storage::path(self::DB_FILENAME), SQLITE3_OPEN_READONLY);
+        $this->db = new Sqlite3(Storage::path(self::DB_FILENAME), SQLITE3_OPEN_READONLY);
         $this->api = UMA::api();
     }
 
@@ -147,7 +151,7 @@ class MigrateOldModule extends Base implements IBase
 
         foreach ($failed as $link) {
             $this->cli->out($link->name);
-            $in = $this->cli->input("Write email (empty for skip):");
+            $in = $this->cli->input('Write email (empty for skip):');
             $email = $in->prompt();
             if ($email !== '') {
                 $newLinks[$link->id] = $email;
@@ -227,13 +231,13 @@ class MigrateOldModule extends Base implements IBase
 
     public function importLegends(): void
     {
-        $in = $this->cli->input("Write ID from old DB:");
+        $in = $this->cli->input('Write ID from old DB:');
         $idStr = $in->prompt();
         if (!($idStr !== '' && is_numeric($idStr))) {
             $this->cli->backgroundRed()->error('No ID provided');
             return;
         }
-        $id = intval($idStr);
+        $id = (int) $idStr;
 
         // -- Teacher info -- //
         $stmt = $this->db->prepare('SELECT * FROM profesor WHERE ID=:id');
@@ -270,7 +274,7 @@ class MigrateOldModule extends Base implements IBase
                 'created_at' => $row['Fecha'],
                 'target' => $legend->id,
                 'type' => ReviewTypesEnum::LEGEND,
-                'username' => $row['Nick'] !== "" ? trim($row['Nick']) : null,
+                'username' => $row['Nick'] !== '' ? trim($row['Nick']) : null,
                 'note' => $row['Valoracion'],
                 'message' => trim($row['Comentario']),
                 'votes' => $row['VotosPositivos'] - $row['VotosNegativos'],
@@ -290,7 +294,7 @@ class MigrateOldModule extends Base implements IBase
             $this->cli->backgroundRed()->error('Could not get departments');
             return null;
         }
-        $dpNames = array_map(fn ($dp) => $this->__normalize($dp->nombre), $dps->data);
+        $dpNames = array_map(fn($dp) => $this->__normalize($dp->nombre), $dps->data);
 
         $dpsInformatica = $this->__getDepartamentosInformatica();
         if ($dpsInformatica === null) {
@@ -368,7 +372,7 @@ class MigrateOldModule extends Base implements IBase
     private function __getTeachersDb(): ?array
     {
         $teachers = [];
-        $res = $this->db->query("SELECT * FROM profesor");
+        $res = $this->db->query('SELECT * FROM profesor');
         if ($res === false) {
             return null;
         }
@@ -402,7 +406,7 @@ class MigrateOldModule extends Base implements IBase
                 'created_at' => $row['Fecha'],
                 'target' => $relationsIdnc[$row['ID_Profesor']],
                 'type' => ReviewTypesEnum::TEACHER,
-                'username' => $row['Nick'] !== "" ? trim($row['Nick']) : null,
+                'username' => $row['Nick'] !== '' ? trim($row['Nick']) : null,
                 'note' => $row['Valoracion'],
                 'message' => trim($row['Comentario']),
                 'votes' => $row['VotosPositivos'] - $row['VotosNegativos'],
@@ -429,7 +433,7 @@ class MigrateOldModule extends Base implements IBase
         $dpsWeb = [];
 
         $dom = Misc::parseHTML($result);
-        $xpath = new \DOMXPath($dom);
+        $xpath = new DOMXPath($dom);
         $els = $xpath->query("//ul[contains(@class, 'itemList')]");
 
         foreach ($els as $el) {
@@ -459,8 +463,8 @@ class MigrateOldModule extends Base implements IBase
         $dpsWeb = [];
 
         $dom = Misc::parseHTML($result);
-        $xpath = new \DOMXPath($dom);
-        $el = $xpath->query("/html/body/div[6]/div[2]/div[1]/p[2]");
+        $xpath = new DOMXPath($dom);
+        $el = $xpath->query('/html/body/div[6]/div[2]/div[1]/p[2]');
 
         $anchors = $el->item(0)->getElementsByTagName('a');
 

@@ -9,6 +9,8 @@ use App\Models\Review;
 use UMA\Models\Profesor;
 use UMA\Models\Response;
 
+use function count;
+
 class Stats
 {
     private const int HALL_MIN_REVIEWS_NEEDED = 10;
@@ -50,7 +52,7 @@ class Stats
             ->selectRaw('COUNT(*) as review_count') // v
             // WR = ( (v / (v+m)) * R ) + ( (m / (v+m)) * C )
             ->selectRaw(
-                "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating"
+                "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating",
             )
             ->orderBy('weighted_rating', $best ? 'DESC' : 'ASC')
             ->limit(self::HALL_MAX_COUNT * 2)

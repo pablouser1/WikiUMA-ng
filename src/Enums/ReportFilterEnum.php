@@ -4,6 +4,7 @@ namespace App\Enums;
 
 use App\Models\Review;
 use Illuminate\Database\Eloquent\Builder;
+use Closure;
 
 /**
  * Enumerate all available filters applicable to reports.
@@ -25,12 +26,12 @@ enum ReportFilterEnum: string
         };
     }
 
-    public function action(): ?\Closure
+    public function action(): ?Closure
     {
         return match ($this) {
-            self::PENDING => fn ($builder) => $this->__handleStatus($builder, ReportStatusEnum::PENDING),
-            self::ACCEPTED => fn ($builder) => $this->__handleStatus($builder, ReportStatusEnum::ACCEPTED),
-            self::DENIED => fn ($builder) => $this->__handleStatus($builder, ReportStatusEnum::DENIED),
+            self::PENDING => fn($builder) => $this->__handleStatus($builder, ReportStatusEnum::PENDING),
+            self::ACCEPTED => fn($builder) => $this->__handleStatus($builder, ReportStatusEnum::ACCEPTED),
+            self::DENIED => fn($builder) => $this->__handleStatus($builder, ReportStatusEnum::DENIED),
             default => null,
         };
     }

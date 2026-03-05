@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 #[ObservedBy(ReportObserver::class)]
 class Report extends Model
 {
-    private const string DEFAULT_REASON_VALUE = "Sin especificar";
+    private const string DEFAULT_REASON_VALUE = 'Sin especificar';
 
     public const int MESSAGE_MAX_LENGTH = 500;
     public const int REASON_MAX_LENGTH = 500;
@@ -37,7 +37,7 @@ class Report extends Model
     protected function reason(): Attribute
     {
         return Attribute::make(
-            get: fn (?string $value) => $value === null ? self::DEFAULT_REASON_VALUE : $value,
+            get: fn(?string $value) => $value === null ? self::DEFAULT_REASON_VALUE : $value,
         );
     }
 

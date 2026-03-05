@@ -5,6 +5,9 @@ namespace App\Console;
 use Illuminate\Database\Eloquent\Collection;
 use League\CLImate\CLImate;
 
+use function call_user_func_array;
+use function is_string;
+
 /**
  * Base class for all CLI modules.
  */
@@ -23,11 +26,11 @@ abstract class Base
     protected function radio(array $options, array $args = []): void
     {
         $names = array_column($options, 'name');
-        $input = $this->cli->radio("Choose an option:", $names);
+        $input = $this->cli->radio('Choose an option:', $names);
         $res = $input->prompt();
 
         $index = array_search($res, $names);
-        $runner = $options[$index]["runner"];
+        $runner = $options[$index]['runner'];
 
         if (is_string($runner[0])) {
             $class = new $runner[0]($this->cli);
@@ -47,17 +50,17 @@ abstract class Base
     {
         $this->radio([
             [
-                "name" => "List",
-                "runner" => [$this, "list"]
+                'name' => 'List',
+                'runner' => [$this, 'list'],
             ],
             [
-                "name" => "Add",
-                "runner" => [$this, "add"]
+                'name' => 'Add',
+                'runner' => [$this, 'add'],
             ],
             [
-                "name" => "Delete",
-                "runner" => [$this, "delete"]
-            ]
+                'name' => 'Delete',
+                'runner' => [$this, 'delete'],
+            ],
         ]);
     }
 
@@ -68,7 +71,7 @@ abstract class Base
     protected function radioModel(Collection $m, string $key): int
     {
         $names = array_column($m->toArray(), $key);
-        $input = $this->cli->radio("Choose an option:", $names);
+        $input = $this->cli->radio('Choose an option:', $names);
         $res = $input->prompt();
 
         return array_search($res, $names);

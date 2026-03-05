@@ -20,7 +20,7 @@
     <?php $this->insert('partials/search/client') ?>
     <div class="columns is-centered is-vcentered is-multiline">
         <?php foreach ($centros as $centro): ?>
-            <?php if ($centro->alfilws !== ""): ?>
+            <?php if ($centro->alfilws !== ''): ?>
                 <div class="column item is-narrow" data-name="<?= $this->e($centro->nombre) ?>">
                     <?php $this->insert('partials/card', [
                         'name' => $centro->nombre,

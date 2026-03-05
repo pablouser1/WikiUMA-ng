@@ -3,6 +3,8 @@
 namespace App\Wrappers;
 
 use App\Enums\CacheEnum;
+use BackedEnum;
+use Redis;
 
 /**
  * Wrapper for Environment Variables.
@@ -34,8 +36,8 @@ class Env
         if ($query !== null) {
             $queryFiltered = [];
             foreach ($query as $key => $value) {
-                $valTmp = $value instanceof \BackedEnum ? $value->value : $value;
-                $queryFiltered[$key] = htmlspecialchars(strval($valTmp));
+                $valTmp = $value instanceof BackedEnum ? $value->value : $value;
+                $queryFiltered[$key] = htmlspecialchars((string) $valTmp);
             }
             $queryStr = '?' . http_build_query($queryFiltered);
         }
@@ -112,20 +114,20 @@ class Env
      */
     public static function db(): array
     {
-        $driver = $_ENV["DB_DRIVER"] ?? "mysql";
-        $host = $_ENV["DB_HOST"] ?? "127.0.0.1";
-        $port = $_ENV["DB_PORT"] ?? 3306;
-        $user = $_ENV["DB_USER"] ?? "";
-        $password = $_ENV["DB_PASSWORD"] ?? "";
-        $name = $_ENV["DB_NAME"] ?? "wikiuma";
+        $driver = $_ENV['DB_DRIVER'] ?? 'mysql';
+        $host = $_ENV['DB_HOST'] ?? '127.0.0.1';
+        $port = $_ENV['DB_PORT'] ?? 3306;
+        $user = $_ENV['DB_USER'] ?? '';
+        $password = $_ENV['DB_PASSWORD'] ?? '';
+        $name = $_ENV['DB_NAME'] ?? 'wikiuma';
 
         return [
-            "driver" => $driver,
-            "host" => $host,
-            "port" => $port,
-            "database" => $name,
-            "username" => $user,
-            "password" => $password
+            'driver' => $driver,
+            'host' => $host,
+            'port' => $port,
+            'database' => $name,
+            'username' => $user,
+            'password' => $password,
         ];
     }
 
@@ -154,7 +156,7 @@ class Env
     /**
      * Get Redis client.
      */
-    public static function redis(): \Redis
+    public static function redis(): Redis
     {
         $host = $_ENV['REDIS_HOST'] ?? null;
         $port = $_ENV['REDIS_PORT'] ?? null;
@@ -169,8 +171,8 @@ class Env
             $data['auth'] = [$password];
         }
 
-        $redis = new \Redis($data);
-        $redis->setOption(\Redis::OPT_SERIALIZER, \Redis::SERIALIZER_IGBINARY);
+        $redis = new Redis($data);
+        $redis->setOption(Redis::OPT_SERIALIZER, Redis::SERIALIZER_IGBINARY);
 
         return $redis;
     }

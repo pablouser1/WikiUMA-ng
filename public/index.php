@@ -20,7 +20,7 @@ $request = Laminas\Diactoros\ServerRequestFactory::fromGlobals(
     $_GET,
     $_POST,
     $_COOKIE,
-    $_FILES
+    $_FILES,
 );
 
 $router = new League\Route\Router();

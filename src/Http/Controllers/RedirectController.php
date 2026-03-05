@@ -28,7 +28,7 @@ class RedirectController extends Controller
         }
 
         $target = $query['target'];
-        $typeInt = intval($query['type']);
+        $typeInt = (int) $query['type'];
         $type = ReviewTypesEnum::tryFrom($typeInt);
 
         if ($type === null) {

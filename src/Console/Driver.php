@@ -41,7 +41,7 @@ class Driver extends Base implements IBase
      */
     public function entrypoint(): void
     {
-        $this->cli->bold()->out("Welcome to WikiUMA-ng!");
+        $this->cli->bold()->out('Welcome to WikiUMA-ng!');
         $this->radio(self::OPTIONS);
     }
 }

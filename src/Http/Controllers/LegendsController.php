@@ -32,7 +32,7 @@ class LegendsController extends Controller
     public static function show(ServerRequestInterface $request, array $args): Response
     {
         $query = $request->getQueryParams();
-        $id = intval($args['legend_id']);
+        $id = (int) $args['legend_id'];
 
         $page = self::__parseIntFromQuery('page', $query);
         if ($page === null) {

@@ -4,6 +4,8 @@ namespace App\Constants;
 
 use App\Wrappers\Misc;
 
+use function count;
+
 /**
  * Easter-eggs when searching
  */

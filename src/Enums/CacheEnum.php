@@ -14,9 +14,9 @@ use Psr\SimpleCache\CacheInterface;
  */
 enum CacheEnum: string
 {
-    case FILE = "file";
-    case APCU = "apcu";
-    case REDIS = "redis";
+    case FILE = 'file';
+    case APCU = 'apcu';
+    case REDIS = 'redis';
 
     public function engine(): ?CacheInterface
     {

@@ -20,7 +20,7 @@
         <div class="column is-narrow">
             <?php $this->insert('partials/card', [
                 'name' => $result->nombre,
-                'url' => $this->url('/profesores', ['idnc' => $result->idnc])
+                'url' => $this->url('/profesores', ['idnc' => $result->idnc]),
             ]) ?>
         </div>
     <?php endforeach ?>

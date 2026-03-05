@@ -6,9 +6,11 @@ use App\Models\Report;
 use App\Models\User;
 use PHPMailer\PHPMailer\PHPMailer;
 
+use function sprintf;
+
 class Mail
 {
-    private const string REPORT_NEW_SUBJECT = "Nuevo informe en WikiUMA";
+    private const string REPORT_NEW_SUBJECT = 'Nuevo informe en WikiUMA';
     private PHPMailer $client;
 
     public function __construct()

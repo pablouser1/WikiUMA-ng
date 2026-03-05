@@ -28,7 +28,7 @@
 
 <section class="section">
     <div class="container">
-        <?php if (is_array($asignatura->grupos) && count($asignatura->grupos) > 0): ?>
+        <?php if (\is_array($asignatura->grupos) && \count($asignatura->grupos) > 0): ?>
             <div class="block">
                 <p class="title has-text-centered">Profesores</p>
                 <?php $this->insert('partials/search/client') ?>
@@ -37,10 +37,10 @@
                         <div class="column is-narrow">
                             <?php $this->insert('partials/panel', [
                                 'title' => "Grupo {$grupo->nombre}",
-                                'items' => array_map(fn ($profesor) => (object) [
+                                'items' => array_map(fn($profesor) => (object) [
                                     'name' => $profesor->nombre,
                                     'url' => $this->url('/profesores', ['email' => $this->encrypt($profesor->email)]),
-                                ], $grupo->profesores)
+                                ], $grupo->profesores),
                             ]) ?>
                         </div>
                     <?php endforeach ?>

@@ -3,6 +3,9 @@
 namespace App\Wrappers;
 
 use Psr\Http\Message\UriInterface;
+use DOMDocument;
+
+use function count;
 
 class Misc
 {
@@ -26,19 +29,19 @@ class Misc
         $filteredQuery = [];
 
         foreach ($newQuery as $key => $value) {
-            $filteredQuery[$key] = strval($value);
+            $filteredQuery[$key] = (string) $value;
         }
 
         return $uri->withQuery(http_build_query($filteredQuery));
     }
 
-    public static function parseHTML(?string $html): ?\DOMDocument
+    public static function parseHTML(?string $html): ?DOMDocument
     {
         if ($html === null) {
             return null;
         }
 
-        $doc = new \DOMDocument();
+        $doc = new DOMDocument();
         $success = @$doc->loadHTML($html);
         return $success ? $doc : null;
     }

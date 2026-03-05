@@ -4,7 +4,7 @@ use App\Wrappers\Storage;
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
 
-if (!function_exists('logger')) {
+if (!\function_exists('logger')) {
     /** @var ?Logger */
     $logger = null;
     function logger(): Logger
