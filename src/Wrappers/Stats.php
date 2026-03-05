@@ -6,6 +6,7 @@ use App\Dto\StatsData;
 use App\Enums\ReportStatusEnum;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
+use Illuminate\Support\Carbon;
 use UMA\Models\Profesor;
 use UMA\Models\Response;
 
@@ -38,14 +39,21 @@ class Stats
     /**
      * @return object{lastRes: Response<Profesor>|Response<string>, data: StatsData<Profesor>}
      */
-    public static function weighted(bool $best = true): object
+    public static function weighted(bool $best = true, ?Carbon $within = null): object
     {
         $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
         $api = UMA::api();
 
-        $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)->avg('note'); // C
-        $tops = Review::query()
-            ->where('type', ReviewTypesEnum::TEACHER)
+        $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)
+            ->when($within !== null, function ($query) use ($within) {
+                $query->whereDate('created_at', '>=', $within);
+            })
+            ->avg('note'); // C
+
+        $tops = Review::where('type', ReviewTypesEnum::TEACHER)
+            ->when($within !== null, function ($query) use ($within) {
+                $query->whereDate('created_at', '>=', $within);
+            })
             ->groupBy('target')
             ->select('target')
             ->selectRaw('AVG(note) as average_note') // R
@@ -55,6 +63,7 @@ class Stats
                 "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating",
             )
             ->orderBy('weighted_rating', $best ? 'DESC' : 'ASC')
+            ->orderBy('target', 'ASC') // Tie break
             ->limit(self::HALL_MAX_COUNT * 2)
             ->get();
 

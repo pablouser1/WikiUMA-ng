@@ -3,6 +3,8 @@
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
  * @var \App\Dto\StatsData<\UMA\Models\Profesor>[] $hall
+ * @var \App\Enums\HallRangeEnum[] $ranges
+ * @var \App\Enums\HallRangeEnum $currentRange
  */
 ?>
 
@@ -13,6 +15,19 @@
 
 <div class="has-text-centered">
     <p class="title">Salón de la fama</p>
+    <div class="tabs is-centered is-toggle">
+        <ul>
+            <?php foreach ($ranges as $range): ?>
+                <?php if ($range === $currentRange): ?>
+                    <li class="is-active">
+                <?php else: ?>
+                    <li>
+                <?php endif ?>
+                    <a href="<?= $this->url('/hall', ['range' => $range->value]) ?>"><?= $this->e($range->displayName()) ?></a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
     <?php foreach ($hall as $item): ?>
         <div class="card">
             <div class="card-content">
@@ -31,7 +46,8 @@
                 </div>
             </div>
             <footer class="card-footer">
-              <a href="<?= $this->url('/profesores', ['email' => $this->encrypt($item->for->email)]) ?>" class="card-footer-item">Ver perfil</a>
+                <a href="<?= $this->url('/profesores', ['email' => $this->encrypt($item->for->email)]) ?>"
+                    class="card-footer-item">Ver perfil</a>
             </footer>
         </div>
     <?php endforeach ?>
