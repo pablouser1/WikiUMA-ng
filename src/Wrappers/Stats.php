@@ -5,6 +5,7 @@ namespace App\Wrappers;
 use App\Dto\StatsData;
 use App\Enums\ReportStatusEnum;
 use App\Enums\ReviewTypesEnum;
+use App\Models\Exclusion;
 use App\Models\Review;
 use Illuminate\Support\Carbon;
 use UMA\Models\Profesor;
@@ -62,6 +63,7 @@ class Stats
             ->selectRaw(
                 "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating",
             )
+            ->whereNotIn('target', Exclusion::all()->pluck('idnc'))
             ->orderBy('weighted_rating', $best ? 'DESC' : 'ASC')
             ->orderBy('target', 'ASC') // Tie break
             ->limit(self::HALL_MAX_COUNT * 2)
