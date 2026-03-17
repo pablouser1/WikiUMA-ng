@@ -29,8 +29,12 @@ $router->get('/legal', [MiscController::class, 'legal']);
 $router->get('/contact', [MiscController::class, 'contact']);
 $router->get('/maintenance', [MiscController::class, 'maintenance']);
 $router->get('/redirect', [RedirectController::class, 'index']);
-$router->get('/search', [SearchController::class, 'index']);
 $router->get('/hall', [HallController::class, 'index']);
+
+$router->group('/search', function (RouteGroup $route) {
+    $route->get('/', [SearchController::class, 'index']);
+    $route->get('/results', [SearchController::class, 'results']);
+});
 
 $router->group('/legends', function (RouteGroup $route) {
     $route->get('/', [LegendsController::class, 'index']);

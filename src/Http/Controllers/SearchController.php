@@ -13,6 +13,11 @@ class SearchController extends Controller
 {
     public static function index(ServerRequestInterface $request): Response
     {
+        return self::__render('views/search/index', $request);
+    }
+
+    public static function results(ServerRequestInterface $request): Response
+    {
         $query = $request->getQueryParams();
         $nombre = $query['nombre'] ?? '';
         $apellido_1 = $query['apellido_1'] ?? '';
@@ -35,7 +40,7 @@ class SearchController extends Controller
             return MsgHandler::errorFromApi($search, $request);
         }
 
-        return self::__render('views/search', $request, [
+        return self::__render('views/search/results', $request, [
             'results' => $search->data,
         ]);
     }

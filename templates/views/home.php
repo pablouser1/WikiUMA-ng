@@ -15,14 +15,19 @@
     <p class="title">¡Bienvenid@ a WikiUMA <small title="nueva generación">ng</small>!</p>
     <p class="subtitle">Califica a tus profesores de forma anónima y más</p>
     <div class="buttons is-centered is-responsive">
-        <a class="button is-primary" href="<?= $this->url('/centros') ?>">
+        <a class="button is-primary" href="<?= $this->url('/search') ?>">
             <span class="icon">
-                <?= icon('fa7-solid:list') ?>
+                <?= icon('fa7-solid:chalkboard-teacher') ?>
             </span>
-            <span>Encontrar profesor en directorio</span>
+            <span>Valorar profesores</span>
+        </a>
+        <a class="button is-link" href="<?= $this->url('/centros') ?>">
+            <span class="icon">
+                <?= icon('fa7-solid:book') ?>
+            </span>
+            <span>Valorar asignaturas</span>
         </a>
     </div>
-    <?php $this->insert('partials/search/duma') ?>
     <?php if ($stats->total > 0): ?>
         <hr />
         <div class="field is-grouped is-grouped-multiline is-grouped-centered">

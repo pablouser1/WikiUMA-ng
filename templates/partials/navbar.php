@@ -18,14 +18,24 @@
 
     <div id="navbar-menu" class="navbar-menu">
         <div class="navbar-start">
-            <a class="navbar-item" href="<?= $this->url('/centros') ?>">
-                <span class="icon-text">
-                    <span class="icon">
-                        <?= icon('fa7-solid:list') ?>
+            <div class="navbar-item has-dropdown is-hoverable">
+                <div class="navbar-link">
+                    <span class="icon-text">
+                        <span class="icon">
+                            <?= icon('fa7-solid:star') ?>
+                        </span>
+                        <span>Valorar</span>
                     </span>
-                    <span>Directorio</span>
-                </span>
-            </a>
+                </div>
+                <div class="navbar-dropdown">
+                    <a class="navbar-item" href="<?= $this->url('/search') ?>">
+                        Profesores
+                    </a>
+                    <a class="navbar-item" href="<?= $this->url('/centros') ?>">
+                        Asignaturas
+                    </a>
+                </div>
+            </div>
             <a class="navbar-item" href="<?= $this->url('/reports/checker') ?>">
                 <span class="icon-text">
                     <span class="icon">
@@ -67,7 +77,7 @@
                         <span>Información</span>
                     </span>
                 </div>
-                <div class="navbar-dropdown is-right">
+                <div class="navbar-dropdown">
                     <a class="navbar-item" href="<?= $this->url('/about') ?>">
                         Acerca de / FAQ
                     </a>

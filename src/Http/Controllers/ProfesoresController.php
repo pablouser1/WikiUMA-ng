@@ -44,9 +44,16 @@ class ProfesoresController extends Controller
         return $response;
     }
 
-    private static function __byEmail(string $emailEncrypted, Api $api, ServerRequestInterface $request, array $query): Response
+    private static function __byEmail(string $emailRaw, Api $api, ServerRequestInterface $request, array $query): Response
     {
-        $email = Security::decrypt($emailEncrypted);
+        $isNotEncrypted = filter_var($emailRaw, FILTER_VALIDATE_EMAIL);
+        if ($isNotEncrypted) {
+            return new RedirectResponse(Env::app_url('/profesores', [
+                'email' => Security::encrypt($emailRaw),
+            ]));
+        }
+
+        $email = Security::decrypt($emailRaw);
         if ($email === null) {
             throw self::__invalidEmail();
         }
