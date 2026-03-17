@@ -2,31 +2,32 @@
 
 namespace App\Wrappers;
 
-use function count;
-
 /**
  * Helper class used for security-based parts.
  */
 class Security
 {
     private const string ALGO = 'aes-128-ctr';
-    private const string SEPARATOR = '|';
 
     public static function encrypt(string $data): string
     {
-        $ivlen = openssl_cipher_iv_length(self::ALGO);
-        $iv = openssl_random_pseudo_bytes($ivlen);
-        return self::__join(openssl_encrypt($data, self::ALGO, Env::app_key(), 0, $iv), $iv);
+        $iv = openssl_random_pseudo_bytes(self::__ivLength());
+        $cipher = openssl_encrypt($data, self::ALGO, Env::app_key(), OPENSSL_RAW_DATA, $iv);
+        return Encoding::base64url_encode($iv . $cipher);
     }
 
     public static function decrypt(string $data): ?string
     {
-        $tuple = self::__split($data);
-        if ($tuple === null) {
+        $dataTmp = Encoding::base64url_decode($data);
+        if ($dataTmp === false) {
             return null;
         }
 
-        $out = openssl_decrypt($tuple[0], self::ALGO, Env::app_key(), 0, $tuple[1]);
+        $ivLength = self::__ivLength();
+        $iv = substr($dataTmp, 0, $ivLength);
+        $cipher = substr($dataTmp, $ivLength);
+
+        $out = openssl_decrypt($cipher, self::ALGO, Env::app_key(), OPENSSL_RAW_DATA, $iv);
         return $out ?: null;
     }
 
@@ -50,24 +51,8 @@ class Security
         return $resData;
     }
 
-    private static function __join(string $encrypted, string $iv): string
+    private static function __ivLength(): int
     {
-        return Encoding::base64url_encode($encrypted . self::SEPARATOR . $iv);
-    }
-
-    private static function __split(string $data): ?array
-    {
-        $dataTmp = Encoding::base64url_decode($data);
-        if ($dataTmp === false) {
-            return null;
-        }
-
-        $arr = explode(self::SEPARATOR, $dataTmp, 2);
-
-        if (count($arr) !== 2) {
-            return null;
-        }
-
-        return $arr;
+        return openssl_cipher_iv_length(self::ALGO);
     }
 }
