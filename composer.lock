@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "06b06fe0f438d87b1c085d1bd2b9bc73",
+    "content-hash": "374fd1d820878e23844dea8d27d69f9c",
     "packages": [
         {
             "name": "adhocore/cli",
@@ -2242,16 +2242,16 @@
         },
         {
             "name": "pablouser1/umawrapper",
-            "version": "1.1.2",
+            "version": "1.1.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pablouser1/UMAWrapper.git",
-                "reference": "1680ee0698c660c5e895610c9dbd0950d94b5c7b"
+                "reference": "aa69ac940ac1e0b906e82ebf81b943ee93d09ece"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pablouser1/UMAWrapper/zipball/1680ee0698c660c5e895610c9dbd0950d94b5c7b",
-                "reference": "1680ee0698c660c5e895610c9dbd0950d94b5c7b",
+                "url": "https://api.github.com/repos/pablouser1/UMAWrapper/zipball/aa69ac940ac1e0b906e82ebf81b943ee93d09ece",
+                "reference": "aa69ac940ac1e0b906e82ebf81b943ee93d09ece",
                 "shasum": ""
             },
             "require": {
@@ -2285,9 +2285,9 @@
             "description": "Wrapper de la API de la Universidad de Málaga",
             "support": {
                 "issues": "https://github.com/pablouser1/UMAWrapper/issues",
-                "source": "https://github.com/pablouser1/UMAWrapper/tree/v1.1.2"
+                "source": "https://github.com/pablouser1/UMAWrapper/tree/v1.1.3"
             },
-            "time": "2026-03-17T19:20:30+00:00"
+            "time": "2026-03-17T20:12:20+00:00"
         },
         {
             "name": "phpmailer/phpmailer",

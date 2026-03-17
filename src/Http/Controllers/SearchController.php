@@ -8,6 +8,7 @@ use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
+use UMA\Models\SearchResult;
 
 class SearchController extends Controller
 {
@@ -35,13 +36,15 @@ class SearchController extends Controller
         $api = UMA::api();
 
         $search = $api->buscar($nombre, $apellido_1, $apellido_2);
-
         if (!$search->success) {
             return MsgHandler::errorFromApi($search, $request);
         }
 
+        // Filter excluded idncs
+        $results = array_filter($search->data, fn(SearchResult $result) => !UMA::isExcluded($result->idnc));
+
         return self::__render('views/search/results', $request, [
-            'results' => $search->data,
+            'results' => $results,
         ]);
     }
 }

@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Enums\ReportStatusEnum;
+use App\Models\Exclusion;
 use App\Models\Report;
 use App\Models\Review;
 use App\Traits\HasReports;
 use App\Traits\HasReviews;
 use App\Wrappers\Env;
+use App\Wrappers\MsgHandler;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\NotFoundException;
@@ -115,5 +118,39 @@ class StaffController extends Controller
         }
 
         return new RedirectResponse(Env::app_url('/staff/reports'));
+    }
+
+    public static function exclusionIndex(ServerRequestInterface $request): Response
+    {
+        $query = $request->getQueryParams();
+        $exclusions = Exclusion::paginate();
+
+        return self::__render('views/staff/exclusions', $request, [
+            'exclusions' => $exclusions,
+            'query' => $query,
+        ]);
+    }
+
+    public static function exclusionCreate(ServerRequestInterface $request): Response
+    {
+        $body = $request->getParsedBody();
+        if (!isset($body['email'])) {
+            throw self::__invalidBody();
+        }
+
+        $api = UMA::api();
+
+        $email = trim($body['email']);
+
+        $profesor = $api->profesor($email);
+        if (!$profesor->success) {
+            return MsgHandler::errorFromApi($profesor, $request);
+        }
+
+        Exclusion::create([
+            'idnc' => $profesor->data->idnc,
+        ]);
+
+        return new RedirectResponse('/staff/exclusions');
     }
 }

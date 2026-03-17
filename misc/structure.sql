@@ -52,3 +52,14 @@ CREATE TABLE `legends` (
   `full_name` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- wikiuma.exclusions definition
+CREATE TABLE `exclusions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `updated_at` datetime NOT NULL DEFAULT current_timestamp(),
+  `idnc` varchar(36) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `exclusions_unique` (`idnc`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;

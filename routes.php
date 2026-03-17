@@ -85,6 +85,8 @@ $router->group('/staff', function (RouteGroup $route) {
     $route->post('/reviews/{review_id:number}/delete', [StaffController::class, 'reviewDelete']);
     $route->get('/reports', [StaffController::class, 'reportIndex']);
     $route->post('/reports/{report_id:number}/status', [StaffController::class, 'reportStatus']);
+    $route->get('/exclusions', [StaffController::class, 'exclusionIndex']);
+    $route->post('/exclusions', [StaffController::class, 'exclusionCreate']);
 })->middleware(new AuthMiddleware());
 
 if (Env::app_debug()) {

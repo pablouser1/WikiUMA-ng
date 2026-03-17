@@ -72,6 +72,10 @@ class ProfesoresController extends Controller
             return MsgHandler::errorFromApi($profesor, $request);
         }
 
+        if (UMA::isExcluded($profesor->data->idnc)) {
+            throw self::__invalidEmail();
+        }
+
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $page, $filter);
         $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
@@ -86,6 +90,10 @@ class ProfesoresController extends Controller
 
     private static function __byIdnc(string $idnc, Api $api): Response
     {
+        if (UMA::isExcluded($idnc)) {
+            throw self::__invalidParams();
+        }
+
         $profesor = $api->profesorWeb($idnc);
         if (!$profesor->success) {
             throw self::__invalidParams();

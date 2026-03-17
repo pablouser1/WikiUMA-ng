@@ -9,6 +9,7 @@ use App\Models\Review;
 use App\Wrappers\Env;
 use App\Wrappers\Render;
 use App\Wrappers\Session;
+use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\NotFoundException;
@@ -47,6 +48,10 @@ class ReviewsController extends Controller
 
         if (!$type->isValidTarget($target)) {
             throw self::__inconsistentData();
+        }
+
+        if ($type === ReviewTypesEnum::TEACHER && UMA::isExcluded($target)) {
+            throw self::__invalidParams();
         }
 
         return self::__render('views/reviews/new', $request, [
@@ -102,6 +107,10 @@ class ReviewsController extends Controller
 
         if (!$type->isValidTarget($target)) {
             throw self::__inconsistentData();
+        }
+
+        if ($type === ReviewTypesEnum::TEACHER && UMA::isExcluded($target)) {
+            throw self::__invalidParams();
         }
 
         if (mb_strlen($body['message'], 'UTF-8') > Review::MESSAGE_MAX_LENGTH) {
