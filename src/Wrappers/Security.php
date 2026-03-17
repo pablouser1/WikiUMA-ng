@@ -62,7 +62,7 @@ class Security
             return null;
         }
 
-        $arr = explode(self::SEPARATOR, $dataTmp);
+        $arr = explode(self::SEPARATOR, $dataTmp, 2);
 
         if (count($arr) !== 2) {
             return null;
