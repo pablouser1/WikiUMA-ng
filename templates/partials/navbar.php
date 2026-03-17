@@ -106,6 +106,9 @@
                         <a class="navbar-item" href="<?= $this->url('/staff/reports') ?>">
                             Informes
                         </a>
+                        <a class="navbar-item" href="<?= $this->url('/staff/exclusions') ?>">
+                            Exclusiones
+                        </a>
                         <a class="navbar-item" href="<?= $this->url('/staff/logout') ?>">
                             Cerrar sesión
                         </a>
