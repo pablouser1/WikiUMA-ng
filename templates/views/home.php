@@ -19,13 +19,13 @@
             <span class="icon">
                 <?= icon('fa7-solid:chalkboard-teacher') ?>
             </span>
-            <span>Valorar profesores</span>
+            <span>Profesores</span>
         </a>
         <a class="button is-link" href="<?= $this->url('/centros') ?>">
             <span class="icon">
                 <?= icon('fa7-solid:book') ?>
             </span>
-            <span>Valorar asignaturas</span>
+            <span>Asignaturas</span>
         </a>
     </div>
     <?php if ($stats->total > 0): ?>
