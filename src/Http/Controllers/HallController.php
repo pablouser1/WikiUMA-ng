@@ -25,7 +25,7 @@ class HallController extends Controller
 
         $range = HallRangeEnum::tryFrom($query['range'] ?? '') ?? HallRangeEnum::ALL_TIMES;
         $hall = Stats::weighted(within: $range->carbon());
-        if (!$hall->lastRes->success) {
+        if ($hall->lastRes !== null && !$hall->lastRes->success) {
             return MsgHandler::errorFromApi($hall->lastRes, $request);
         }
 

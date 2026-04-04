@@ -35,6 +35,9 @@
             <?php endforeach ?>
         </ul>
     </div>
+    <?php if (count($hall) === 0): ?>
+        <p>No hay datos.</p>
+    <?php endif ?>
     <?php foreach ($hall as $item): ?>
         <div class="card">
             <div class="card-content">

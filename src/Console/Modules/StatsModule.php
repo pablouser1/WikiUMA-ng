@@ -44,7 +44,7 @@ class StatsModule extends Base implements IBase
     private function __ranking(bool $best): void
     {
         $weighted = Stats::weighted($best);
-        if (!$weighted->lastRes->success) {
+        if ($weighted->lastRes !== null && !$weighted->lastRes->success) {
             $this->cli->error($weighted->lastRes->error);
         }
 

@@ -51,6 +51,13 @@ class Stats
             })
             ->avg('note'); // C
 
+        if ($globalAverage === null) {
+            return (object) [
+                'lastRes' => null,
+                'data' => [],
+            ];
+        }
+
         $tops = Review::where('type', ReviewTypesEnum::TEACHER)
             ->when($within !== null, function ($query) use ($within) {
                 $query->whereDate('created_at', '>=', $within);
