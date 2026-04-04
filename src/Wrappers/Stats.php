@@ -17,6 +17,7 @@ class Stats
 {
     private const int HALL_MIN_REVIEWS_NEEDED = 10;
     private const int HALL_MAX_COUNT = 5;
+    private const int HALL_MIN_AVG = 5;
 
     public static function all(): StatsData
     {
@@ -38,7 +39,7 @@ class Stats
     }
 
     /**
-     * @return object{lastRes: Response<Profesor>|Response<string>, data: StatsData<Profesor>}
+     * @return object{lastRes: Response<Profesor>|Response<string>|null, data: StatsData<Profesor>}
      */
     public static function weighted(bool $best = true, ?Carbon $within = null): object
     {
@@ -58,19 +59,24 @@ class Stats
             ];
         }
 
-        $tops = Review::where('type', ReviewTypesEnum::TEACHER)
+        $tops = Review::query()
+            ->where('type', ReviewTypesEnum::TEACHER)
+            ->whereNotIn('target', Exclusion::all()->pluck('idnc'))
             ->when($within !== null, function ($query) use ($within) {
                 $query->whereDate('created_at', '>=', $within);
             })
             ->groupBy('target')
+            ->when($best, function ($query) {
+                $query->havingRaw('average_note >= ?', [self::HALL_MIN_AVG]);
+            })
             ->select('target')
             ->selectRaw('AVG(note) as average_note') // R
             ->selectRaw('COUNT(*) as review_count') // v
             // WR = ( (v / (v+m)) * R ) + ( (m / (v+m)) * C )
             ->selectRaw(
-                "(((COUNT(*) / (COUNT(*) + {$minReviewsRequired})) * AVG(note)) + (( {$minReviewsRequired} / (COUNT(*) + {$minReviewsRequired})) * {$globalAverage})) AS weighted_rating",
+                '(((COUNT(*) / (COUNT(*) + ?)) * AVG(note)) + ((? / (COUNT(*) + ?)) * ?)) AS weighted_rating',
+                [$minReviewsRequired, $minReviewsRequired, $minReviewsRequired, $globalAverage],
             )
-            ->whereNotIn('target', Exclusion::all()->pluck('idnc'))
             ->orderBy('weighted_rating', $best ? 'DESC' : 'ASC')
             ->orderBy('target', 'ASC') // Tie break
             ->limit(self::HALL_MAX_COUNT * 2)
