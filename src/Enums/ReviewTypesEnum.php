@@ -3,7 +3,7 @@
 namespace App\Enums;
 
 use App\Wrappers\Env;
-use App\Wrappers\Misc;
+use App\Wrappers\UMA;
 use Ramsey\Uuid\Uuid;
 
 /**
@@ -50,7 +50,7 @@ enum ReviewTypesEnum: int
         } elseif ($this === self::LEGEND) {
             return Env::app_url('/legends/' . $target);
         } elseif ($this === self::SUBJECT) {
-            $arr = Misc::planAsignaturaSplit($target);
+            $arr = UMA::planAsignaturaSplit($target);
             if ($arr === null) {
                 return null;
             }

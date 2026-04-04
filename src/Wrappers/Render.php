@@ -8,7 +8,6 @@ use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
 use League\Plates\Engine;
 use League\Plates\Extension\Asset;
-use Psr\Http\Message\UriInterface;
 
 class Render
 {
@@ -17,21 +16,21 @@ class Render
         $engine = new Engine(__DIR__ . '/../../templates');
         $engine->loadExtension(new Asset(__DIR__ . '/../../public'));
 
-        $engine->registerFunction('url', fn(string $path, ?array $query = null) => Env::app_url($path, $query));
+        $engine->registerFunction('url', [Env::class, 'app_url']);
         $engine->registerFunction('version', fn() => InstalledVersions::getRootPackage()['pretty_version']);
-        $engine->registerFunction('loggedin', fn() => Session::isLoggedIn());
-        $engine->registerFunction('theme', fn() => Cookies::theme());
+        $engine->registerFunction('loggedin', fn() => [Session::class, 'isLoggedIn']);
+        $engine->registerFunction('theme', fn() => [Cookies::class, 'theme']);
 
-        $engine->registerFunction('encrypt', fn(string $data) => Security::encrypt($data));
-        $engine->registerFunction('hcaptcha_sitekey', fn() => Env::hcaptcha_sitekey());
+        $engine->registerFunction('encrypt', [Security::class, 'encrypt']);
+        $engine->registerFunction('hcaptcha_sitekey', [Env::class, 'hcaptcha_sitekey']);
 
-        $engine->registerFunction('pathWithQuery', fn(UriInterface $uri) => Misc::pathWithQuery($uri));
-        $engine->registerFunction('uriQuery', fn(UriInterface $uri, array $origQuery, array $newData) => Misc::modifyQueryFromUri($uri, $origQuery, $newData));
+        $engine->registerFunction('pathWithQuery', [Misc::class, 'pathWithQuery']);
+        $engine->registerFunction('uriQuery', [Misc::class, 'modifyQueryFromUri']);
 
-        $engine->registerFunction('planAsignaturaSplit', fn(string $str) => Misc::planAsignaturaSplit($str));
-        $engine->registerFunction('planAsignaturaJoin', fn(string $plan_id, string $asig_id) => Misc::planAsignaturaJoin($plan_id, $asig_id));
+        $engine->registerFunction('planAsignaturaSplit', [UMA::class, 'planAsignaturaSplit']);
+        $engine->registerFunction('planAsignaturaJoin', [UMA::class, 'planAsignaturaJoin']);
 
-        $engine->registerFunction('contact', fn(bool $antiSpam = true) => Env::app_contact($antiSpam));
+        $engine->registerFunction('contact', [Env::class, 'app_contact']);
         // -- STYLING -- //
         $engine->registerFunction('color', function (float $note, bool $isComment = false): string {
             $type = '';
@@ -46,7 +45,7 @@ class Render
             } else {
                 if ($note < 5) {
                     $type = 'danger';
-                } elseif ((5 <= $note) && ($note < 7)) {
+                } elseif (5 <= $note && $note < 7) {
                     $type = 'warning';
                 } elseif ($note >= 7) {
                     $type = 'success';

@@ -2,7 +2,7 @@
 
 namespace App\Constants;
 
-use App\Wrappers\Misc;
+use App\Wrappers\Security;
 
 use function count;
 
@@ -41,6 +41,6 @@ class Extras
 
     public static function review(string $rawBody): ?string
     {
-        return Misc::isXss($rawBody) ? self::MY_FIRST_XSS_REDIRECT : null;
+        return Security::isXssNaive($rawBody) ? self::MY_FIRST_XSS_REDIRECT : null;
     }
 }

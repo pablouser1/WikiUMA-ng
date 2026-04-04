@@ -51,6 +51,12 @@ class Security
         return $resData;
     }
 
+    public static function isXssNaive(string $input): bool
+    {
+        $pattern = '/<\s*script[^>]*>|javascript\s*:|on\w+\s*=/i';
+        return preg_match($pattern, $input) === 1;
+    }
+
     private static function __ivLength(): int
     {
         return openssl_cipher_iv_length(self::ALGO);

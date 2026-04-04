@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Enums\ReviewTypesEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
-use App\Wrappers\Misc;
 use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Psr\Http\Message\ServerRequestInterface;
@@ -40,7 +39,7 @@ class AsignaturasController extends Controller
             return MsgHandler::errorFromApi($asignatura, $request);
         }
 
-        $id = Misc::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
+        $id = UMA::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $page, $filter);

@@ -5,8 +5,6 @@ namespace App\Wrappers;
 use Psr\Http\Message\UriInterface;
 use DOMDocument;
 
-use function count;
-
 class Misc
 {
     public static function pathWithQuery(UriInterface $uri): string
@@ -44,26 +42,5 @@ class Misc
         $doc = new DOMDocument();
         $success = @$doc->loadHTML($html);
         return $success ? $doc : null;
-    }
-
-    public static function isXss(string $input): bool
-    {
-        $pattern = '/<\s*script[^>]*>|javascript\s*:|on\w+\s*=/i';
-        return preg_match($pattern, $input) === 1;
-    }
-
-    public static function planAsignaturaSplit(string $str): ?array
-    {
-        $arr = explode(';', $str);
-        if (count($arr) === 2) {
-            return $arr;
-        }
-
-        return null;
-    }
-
-    public static function planAsignaturaJoin(string $plan_id, string $asig_id): string
-    {
-        return $plan_id . ';' . $asig_id;
     }
 }
