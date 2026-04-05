@@ -34,6 +34,6 @@ class UMA
 
     public static function planAsignaturaJoin(string $plan_id, string $asig_id): string
     {
-        return $plan_id . ';' . $asig_id;
+        return "$plan_id;$asig_id";
     }
 }

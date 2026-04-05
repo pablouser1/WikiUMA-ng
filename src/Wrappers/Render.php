@@ -18,8 +18,8 @@ class Render
 
         $engine->registerFunction('url', [Env::class, 'app_url']);
         $engine->registerFunction('version', fn() => InstalledVersions::getRootPackage()['pretty_version']);
-        $engine->registerFunction('loggedin', fn() => [Session::class, 'isLoggedIn']);
-        $engine->registerFunction('theme', fn() => [Cookies::class, 'theme']);
+        $engine->registerFunction('loggedin', [Session::class, 'isLoggedIn']);
+        $engine->registerFunction('theme', [Cookies::class, 'theme']);
 
         $engine->registerFunction('encrypt', [Security::class, 'encrypt']);
         $engine->registerFunction('hcaptcha_sitekey', [Env::class, 'hcaptcha_sitekey']);
