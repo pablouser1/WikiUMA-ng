@@ -49,7 +49,7 @@ class StatsModule extends Base implements IBase
         }
 
         foreach ($weighted->data as $item) {
-            $this->cli->out("{$item->teacher->nombre}: {$item->total} valoraciones | {$item->avg} media");
+            $this->cli->out("{$item->for->nombre}: {$item->total} valoraciones | {$item->avg} media");
         }
     }
 }

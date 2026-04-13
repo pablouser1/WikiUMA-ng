@@ -39,7 +39,7 @@ class Stats
     }
 
     /**
-     * @return object{lastRes: Response<Profesor>|Response<string>|null, data: StatsData<Profesor>}
+     * @return object{lastRes: Response<Profesor>|Response<string>|null, data: StatsData<Profesor>[]}
      */
     public static function weighted(bool $best = true, ?Carbon $within = null): object
     {

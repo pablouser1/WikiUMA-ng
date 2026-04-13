@@ -1,6 +1,6 @@
 /**
  * Handle client-side items filtering.
- * Get all .item elements and remove based on search term.
+ * Get all .item elements and hide based on search term.
 */
 
 const items = document.getElementsByClassName('item');
