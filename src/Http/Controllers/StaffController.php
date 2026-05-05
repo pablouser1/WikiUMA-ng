@@ -117,6 +117,11 @@ class StaffController extends Controller
             throw new NotFoundException('Informe no encontrado');
         }
 
+        $reason = isset($body['reason']) && !empty($body['reason']) ? trim($body['reason']) : null;
+        $report->status = $status;
+        $report->reason = $reason;
+        $report->save();
+
         return new RedirectResponse(Env::app_url('/staff/reports'));
     }
 

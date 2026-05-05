@@ -16,11 +16,12 @@ date_default_timezone_set(Env::app_tz());
 $db = Env::db();
 $capsule = new Capsule();
 
-$capsule->addConnection(array_merge($db, [
+$capsule->addConnection([
+    ...$db,
     'charset' => 'utf8mb4',
     'collation' => 'utf8mb4_unicode_ci',
     'prefix' => '',
-]));
+]);
 
 $capsule->setEventDispatcher(new Dispatcher());
 
