@@ -1,8 +1,19 @@
 #!/usr/bin/env php
 <?php
-require __DIR__ . '/vendor/autoload.php';
 
-use App\Console\Driver;
+use Ahc\Cli\Application;
+use App\Console\Migration\DbToEmailManualMigrationCommand;
+use App\Console\Migration\DbToEmailMigrationCommand;
+use App\Console\Migration\DbToLegendMigrationCommand;
+use App\Console\Migration\EmailToIdncMigrationCommand;
+use App\Console\Migration\ImportReviewsMigrationCommand;
+use App\Console\StatsCommand;
+use App\Console\Users\UsersAddCommand;
+use App\Console\Users\UsersDeleteCommand;
+use App\Console\Users\UsersListCommand;
+use App\Constants\App;
+
+require __DIR__ . '/vendor/autoload.php';
 
 if (PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) {
   echo "Cli only!";
@@ -12,7 +23,23 @@ if (PHP_SAPI !== 'cli' || isset($_SERVER['HTTP_USER_AGENT'])) {
 require __DIR__ . '/bootstrap.php';
 require __DIR__ . '/functions.php';
 
-$cli = new League\CLImate\CLImate;
+$app = new Application(
+    'WikiUMA',
+    App::version(),
+);
 
-$driver = new Driver($cli);
-$driver->entrypoint();
+$app->add(new StatsCommand());
+
+// Migration
+$app->add(new DbToEmailMigrationCommand());
+$app->add(new DbToEmailManualMigrationCommand());
+$app->add(new EmailToIdncMigrationCommand());
+$app->add(new ImportReviewsMigrationCommand());
+$app->add(new DbToLegendMigrationCommand());
+
+// Users
+$app->add(new UsersListCommand());
+$app->add(new UsersAddCommand());
+$app->add(new UsersDeleteCommand());
+
+$app->handle($_SERVER['argv']);

@@ -2,7 +2,7 @@
 
 namespace App\Wrappers;
 
-use Composer\InstalledVersions;
+use App\Constants\App;
 use League\CommonMark\Environment\Environment;
 use League\CommonMark\Extension\InlinesOnly\InlinesOnlyExtension;
 use League\CommonMark\MarkdownConverter;
@@ -17,7 +17,7 @@ class Render
         $engine->loadExtension(new Asset(__DIR__ . '/../../public'));
 
         $engine->registerFunction('url', [Env::class, 'app_url']);
-        $engine->registerFunction('version', fn() => InstalledVersions::getRootPackage()['pretty_version']);
+        $engine->registerFunction('version', [App::class, 'version']);
         $engine->registerFunction('loggedin', [Session::class, 'isLoggedIn']);
         $engine->registerFunction('theme', [Cookies::class, 'theme']);
 
