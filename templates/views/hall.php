@@ -35,7 +35,7 @@
             <?php endforeach ?>
         </ul>
     </div>
-    <?php if (count($hall) === 0): ?>
+    <?php if (\count($hall) === 0): ?>
         <p>No hay datos.</p>
     <?php endif ?>
     <?php foreach ($hall as $item): ?>

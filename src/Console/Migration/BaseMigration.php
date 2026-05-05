@@ -1,10 +1,12 @@
 <?php
+
 namespace App\Console\Migration;
 
 use Ahc\Cli\Input\Command;
 use App\Wrappers\Storage;
 use App\Wrappers\UMA;
 use UMA\Api;
+use SQLite3;
 
 abstract class BaseMigration extends Command
 {
@@ -15,8 +17,8 @@ abstract class BaseMigration extends Command
         return UMA::api();
     }
 
-    public function db(): \SQLite3
+    public function db(): SQLite3
     {
-        return new \SQLite3(Storage::path(self::DB_FILENAME), SQLITE3_OPEN_READONLY);
+        return new SQLite3(Storage::path(self::DB_FILENAME), SQLITE3_OPEN_READONLY);
     }
 }

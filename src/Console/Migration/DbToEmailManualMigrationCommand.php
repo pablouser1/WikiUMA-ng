@@ -1,16 +1,16 @@
 <?php
+
 namespace App\Console\Migration;
 
 use App\Wrappers\Storage;
 
 class DbToEmailManualMigrationCommand extends BaseMigration
 {
-
     public function __construct()
     {
         parent::__construct(
             'migration:db2email-manual',
-            'Used for teachers that couldn\'t be linked automatically on migration:db2email'
+            'Used for teachers that couldn\'t be linked automatically on migration:db2email',
         );
     }
 

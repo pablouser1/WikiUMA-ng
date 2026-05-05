@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Users;
 
 use Ahc\Cli\Input\Command;

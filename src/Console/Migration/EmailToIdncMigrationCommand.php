@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Migration;
 
 use App\Wrappers\Storage;
@@ -7,12 +8,11 @@ use function count;
 
 class EmailToIdncMigrationCommand extends BaseMigration
 {
-
     public function __construct()
     {
         parent::__construct(
             'migration:email2idnc',
-            'Relate email to idnc'
+            'Relate email to idnc',
         );
     }
 

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Migration;
 
 use App\Enums\ReviewTypesEnum;
@@ -7,12 +8,11 @@ use App\Wrappers\Storage;
 
 class ImportReviewsMigrationCommand extends BaseMigration
 {
-
     public function __construct()
     {
         parent::__construct(
             'migration:import-reviews',
-            'Write all importable reviews'
+            'Write all importable reviews',
         );
     }
 

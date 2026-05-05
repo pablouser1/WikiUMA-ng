@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Users;
 
 use Ahc\Cli\Input\Command;
@@ -19,7 +20,7 @@ class UsersAddCommand extends Command
             ->option('--email', 'Email');
     }
 
-    public function interact(Interactor $io) : void
+    public function interact(Interactor $io): void
     {
         if (!$this->username) {
             $this->set('username', $io->prompt('Enter username'));

@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Migration;
 
 use App\Wrappers\Misc;
@@ -16,7 +17,7 @@ class DbToEmailMigrationCommand extends BaseMigration
     {
         parent::__construct(
             'migration:db2email',
-            'Get teachers\' names from db and attempt to relate them to data found on DUMA'
+            'Get teachers\' names from db and attempt to relate them to data found on DUMA',
         );
     }
 

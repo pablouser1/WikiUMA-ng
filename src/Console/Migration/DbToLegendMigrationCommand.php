@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Console\Migration;
 
 use App\Enums\ReviewTypesEnum;
@@ -7,12 +8,11 @@ use App\Models\Review;
 
 class DbToLegendMigrationCommand extends BaseMigration
 {
-
     public function __construct()
     {
         parent::__construct(
             'migration:db2legend',
-            'Add teacher and associated reviews to legend'
+            'Add teacher and associated reviews to legend',
         );
 
         $this->argument('<id>', 'Teacher id');
