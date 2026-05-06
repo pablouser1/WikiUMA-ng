@@ -10,8 +10,12 @@
  */
 ?>
 
+<?php
+$name = $best ? 'fama' : 'infamia';
+?>
+
 <?php $this->layout('layouts/hero', [
-    'title' => 'Salón de la fama',
+    'title' => "Salón de la $name",
     'uri' => $uri,
 ]) ?>
 
@@ -21,7 +25,7 @@
             <span class="icon">
                 <?= icon('fa7-solid:trophy') ?>
             </span>
-            <span>Salón de la <?= $best ? 'fama' : 'infamia' ?></span>
+            <span>Salón de la <?= $this->e($name) ?></span>
         </span>
     </p>
     <div class="tabs is-centered is-toggle">
