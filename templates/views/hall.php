@@ -2,6 +2,7 @@
 /**
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
+ * @var array $query
  * @var \App\Dto\StatsData<\UMA\Models\Profesor>[] $hall
  * @var \App\Enums\HallRangeEnum[] $ranges
  * @var \App\Enums\HallRangeEnum $currentRange
@@ -30,7 +31,7 @@
                 <?php else: ?>
                     <li>
                 <?php endif ?>
-                    <a href="<?= $this->url('/hall', ['range' => $range->value]) ?>"><?= $this->e($range->displayName()) ?></a>
+                    <a href="<?= $this->uriQuery($uri, $query, ['range' => $range->value]) ?>"><?= $this->e($range->displayName()) ?></a>
                 </li>
             <?php endforeach ?>
         </ul>

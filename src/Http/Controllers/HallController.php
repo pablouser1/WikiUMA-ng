@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Enums\HallRangeEnum;
+use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\Stats;
 use Laminas\Diactoros\Response;
@@ -23,8 +24,17 @@ class HallController extends Controller
     {
         $query = $request->getQueryParams();
 
+        $best = true;
+        $lowest = Env::app_lowest();
+        if ($lowest && ($query[$lowest[0]] ?? null) === $lowest[1]) {
+            $best = false;
+        }
+
         $range = HallRangeEnum::tryFrom($query['range'] ?? '') ?? HallRangeEnum::ALL_TIMES;
-        $hall = Stats::weighted(within: $range->carbon());
+        $hall = Stats::weighted(
+            best: $best,
+            within: $range->carbon(),
+        );
         if ($hall->lastRes !== null && !$hall->lastRes->success) {
             return MsgHandler::errorFromApi($hall->lastRes, $request);
         }
@@ -33,6 +43,7 @@ class HallController extends Controller
             'hall' => $hall->data,
             'ranges' => HallRangeEnum::cases(),
             'currentRange' => $range,
+            'query' => $query,
         ]);
     }
 }

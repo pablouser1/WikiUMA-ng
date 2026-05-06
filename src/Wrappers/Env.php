@@ -85,6 +85,17 @@ class Env
         return $_ENV['APP_TZ'] ?? 'UTC';
     }
 
+    public static function app_lowest(): ?array
+    {
+        $key = $_ENV['APP_LOWEST_KEY'] ?? null;
+        $value = $_ENV['APP_LOWEST_VALUE'] ?? null;
+        if ($key === null || $value === null) {
+            return null;
+        }
+
+        return [$key, $value];
+    }
+
     public static function hcaptcha_sitekey(): string
     {
         return $_ENV['HCAPTCHA_SITEKEY'] ?? '';
