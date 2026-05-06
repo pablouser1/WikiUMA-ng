@@ -6,6 +6,7 @@
  * @var \App\Dto\StatsData<\UMA\Models\Profesor>[] $hall
  * @var \App\Enums\HallRangeEnum[] $ranges
  * @var \App\Enums\HallRangeEnum $currentRange
+ * @var bool $best
  */
 ?>
 
@@ -20,7 +21,7 @@
             <span class="icon">
                 <?= icon('fa7-solid:trophy') ?>
             </span>
-            <span>Salón de la fama</span>
+            <span>Salón de la <?= $best ? 'fama' : 'infamia' ?></span>
         </span>
     </p>
     <div class="tabs is-centered is-toggle">
