@@ -43,6 +43,7 @@ class HallController extends Controller
             'hall' => $hall->data,
             'ranges' => HallRangeEnum::cases(),
             'currentRange' => $range,
+            'best' => $best,
             'query' => $query,
         ]);
     }
