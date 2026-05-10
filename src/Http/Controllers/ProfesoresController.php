@@ -11,7 +11,7 @@ use App\Wrappers\UMA;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use Psr\Http\Message\ServerRequestInterface;
-use UMA\Api;
+use UMA\Models\Profesor;
 
 /**
  * Teachers Controller.
@@ -30,36 +30,45 @@ class ProfesoresController extends Controller
     public static function index(ServerRequestInterface $request): Response
     {
         $query = $request->getQueryParams();
-        $api = UMA::api();
 
-        $response = null;
         if (isset($query['email'])) {
-            $response = self::__byEmail($query['email'], $api, $request, $query);
-        } elseif (isset($query['idnc'])) {
-            $response = self::__byIdnc($query['idnc'], $api);
-        } else {
-            throw self::__invalidParams();
+            return self::__byEmail($query['email'], $request, $query);
         }
 
-        return $response;
+        if (isset($query['idnc'])) {
+            return self::__byIdnc($query['idnc']);
+        }
+
+        throw self::__invalidParams();
     }
 
-    private static function __byEmail(string $emailRaw, Api $api, ServerRequestInterface $request, array $query): Response
+    public static function stats(ServerRequestInterface $request): Response
     {
-        $isNotEncrypted = filter_var($emailRaw, FILTER_VALIDATE_EMAIL);
-        if ($isNotEncrypted) {
+        $query = $request->getQueryParams();
+        $resolved = self::__resolveProfesor($query['email'] ?? null, $request);
+
+        // If the resolver returned a Response (error), return it immediately
+        if ($resolved instanceof Response) {
+            return $resolved;
+        }
+
+        return self::__render('views/profesor/stats', $request, [
+            'profesor' => $resolved,
+        ]);
+    }
+
+    private static function __byEmail(string $emailRaw, ServerRequestInterface $request, array $query): Response
+    {
+        // Redirect if raw email is provided
+        if (filter_var($emailRaw, FILTER_VALIDATE_EMAIL)) {
             return new RedirectResponse(Env::app_url('/profesores', [
                 'email' => Security::encrypt($emailRaw),
             ]));
         }
 
-        $email = Security::decrypt($emailRaw);
-        if ($email === null) {
-            throw self::__invalidEmail();
-        }
-
-        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-            throw self::__invalidEmail();
+        $resolved = self::__resolveProfesor($emailRaw, $request);
+        if ($resolved instanceof Response) {
+            return $resolved;
         }
 
         $page = self::__parseIntFromQuery('page', $query);
@@ -67,7 +76,45 @@ class ProfesoresController extends Controller
             throw self::__invalidParams();
         }
 
-        $profesor = $api->profesor($email);
+        $filter = self::__getReviewFilter($query['filter'] ?? null);
+
+        return self::__render('views/profesor/index', $request, [
+            'profesor' => $resolved,
+            'reviews' => self::__getReviews($resolved->idnc, ReviewTypesEnum::TEACHER, $page, $filter),
+            'stats' => self::__getStats($resolved->idnc, ReviewTypesEnum::TEACHER),
+            'query' => $query,
+        ]);
+    }
+
+    private static function __byIdnc(string $idnc): Response
+    {
+        if (UMA::isExcluded($idnc)) {
+            throw self::__invalidParams();
+        }
+
+        $profesor = UMA::api()->profesorWeb($idnc);
+        if (!$profesor->success) {
+            throw self::__invalidParams();
+        }
+
+        return new RedirectResponse(Env::app_url('/profesores', [
+            'email' => Security::encrypt($profesor->data),
+        ]));
+    }
+
+    private static function __resolveProfesor(?string $encryptedEmail, ServerRequestInterface $request): Profesor|Response
+    {
+        if (!$encryptedEmail) {
+            throw self::__invalidParams();
+        }
+
+        $email = Security::decrypt($encryptedEmail);
+        if ($email === null || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw self::__invalidEmail();
+        }
+
+        $profesor = UMA::api()->profesor($email);
+
         if (!$profesor->success) {
             return MsgHandler::errorFromApi($profesor, $request);
         }
@@ -76,31 +123,6 @@ class ProfesoresController extends Controller
             throw self::__invalidEmail();
         }
 
-        $filter = self::__getReviewFilter($query['filter'] ?? null);
-        $reviews = self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $page, $filter);
-        $stats = self::__getStats($profesor->data->idnc, ReviewTypesEnum::TEACHER);
-
-        return self::__render('views/profesor', $request, [
-            'profesor' => $profesor->data,
-            'reviews' => $reviews,
-            'stats' => $stats,
-            'query' => $query,
-        ]);
-    }
-
-    private static function __byIdnc(string $idnc, Api $api): Response
-    {
-        if (UMA::isExcluded($idnc)) {
-            throw self::__invalidParams();
-        }
-
-        $profesor = $api->profesorWeb($idnc);
-        if (!$profesor->success) {
-            throw self::__invalidParams();
-        }
-
-        return new RedirectResponse(Env::app_url('/profesores', [
-            'email' => Security::encrypt($profesor->data),
-        ]));
+        return $profesor->data;
     }
 }

@@ -64,6 +64,11 @@ $router->group('/centros/{centro_id:number}/titulaciones', function (RouteGroup 
 
 $router->get('/planes/{plan_id:number}/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
 
+$router->group('/profesores', function (RouteGroup $route) {
+    $route->get('/', [ProfesoresController::class, 'index']);
+    $route->get('/stats', [ProfesoresController::class, 'stats']);
+});
+
 $router->get('/profesores', [ProfesoresController::class, 'index']);
 
 $router->get('/reviews', [ReviewsController::class, 'index']);

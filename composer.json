@@ -13,6 +13,7 @@
     "require": {
         "ext-iconv": "*",
         "adhocore/cli": "^1.9.4",
+        "bbsnly/chartjs-php": "^4.0",
         "chillerlan/php-cache": "^5.1.0",
         "illuminate/database": "^13.7.0",
         "illuminate/events": "^13.7.0",

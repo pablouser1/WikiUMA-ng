@@ -7,6 +7,7 @@
     'withForm' => $withForm ?? false,
     'withCaptcha' => $withCaptcha ?? false,
     'withReviews' => $withReviews ?? false,
+    'withCharts' => $withCharts ?? false,
 ])
 ?>
 <body>

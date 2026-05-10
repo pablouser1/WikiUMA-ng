@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5db57529633935ce1beb5024815fd13a",
+    "content-hash": "56e04bb386e2f4daf38bace1808226c3",
     "packages": [
         {
             "name": "adhocore/cli",
@@ -78,6 +78,54 @@
                 }
             ],
             "time": "2025-05-11T13:23:54+00:00"
+        },
+        {
+            "name": "bbsnly/chartjs-php",
+            "version": "v4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bbsnly/chartjs-php.git",
+                "reference": "23af1a1ec169ffdb978f5365448532a383f57af7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/bbsnly/chartjs-php/zipball/23af1a1ec169ffdb978f5365448532a383f57af7",
+                "reference": "23af1a1ec169ffdb978f5365448532a383f57af7",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "package",
+            "autoload": {
+                "psr-4": {
+                    "Bbsnly\\ChartJs\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anatoliy Babushka",
+                    "email": "anatoliybabushka@gmail.com"
+                }
+            ],
+            "description": "PHP wrapper for Chart.js library",
+            "homepage": "https://github.com/bbsnly/chartjs-php",
+            "keywords": [
+                "chartjs",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/bbsnly/chartjs-php/issues",
+                "source": "https://github.com/bbsnly/chartjs-php/tree/v4.0.1"
+            },
+            "time": "2024-07-31T18:22:44+00:00"
         },
         {
             "name": "brick/math",
