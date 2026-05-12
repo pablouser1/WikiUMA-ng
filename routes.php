@@ -16,6 +16,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TipsController;
 use App\Http\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
@@ -64,10 +65,7 @@ $router->group('/centros/{centro_id:number}/titulaciones', function (RouteGroup 
 
 $router->get('/planes/{plan_id:number}/asignaturas/{asignatura_id:number}', [AsignaturasController::class, 'index']);
 
-$router->group('/profesores', function (RouteGroup $route) {
-    $route->get('/', [ProfesoresController::class, 'index']);
-    $route->get('/stats', [ProfesoresController::class, 'stats']);
-});
+$router->get('/profesores', [ProfesoresController::class, 'index']);
 
 $router->get('/reviews', [ReviewsController::class, 'index']);
 $router->post('/reviews', [ReviewsController::class, 'create']);
@@ -76,6 +74,8 @@ $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
     $route->get('/like', [ReviewsController::class, 'like']);
     $route->get('/dislike', [ReviewsController::class, 'dislike']);
 });
+
+$router->get('/stats', [StatsController::class, 'index']);
 
 $router->group('/staff', function (RouteGroup $route) {
     // -- Auth -- //
