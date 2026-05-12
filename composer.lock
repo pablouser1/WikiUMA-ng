@@ -2226,16 +2226,16 @@
         },
         {
             "name": "pablouser1/umawrapper",
-            "version": "1.2.0",
+            "version": "1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pablouser1/UMAWrapper.git",
-                "reference": "c3833c8620256ba27daca7e0814be615f58ba2a3"
+                "reference": "438b56a5cf80da0a4a11b65d8cd3e30cb7959db7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pablouser1/UMAWrapper/zipball/c3833c8620256ba27daca7e0814be615f58ba2a3",
-                "reference": "c3833c8620256ba27daca7e0814be615f58ba2a3",
+                "url": "https://api.github.com/repos/pablouser1/UMAWrapper/zipball/438b56a5cf80da0a4a11b65d8cd3e30cb7959db7",
+                "reference": "438b56a5cf80da0a4a11b65d8cd3e30cb7959db7",
                 "shasum": ""
             },
             "require": {
@@ -2269,9 +2269,9 @@
             "description": "Wrapper de la API de la Universidad de Málaga",
             "support": {
                 "issues": "https://github.com/pablouser1/UMAWrapper/issues",
-                "source": "https://github.com/pablouser1/UMAWrapper/tree/v1.2.0"
+                "source": "https://github.com/pablouser1/UMAWrapper/tree/v1.2.1"
             },
-            "time": "2026-05-12T11:41:06+00:00"
+            "time": "2026-05-12T15:00:51+00:00"
         },
         {
             "name": "phpmailer/phpmailer",
