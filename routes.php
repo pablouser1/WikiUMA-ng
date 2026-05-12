@@ -69,8 +69,6 @@ $router->group('/profesores', function (RouteGroup $route) {
     $route->get('/stats', [ProfesoresController::class, 'stats']);
 });
 
-$router->get('/profesores', [ProfesoresController::class, 'index']);
-
 $router->get('/reviews', [ReviewsController::class, 'index']);
 $router->post('/reviews', [ReviewsController::class, 'create']);
 $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
