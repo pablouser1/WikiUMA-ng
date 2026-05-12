@@ -41,7 +41,7 @@
                 ]) ?>
             </div>
         <?php endif ?>
-        <?php if ($unpopular !== null && $popular->votes < 0): ?>
+        <?php if ($unpopular !== null && $unpopular->votes < 0): ?>
             <div class="column is-half">
                 <p class="is-size-4 has-text-centered">
                     <b>Valoración más polémica</b>
