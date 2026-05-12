@@ -106,8 +106,8 @@ class StatsController extends Controller
                         'size' => 14,
                         'weight' => 'bold',
                     ],
-                    'padding' => ['top' => 10, 'bottom' => 0]
-                ]
+                    'padding' => ['top' => 10, 'bottom' => 0],
+                ],
             ],
             'y' => [
                 'title' => [
@@ -119,9 +119,9 @@ class StatsController extends Controller
                         'size' => 14,
                         'weight' => 'bold',
                     ],
-                    'padding' => ['top' => 0, 'bottom' => 10]
+                    'padding' => ['top' => 0, 'bottom' => 10],
                 ],
-            ]
+            ],
         ]);
 
         $options->plugins([
