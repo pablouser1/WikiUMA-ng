@@ -1,13 +1,13 @@
 <?php
 $hasFrom = isset($from) && !empty($from);
-$isReadOnly = $hasFrom && $from['type']->isReadOnly();
+$isReadOnly = $hasFrom && $from->type->isReadOnly();
 ?>
 
 <div class="block">
     <?php if (!$isReadOnly && $hasFrom): ?>
-        <?php $this->insert('partials/reviews/new', [
-            'target' => $from['target'],
-            'type' => $from['type'],
+        <?php $this->insert('partials/reviews/actions', [
+            'target' => $from->target,
+            'type' => $from->type,
         ]) ?>
     <?php endif ?>
     <?php $this->insert('partials/reviews/filter', [

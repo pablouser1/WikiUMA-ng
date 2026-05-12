@@ -5,7 +5,7 @@
  * @var array $query
  * @var \UMA\Models\Asignatura $asignatura
  * @var \App\Models\Review[] $reviews
- * @var \App\Dto\StatsData $stats
+ * @var \App\Dto\StatsDto $stats
  */
 ?>
 
@@ -33,10 +33,10 @@
                 'reviews' => $reviews,
                 'uri' => $uri,
                 'query' => $query,
-                'from' => [
-                    'target' => $this->planAsignaturaJoin($plan_id, $asignatura->codAsig),
-                    'type' => \App\Enums\ReviewTypesEnum::SUBJECT,
-                ],
+                'from' => new App\Dto\FromDto(
+                    target: $this->planAsignaturaJoin($plan_id, $asignatura->codAsig),
+                    type: \App\Enums\ReviewTypesEnum::SUBJECT,
+                ),
             ]) ?>
         </div>
     </div>

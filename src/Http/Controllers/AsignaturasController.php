@@ -43,7 +43,7 @@ class AsignaturasController extends Controller
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $page, $filter);
-        $stats = self::__getStats($id, ReviewTypesEnum::SUBJECT);
+        $stats = self::__getStatsSimple($id, ReviewTypesEnum::SUBJECT);
 
         return self::__render('views/asignatura', $request, [
             'asignatura' => $asignatura->data,

@@ -3,7 +3,7 @@
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
  * @var array $query
- * @var \App\Dto\StatsData<\UMA\Models\Profesor>[] $hall
+ * @var \App\Dto\StatsDto<\UMA\Models\Profesor>[] $hall
  * @var \App\Enums\HallRangeEnum[] $ranges
  * @var \App\Enums\HallRangeEnum $currentRange
  * @var bool $best

@@ -19,5 +19,8 @@
     <?php if (isset($withForm) && $withForm): ?>
         <script defer src="<?= $this->url($this->asset('/js/form.js')) ?>"></script>
     <?php endif ?>
+    <?php if (isset($withCharts) && $withCharts): ?>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <?php endif ?>
     <title><?= $this->e($title) ?> - WikiUMA</title>
 </head>

@@ -3,7 +3,7 @@
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
  * @var \App\Models\Legend $legend
- * @var \App\Dto\StatsData $stats
+ * @var \App\Dto\StatsDto $stats
  */
 ?>
 
@@ -28,10 +28,10 @@
             'reviews' => $reviews,
             'uri' => $uri,
             'query' => $query,
-            'from' => [
-                'target' => $legend->id,
-                'type' => \App\Enums\ReviewTypesEnum::LEGEND,
-            ],
+            'from' => new App\Dto\FromDto(
+                target: $legend->id,
+                type: \App\Enums\ReviewTypesEnum::LEGEND,
+            ),
         ]) ?>
     </div>
 </section>

@@ -5,7 +5,7 @@
  * @var array $query
  * @var \UMA\Models\Profesor $profesor
  * @var \Illuminate\Support\Collection<\App\Models\Review> $reviews
- * @var \App\Dto\StatsData $stats
+ * @var \App\Dto\StatsDto $stats
  */
 ?>
 
@@ -19,7 +19,9 @@
     <div class="hero-body">
         <p class="title"><?= $this->e($profesor->nombre) ?></p>
         <?php if (isset($profesor->departamentos[0])): ?>
-            <span class="tag is-info"><?= $this->e($profesor->departamentos[0][0]->nombre) ?></span>
+            <p class="subtitle">
+                <span class="tag is-info"><?= $this->e($profesor->departamentos[0][0]->nombre) ?></span>
+            </p>
         <?php endif ?>
         <?php if ($stats->total > 0): ?>
             <?php $this->insert('partials/stats/index', ['stats' => $stats]) ?>
@@ -33,10 +35,10 @@
             'reviews' => $reviews,
             'uri' => $uri,
             'query' => $query,
-            'from' => [
-                'target' => $profesor->idnc,
-                'type' => \App\Enums\ReviewTypesEnum::TEACHER,
-            ],
+            'from' => new App\Dto\FromDto(
+                target: $profesor->idnc,
+                type: \App\Enums\ReviewTypesEnum::TEACHER,
+            ),
         ]) ?>
     </div>
 </section>

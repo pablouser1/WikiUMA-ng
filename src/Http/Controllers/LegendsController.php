@@ -46,7 +46,7 @@ class LegendsController extends Controller
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
         $reviews = self::__getReviews($legend->id, ReviewTypesEnum::LEGEND, $page, $filter);
-        $stats = self::__getStats($legend->id, ReviewTypesEnum::LEGEND);
+        $stats = self::__getStatsSimple($legend->id, ReviewTypesEnum::LEGEND);
 
         return self::__render('views/legends/single', $request, [
             'legend' => $legend,

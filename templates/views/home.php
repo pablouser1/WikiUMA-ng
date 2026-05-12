@@ -2,7 +2,7 @@
 /**
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
- * @var \App\Dto\StatsData $stats
+ * @var \App\Dto\StatsDto $stats
  */
 ?>
 

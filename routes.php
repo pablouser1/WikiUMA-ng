@@ -16,6 +16,7 @@ use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\ReviewsController;
 use App\Http\Controllers\SearchController;
 use App\Http\Controllers\StaffController;
+use App\Http\Controllers\StatsController;
 use App\Http\Controllers\TipsController;
 use App\Http\Middleware\AuthMiddleware;
 use App\Wrappers\Env;
@@ -73,6 +74,8 @@ $router->group('/reviews/{review_id:number}', function (RouteGroup $route) {
     $route->get('/like', [ReviewsController::class, 'like']);
     $route->get('/dislike', [ReviewsController::class, 'dislike']);
 });
+
+$router->get('/stats', [StatsController::class, 'index']);
 
 $router->group('/staff', function (RouteGroup $route) {
     // -- Auth -- //

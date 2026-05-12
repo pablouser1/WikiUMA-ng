@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Constants\App;
+use App\Dto\StatsDto;
 use App\Enums\ReviewFilterEnum;
 use App\Enums\ReviewTypesEnum;
 use App\Models\Review;
@@ -40,9 +41,9 @@ trait HasReviews
     /**
      * Get stats linked to target.
      */
-    private static function __getStats(string $target, ReviewTypesEnum $type): object
+    private static function __getStatsSimple(string $target, ReviewTypesEnum $type): StatsDto
     {
-        return Stats::fromTarget($target, $type);
+        return Stats::simple($target, $type);
     }
 
     private static function __getReviewFilter(?string $filter): ?ReviewFilterEnum
