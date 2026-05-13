@@ -4,10 +4,11 @@ $isReadOnly = $hasFrom && $from->type->isReadOnly();
 ?>
 
 <div class="block">
-    <?php if (!$isReadOnly && $hasFrom): ?>
+    <?php if ($hasFrom): ?>
         <?php $this->insert('partials/reviews/actions', [
             'target' => $from->target,
             'type' => $from->type,
+            'isReadOnly' => $isReadOnly,
         ]) ?>
     <?php endif ?>
     <?php $this->insert('partials/reviews/filter', [
