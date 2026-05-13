@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Dto\FromDto;
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Review;
 use App\Wrappers\UMA;
 use Bbsnly\ChartJs\Chart;
@@ -33,7 +33,7 @@ class StatsController extends Controller
             throw self::__invalidParams();
         }
 
-        $type = ReviewTypesEnum::tryFrom($query['type']);
+        $type = ReviewTypeEnum::tryFrom($query['type']);
         if ($type === null) {
             throw self::__invalidParams();
         }
@@ -44,7 +44,7 @@ class StatsController extends Controller
             throw self::__inconsistentData();
         }
 
-        if ($type === ReviewTypesEnum::TEACHER && UMA::isExcluded($target)) {
+        if ($type === ReviewTypeEnum::TEACHER && UMA::isExcluded($target)) {
             throw self::__invalidParams();
         }
 

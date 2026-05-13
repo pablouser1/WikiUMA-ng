@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Legend;
 use App\Traits\HasReviews;
 use Laminas\Diactoros\Response;
@@ -45,8 +45,8 @@ class LegendsController extends Controller
         }
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
-        $reviews = self::__getReviews($legend->id, ReviewTypesEnum::LEGEND, $page, $filter);
-        $stats = self::__getStatsSimple($legend->id, ReviewTypesEnum::LEGEND);
+        $reviews = self::__getReviews($legend->id, ReviewTypeEnum::LEGEND, $page, $filter);
+        $stats = self::__getStatsSimple($legend->id, ReviewTypeEnum::LEGEND);
 
         return self::__render('views/legends/single', $request, [
             'legend' => $legend,

@@ -4,7 +4,7 @@ namespace App\Wrappers;
 
 use App\Dto\StatsDto;
 use App\Enums\ReportStatusEnum;
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Exclusion;
 use App\Models\Review;
 use Illuminate\Support\Carbon;
@@ -47,7 +47,7 @@ class Stats
         $minReviewsRequired = self::HALL_MIN_REVIEWS_NEEDED; // m
         $api = UMA::api();
 
-        $globalAverage = Review::where('type', ReviewTypesEnum::TEACHER)
+        $globalAverage = Review::where('type', ReviewTypeEnum::TEACHER)
             ->when($within !== null, function ($query) use ($within) {
                 $query->whereDate('created_at', '>=', $within);
             })
@@ -61,7 +61,7 @@ class Stats
         }
 
         $tops = Review::query()
-            ->where('type', ReviewTypesEnum::TEACHER)
+            ->where('type', ReviewTypeEnum::TEACHER)
             ->whereNotIn('target', Exclusion::all()->pluck('idnc'))
             ->when($within !== null, function ($query) use ($within) {
                 $query->whereDate('created_at', '>=', $within);
@@ -110,7 +110,7 @@ class Stats
         ];
     }
 
-    public static function simple(string $target, ReviewTypesEnum $type): StatsDto
+    public static function simple(string $target, ReviewTypeEnum $type): StatsDto
     {
         $reviews = Review::where('target', '=', $target)
             ->where('type', '=', $type)

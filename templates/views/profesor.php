@@ -37,7 +37,7 @@
             'query' => $query,
             'from' => new App\Dto\FromDto(
                 target: $profesor->idnc,
-                type: \App\Enums\ReviewTypesEnum::TEACHER,
+                type: \App\Enums\ReviewTypeEnum::TEACHER,
             ),
         ]) ?>
     </div>

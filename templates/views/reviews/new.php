@@ -3,7 +3,7 @@
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
  * @var string $target
- * @var \App\Enums\ReviewTypesEnum $type
+ * @var \App\Enums\ReviewTypeEnum $type
  */
 ?>
 

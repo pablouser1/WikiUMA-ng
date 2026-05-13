@@ -5,7 +5,7 @@ namespace App\Traits;
 use App\Constants\App;
 use App\Dto\StatsDto;
 use App\Enums\ReviewFilterEnum;
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Review;
 use App\Wrappers\Stats;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -17,7 +17,7 @@ trait HasReviews
      *
      * @return LengthAwarePaginator<Review>
      */
-    private static function __getReviews(?string $target, ?ReviewTypesEnum $type, int $page, ?ReviewFilterEnum $filter): LengthAwarePaginator
+    private static function __getReviews(?string $target, ?ReviewTypeEnum $type, int $page, ?ReviewFilterEnum $filter): LengthAwarePaginator
     {
         $query = Review::latest();
 
@@ -41,7 +41,7 @@ trait HasReviews
     /**
      * Get stats linked to target.
      */
-    private static function __getStatsSimple(string $target, ReviewTypesEnum $type): StatsDto
+    private static function __getStatsSimple(string $target, ReviewTypeEnum $type): StatsDto
     {
         return Stats::simple($target, $type);
     }

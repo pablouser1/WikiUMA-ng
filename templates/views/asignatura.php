@@ -35,7 +35,7 @@
                 'query' => $query,
                 'from' => new App\Dto\FromDto(
                     target: $this->planAsignaturaJoin($plan_id, $asignatura->codAsig),
-                    type: \App\Enums\ReviewTypesEnum::SUBJECT,
+                    type: \App\Enums\ReviewTypeEnum::SUBJECT,
                 ),
             ]) ?>
         </div>

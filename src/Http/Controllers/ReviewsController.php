@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Constants\Extras;
 use App\Constants\Messages;
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Review;
 use App\Wrappers\Env;
 use App\Wrappers\Render;
@@ -35,7 +35,7 @@ class ReviewsController extends Controller
             throw self::__invalidParams();
         }
 
-        $type = ReviewTypesEnum::tryFrom($query['type']);
+        $type = ReviewTypeEnum::tryFrom($query['type']);
         if ($type === null) {
             throw self::__invalidParams();
         }
@@ -50,7 +50,7 @@ class ReviewsController extends Controller
             throw self::__inconsistentData();
         }
 
-        if ($type === ReviewTypesEnum::TEACHER && UMA::isExcluded($target)) {
+        if ($type === ReviewTypeEnum::TEACHER && UMA::isExcluded($target)) {
             throw self::__invalidParams();
         }
 
@@ -94,7 +94,7 @@ class ReviewsController extends Controller
             throw self::__invalidBody();
         }
 
-        $type = ReviewTypesEnum::tryFrom($body['type']);
+        $type = ReviewTypeEnum::tryFrom($body['type']);
         if ($type === null) {
             throw self::__invalidBody();
         }
@@ -109,7 +109,7 @@ class ReviewsController extends Controller
             throw self::__inconsistentData();
         }
 
-        if ($type === ReviewTypesEnum::TEACHER && UMA::isExcluded($target)) {
+        if ($type === ReviewTypeEnum::TEACHER && UMA::isExcluded($target)) {
             throw self::__invalidParams();
         }
 

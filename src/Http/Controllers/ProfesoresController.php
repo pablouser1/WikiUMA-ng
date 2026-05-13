@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\Env;
 use App\Wrappers\MsgHandler;
@@ -74,8 +74,8 @@ class ProfesoresController extends Controller
 
         return self::__render('views/profesor', $request, [
             'profesor' => $profesor->data,
-            'reviews' => self::__getReviews($profesor->data->idnc, ReviewTypesEnum::TEACHER, $page, $filter),
-            'stats' => self::__getStatsSimple($profesor->data->idnc, ReviewTypesEnum::TEACHER),
+            'reviews' => self::__getReviews($profesor->data->idnc, ReviewTypeEnum::TEACHER, $page, $filter),
+            'stats' => self::__getStatsSimple($profesor->data->idnc, ReviewTypeEnum::TEACHER),
             'query' => $query,
         ]);
     }

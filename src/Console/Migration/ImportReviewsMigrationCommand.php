@@ -2,7 +2,7 @@
 
 namespace App\Console\Migration;
 
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Review;
 use App\Wrappers\Storage;
 
@@ -60,7 +60,7 @@ class ImportReviewsMigrationCommand extends BaseMigration
             $reviews[] = (object) [
                 'created_at' => $row['Fecha'],
                 'target' => $relationsIdnc[$row['ID_Profesor']],
-                'type' => ReviewTypesEnum::TEACHER,
+                'type' => ReviewTypeEnum::TEACHER,
                 'username' => $row['Nick'] !== '' ? trim($row['Nick']) : null,
                 'note' => $row['Valoracion'],
                 'message' => trim($row['Comentario']),

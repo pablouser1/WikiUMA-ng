@@ -2,7 +2,7 @@
 
 namespace App\Console\Migration;
 
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Models\Legend;
 use App\Models\Review;
 
@@ -69,7 +69,7 @@ class DbToLegendMigrationCommand extends BaseMigration
             $reviews[] = [
                 'created_at' => $row['Fecha'],
                 'target' => $legend->id,
-                'type' => ReviewTypesEnum::LEGEND,
+                'type' => ReviewTypeEnum::LEGEND,
                 'username' => $row['Nick'] !== '' ? trim($row['Nick']) : null,
                 'note' => $row['Valoracion'],
                 'message' => trim($row['Comentario']),

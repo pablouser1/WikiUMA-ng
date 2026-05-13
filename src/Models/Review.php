@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Enums\ReportStatusEnum;
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Observers\ReviewObserver;
 use Illuminate\Database\Eloquent\Attributes\ObservedBy;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -32,7 +32,7 @@ class Review extends Model
     protected function casts(): array
     {
         return [
-            'type' => ReviewTypesEnum::class,
+            'type' => ReviewTypeEnum::class,
         ];
     }
 

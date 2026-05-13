@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use App\Traits\HasReviews;
 use App\Wrappers\MsgHandler;
 use App\Wrappers\UMA;
@@ -42,8 +42,8 @@ class AsignaturasController extends Controller
         $id = UMA::planAsignaturaJoin($args['plan_id'], $args['asignatura_id']);
 
         $filter = self::__getReviewFilter($query['filter'] ?? null);
-        $reviews = self::__getReviews($id, ReviewTypesEnum::SUBJECT, $page, $filter);
-        $stats = self::__getStatsSimple($id, ReviewTypesEnum::SUBJECT);
+        $reviews = self::__getReviews($id, ReviewTypeEnum::SUBJECT, $page, $filter);
+        $stats = self::__getStatsSimple($id, ReviewTypeEnum::SUBJECT);
 
         return self::__render('views/asignatura', $request, [
             'asignatura' => $asignatura->data,

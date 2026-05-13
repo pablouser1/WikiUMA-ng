@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Enums\ReviewTypesEnum;
+use App\Enums\ReviewTypeEnum;
 use Laminas\Diactoros\Response;
 use Laminas\Diactoros\Response\RedirectResponse;
 use League\Route\Http\Exception\BadRequestException;
@@ -29,7 +29,7 @@ class RedirectController extends Controller
 
         $target = $query['target'];
         $typeInt = (int) $query['type'];
-        $type = ReviewTypesEnum::tryFrom($typeInt);
+        $type = ReviewTypeEnum::tryFrom($typeInt);
 
         if ($type === null) {
             throw self::__invalidParams();

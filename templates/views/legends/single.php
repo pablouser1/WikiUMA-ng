@@ -30,7 +30,7 @@
             'query' => $query,
             'from' => new App\Dto\FromDto(
                 target: $legend->id,
-                type: \App\Enums\ReviewTypesEnum::LEGEND,
+                type: \App\Enums\ReviewTypeEnum::LEGEND,
             ),
         ]) ?>
     </div>

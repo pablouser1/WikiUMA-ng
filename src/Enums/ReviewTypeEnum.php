@@ -9,7 +9,7 @@ use Ramsey\Uuid\Uuid;
 /**
  * Enumarate all valid review types.
  */
-enum ReviewTypesEnum: int
+enum ReviewTypeEnum: int
 {
     case TEACHER = 0;
     case SUBJECT = 1;
