@@ -3,8 +3,9 @@
  * @var \League\Plates\Template\Template $this
  * @var \Psr\Http\Message\UriInterface $uri
  * @var Bbsnly\ChartJs\Chart $distribution
- * @var \App\Models\Review|null $popular
- * @var \App\Models\Review|null $unpopular
+ * @var ?\App\Models\Review $popular
+ * @var ?\App\Models\Review $unpopular
+ * @var \App\Dto\FromDto $from
  */
 ?>
 
@@ -20,6 +21,14 @@
 ]) ?>
 
 <section class="section">
+    <div class="buttons is-centered">
+        <a href="<?= $this->e($back) ?>" class="button is-link">
+            <span class="icon">
+                <?= icon('fa7-solid:arrow-rotate-back') ?>
+            </span>
+            <span>Volver</span>
+        </a>
+    </div>
     <div class="columns is-centered is-multiline">
         <div class="column is-half">
             <p class="is-size-4 has-text-centered">

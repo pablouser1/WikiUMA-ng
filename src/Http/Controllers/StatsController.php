@@ -62,7 +62,7 @@ class StatsController extends Controller
             'distribution' => $distChart,
             'popular' => $popular,
             'unpopular' => $unpopular,
-            'from' => new FromDto($target, $type),
+            'back' => $type->url($target),
         ]);
     }
 
